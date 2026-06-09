@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>(function(){var t=localStorage.getItem('harvard-viz-theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+<title>The Pyramid Transformation — AI &amp; the Legal Profession</title>
+<meta name="description" content="How AI reshapes the law-firm pyramid — from up-or-out to up-and-out.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="The Pyramid Transformation — AI &amp; the Legal Profession">
+<meta property="og:description" content="How AI reshapes the law-firm pyramid — from up-or-out to up-and-out.">
+<meta property="og:url" content="https://hlsclp.org/visualisations/pyramid-transformation.html">
+<meta property="og:image" content="https://hlsclp.org/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Pyramid Transformation — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="How AI reshapes the law-firm pyramid — from up-or-out to up-and-out.">
+<meta name="twitter:image" content="https://hlsclp.org/assets/reference/og-card.png">
+
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<link rel="stylesheet" href="styles/shared-dark.css">
+<script src="styles/d3.v7.min.js"></script>
+<style>
+/* Accessibility: visible focus ring + reduced-motion (B4 / I4) */
+:where(a,button,input,[tabindex]):focus-visible {
+  outline: 2px solid var(--df-accent);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,*::before,*::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
+[data-theme="light"] {
+  --surface: #ffffff;
+  --surface-raised: #f8fafc;
+  --surface-dark: #f1f5f9;
+  --text-heading: #0f172a;
+  --text-body: #334155;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  --text-label: #64748b;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  /* accent inherits crimson --df-accent from shared CSS (light harmonisation) */
+  --accent-blue: var(--df-accent);
+  --accent-blue-dim: var(--df-accent-dim);
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-subtle: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.12);
+  --slate-50: #f8fafc; --slate-100: #f1f5f9; --slate-200: #e2e8f0; --slate-300: #cbd5e1;
+  --slate-400: #94a3b8; --slate-500: #64748b; --slate-600: #475569; --slate-700: #334155;
+  --slate-800: #1e293b; --slate-900: #0f172a;
+}
+body { overflow: hidden; }
+/* I1: page title promoted to <h1>; reset UA h1 metrics to preserve original layout */
+h1.sidebar-page-title { margin-top: 0; }
+
+/* Right info panel — always visible */
+.info-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: var(--detail-width);
+  background: var(--surface-raised);
+  border-left: 1px solid var(--border);
+  z-index: 90;
+  overflow-y: auto;
+  padding: 28px 24px 32px;
+}
+
+/* Main viz adjusts for fixed right panel */
+.main-viz { right: var(--detail-width); }
+
+/* ── Shape Selector Items ── */
+.shape-item {
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--slate-600);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+  line-height: 1.45;
+  gap: 8px;
+}
+.shape-item:hover { background: rgba(255,255,255,0.04); color: var(--text-heading); }
+.shape-item.active { background: var(--accent-blue-dim); color: var(--text-heading); }
+.shape-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0; background: var(--accent-blue);
+}
+
+/* ── Toggle Switches ── */
+.toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 5px 0; font-size: 13px; color: var(--text-secondary);
+}
+.toggle-label { display: flex; align-items: center; gap: 8px; }
+.toggle-color-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.toggle-switch {
+  position: relative; width: 36px; height: 20px; cursor: pointer;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute; inset: 0; background: var(--slate-700);
+  border-radius: 10px; transition: background 0.2s;
+}
+.toggle-slider::before {
+  content: ''; position: absolute; width: 16px; height: 16px;
+  left: 2px; top: 2px; background: var(--slate-300);
+  border-radius: 50%; transition: transform 0.2s;
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--accent-blue); }
+.toggle-switch input:checked + .toggle-slider::before { transform: translateX(16px); }
+
+/* ── Zone Content (right panel) ── */
+.zone-header { margin-bottom: 16px; }
+.zone-name {
+  font-size: 18px; font-weight: 700;
+  color: var(--text-heading); margin-bottom: 3px;
+  padding-left: 14px; border-left: 4px solid var(--accent-blue);
+}
+.zone-tagline {
+  font-size: 13px; color: var(--text-secondary); padding-left: 18px;
+}
+.zone-section-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  margin-bottom: 6px; margin-top: 18px;
+}
+.zone-section-label.gets { color: #0A6B42; }
+.zone-section-label.risks { color: #8A6D00; }
+.zone-section-label.training-lbl { color: var(--accent-blue); }
+.zone-section-label.christensen-lbl { color: var(--text-muted); }
+.zone-list { list-style: none; }
+.zone-list li {
+  font-size: 12.5px; color: var(--text-body); line-height: 1.55;
+  padding: 4px 0 4px 16px; position: relative;
+}
+.zone-list li::before {
+  content: ''; position: absolute; left: 0; top: 11px;
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.zone-gets li::before { background: rgba(10, 191, 103, 0.5); }
+.zone-risks li::before { background: rgba(239, 208, 56, 0.6); }
+
+.zone-tension-callout {
+  border-left: 3px solid var(--accent-blue);
+  padding: 10px 14px;
+  background: rgba(165, 28, 48, 0.05);
+  border-radius: 0 8px 8px 0;
+  font-size: 12.5px; color: var(--text-body);
+  line-height: 1.6; font-style: italic;
+  margin: 8px 0 4px;
+}
+
+.zone-christensen {
+  font-size: 12.5px; color: var(--text-secondary);
+  line-height: 1.55; margin-top: 4px;
+}
+
+.zone-quote {
+  font-size: 12.5px; color: var(--text-secondary);
+  line-height: 1.6; font-style: italic;
+  margin-top: 4px; padding: 8px 12px;
+  border-left: 2px solid var(--slate-600);
+}
+.zone-quote-attr {
+  font-size: 11px; color: var(--text-muted);
+  font-style: normal; margin-top: 4px;
+}
+
+/* ── SVG Axis Labels ── */
+.axis-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  fill: var(--slate-600);
+}
+.axis-end-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px; fill: var(--slate-600);
+}
+
+/* ── Missing Generation ── */
+.missing-gen-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 14px; font-weight: 600;
+  fill: #A51C30; text-anchor: middle;
+  pointer-events: none;
+}
+
+/* ── Network nodes ── */
+.network-node-label {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 12px; font-weight: 500;
+  fill: var(--text-body); text-anchor: middle;
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1400px) {
+  .info-panel { width: 300px; }
+  .main-viz { right: 300px; }
+}
+@media (max-width: 1000px) {
+  .info-panel { display: none; }
+  .main-viz { right: 0; }
+}
+
+/* embed/preview modes — strip chrome so the viz embeds cleanly as a figure */
+html.embed-mode .sidebar-left, html.embed-mode .sidebar-toggle, html.embed-mode .project-nav, html.embed-mode .detail-panel,
+html.preview-mode .sidebar-left, html.preview-mode .sidebar-toggle, html.preview-mode .project-nav, html.preview-mode .detail-panel, html.preview-mode .info-panel { display: none !important; }
+html.embed-mode .main-viz, html.preview-mode .main-viz { left: 0 !important; right: 0 !important; }
+
+/* No bounding-box outline on graphical SVG marks — it renders as an ugly square
+   around the element's bbox. Keyboard focus on the canvas is still conveyed by the
+   selection/detail-panel state and the sidebar list controls (which keep their ring). */
+svg *:focus, svg *:focus-visible { outline: none !important; }
+
+@media print {
+  html, body { height: auto !important; overflow: visible !important; background: #fff !important; }
+  body.has-project-nav { padding-top: 0 !important; }
+  .project-nav, .sidebar-left, .sidebar-toggle, .detail-panel, .info-panel,
+  .zoom-reset-btn, .focus-reset-btn, .tooltip, .nav-burger { display: none !important; }
+  .main-viz, .has-project-nav .main-viz {
+    position: static !important; inset: auto !important;
+    left: 0 !important; right: 0 !important; top: 0 !important;
+    width: 100% !important; height: 96vh !important; overflow: visible !important;
+  }
+  #mainViz, #vizSvg, .main-viz svg { width: 100% !important; height: 100% !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: landscape; margin: 10mm; }
+}
+</style>
+<script>(function(){var q=location.search;if(q.indexOf('embed=1')!==-1)document.documentElement.classList.add('embed-mode');if(q.indexOf('hero=1')!==-1)document.documentElement.classList.add('hero-mode');if(q.indexOf('preview=1')!==-1)document.documentElement.classList.add('preview-mode');})()</script>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-left">&#9776; Menu</button>
+
+<aside class="sidebar-left" id="sidebar-left">
+  <img src="styles/dt-logo-white.webp" alt="Dragonfly Thinking" class="sidebar-logo">
+  <div class="sidebar-classification">Harvard Center for the Legal Profession<br>AI and the Future of Law</div>
+  <div class="sidebar-page-author" style="font-size:13px;color:var(--text-secondary, var(--df-slate-400));margin-bottom:16px;margin-top:8px;">Anthea Roberts &amp; David Wilkins</div>
+  <hr class="sidebar-divider" style="margin:12px 0 16px;">
+
+  <h1 class="sidebar-page-title">The Pyramid Transformation</h1>
+  <div class="sidebar-page-subtitle">Up and Out &mdash; Roberts &amp; Wilkins, 2026</div>
+  <p class="sidebar-page-desc">As AI automates the profession's base, the defining pyramid structure deforms. Three convergence forces press from different directions. Three possible shapes emerge.</p>
+
+  <div class="sidebar-section-label">Structural Shapes</div>
+  <div class="toc-list" id="shape-selector">
+    <div class="shape-item active" data-shape="pyramid" role="button" tabindex="0" aria-pressed="true" aria-label="Show Traditional Pyramid shape"><span class="shape-dot" style="background:#1575BF"></span><span>Traditional Pyramid</span></div>
+    <div class="shape-item" data-shape="obelisk" role="button" tabindex="0" aria-pressed="false" aria-label="Show Obelisk shape"><span class="shape-dot" style="background:#446BB7"></span><span>Obelisk</span></div>
+    <div class="shape-item" data-shape="barbell" role="button" tabindex="0" aria-pressed="false" aria-label="Show Barbell shape"><span class="shape-dot" style="background:#92448A"></span><span>Barbell</span></div>
+    <div class="shape-item" data-shape="diamond" role="button" tabindex="0" aria-pressed="false" aria-label="Show Diamond shape"><span class="shape-dot" style="background:#1B99D6"></span><span>Diamond</span></div>
+    <div class="shape-item" data-shape="t-shape" role="button" tabindex="0" aria-pressed="false" aria-label="Show The T shape"><span class="shape-dot" style="background:#0BAEA3"></span><span>The T</span></div>
+  </div>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-section-label">Convergence Forces</div>
+  <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px;">
+    <div class="toggle-row">
+      <span class="toggle-label"><span class="toggle-color-dot" style="background:#FF9413"></span> From Below</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-from-below"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label"><span class="toggle-color-dot" style="background:#EFD038"></span> Laterally</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-laterally"><span class="toggle-slider"></span></label>
+    </div>
+    <div class="toggle-row">
+      <span class="toggle-label"><span class="toggle-color-dot" style="background:#1B99D6"></span> From Clients</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-from-clients"><span class="toggle-slider"></span></label>
+    </div>
+  </div>
+
+  <hr class="sidebar-divider">
+
+  <div class="toggle-row">
+    <span class="toggle-label">Training Pathway</span>
+    <label class="toggle-switch"><input type="checkbox" id="toggle-training" checked><span class="toggle-slider"></span></label>
+  </div>
+
+  <hr class="sidebar-divider">
+
+  <div class="toggle-row">
+    <span class="toggle-label">Theme</span>
+    <label class="toggle-switch"><input type="checkbox" id="toggle-theme"><span class="toggle-slider"></span></label>
+  </div>
+</aside>
+
+<div class="main-viz" id="mainViz">
+  <svg id="vizSvg" style="width:100%;height:100%;"></svg>
+</div>
+
+<aside class="info-panel" id="infoPanel">
+  <div id="panelContent">
+    <div class="zone-header">
+      <div class="zone-name" id="panelName">The Traditional Pyramid</div>
+      <div class="zone-tagline" id="panelTagline">Many juniors subsidise fewer partners</div>
+    </div>
+
+    <div id="panelDescription" style="font-size:13px;color:var(--text-body);line-height:1.6;margin-bottom:4px;"></div>
+
+    <div class="zone-section-label gets">GETS</div>
+    <ul class="zone-list zone-gets" id="panelGets"></ul>
+
+    <div class="zone-section-label risks">RISKS</div>
+    <ul class="zone-list zone-risks" id="panelRisks"></ul>
+
+    <div class="zone-section-label training-lbl">TRAINING PARADOX</div>
+    <div class="zone-tension-callout" id="panelTraining"></div>
+
+    <div class="zone-section-label christensen-lbl">CHRISTENSEN RISK</div>
+    <div class="zone-christensen" id="panelChristensen"></div>
+
+    <hr class="detail-divider">
+
+    <div class="zone-quote" id="panelQuote"></div>
+    <div class="zone-quote-attr">&mdash; Roberts &amp; Wilkins, "Up and Out" (2026)</div>
+
+    <div id="panelForceDetail" style="margin-top:16px;display:none;">
+      <hr class="detail-divider">
+      <div class="zone-header" style="margin-top:12px;">
+        <div class="zone-name" id="forceDetailName" style="border-left-color:var(--df-risk-extreme);"></div>
+        <div class="zone-tagline" id="forceDetailTagline"></div>
+      </div>
+      <div id="forceDetailDesc" style="font-size:13px;color:var(--text-body);line-height:1.6;margin-bottom:8px;"></div>
+      <div class="zone-section-label" style="color:var(--text-muted);">KEY ACTORS</div>
+      <div id="forceDetailActors" style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px;"></div>
+      <div class="zone-section-label" style="color:var(--text-muted);">EVIDENCE</div>
+      <ul class="zone-list" id="forceDetailExamples" style="margin-bottom:4px;"></ul>
+    </div>
+  </div>
+</aside>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-title" id="tooltip-title"></div>
+  <div class="tooltip-subtitle" id="tooltip-subtitle"></div>
+</div>
+
+<script>
+// ════════════════════════════════════════════════════════════════
+// DATA MODEL
+// ════════════════════════════════════════════════════════════════
+
+const SHAPES = [
+  {
+    id: "pyramid",
+    name: "The Traditional Pyramid",
+    tagline: "Many juniors subsidise fewer partners",
+    vertices: [[0.5, 0.05], [0.85, 0.95], [0.15, 0.95]],
+    tiers: [
+      { label: "Partners", yStart: 0.05, yEnd: 0.20, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "Augmented \u2014 AI amplifies judgment capacity" },
+      { label: "Counsel", yStart: 0.20, yEnd: 0.35, color: "rgba(11,174,163,0.14)", stroke: "#0BAEA3", aiImpact: "Augmented \u2014 experienced specialists with AI tools" },
+      { label: "Senior Associates", yStart: 0.35, yEnd: 0.55, color: "rgba(239,208,56,0.16)", stroke: "#EFD038", aiImpact: "Transformed \u2014 role shifts from production to review" },
+      { label: "Mid-level Associates", yStart: 0.55, yEnd: 0.75, color: "rgba(146,68,138,0.14)", stroke: "#92448A", aiImpact: "Transformed \u2014 substantial role compression" },
+      { label: "Junior Associates", yStart: 0.75, yEnd: 0.95, color: "rgba(165,28,48,0.14)", stroke: "#A51C30", aiImpact: "At risk \u2014 high-volume work is AI\u2019s primary target" }
+    ],
+    trainingPathway: "continuous",
+    gets: [
+      "Proven leverage economics \u2014 juniors subsidise partners",
+      "Clear apprenticeship pathway from base to top",
+      "Deep domain expertise built through years of practice"
+    ],
+    risks: [
+      "Base economics collapse when AI handles volume work",
+      "Entire model depends on a large base that\u2019s shrinking",
+      "Training pipeline assumes work that may not exist"
+    ],
+    trainingParadox: "The pyramid\u2019s strength: continuous apprenticeship from junior to partner through increasingly complex work. Every rung teaches something the next rung needs.",
+    christensenRisk: "Stable \u2014 but only while the base survives. The leverage economics that sustain the pyramid require volume work at the base.",
+    quote: "Everyone in law knows the phrase \u2018up or out.\u2019 It\u2019s the profession\u2019s defining career bargain: produce enough leverage to justify your compensation and advance, or leave.",
+    convergenceForces: [],
+    accentColor: "#1575BF"
+  },
+  {
+    id: "obelisk",
+    name: "The Obelisk",
+    tagline: "Same shape, dramatically narrower \u2014 keep the structure, shrink the intake",
+    vertices: [[0.5, 0.05], [0.55, 0.12], [0.58, 0.95], [0.42, 0.95], [0.45, 0.12]],
+    tiers: [
+      { label: "Partners", yStart: 0.05, yEnd: 0.22, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "Augmented \u2014 integrative judgment expands" },
+      { label: "Counsel", yStart: 0.22, yEnd: 0.40, color: "rgba(11,174,163,0.14)", stroke: "#0BAEA3", aiImpact: "Augmented \u2014 specialised orchestration roles" },
+      { label: "Senior Associates", yStart: 0.40, yEnd: 0.62, color: "rgba(239,208,56,0.16)", stroke: "#EFD038", aiImpact: "Transformed \u2014 review and quality control" },
+      { label: "Junior Associates", yStart: 0.62, yEnd: 0.95, color: "rgba(146,68,138,0.14)", stroke: "#92448A", aiImpact: "Reduced \u2014 vastly fewer people at the base" }
+    ],
+    trainingPathway: "thinned",
+    gets: [
+      "Hierarchy and mentorship structure preserved",
+      "Training pathway survives, just narrower",
+      "The pyramid\u2019s answer to automation: keep the structure, shrink the intake"
+    ],
+    risks: [
+      "Vastly fewer entry points restrict talent pipeline",
+      "Less diverse intake as entry narrows",
+      "Still vulnerable to base erosion from AI-native firms"
+    ],
+    trainingParadox: "Apprenticeship survives but with fewer entry points. The pathway is intact but thinner \u2014 less volume means fewer repetitions, slower learning.",
+    christensenRisk: "Moderate \u2014 the base is thinner but still present. This is the gentlest transformation and the most conservative bet.",
+    quote: "The same basic shape \u2014 hierarchical, vertical, up-or-out logic intact \u2014 but dramatically narrower. The rungs are still there; there are just far fewer people on them.",
+    convergenceForces: ["from-below"],
+    accentColor: "#446BB7"
+  },
+  {
+    id: "barbell",
+    name: "The Barbell",
+    tagline: "Senior partners and AI-native juniors at the ends, hollowed middle",
+    vertices: [[0.28, 0.05], [0.72, 0.05], [0.72, 0.25], [0.58, 0.38], [0.58, 0.62], [0.72, 0.75], [0.72, 0.95], [0.28, 0.95], [0.28, 0.75], [0.42, 0.62], [0.42, 0.38], [0.28, 0.25]],
+    tiers: [
+      { label: "Partners / Orchestrators", yStart: 0.05, yEnd: 0.25, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "The judgment layer \u2014 client relationships, institutional weight" },
+      { label: "The Missing Generation", yStart: 0.32, yEnd: 0.68, color: "rgba(165,28,48,0.14)", stroke: "#A51C30", aiImpact: "Hollowed \u2014 mid-career lawyers squeezed out, wrong skills for either end", isMissing: true },
+      { label: "AI-Native Juniors", yStart: 0.75, yEnd: 0.95, color: "rgba(146,68,138,0.14)", stroke: "#92448A", aiImpact: "Fluent in tools, cheap to deploy with AI leverage, productive from day one" }
+    ],
+    trainingPathway: "broken",
+    gets: [
+      "Partners freed for highest-value integrative judgment",
+      "AI-native juniors productive from day one with AI leverage",
+      "Cost structure dramatically reduced"
+    ],
+    risks: [
+      "Training pathway severed \u2014 the missing generation",
+      "Pipeline from bottom to top is broken",
+      "Institutional knowledge fails to transfer"
+    ],
+    trainingParadox: "The middle hollows out. Mid-career lawyers are squeezed: they lack the relationships and judgment for the top, and the AI-native skills for the bottom. Over time, the pipeline that produces partners is broken.",
+    christensenRisk: "High \u2014 the missing generation means no pipeline for future partners. And the thin middle is exactly where AI capability is improving fastest.",
+    quote: "Senior partners at the top \u2014 the judgment layer. AI-native juniors at the bottom. And in the middle? A hollowed-out, missing generation.",
+    convergenceForces: ["from-below", "laterally"],
+    accentColor: "#92448A"
+  },
+  {
+    id: "diamond",
+    name: "The Diamond",
+    tagline: "Thick in the middle where human–AI collaboration is densest",
+    vertices: [[0.5, 0.05], [0.85, 0.5], [0.5, 0.95], [0.15, 0.5]],
+    tiers: [
+      { label: "Pure-Judgment Apex", yStart: 0.05, yEnd: 0.30, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "The narrow top — pure judgment, client trust, the work AI can’t touch" },
+      { label: "Human–AI Collaboration", yStart: 0.30, yEnd: 0.70, color: "rgba(11,174,163,0.14)", stroke: "#0BAEA3", aiImpact: "The widest band — orchestrators, reviewers, and integrators working alongside AI" },
+      { label: "Automated Base", yStart: 0.70, yEnd: 0.95, color: "rgba(165,28,48,0.14)", stroke: "#A51C30", aiImpact: "At risk — volume work handled by AI, the base thins" }
+    ],
+    trainingPathway: "thinned",
+    gets: [
+      "A wide band of orchestrators, reviewers, and integrators working alongside AI",
+      "Training reimagined through orchestration rather than volume work",
+      "The shape that looks most promising"
+    ],
+    risks: [
+      "Masks a coordination failure — a tragedy of the commons in training",
+      "Every firm free-rides on the pipeline; no one invests in maintaining it",
+      "The verification capacity to catch subtle AI errors is exactly the expertise being destroyed"
+    ],
+    trainingParadox: "Training is reimagined through orchestration — but it masks a coordination failure. No firm needs to train lawyers; it needs trained lawyers. When every firm free-rides on the pipeline, no one maintains it, and the resource disappears.",
+    christensenRisk: "Moderate to high — the most promising shape on its face, but it depends on collective investment in a training pipeline that each firm’s individually rational automation decision quietly destroys.",
+    quote: "Thick in the middle where human-AI collaboration is densest, thin at the automated base and the pure-judgment apex. This is the shape that looks most promising — but it masks a coordination failure.",
+    convergenceForces: ["from-below", "laterally"],
+    accentColor: "#1B99D6"
+  },
+  {
+    id: "t-shape",
+    name: "The T",
+    tagline: "Automated stack below, human layer thin and stretched wide on top",
+    vertices: [[0.10, 0.05], [0.90, 0.05], [0.90, 0.20], [0.62, 0.20], [0.62, 0.95], [0.38, 0.95], [0.38, 0.20], [0.10, 0.20]],
+    tiers: [
+      { label: "The Human Layer", yStart: 0.05, yEnd: 0.19, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "Orchestrators \u2014 connecting outward to clients, firms, regulators, consultants" },
+      { label: "Expanding Automated Zone", yStart: 0.21, yEnd: 0.57, color: "rgba(165,28,48,0.12)", stroke: "#A51C30", aiImpact: "Intelligence eating upward \u2014 what was judgment becomes automated" },
+      { label: "Fully Automated Base", yStart: 0.58, yEnd: 0.95, color: "rgba(165,28,48,0.16)", stroke: "#A51C30", aiImpact: "Automated \u2014 volume work handled entirely by AI" }
+    ],
+    trainingPathway: "collapsed",
+    gets: [
+      "Maximum integration \u2014 human layer connects across all adjacent domains",
+      "Most scalable if AI handles the entire vertical stack",
+      "Orchestrators do the relational and integrative work machines can\u2019t"
+    ],
+    risks: [
+      "Essentially no training pathway \u2014 no rungs from base to top",
+      "The human layer is thin and getting thinner as AI improves",
+      "Today\u2019s judgment may become tomorrow\u2019s intelligence"
+    ],
+    trainingParadox: "There are no rungs. The automated stack doesn\u2019t produce learning experiences. The human layer at the top is thin and assumes integrative expertise \u2014 but there\u2019s no pathway to develop it.",
+    christensenRisk: "Extreme \u2014 this is the Christensen endgame. The automated zone keeps growing upward, intelligence work eating into what used to be judgment work. The human layer gets thinner with every advance.",
+    quote: "The vertical stroke is the automated stack. The horizontal bar is the human layer \u2014 thin, stretched wide, doing the relational and integrative work that machines can\u2019t.",
+    convergenceForces: ["from-below", "laterally", "from-clients"],
+    accentColor: "#0BAEA3"
+  }
+];
+
+const CONVERGENCE_FORCES = [
+  {
+    id: "from-below",
+    name: "From Below",
+    tagline: "AI-native firms eating technical work",
+    color: "#FF9413",
+    direction: "up",
+    description: "AI-native legal platforms don\u2019t breach the bar; they maintain lawyer oversight while delivering AI-native economics. They start with commodity work and improve. The outsourced task is the wedge; the insourced work is the long-term target.",
+    actors: ["Harvey AI", "Eve.legal", "Legora", "AI-native startups"],
+    examples: [
+      "Harvey building agent platform for law firms",
+      "Eve.legal\u2019s $1B contingency AI model",
+      "Bek: \u2018Today\u2019s judgement will become tomorrow\u2019s intelligence\u2019"
+    ],
+    shapesItFavors: ["obelisk", "barbell"]
+  },
+  {
+    id: "laterally",
+    name: "Laterally",
+    tagline: "Big Four adding legal to existing infrastructure",
+    color: "#EFD038",
+    direction: "horizontal",
+    description: "The Big Four have been building integrated solutions for decades \u2014 consulting, audit, tax, technology, and global infrastructure. Law firms going \u2018up and out\u2019 arrive at a party that\u2019s already crowded.",
+    actors: ["PwC", "KPMG", "EY", "Deloitte"],
+    examples: [
+      "PwC promoting legal in 124 countries by 2012",
+      "KPMG licensed to practise law in Arizona",
+      "\u2018They will move up the value chain and eat our lunch\u2019"
+    ],
+    shapesItFavors: ["barbell", "t-shape"]
+  },
+  {
+    id: "from-clients",
+    name: "From Clients",
+    tagline: "General counsel building their own orchestration",
+    color: "#1B99D6",
+    direction: "pull",
+    description: "General counsel aren\u2019t waiting. They\u2019re building their own orchestration capability, segmenting work by complexity, assembling integrated solutions without law firms as intermediaries.",
+    actors: ["In-house legal teams", "Corporate CLOs", "Legal ops"],
+    examples: [
+      "Yurko\u2019s \u2018virtual law firm\u2019 cutting costs 50%+",
+      "GCs as ecosystem orchestrators with AI",
+      "In-house teams governing organisational AI use"
+    ],
+    shapesItFavors: ["t-shape"]
+  }
+];
+
+const NODE_COLORS = {
+  partner: "#1575BF",
+  specialist: "#94a3b8",
+  tech: "#0BAEA3",
+  external: "#FF9413",
+  infra: "#446BB7"
+};
+
+// ════════════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════════════
+
+let currentShapeId = "pyramid";
+let activeForces = { "from-below": false, "laterally": false, "from-clients": false };
+let showTraining = true;
+let animating = false;
+
+// ════════════════════════════════════════════════════════════════
+// SVG SETUP
+// ════════════════════════════════════════════════════════════════
+
+const svg = d3.select("#vizSvg");
+const tooltip = document.getElementById("tooltip");
+const tooltipTitle = document.getElementById("tooltip-title");
+const tooltipSub = document.getElementById("tooltip-subtitle");
+
+// Drawing area parameters
+const PADDING = { top: 50, right: 40, bottom: 50, left: 60 };
+
+function getDims() {
+  const el = document.getElementById("mainViz");
+  return { w: el.clientWidth, h: el.clientHeight };
+}
+
+function getDrawArea() {
+  const { w, h } = getDims();
+  return {
+    x: PADDING.left,
+    y: PADDING.top,
+    w: w - PADDING.left - PADDING.right,
+    h: h - PADDING.top - PADDING.bottom
+  };
+}
+
+// Scale normalized coords to draw area
+function scaleX(nx) { const a = getDrawArea(); return a.x + nx * a.w; }
+function scaleY(ny) { const a = getDrawArea(); return a.y + ny * a.h; }
+function scaleR(nr) { const a = getDrawArea(); return nr * Math.min(a.w, a.h) / 400; }
+
+// ════════════════════════════════════════════════════════════════
+// INTERPOLATION HELPERS
+// ════════════════════════════════════════════════════════════════
+
+// Resample polygon vertices to a fixed count for smooth morphing
+function resamplePolygon(verts, n) {
+  if (verts.length === 0) return Array.from({ length: n }, () => [0.5, 0.5]);
+  const closed = [...verts, verts[0]];
+  // Compute cumulative arc length
+  const lens = [0];
+  for (let i = 1; i < closed.length; i++) {
+    const dx = closed[i][0] - closed[i-1][0], dy = closed[i][1] - closed[i-1][1];
+    lens.push(lens[i-1] + Math.sqrt(dx*dx + dy*dy));
+  }
+  const total = lens[lens.length - 1];
+  const result = [];
+  for (let i = 0; i < n; i++) {
+    const target = (i / n) * total;
+    let seg = 0;
+    while (seg < lens.length - 2 && lens[seg + 1] < target) seg++;
+    const segLen = lens[seg + 1] - lens[seg];
+    const t = segLen === 0 ? 0 : (target - lens[seg]) / segLen;
+    result.push([
+      closed[seg][0] + t * (closed[seg+1][0] - closed[seg][0]),
+      closed[seg][1] + t * (closed[seg+1][1] - closed[seg][1])
+    ]);
+  }
+  return result;
+}
+
+const MORPH_POINTS = 64;
+
+// ════════════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════════════
+
+let gAxis, gShape, gTiers, gTraining, gForces, gNetwork, gMissing;
+
+function initSVG() {
+  svg.selectAll("*").remove();
+
+  const defs = svg.append("defs");
+  // Arrow markers for convergence forces
+  ["from-below", "laterally", "from-clients"].forEach(id => {
+    const f = CONVERGENCE_FORCES.find(c => c.id === id);
+    defs.append("marker")
+      .attr("id", "arrow-" + id)
+      .attr("viewBox", "0 0 10 6")
+      .attr("refX", 10)
+      .attr("refY", 3)
+      .attr("markerWidth", 8)
+      .attr("markerHeight", 5)
+      .attr("orient", "auto")
+      .append("path")
+      .attr("d", "M0,0 L10,3 L0,6 Z")
+      .attr("fill", f.color);
+  });
+
+  gAxis = svg.append("g").attr("class", "axis-group");
+  gShape = svg.append("g").attr("class", "shape-group");
+  gTiers = svg.append("g").attr("class", "tiers-group");
+  gMissing = svg.append("g").attr("class", "missing-group");
+  gTraining = svg.append("g").attr("class", "training-group");
+  gForces = svg.append("g").attr("class", "forces-group");
+  gNetwork = svg.append("g").attr("class", "network-group");
+
+  drawAxes();
+  drawShape(false);
+  fitViewBox();
+}
+
+// Fit the SVG viewBox to the drawn content so it scales cleanly on
+// mobile/iPad and prints to PDF without clipping (no on-screen change).
+function fitViewBox() {
+  const pad = 28;
+  const bb = svg.node().getBBox();
+  if (bb && bb.width && bb.height) {
+    svg.attr("viewBox", (bb.x - pad) + " " + (bb.y - pad) + " " + (bb.width + 2 * pad) + " " + (bb.height + 2 * pad))
+       .attr("preserveAspectRatio", "xMidYMid meet")
+       .attr("width", "100%")
+       .attr("height", "100%");
+  }
+}
+
+function drawAxes() {
+  gAxis.selectAll("*").remove();
+  const a = getDrawArea();
+
+  // Y-axis
+  gAxis.append("line")
+    .attr("x1", a.x - 20).attr("y1", a.y)
+    .attr("x2", a.x - 20).attr("y2", a.y + a.h)
+    .attr("stroke", "var(--slate-700)").attr("stroke-width", 1).attr("stroke-dasharray", "3,4");
+
+  gAxis.append("text").attr("class", "axis-label")
+    .attr("x", a.x - 36).attr("y", a.y + a.h / 2)
+    .attr("text-anchor", "middle")
+    .attr("transform", `rotate(-90, ${a.x - 36}, ${a.y + a.h / 2})`)
+    .text("VALUE CHAIN");
+
+  gAxis.append("text").attr("class", "axis-end-label")
+    .attr("x", a.x - 20).attr("y", a.y - 8)
+    .attr("text-anchor", "middle").text("Integrative Judgment");
+
+  gAxis.append("text").attr("class", "axis-end-label")
+    .attr("x", a.x - 20).attr("y", a.y + a.h + 16)
+    .attr("text-anchor", "middle").text("Technical / Volume");
+
+  // X-axis
+  gAxis.append("line")
+    .attr("x1", a.x).attr("y1", a.y + a.h + 24)
+    .attr("x2", a.x + a.w).attr("y2", a.y + a.h + 24)
+    .attr("stroke", "var(--slate-700)").attr("stroke-width", 1).attr("stroke-dasharray", "3,4");
+
+  gAxis.append("text").attr("class", "axis-label")
+    .attr("x", a.x + a.w / 2).attr("y", a.y + a.h + 42)
+    .attr("text-anchor", "middle").text("DOMAIN BREADTH");
+
+  gAxis.append("text").attr("class", "axis-end-label")
+    .attr("x", a.x).attr("y", a.y + a.h + 42)
+    .attr("text-anchor", "start").text("Pure Legal");
+
+  gAxis.append("text").attr("class", "axis-end-label")
+    .attr("x", a.x + a.w).attr("y", a.y + a.h + 42)
+    .attr("text-anchor", "end").text("Integrated Solutions");
+}
+
+function getShape(id) { return SHAPES.find(s => s.id === id); }
+
+function drawShape(animate) {
+  const shape = getShape(currentShapeId);
+  const isNet = shape.isNetwork;
+
+  // ── Polygon shape ──
+  if (!isNet) {
+    gNetwork.transition().duration(animate ? 400 : 0).style("opacity", 0);
+
+    const resampled = resamplePolygon(shape.vertices, MORPH_POINTS);
+    const pathData = resampled.map(([x, y]) => `${scaleX(x)},${scaleY(y)}`).join(" ");
+
+    let poly = gShape.selectAll("polygon.main-shape").data([1]);
+    poly = poly.enter().append("polygon").attr("class", "main-shape")
+      .attr("fill", "none")
+      .attr("stroke", "var(--slate-400)")
+      .attr("stroke-width", 1.25)
+      .attr("stroke-opacity", 0.6)
+      .merge(poly);
+
+    if (animate) {
+      poly.transition().duration(800).ease(d3.easeCubicOut)
+        .attr("points", pathData)
+        .style("opacity", 1);
+    } else {
+      poly.attr("points", pathData).style("opacity", 1);
+    }
+
+    // ── Tier bands ──
+    drawTiers(shape, animate);
+    drawMissingGeneration(shape, animate);
+  } else {
+    // Fade out polygon
+    gShape.selectAll("polygon.main-shape")
+      .transition().duration(animate ? 400 : 0).style("opacity", 0);
+    gTiers.selectAll("*").transition().duration(animate ? 300 : 0).style("opacity", 0).remove();
+    gMissing.selectAll("*").transition().duration(animate ? 300 : 0).style("opacity", 0).remove();
+
+    // Draw network
+    setTimeout(() => drawNetwork(shape, animate), animate ? 300 : 0);
+  }
+
+  drawTrainingPathway(shape, animate);
+  drawConvergenceForces(shape, animate);
+  updatePanel(shape);
+}
+
+function drawTiers(shape, animate) {
+  gTiers.selectAll("*").remove();
+
+  shape.tiers.forEach((tier, i) => {
+    // Compute clipped horizontal extent at tier's y range by intersecting with the shape polygon
+    const yMid = (tier.yStart + tier.yEnd) / 2;
+    const xExtent = getShapeWidthAtY(shape.vertices, yMid);
+    if (!xExtent) return;
+
+    const tierGroup = gTiers.append("g").attr("class", "tier-band");
+
+    // Band rectangle (clipped to shape)
+    const yTop = scaleY(tier.yStart);
+    const yBot = scaleY(tier.yEnd);
+    const xL = scaleX(xExtent[0]);
+    const xR = scaleX(xExtent[1]);
+
+    // Build a clipped polygon for the tier band
+    const clipVerts = getTierClipPolygon(shape.vertices, tier.yStart, tier.yEnd);
+    const clipPath = clipVerts.map(([x, y]) => `${scaleX(x)},${scaleY(y)}`).join(" ");
+
+    const tierStroke = tier.stroke || "#446BB7";
+    const band = tierGroup.append("polygon")
+      .attr("points", clipPath)
+      .attr("fill", tier.color)
+      .attr("stroke", tierStroke)
+      .attr("stroke-width", tier.isMissing ? 1.25 : 1)
+      .attr("stroke-dasharray", tier.isMissing ? "4,3" : "none")
+      .style("cursor", "pointer")
+      .style("opacity", animate ? 0 : 1);
+
+    if (animate) band.transition().duration(600).delay(i * 80).style("opacity", 1);
+
+    // Tier label
+    const labelX = scaleX(0.5);
+    const labelY = (yTop + yBot) / 2;
+
+    tierGroup.append("text")
+      .attr("x", labelX).attr("y", labelY)
+      .attr("text-anchor", "middle").attr("dominant-baseline", "central")
+      .attr("font-family", "'IBM Plex Sans', sans-serif")
+      .attr("font-size", tier.isMissing ? "14px" : "14px")
+      .attr("font-weight", 500)
+      .attr("fill", tier.isMissing ? "#A51C30" : "var(--text-secondary)")
+      .attr("pointer-events", "none")
+      .style("opacity", animate ? 0 : 0.85)
+      .text(tier.isMissing ? "" : tier.label)
+      .transition().duration(400).delay(animate ? i * 80 + 200 : 0).style("opacity", 0.85);
+
+    // Hover interactions — deepen the SAME tier hue (raise alpha to 0.28)
+    const hoverFill = tier.color.replace(/,([\d.]+)\)$/, ",0.28)");
+    band.on("mouseenter", function(e) {
+      d3.select(this).attr("fill", hoverFill);
+      tooltipTitle.textContent = tier.label;
+      tooltipSub.textContent = tier.aiImpact;
+      tooltip.classList.add("visible");
+      tooltip.style.left = (e.clientX + 12) + "px";
+      tooltip.style.top = (e.clientY - 8) + "px";
+    }).on("mousemove", function(e) {
+      tooltip.style.left = (e.clientX + 12) + "px";
+      tooltip.style.top = (e.clientY - 8) + "px";
+    }).on("mouseleave", function() {
+      d3.select(this).attr("fill", tier.color);
+      tooltip.classList.remove("visible");
+    });
+  });
+}
+
+function drawMissingGeneration(shape, animate) {
+  gMissing.selectAll("*").remove();
+  if (shape.id !== "barbell") return;
+
+  const missTier = shape.tiers.find(t => t.isMissing);
+  if (!missTier) return;
+
+  const yMid = (missTier.yStart + missTier.yEnd) / 2;
+  gMissing.append("text")
+    .attr("class", "missing-gen-label")
+    .attr("x", scaleX(0.5))
+    .attr("y", scaleY(yMid) + 16)
+    .text("\u26A0 The Missing Generation")
+    .style("opacity", animate ? 0 : 1)
+    .transition().duration(600).delay(animate ? 500 : 0).style("opacity", 1);
+}
+
+function getShapeWidthAtY(verts, y) {
+  if (verts.length < 3) return null;
+  const closed = [...verts, verts[0]];
+  const xs = [];
+  for (let i = 0; i < closed.length - 1; i++) {
+    const [x1, y1] = closed[i], [x2, y2] = closed[i + 1];
+    if ((y1 <= y && y2 >= y) || (y2 <= y && y1 >= y)) {
+      if (y1 === y2) { xs.push(x1, x2); }
+      else {
+        const t = (y - y1) / (y2 - y1);
+        xs.push(x1 + t * (x2 - x1));
+      }
+    }
+  }
+  if (xs.length < 2) return null;
+  return [Math.min(...xs), Math.max(...xs)];
+}
+
+function getTierClipPolygon(verts, yStart, yEnd) {
+  // Simple approach: build polygon from shape edges clipped to y range
+  const topX = getShapeWidthAtY(verts, yStart);
+  const botX = getShapeWidthAtY(verts, yEnd);
+  if (!topX || !botX) return [[0.5, yStart], [0.5, yEnd]];
+
+  // Sample several y levels for smoother clipping on non-straight edges
+  const steps = 8;
+  const leftPoints = [], rightPoints = [];
+  for (let i = 0; i <= steps; i++) {
+    const y = yStart + (yEnd - yStart) * (i / steps);
+    const extent = getShapeWidthAtY(verts, y);
+    if (extent) {
+      leftPoints.push([extent[0], y]);
+      rightPoints.push([extent[1], y]);
+    }
+  }
+  // Build polygon: right side top-to-bottom, then left side bottom-to-top
+  return [...rightPoints, ...leftPoints.reverse()];
+}
+
+// ── Training Pathway ──
+function drawTrainingPathway(shape, animate) {
+  gTraining.selectAll("*").remove();
+  if (!showTraining) return;
+
+  const type = shape.trainingPathway;
+  const a = getDrawArea();
+
+  if (type === "continuous") {
+    // Solid vertical line
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.08))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.92))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 2.5)
+      .attr("stroke-opacity", 0.7);
+  } else if (type === "thinned") {
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.08))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.92))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 1.5)
+      .attr("stroke-opacity", 0.5);
+  } else if (type === "broken") {
+    // Top segment
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.08))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.30))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 2.5)
+      .attr("stroke-opacity", 0.7);
+    // Gap indicator
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.33))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.67))
+      .attr("stroke", "#EFD038").attr("stroke-width", 1)
+      .attr("stroke-opacity", 0.45).attr("stroke-dasharray", "2,6");
+    // Bottom segment
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.70))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.92))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 2.5)
+      .attr("stroke-opacity", 0.7);
+    // X marks at gap boundaries
+    const gapTop = scaleY(0.31), gapBot = scaleY(0.69), cx = scaleX(0.5);
+    [gapTop, gapBot].forEach(gy => {
+      gTraining.append("line").attr("x1", cx - 5).attr("y1", gy - 5).attr("x2", cx + 5).attr("y2", gy + 5)
+        .attr("stroke", "#A51C30").attr("stroke-width", 1.5).attr("stroke-opacity", 0.7);
+      gTraining.append("line").attr("x1", cx + 5).attr("y1", gy - 5).attr("x2", cx - 5).attr("y2", gy + 5)
+        .attr("stroke", "#A51C30").attr("stroke-width", 1.5).attr("stroke-opacity", 0.7);
+    });
+  } else if (type === "distributed") {
+    // Dotted line across middle
+    gTraining.append("line")
+      .attr("x1", scaleX(0.5)).attr("y1", scaleY(0.08))
+      .attr("x2", scaleX(0.5)).attr("y2", scaleY(0.92))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 2)
+      .attr("stroke-opacity", 0.5).attr("stroke-dasharray", "4,6");
+    // Horizontal dotted branches in the thick middle
+    [0.35, 0.50, 0.65].forEach(y => {
+      gTraining.append("line")
+        .attr("x1", scaleX(0.38)).attr("y1", scaleY(y))
+        .attr("x2", scaleX(0.62)).attr("y2", scaleY(y))
+        .attr("stroke", "#0ABF67").attr("stroke-width", 1.5)
+        .attr("stroke-opacity", 0.35).attr("stroke-dasharray", "3,5");
+    });
+  } else if (type === "fragmented") {
+    // Short scattered dashes
+    const frags = [
+      [0.35, 0.15, 0.35, 0.22], [0.65, 0.15, 0.65, 0.22],
+      [0.25, 0.35, 0.25, 0.42], [0.75, 0.35, 0.75, 0.42],
+      [0.50, 0.50, 0.50, 0.58], [0.40, 0.65, 0.40, 0.72],
+      [0.60, 0.65, 0.60, 0.72], [0.50, 0.78, 0.50, 0.85]
+    ];
+    frags.forEach(([x1, y1, x2, y2], i) => {
+      gTraining.append("line")
+        .attr("x1", scaleX(x1)).attr("y1", scaleY(y1))
+        .attr("x2", scaleX(x2)).attr("y2", scaleY(y2))
+        .attr("stroke", "#0ABF67").attr("stroke-width", 1.5)
+        .attr("stroke-opacity", 0.4).attr("stroke-dasharray", "3,4")
+        .style("opacity", animate ? 0 : 1)
+        .transition().duration(300).delay(animate ? i * 60 : 0).style("opacity", 1);
+    });
+  } else if (type === "collapsed") {
+    gTraining.append("line")
+      .attr("x1", scaleX(0.15)).attr("y1", scaleY(0.12))
+      .attr("x2", scaleX(0.85)).attr("y2", scaleY(0.12))
+      .attr("stroke", "#0ABF67").attr("stroke-width", 2)
+      .attr("stroke-opacity", 0.5).attr("stroke-dasharray", "4,6");
+  }
+}
+
+// ── Network ──
+function drawNetwork(shape, animate) {
+  gNetwork.selectAll("*").remove();
+  gNetwork.style("opacity", 1);
+
+  const nodeMap = {};
+  shape.nodes.forEach(n => { nodeMap[n.id] = n; });
+
+  // Edges
+  shape.edges.forEach((e, i) => {
+    const s = nodeMap[e.source], t = nodeMap[e.target];
+    const mx = (s.x + t.x) / 2 + (Math.random() - 0.5) * 0.05;
+    const my = (s.y + t.y) / 2 + (Math.random() - 0.5) * 0.05;
+
+    gNetwork.append("path")
+      .attr("d", `M${scaleX(s.x)},${scaleY(s.y)} Q${scaleX(mx)},${scaleY(my)} ${scaleX(t.x)},${scaleY(t.y)}`)
+      .attr("fill", "none")
+      .attr("stroke", "var(--slate-600)")
+      .attr("stroke-width", 1.5)
+      .attr("stroke-opacity", 0.5)
+      .style("opacity", animate ? 0 : 1)
+      .transition().duration(500).delay(animate ? 200 + i * 40 : 0).style("opacity", 1);
+  });
+
+  // Nodes
+  shape.nodes.forEach((n, i) => {
+    const ng = gNetwork.append("g")
+      .style("opacity", animate ? 0 : 1)
+      .style("cursor", "pointer");
+
+    if (animate) ng.transition().duration(500).delay(300 + i * 60).style("opacity", 1);
+
+    const scaledR = Math.max(n.r * 0.8, 8);
+
+    ng.append("circle")
+      .attr("cx", scaleX(n.x)).attr("cy", scaleY(n.y))
+      .attr("r", scaledR)
+      .attr("fill", NODE_COLORS[n.type] || "#94a3b8")
+      .attr("fill-opacity", 0.2)
+      .attr("stroke", NODE_COLORS[n.type] || "#94a3b8")
+      .attr("stroke-width", 1.5)
+      .attr("stroke-opacity", 0.6);
+
+    ng.append("text")
+      .attr("class", "network-node-label")
+      .attr("x", scaleX(n.x)).attr("y", scaleY(n.y) + scaledR + 14)
+      .text(n.label);
+
+    // Hover
+    ng.on("mouseenter", function(ev) {
+      d3.select(this).select("circle").attr("fill-opacity", 0.4).attr("stroke-opacity", 1);
+      tooltipTitle.textContent = n.label;
+      tooltipSub.textContent = n.type.charAt(0).toUpperCase() + n.type.slice(1) + " node";
+      tooltip.classList.add("visible");
+      tooltip.style.left = (ev.clientX + 12) + "px";
+      tooltip.style.top = (ev.clientY - 8) + "px";
+    }).on("mousemove", function(ev) {
+      tooltip.style.left = (ev.clientX + 12) + "px";
+      tooltip.style.top = (ev.clientY - 8) + "px";
+    }).on("mouseleave", function() {
+      d3.select(this).select("circle").attr("fill-opacity", 0.2).attr("stroke-opacity", 0.6);
+      tooltip.classList.remove("visible");
+    });
+  });
+}
+
+// ── Convergence Force Arrows ──
+function drawConvergenceForces() {
+  gForces.selectAll("*").remove();
+
+  const shape = getShape(currentShapeId);
+
+  Object.keys(activeForces).forEach(forceId => {
+    if (!activeForces[forceId]) return;
+    const force = CONVERGENCE_FORCES.find(f => f.id === forceId);
+    if (!force) return;
+
+    const arrows = getForceArrows(force, shape);
+    arrows.forEach((arr, i) => {
+      const line = gForces.append("line")
+        .attr("x1", scaleX(arr.x1)).attr("y1", scaleY(arr.y1))
+        .attr("x2", scaleX(arr.x2)).attr("y2", scaleY(arr.y2))
+        .attr("stroke", force.color)
+        .attr("stroke-width", 2)
+        .attr("stroke-dasharray", "6,4")
+        .attr("marker-end", `url(#arrow-${forceId})`)
+        .style("opacity", 0);
+
+      line.transition().duration(400).delay(i * 100).style("opacity", 0.7);
+
+      // Animated dash-offset
+      animateDash(line, force.direction);
+    });
+  });
+
+  // Update panel if a force is active
+  updateForcePanel();
+}
+
+function animateDash(line, direction) {
+  const offset = direction === "up" ? 20 : (direction === "horizontal" ? 20 : 20);
+  function pulse() {
+    line.transition().duration(1500).ease(d3.easeLinear)
+      .attr("stroke-dashoffset", -offset)
+      .transition().duration(0)
+      .attr("stroke-dashoffset", 0)
+      .on("end", pulse);
+  }
+  pulse();
+}
+
+function getForceArrows(force, shape) {
+  const arrows = [];
+  if (force.direction === "up") {
+    // Upward arrows at the base
+    [0.30, 0.50, 0.70].forEach(x => {
+      arrows.push({ x1: x, y1: 1.02, x2: x, y2: 0.88 });
+    });
+  } else if (force.direction === "horizontal") {
+    // Horizontal arrows from both sides at mid-level
+    [0.35, 0.50, 0.65].forEach(y => {
+      arrows.push({ x1: -0.04, y1: y, x2: 0.10, y2: y });
+      arrows.push({ x1: 1.04, y1: y, x2: 0.90, y2: y });
+    });
+  } else if (force.direction === "pull") {
+    // Arrows from above-right pulling away
+    arrows.push({ x1: 0.60, y1: 0.10, x2: 0.90, y2: -0.02 });
+    arrows.push({ x1: 0.65, y1: 0.25, x2: 0.95, y2: 0.12 });
+    arrows.push({ x1: 0.60, y1: 0.40, x2: 0.92, y2: 0.28 });
+  }
+  return arrows;
+}
+
+// ── Panel Update ──
+function updatePanel(shape) {
+  document.getElementById("panelName").textContent = shape.name;
+  document.getElementById("panelName").style.borderLeftColor = shape.accentColor || "var(--accent-blue)";
+  document.getElementById("panelTagline").textContent = shape.tagline;
+
+  const getsEl = document.getElementById("panelGets");
+  getsEl.innerHTML = shape.gets.map(g => `<li>${g}</li>`).join("");
+
+  const risksEl = document.getElementById("panelRisks");
+  risksEl.innerHTML = shape.risks.map(r => `<li>${r}</li>`).join("");
+
+  document.getElementById("panelTraining").textContent = shape.trainingParadox;
+  document.getElementById("panelChristensen").textContent = shape.christensenRisk;
+  document.getElementById("panelQuote").textContent = `"${shape.quote}"`;
+}
+
+function updateForcePanel() {
+  const activeIds = Object.keys(activeForces).filter(k => activeForces[k]);
+  const panel = document.getElementById("panelForceDetail");
+
+  if (activeIds.length === 0) {
+    panel.style.display = "none";
+    return;
+  }
+
+  // Show the last toggled-on force
+  const forceId = activeIds[activeIds.length - 1];
+  const force = CONVERGENCE_FORCES.find(f => f.id === forceId);
+  if (!force) { panel.style.display = "none"; return; }
+
+  panel.style.display = "block";
+  document.getElementById("forceDetailName").textContent = force.name;
+  document.getElementById("forceDetailName").style.borderLeftColor = force.color;
+  document.getElementById("forceDetailTagline").textContent = force.tagline;
+  document.getElementById("forceDetailDesc").textContent = force.description;
+
+  const actorsEl = document.getElementById("forceDetailActors");
+  actorsEl.innerHTML = force.actors.map(a =>
+    `<span style="display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:500;background:rgba(255,255,255,0.06);color:var(--text-body);border:1px solid var(--border);">${a}</span>`
+  ).join("");
+
+  const exEl = document.getElementById("forceDetailExamples");
+  exEl.innerHTML = force.examples.map(ex =>
+    `<li style="font-size:11.5px;color:var(--text-secondary);line-height:1.5;padding:3px 0 3px 14px;position:relative;"><span style="position:absolute;left:0;color:var(--slate-600);font-size:10px;">\u2014</span>${ex}</li>`
+  ).join("");
+}
+
+// ════════════════════════════════════════════════════════════════
+// EVENT HANDLERS
+// ════════════════════════════════════════════════════════════════
+
+// Shape selector
+function selectShapeItem(el) {
+  const shapeId = el.dataset.shape;
+  if (shapeId === currentShapeId) return;
+
+  document.querySelectorAll(".shape-item").forEach(s => {
+    s.classList.remove("active");
+    s.setAttribute("aria-pressed", "false");
+  });
+  el.classList.add("active");
+  el.setAttribute("aria-pressed", "true");
+
+  currentShapeId = shapeId;
+  drawShape(true);
+}
+document.querySelectorAll(".shape-item").forEach(el => {
+  el.addEventListener("click", function() { selectShapeItem(this); });
+  // B5: keyboard operability — Enter/Space invoke the same handler as click
+  el.addEventListener("keydown", function(e) {
+    if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") {
+      e.preventDefault();
+      selectShapeItem(this);
+    }
+  });
+});
+
+// Force toggles
+["from-below", "laterally", "from-clients"].forEach(id => {
+  document.getElementById("toggle-" + id).addEventListener("change", function() {
+    activeForces[id] = this.checked;
+    drawConvergenceForces();
+  });
+});
+
+// Training pathway toggle
+document.getElementById("toggle-training").addEventListener("change", function() {
+  showTraining = this.checked;
+  const shape = getShape(currentShapeId);
+  drawTrainingPathway(shape, true);
+});
+
+// Theme toggle
+document.getElementById("toggle-theme").addEventListener("change", function() {
+  const next = this.checked ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", next);
+  localStorage.setItem("harvard-viz-theme", next);
+  const logo = document.querySelector(".sidebar-logo");
+  if (logo) logo.style.display = next === "light" ? "none" : "block";
+  // Redraw axes for CSS var updates
+  setTimeout(() => {
+    drawAxes();
+    drawConvergenceForces();
+  }, 50);
+});
+
+// Init theme toggle state
+(function() {
+  const t = document.documentElement.getAttribute("data-theme");
+  if (t === "light") {
+    document.getElementById("toggle-theme").checked = true;
+    const logo = document.querySelector(".sidebar-logo");
+    if (logo) logo.style.display = "none";
+  }
+})();
+
+// Sidebar toggle (mobile)
+document.getElementById("sidebar-toggle").addEventListener("click", function() {
+  const open = document.getElementById("sidebar-left").classList.toggle("open");
+  this.setAttribute("aria-expanded", open ? "true" : "false");
+});
+
+// Resize handler
+window.addEventListener("resize", () => {
+  drawAxes();
+  drawShape(false);
+  fitViewBox();
+});
+
+// ════════════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════════════
+
+initSVG();
+</script>
+
+</body>
+</html>

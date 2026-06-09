@@ -1,0 +1,243 @@
+/* ============================================================================
+   AI, Complex Decision-Making and the Future of the Legal Profession
+   ── legal-design-system.css ──────────────────────────────────────────────
+   Project token layer. A documented disciple of the Dragonfly Design System
+   (v3.4.0). Two sanctioned departures from canonical:
+     (4a) Harvard Crimson #A51C30 replaces Dragonfly blue as the lead accent.
+     (4b) A serif display face (Crimson Pro) joins IBM Plex Sans — display only.
+   Decision resolved in concepting: CRIMSON-MONO. Links are slate, not blue.
+   Light mode is the default; a dark mode is offered as secondary.
+   ========================================================================== */
+
+/* ── Self-hosted faces ────────────────────────────────────────────────────
+   Both faces are self-hosted woff2 (brief §8: self-hosted fonts, no CDN
+   dependency). IBM Plex Sans = body/UI; Crimson Pro = display serif (variable
+   axis, roman + italic, latin subset). No Google Fonts <link> required. */
+@font-face {
+  font-family: 'IBM Plex Sans';
+  src: url('assets/fonts/ibm-plex-sans.woff2') format('woff2');
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Crimson Pro';
+  src: url('assets/fonts/crimson-pro-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Crimson Pro';
+  src: url('assets/fonts/crimson-pro-latin-italic.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: italic;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  /* ─── Neutrals — identical to canonical --df-slate-* (≈90% of every surface) ─ */
+  --df-slate-950: #0f172a;
+  --df-slate-900: #111c30;
+  --df-slate-800: #1e293b;   /* DEFAULT readable text */
+  --df-slate-700: #334155;
+  --df-slate-600: #475569;
+  --df-slate-500: #64748b;
+  --df-slate-400: #94a3b8;
+  --df-slate-300: #cbd5e1;
+  --df-slate-200: #e2e8f0;
+  --df-slate-100: #f1f5f9;
+  --df-slate-50:  #f8f9fb;
+  --df-white:     #ffffff;
+
+  /* ─── Lead accent — Harvard Crimson (accent punctuation only, never a field) ─ */
+  --legal-crimson:        #A51C30;  /* AA/AAA on white ~7.4:1 both directions */
+  --legal-crimson-deep:   #8F1728;  /* hover / pressed / deep emphasis */
+  --legal-crimson-shadow: #6E1020;  /* deepest tone — mark shadow only */
+  --legal-crimson-08: rgba(165, 28, 48, 0.08);  /* callout / card wash */
+  --legal-crimson-14: rgba(165, 28, 48, 0.14);  /* active chip / stronger wash */
+  --legal-crimson-20: rgba(165, 28, 48, 0.20);  /* borders */
+
+  /* Tonal set for the dragonfly mark (deep→shadow, mid, Harvard crimson) */
+  --legal-mark-1: #6E1020;
+  --legal-mark-2: #8F1728;
+  --legal-mark-3: #A51C30;
+
+  /* ─── Functional data states ONLY (never decorative; never colour-alone) ─── */
+  --legal-data-green: #0a6b42;
+  --legal-data-amber: #b45309;
+  --legal-data-red:   #9f1239;
+
+  /* ─── Semantic surfaces — LIGHT (default) ─────────────────────────────── */
+  --bg-page:      #ffffff;
+  --bg-subtle:    var(--df-slate-50);
+  --bg-panel:     #ffffff;
+  --bg-hover:     var(--df-slate-100);
+  --border:       var(--df-slate-200);
+  --border-soft:  #eef1f5;
+  --text-display: var(--df-slate-950);   /* serif headings */
+  --text-heading: var(--df-slate-900);
+  --text-body:    var(--df-slate-800);
+  --text-muted:   var(--df-slate-600);
+  --text-faint:   var(--df-slate-500);
+  --text-on-crimson: #ffffff;
+  --link:         var(--df-slate-900);   /* crimson-mono: links are slate… */
+  --link-underline: var(--legal-crimson-20);  /* …with a crimson underline tell */
+  --focus-ring:   var(--legal-crimson);
+
+  /* ─── Typography ──────────────────────────────────────────────────────── */
+  --legal-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+  --legal-sans:  'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Display register (serif). Web guide sizes — deck scales these ~2.4×. */
+  --t-hero: 52px;   /* 40–56 */
+  --t-h1:   34px;
+  --t-h2:   23px;
+  --t-h3:   19px;
+  /* Text & UI register (sans) — bold uplift for readability on phones */
+  --t-body:  18px;  /* 17–18 / 1.75 */
+  --t-small: 15px;
+  --t-label: 12px;
+
+  --lh-body: 1.75;
+  --lh-display: 1.12;
+  --track-label: 0.16em;   /* ~2.5px at label size */
+
+  /* ─── Spacing, radius, shadow (inherited from canonical) ──────────────── */
+  --space-section: 96px;
+  --space-block:   52px;
+  --card-padding:  24px;
+  --content-max:   720px;
+  --measure:       68ch;
+
+  --radius-card:  10px;
+  --radius-md:    8px;
+  --radius-sm:    6px;
+  --radius-badge: 4px;
+
+  --shadow-light:   0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-card:    0 2px 8px rgba(15, 23, 42, 0.05);
+  --shadow-panel:   0 18px 48px rgba(15, 23, 42, 0.12);
+}
+
+/* ─── Dark mode (secondary) — crimson lifts to stay legible on dark slate ── */
+:root[data-theme="dark"],
+.theme-dark {
+  --legal-crimson:      #E55C73;   /* lifted for ≥4.5:1 on dark slate panels (WCAG AA) */
+  --legal-crimson-deep: #C8485E;
+  --legal-crimson-08: rgba(229, 92, 115, 0.10);
+  --legal-crimson-14: rgba(229, 92, 115, 0.18);
+  --legal-crimson-20: rgba(229, 92, 115, 0.26);
+
+  --bg-page:     #0f141d;
+  --bg-subtle:   #141b26;
+  --bg-panel:    #18202c;
+  --bg-hover:    #1f2937;
+  --border:      #273245;
+  --border-soft: #1d2734;
+  --text-display: #f1f5f9;
+  --text-heading: #e8edf4;
+  --text-body:    #cbd5e1;
+  --text-muted:   #94a3b8;
+  --text-faint:   #8593a6;   /* lifted for ≥4.5:1 on dark panels (WCAG AA) */
+  --link:         #e8edf4;
+  --link-underline: var(--legal-crimson-20);
+  --focus-ring:   #E55C73;
+
+  --shadow-card:  0 2px 10px rgba(0, 0, 0, 0.35);
+  --shadow-panel: 0 20px 56px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Element defaults ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg-page);
+  color: var(--text-body);
+  font-family: var(--legal-sans);
+  font-size: var(--t-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3, .display {
+  font-family: var(--legal-serif);
+  color: var(--text-display);
+  line-height: var(--lh-display);
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  margin: 0;
+  text-wrap: balance;
+}
+
+/* Uppercase eyebrow / section label — sans, wide tracking, small */
+.eyebrow {
+  font-family: var(--legal-sans);
+  font-size: var(--t-label);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--track-label);
+  color: var(--legal-crimson);
+}
+
+/* Crimson-mono link: slate ink, crimson underline as the interactive tell */
+a.legal-link {
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: text-decoration-color .15s ease, color .15s ease;
+}
+a.legal-link:hover {
+  color: var(--legal-crimson);
+  text-decoration-color: var(--legal-crimson);
+}
+
+/* Visible keyboard focus on every interactive element (WCAG 2.1 AA) */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Reduced-motion path */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Print / PDF path — prose pages, identity boards, mockup sheets. */
+@media print {
+  /* Force the LIGHT register even if the reader exported from dark mode. */
+  :root[data-theme="dark"], .theme-dark {
+    --legal-crimson: #A51C30; --legal-crimson-deep: #8F1728;
+    --legal-crimson-08: rgba(165,28,48,0.08);
+    --legal-crimson-14: rgba(165,28,48,0.14);
+    --legal-crimson-20: rgba(165,28,48,0.20);
+    --bg-page: #fff; --bg-subtle: #f8f9fb; --bg-panel: #fff; --bg-hover: #f1f5f9;
+    --border: #e2e8f0; --border-soft: #eef1f5;
+    --text-display: #0f172a; --text-heading: #111c30; --text-body: #1e293b;
+    --text-muted: #475569; --text-faint: #64748b; --link: #111c30;
+  }
+  .site-nav, .project-nav, .nav-burger, .icon-btn, .reader-sidebar, .read-aside,
+  .home-rail, .sidebar-toggle, .toc, .reading-aside,
+  .theme-toggle, .toggle { display: none !important; }
+  html, body { background: #fff !important; }
+  body.has-project-nav { padding-top: 0 !important; }
+  a { color: inherit !important; }
+  img, figure, .essay-card, .viz-teaser, pre, blockquote,
+  .card, .tile, .cs-card, .annot .a, .variant, .sw, .dir, .fd,
+  .scale-row, .size-cell, .browser, .phone, .reg, .lockup-card,
+  .screen, section.block { break-inside: avoid; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { margin: 14mm; }
+}

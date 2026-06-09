@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Full Deck — AI &amp; the Legal Profession</title>
+<meta name="description" content="The seven-essay series as a presentation deck — AI &amp; the Legal Profession.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="Full Deck — AI &amp; the Legal Profession">
+<meta property="og:description" content="The seven-essay series as a presentation deck — AI &amp; the Legal Profession.">
+<meta property="og:url" content="https://hlsclp.org/deck/series-deck.html">
+<meta property="og:image" content="https://hlsclp.org/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Full Deck — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="The seven-essay series as a presentation deck — AI &amp; the Legal Profession.">
+<meta name="twitter:image" content="https://hlsclp.org/assets/reference/og-card.png">
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<link rel="stylesheet" href="../legal-design-system.css">
+<style>
+  deck-stage:not(:defined) { visibility: hidden; }
+  html, body { margin: 0; background: #0a0e16; }
+
+  deck-stage {
+    /* projection type scale (~2.4× the web guide) */
+    --d-hero: 104px;
+    --d-h1: 78px;
+    --d-h2: 54px;
+    --d-h3: 40px;
+    --d-body: 34px;
+    --d-small: 26px;
+    --d-label: 23px;
+    --pad: 112px;
+  }
+
+  .slide { width: 1920px; height: 1080px; position: relative; background: var(--bg-page); overflow: hidden; }
+  .slide.dark { background: #0c1119; --text-display:#f4f7fb; --text-body:#cdd6e3; --text-muted:#8a99ad; --border:#26303f; }
+  .pad { position: absolute; inset: var(--pad); }
+
+  .d-eyebrow { font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--legal-crimson); }
+  .d-eyebrow.muted { color: var(--text-muted); }
+  h1.d, h2.d, h3.d { font-family: var(--legal-serif); color: var(--text-display); line-height: 1.05; letter-spacing: -0.02em; font-weight: 600; margin: 0; }
+  h1.d { font-size: var(--d-h1); }
+  h2.d { font-size: var(--d-h2); }
+  .d em { font-style: italic; color: var(--legal-crimson); }
+  .d-body { font-family: var(--legal-sans); font-size: var(--d-body); line-height: 1.5; color: var(--text-body); }
+
+  /* footer co-brand */
+  .d-foot { position: absolute; left: var(--pad); right: var(--pad); bottom: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .d-foot .cobrand { display: flex; align-items: center; gap: 16px; font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); }
+  .d-foot .cobrand b { color: var(--text-body); font-weight: 600; }
+  .d-foot .credit { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); }
+  .d-foot .credit b { color: var(--text-body); font-weight: 600; }
+  .d-rule { position: absolute; left: var(--pad); right: var(--pad); bottom: 124px; height: 1px; background: var(--border); }
+
+  /* ── COVER ───────────────────────────────────────────────── */
+  .cover .pad { display: flex; flex-direction: column; justify-content: center; }
+  .cover .markwrap { margin-bottom: 56px; }
+  .cover .crule { width: 96px; height: 4px; background: var(--legal-crimson); margin: 40px 0 44px; }
+  .cover h1 { font-size: var(--d-hero); max-width: 22ch; line-height: 1.0; }
+  .cover .sub { font-family: var(--legal-serif); font-size: 46px; color: var(--text-muted); margin-top: 28px; font-style: italic; font-weight: 400; }
+  .cover .leads { position: absolute; left: var(--pad); right: var(--pad); bottom: 80px; display: flex; gap: 64px; align-items: flex-end; justify-content: space-between; }
+  .cover .leads .role { display: block; font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 20px; }
+  .cover .leads .lead-group { display: flex; gap: 80px; }
+  .cover .leads .who { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); line-height: 1.5; max-width: 26ch; }
+  .cover .leads .who b { color: var(--text-display); font-weight: 600; display: block; font-size: 30px; margin-bottom: 4px; }
+  .cover .leads .org { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); text-align: right; line-height: 1.5; }
+
+  /* ── SECTION DIVIDER ─────────────────────────────────────── */
+  .divider .pad { display: flex; flex-direction: column; justify-content: center; }
+  .divider .num { font-family: var(--legal-serif); font-size: 280px; font-weight: 600; color: var(--legal-crimson); line-height: 0.8; letter-spacing: -0.04em; }
+  .divider h2 { font-size: 92px; margin-top: 24px; max-width: 20ch; }
+  .divider .desc { font-family: var(--legal-sans); font-size: var(--d-body); color: var(--text-muted); margin-top: 36px; max-width: 40ch; line-height: 1.5; }
+
+  /* ── INSIGHT LIST ────────────────────────────────────────── */
+  .insight .head { margin-bottom: 32px; }
+  .insight h2 { font-size: 64px; max-width: 26ch; margin-top: 16px; }
+  .ins-list { display: flex; flex-direction: column; gap: 0; }
+  .ins-item { display: grid; grid-template-columns: 120px 1fr; gap: 40px; padding: 24px 0; border-top: 1px solid var(--border); align-items: baseline; }
+  .ins-item:last-child { border-bottom: 1px solid var(--border); }
+  .ins-item .n { font-family: var(--legal-serif); font-size: 54px; font-weight: 600; color: var(--legal-crimson); line-height: 1; }
+  .ins-item .c h3 { font-family: var(--legal-serif); font-size: var(--d-h3); font-weight: 600; color: var(--text-display); margin: 0 0 8px; }
+  .ins-item .c p { font-family: var(--legal-sans); font-size: 29px; color: var(--text-muted); margin: 0; line-height: 1.38; max-width: 48ch; }
+
+  /* ── COMPARISON ──────────────────────────────────────────── */
+  .compare .head { margin-bottom: 56px; }
+  .compare h2 { font-size: 72px; margin-top: 20px; }
+  .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .cmp-col { border-top: 4px solid var(--legal-crimson); padding-top: 36px; }
+  .cmp-col.alt { border-top-color: var(--df-slate-400); }
+  .cmp-col .lbl { font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 22px; }
+  .cmp-col.alt .lbl { color: var(--text-muted); }
+  .cmp-col h3 { font-family: var(--legal-serif); font-size: 50px; font-weight: 600; color: var(--text-display); line-height: 1.1; margin: 0 0 30px; }
+  .cmp-col ul { margin: 0; padding: 0; list-style: none; }
+  .cmp-col li { font-family: var(--legal-sans); font-size: 30px; line-height: 1.45; color: var(--text-body); padding: 18px 0 18px 40px; position: relative; border-top: 1px solid var(--border); }
+  .cmp-col li::before { content: ""; position: absolute; left: 0; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--legal-crimson); }
+  .cmp-col.alt li::before { background: var(--df-slate-300); }
+
+  /* ── DIAMOND-COMPLETE 5-SHAPE GRID ───────────────────────── */
+  .diamond .head { margin-bottom: 20px; }
+  .diamond h2 { font-size: 64px; max-width: 26ch; margin-top: 18px; }
+  .diamond-stage { position: absolute; left: 50%; top: 600px; transform: translate(-50%, -50%); width: 1000px; height: 740px; }
+  .dshape { position: absolute; width: 300px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transform: translate(-50%, -50%); }
+  .dshape .tile { width: 230px; height: 230px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow-card); padding: 24px; }
+  .dshape .tile.center { background: var(--legal-crimson); border-color: var(--legal-crimson); }
+  .dshape .tile.center .dl { color: rgba(255,255,255,0.78); }
+  .dshape .tile.center .dt { color: #fff; }
+  .dshape .dl { font-family: var(--legal-sans); font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--legal-crimson); }
+  .dshape .dt { font-family: var(--legal-serif); font-size: 32px; font-weight: 600; color: var(--text-display); line-height: 1.1; }
+  .diamond svg.links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* ── EMBEDDED VIZ (legacy two-col) ───────────────────────── */
+  .vizslide .pad { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; }
+  .vizslide .net { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 28px; height: 720px; position: relative; overflow: hidden; }
+  .vizslide .copy h2 { font-size: 64px; margin: 18px 0 30px; max-width: 16ch; }
+  .vizslide .copy p { font-family: var(--legal-sans); font-size: var(--d-body); color: var(--text-muted); line-height: 1.5; max-width: 30ch; }
+  .vizslide .stats { display: flex; gap: 56px; margin-top: 48px; }
+  .vizslide .stats .n { font-family: var(--legal-serif); font-size: 84px; font-weight: 600; color: var(--text-display); line-height: 1; }
+  .vizslide .stats .l { font-family: var(--legal-sans); font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); margin-top: 12px; }
+
+  /* ── CLOSING ─────────────────────────────────────────────── */
+  .closing .pad { display: flex; flex-direction: column; justify-content: center; }
+  .closing .crule { width: 96px; height: 4px; background: var(--legal-crimson); margin: 44px 0; }
+  .closing h2 { font-size: 96px; max-width: 18ch; }
+  .closing .url { font-family: var(--legal-sans); font-size: 30px; color: var(--text-muted); margin-top: 40px; }
+  .closing .leads { position: absolute; left: var(--pad); right: var(--pad); bottom: 96px; display: flex; gap: 80px; }
+  .closing .leads .who { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); line-height: 1.5; }
+  .closing .leads .who b { color: var(--text-display); font-weight: 600; display: block; font-size: 30px; }
+
+  /* ══════════════════════════════════════════════════════════
+     NEW — series-deck additions
+     ══════════════════════════════════════════════════════════ */
+
+  /* shared diagram-slide frame */
+  .dia .head { margin-bottom: 8px; }
+  .dia h2 { font-size: 58px; max-width: 30ch; margin-top: 14px; }
+  .dia .dsub { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); margin-top: 14px; max-width: 70ch; line-height: 1.45; }
+  .dwrap { position: absolute; left: var(--pad); right: var(--pad); top: 360px; bottom: 130px; display: flex; align-items: center; justify-content: center; }
+  .dia .head { max-width: 64ch; }
+
+  /* AGENDA */
+  .agenda .head { margin-bottom: 40px; }
+  .agenda h2 { font-size: 64px; }
+  .agenda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 72px; }
+  .ag-item { display: grid; grid-template-columns: 88px 1fr; gap: 28px; padding: 22px 0; border-top: 1px solid var(--border); align-items: baseline; }
+  .ag-item .n { font-family: var(--legal-serif); font-size: 44px; font-weight: 600; color: var(--legal-crimson); line-height: 1; }
+  .ag-item .t { font-family: var(--legal-serif); font-size: 34px; font-weight: 600; color: var(--text-display); line-height: 1.12; }
+  .ag-item .t span { display: block; font-family: var(--legal-sans); font-size: 22px; font-weight: 500; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.02em; }
+
+  /* HARVEY STATS HERO */
+  .stats-hero .head { margin-bottom: 8px; }
+  .stats-hero h2 { font-size: 60px; max-width: 26ch; margin-top: 14px; }
+  .sh-grid { position: absolute; left: var(--pad); right: var(--pad); top: 360px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; }
+  .sh-cell { border-top: 4px solid var(--legal-crimson); padding-top: 30px; }
+  .sh-cell.alt { border-top-color: var(--df-slate-300); }
+  .sh-cell .n { font-family: var(--legal-serif); font-size: 96px; font-weight: 600; color: var(--text-display); line-height: 0.95; }
+  .sh-cell .l { font-family: var(--legal-sans); font-size: 25px; color: var(--text-muted); margin-top: 18px; line-height: 1.4; }
+  .sh-note { position: absolute; left: var(--pad); right: var(--pad); bottom: 150px; font-family: var(--legal-serif); font-style: italic; font-size: 38px; color: var(--text-body); max-width: 40ch; }
+  .sh-note b { color: var(--legal-crimson); font-style: normal; font-weight: 600; }
+
+  /* GATEWAY hub-spoke + RINGS share svg sizing */
+  .gateway-stage { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .gateway-stage svg { width: auto; height: 100%; max-width: 100%; max-height: 100%; }
+  .gw-aside { position: absolute; left: var(--pad); top: 520px; max-width: 34ch; }
+  .gw-aside .lbl { font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 30px; }
+  .gw-key { display: grid; grid-template-columns: 40px 1fr; gap: 22px; align-items: start; margin-bottom: 28px; }
+  .gw-key .kdot { width: 30px; height: 30px; border-radius: 50%; margin-top: 6px; }
+  .gw-key .kdot.solid { background: var(--bg-panel); border: 2px solid var(--df-slate-300); }
+  .gw-key .kdot.dashed { background: var(--legal-crimson-08); border: 2px dashed var(--legal-crimson); }
+  .gw-key .kt { font-family: var(--legal-sans); font-size: 26px; line-height: 1.4; color: var(--text-muted); }
+  .gw-key .kt b { display: block; font-size: 29px; color: var(--text-display); font-weight: 600; margin-bottom: 5px; }
+
+  .rings-wrap { display: flex; gap: 90px; align-items: center; justify-content: center; width: 100%; height: 100%; }
+  .rings-wrap svg { width: 540px; height: 540px; max-height: 100%; flex: none; }
+  .rings-legend { display: flex; flex-direction: column; gap: 0; max-width: 640px; }
+  .rl-item { display: grid; grid-template-columns: 34px 1fr; gap: 26px; padding: 20px 0; border-top: 1px solid var(--border); align-items: baseline; }
+  .rl-item .dot { width: 22px; height: 22px; border-radius: 6px; margin-top: 8px; }
+  .rl-item h3 { font-family: var(--legal-serif); font-size: 32px; font-weight: 600; color: var(--text-display); margin: 0 0 4px; }
+  .rl-item p { font-family: var(--legal-sans); font-size: 23px; color: var(--text-muted); margin: 0; line-height: 1.4; }
+
+  /* FLOW3 — director / coach / editor */
+  .flow3 { display: flex; align-items: stretch; justify-content: center; gap: 0; width: 100%; }
+  .fcard { flex: 1; max-width: 460px; border-top: 4px solid var(--legal-crimson); padding: 34px 8px 0 0; }
+  .fcard .role { font-family: var(--legal-sans); font-size: 21px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 18px; }
+  .fcard h3 { font-family: var(--legal-serif); font-size: 46px; font-weight: 600; color: var(--text-display); margin: 0 0 18px; }
+  .fcard p { font-family: var(--legal-sans); font-size: 27px; color: var(--text-muted); margin: 0; line-height: 1.4; max-width: 22ch; }
+  .farrow { flex: 0 0 90px; display: flex; align-items: center; justify-content: center; color: var(--df-slate-300); font-size: 60px; font-weight: 300; }
+
+  /* MATRIX — scrambled map */
+  .matrix-stage { position: relative; width: 1480px; height: 560px; margin: 0 auto; }
+  .mx-axis-x { position: absolute; left: 90px; right: 0; bottom: 6px; display: flex; justify-content: space-between; font-family: var(--legal-sans); font-size: 22px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); }
+  .mx-axis-y { position: absolute; left: -10px; top: 0; bottom: 52px; width: 60px; display: flex; flex-direction: column; justify-content: space-between; align-items: center; }
+  .mx-axis-y span { writing-mode: vertical-rl; transform: rotate(180deg); font-family: var(--legal-sans); font-size: 22px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-faint); }
+  .mx-grid { position: absolute; left: 90px; right: 0; top: 0; bottom: 52px; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--border); border: 2px solid var(--border); border-radius: 16px; overflow: hidden; }
+  .quad { background: var(--bg-panel); padding: 30px 34px; display: flex; flex-direction: column; gap: 16px; }
+  .qchip { border-left: 6px solid var(--df-slate-400); padding: 8px 0 8px 18px; }
+  .qchip.crimson { border-left-color: var(--legal-crimson); }
+  .qchip h4 { font-family: var(--legal-serif); font-size: 30px; font-weight: 600; color: var(--text-display); margin: 0 0 4px; }
+  .qchip p { font-family: var(--legal-sans); font-size: 21px; color: var(--text-muted); margin: 0; line-height: 1.35; }
+
+  /* MULT — four ingredients */
+  .mult { display: flex; align-items: stretch; justify-content: center; gap: 0; width: 100%; }
+  .ing { flex: 0 0 300px; border-top: 4px solid var(--df-slate-300); padding: 30px 6px 0 0; }
+  .ing.bind { border-top-color: var(--legal-crimson); }
+  .ing .lbl { font-family: var(--legal-sans); font-size: 19px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-faint); margin-bottom: 16px; }
+  .ing.bind .lbl { color: var(--legal-crimson); }
+  .ing h3 { font-family: var(--legal-serif); font-size: 38px; font-weight: 600; color: var(--text-display); margin: 0 0 22px; line-height: 1.08; }
+  .ing .bar { height: 16px; border-radius: 8px; background: var(--df-slate-200); overflow: hidden; }
+  .ing .bar i { display: block; height: 100%; background: var(--df-slate-500); }
+  .ing.bind .bar i { background: var(--legal-crimson); }
+  .ing .cap { font-family: var(--legal-sans); font-size: 21px; color: var(--text-muted); margin-top: 14px; }
+  .ing.bind .cap { color: var(--legal-crimson); font-weight: 600; }
+  .mop { flex: 0 0 70px; display: flex; align-items: center; justify-content: center; font-family: var(--legal-serif); font-size: 56px; color: var(--df-slate-400); }
+  .mult-note { position: absolute; left: var(--pad); right: var(--pad); bottom: 150px; font-family: var(--legal-sans); font-size: 28px; color: var(--text-body); max-width: 64ch; line-height: 1.45; }
+  .mult-note b { color: var(--legal-crimson); font-weight: 600; }
+
+  /* TEAM SHAPES — shape of firms (à la FoW slide 7) */
+  .team-shapes-row { display: flex; align-items: flex-start; justify-content: center; gap: 36px; width: 100%; }
+  .team-shape { flex: 1; max-width: 280px; text-align: center; }
+  .ts-svg { height: 240px; display: flex; align-items: center; justify-content: center; }
+  .ts-svg svg { width: 200px; height: 200px; }
+  .ts-name { font-family: var(--legal-serif); font-size: 34px; font-weight: 600; color: var(--text-display); margin-top: 14px; }
+  .ts-tagline { font-family: var(--legal-sans); font-size: 21px; color: var(--text-muted); margin-top: 10px; line-height: 1.35; min-height: 58px; }
+  .ts-verdict { font-family: var(--legal-sans); font-size: 21px; font-weight: 700; margin-top: 12px; letter-spacing: 0.04em; }
+  .team-shape.ts-target .ts-verdict { color: var(--legal-crimson); }
+  .team-shape.ts-warning .ts-verdict { color: var(--legal-data-red); }
+  .ts-footer-note { position: absolute; left: var(--pad); right: var(--pad); bottom: 178px; text-align: center; font-family: var(--legal-sans); font-size: 25px; color: var(--text-body); }
+  .ts-footer-note em { font-style: italic; color: var(--legal-crimson); }
+  .ts-citation { position: absolute; left: var(--pad); right: var(--pad); bottom: 142px; text-align: center; font-family: var(--legal-sans); font-size: 19px; color: var(--text-faint); }
+
+  /* ── VIZFRAME — embedded live interactive ───────────────── */
+  .vizframe .pad { inset: 70px var(--pad) 130px; display: flex; flex-direction: column; }
+  .vizframe .vf-head { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 26px; gap: 40px; }
+  .vizframe .vf-head .tt h2 { font-size: 48px; margin-top: 12px; }
+  .vizframe .vf-head .tt p { font-family: var(--legal-sans); font-size: 24px; color: var(--text-muted); margin: 12px 0 0; }
+  .vf-actions { display: flex; gap: 16px; flex: none; }
+  .vf-btn { font-family: var(--legal-sans); font-size: 23px; font-weight: 600; letter-spacing: 0.02em; color: var(--legal-crimson); background: var(--legal-crimson-08); border: 1px solid var(--legal-crimson-20); border-radius: 12px; padding: 14px 26px; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
+  .vf-btn:hover { background: var(--legal-crimson-14); }
+  .vf-btn.solid { background: var(--legal-crimson); color: #fff; border-color: var(--legal-crimson); }
+  .vf-holder { flex: 1; position: relative; border: 1px solid var(--border); border-radius: 22px; overflow: hidden; background: var(--bg-subtle); box-shadow: var(--shadow-card); }
+  .vf-holder iframe.vf { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--bg-page); }
+
+  /* deck-variant chip — names the version (cover, top-right) */
+  .deck-variant { position: absolute; top: var(--pad); right: var(--pad); font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--legal-crimson); z-index: 6; }
+
+  /* persistent site link — bottom-right of every slide */
+  .site-url { position: absolute; right: var(--pad); bottom: 56px; z-index: 6; font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); text-decoration: none; letter-spacing: 0.01em; }
+  .site-url:hover { color: var(--legal-crimson); }
+  .d-foot .credit a, .cover .org a { color: inherit; text-decoration: none; }
+  .d-foot .credit a:hover, .cover .org a:hover { color: var(--legal-crimson); }
+
+  @media print {
+    .vf-btn { display: none; }
+  }
+</style>
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- 1 · COVER -->
+  <section data-label="Cover">
+    <div class="slide cover dark">
+      <div class="deck-variant">Full deck</div>
+      <div class="pad">
+        <div class="markwrap"><span class="mk" data-mk="cover"></span></div>
+        <div class="d-eyebrow">A research program · Harvard Law School</div>
+        <div class="crule"></div>
+        <h1 class="d">AI &amp; the <em>Legal</em> Profession</h1>
+        <div class="sub">Complex decision-making and the future of the profession</div>
+      </div>
+      <div class="leads">
+        <div class="lead-block">
+          <span class="role">Project leads</span>
+          <div class="lead-group">
+            <div class="who"><b>Anthea Roberts</b>Professor, ANU · Visiting Professor, Harvard Law School</div>
+            <div class="who"><b>David B. Wilkins</b>Faculty Director, Center on the Legal Profession</div>
+          </div>
+        </div>
+        <div class="org">Center on the Legal Profession,<br>Harvard Law School<br>with Dragonfly Thinking<br><a href="https://hlsclp.org/" target="_blank" rel="noopener" style="color:var(--legal-crimson)">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · AGENDA / SERIES MAP -->
+  <section data-label="Series map">
+    <div class="slide agenda">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">The arc</div>
+          <h2 class="d">Six essays, one <em>question</em>.</h2>
+        </div>
+        <div class="agenda-grid">
+          <div class="ag-item"><div class="n">01</div><div class="t">Law is the gateway drug<span>Why AI enters professional services through law</span></div></div>
+          <div class="ag-item"><div class="n">02</div><div class="t">Harvey's strategic evolution<span>A platform / infrastructure play, not a wrapper</span></div></div>
+          <div class="ag-item"><div class="n">03</div><div class="t">Getting your hands dirty<span>You only learn AI by using it</span></div></div>
+          <div class="ag-item"><div class="n">04</div><div class="t">The scrambled map<span>Competition that no longer fits old categories</span></div></div>
+          <div class="ag-item"><div class="n">05</div><div class="t">The training crisis<span>The scarcest ingredient is being destroyed</span></div></div>
+          <div class="ag-item"><div class="n">06</div><div class="t">From up-or-out to up-and-out<span>What shape the profession takes next</span></div></div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · INTRO A — COMPOUND VISION -->
+  <section data-label="Compound vision">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Series introduction</div>
+          <h2 class="d">Two lenses on the same <em>problem</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">Anthea reads</div>
+            <h3>AI as technology strategy</h3>
+            <ul>
+              <li>Platform and infrastructure plays, not just tools.</li>
+              <li>Where value concentrates as a layer is built.</li>
+              <li>What the market is really pricing.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">David reads</div>
+            <h3>AI as professional evolution</h3>
+            <ul>
+              <li>A century of change in how legal services are delivered.</li>
+              <li>How the profession has absorbed prior disruptions.</li>
+              <li>Where structure and judgment actually sit.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · INTRO B — DIAMOND-COMPLETE -->
+  <section data-label="Diamond-complete">
+    <div class="slide diamond">
+      <div class="pad" style="inset: 80px var(--pad);">
+        <div class="head">
+          <div class="d-eyebrow">Dragonfly thinking · the crossover visual</div>
+          <h2 class="d">Five lenses integrate into one <em>compound</em> view.</h2>
+        </div>
+      </div>
+      <div class="diamond-stage" id="diamondStage">
+        <svg class="links" viewBox="0 0 1000 740" id="diamondLinks"></svg>
+        <div class="dshape" style="left:500px; top:140px;"><div class="tile"><span class="dl">Structure</span><span class="dt">Professional system</span></div></div>
+        <div class="dshape" style="left:180px; top:370px;"><div class="tile"><span class="dl">Technology</span><span class="dt">AI strategy</span></div></div>
+        <div class="dshape" style="left:820px; top:370px;"><div class="tile"><span class="dl">Market</span><span class="dt">Capital &amp; firms</span></div></div>
+        <div class="dshape" style="left:500px; top:600px;"><div class="tile"><span class="dl">Disruption</span><span class="dt">Innovation theory</span></div></div>
+        <div class="dshape" style="left:500px; top:370px;"><div class="tile center"><span class="dl">Integration</span><span class="dt">Compound judgment</span></div></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · INTRO C — TOPIC NETWORK (live iframe) -->
+  <section data-label="Living corpus · topic network">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · the corpus</div>
+            <h2 class="d">A living map of the <em>corpus</em>.</h2>
+            <p>170 sources · 39 topics · 11 dimensions — click and drag to explore which issues dominate and which sources bridge domains.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/topic-network.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/topic-network.html" title="Topic network — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 01 -->
+  <section data-label="Part 01 · Gateway">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Structure</div>
+        <div class="num">01</div>
+        <h2 class="d">Law is the gateway <em>drug</em></h2>
+        <p class="desc">Why AI enters professional services through law — and what its century-built centrality unlocks.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · ESSAY 1A — INSIGHT -->
+  <section data-label="01 · Gateway — insight">
+    <div class="slide insight">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 01 · The gateway</div>
+          <h2 class="d">A 10:1 valuation gap is a signal, not <em>noise</em>.</h2>
+        </div>
+        <div class="ins-list">
+          <div class="ins-item">
+            <div class="n">01</div>
+            <div class="c"><h3>Not just text-fit</h3><p>Accounting and consulting are knowledge work too — that alone can't explain a tenfold valuation gap.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">02</div>
+            <div class="c"><h3>A century-built position</h3><p>Lawyers have worked for a hundred years to make law a central node in how business and society operate.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">03</div>
+            <div class="c"><h3>The gating input</h3><p>The General Counsel sits at the closing table — the input without which nothing moves forward.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · ESSAY 1B — CAPTURE BOTH WAYS -->
+  <section data-label="01 · Capture both ways">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 01 · The open question</div>
+          <h2 class="d">Capture — <em>both ways</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">Law captures the gateway</div>
+            <h3>The profession absorbs AI</h3>
+            <ul>
+              <li>Incumbent firms adopt AI as the latest in a century of tools.</li>
+              <li>Structural centrality holds — or expands further.</li>
+              <li>Value accrues to those who own the legal node.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">The gateway captures law</div>
+            <h3>Platforms inherit the position</h3>
+            <ul>
+              <li>AI platforms built on law inherit the gateway vantage.</li>
+              <li>The profession supplies raw material to a layer above it.</li>
+              <li>Control over the central node migrates outward.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 · ESSAY 1D — GATEWAY SYSTEMS (live iframe) -->
+  <section data-label="01 · Gateway systems (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · systems map</div>
+            <h2 class="d">The gateway as a <em>system</em>.</h2>
+            <p>Structural centrality and the legalization of everything, mapped as a live systems diagram.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/law-gateway-systems.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/law-gateway-systems.html" title="Law gateway systems — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 · ESSAY 1C — GATEWAY CENTRALITY (stylized) -->
+  <section data-label="01 · Gateway centrality">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 01 · Structural centrality</div>
+          <h2 class="d">Law sits at the centre — and the field keeps <em>widening</em>.</h2>
+          <div class="dsub">The legalization of everything routes more of business and society through legal frameworks — making law the highest-value entry point for AI.</div>
+        </div>
+      </div>
+      <div class="dwrap" style="top:240px; bottom:90px; left:44%; right:var(--pad);">
+        <div class="gateway-stage">
+          <svg viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet" id="gatewaySvg" role="img" aria-label="Law at the centre; an inner ring of long-embedded domains and an outer dashed ring of newly legalised domains">
+            <!-- faint orbit guides -->
+            <circle cx="500" cy="500" r="415" fill="none" stroke="rgba(165,28,48,0.16)" stroke-width="1.5" stroke-dasharray="3 9"/>
+            <circle cx="500" cy="500" r="235" fill="none" stroke="#eef1f5" stroke-width="1.5"/>
+            <!-- links + nodes drawn by JS (outer behind inner) -->
+            <g id="gwOuterLinks"></g>
+            <g id="gwInnerLinks"></g>
+            <g id="gwOuterNodes"></g>
+            <g id="gwInnerNodes"></g>
+            <!-- centre -->
+            <circle cx="500" cy="500" r="108" fill="#A51C30"/>
+            <text x="500" y="494" text-anchor="middle" font-family="var(--legal-serif)" font-size="42" font-weight="600" fill="#fff">LAW</text>
+            <text x="500" y="528" text-anchor="middle" font-family="var(--legal-sans)" font-size="16" letter-spacing="2" fill="rgba(255,255,255,0.8)" style="text-transform:uppercase">the central node</text>
+          </svg>
+        </div>
+      </div>
+      <aside class="gw-aside">
+        <div class="lbl">How to read it</div>
+        <div class="gw-key"><span class="kdot solid"></span><div class="kt"><b>Embedded for decades</b>Finance, corporate, tax, disputes — law already at the core.</div></div>
+        <div class="gw-key"><span class="kdot dashed"></span><div class="kt"><b>The legalization of everything</b>AI, ESG, sanctions, data — new domains routing through law.</div></div>
+      </aside>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 02 -->
+  <section data-label="Part 02 · Harvey">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Strategy</div>
+        <div class="num">02</div>
+        <h2 class="d">Harvey's strategic <em>evolution</em></h2>
+        <p class="desc">Not a wrapper but an infrastructure play — five concentric rings from assistant to ecosystem.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 · ESSAY 2A — HARVEY STATS -->
+  <section data-label="02 · Harvey — infrastructure">
+    <div class="slide stats-hero">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 02 · Strategy</div>
+          <h2 class="d">Harvey isn't a wrapper — it's <em>infrastructure</em>.</h2>
+        </div>
+      </div>
+      <div class="sh-grid">
+        <div class="sh-cell"><div class="n">$11B</div><div class="l">valuation — a platform bet, not a tool price</div></div>
+        <div class="sh-cell"><div class="n">10:1</div><div class="l">gap over the largest accounting-AI company</div></div>
+        <div class="sh-cell alt"><div class="n">18k+</div><div class="l">custom workflows built on the platform</div></div>
+        <div class="sh-cell alt"><div class="n">25k+</div><div class="l">custom agents — an emerging ecosystem</div></div>
+      </div>
+      <div class="sh-note">The real play is becoming the <b>infrastructure</b> through which professional services are delivered — with law firms as the distribution node.</div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 · ESSAY 2C — FIVE RINGS (live iframe) -->
+  <section data-label="02 · Harvey evolution (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · five rings</div>
+            <h2 class="d">Harvey's strategic <em>evolution</em>.</h2>
+            <p>Step through the concentric expansion from assistant to ecosystem governor.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/harveys-strategic-evolution.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/harveys-strategic-evolution.html" title="Harvey's strategic evolution — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 · ESSAY 2B — FIVE RINGS (stylized) -->
+  <section data-label="02 · Five rings">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 02 · Concentric expansion</div>
+          <h2 class="d">Five rings — from assistant to <em>ecosystem</em>.</h2>
+        </div>
+      </div>
+      <div class="dwrap">
+        <div class="rings-wrap">
+          <svg viewBox="0 0 800 800" role="img" aria-label="Five concentric rings of Harvey's strategic evolution">
+            <circle cx="400" cy="400" r="380" fill="none" stroke="#cbd5e1" stroke-width="2"/>
+            <circle cx="400" cy="400" r="305" fill="rgba(148,163,184,0.06)" stroke="#94a3b8" stroke-width="2"/>
+            <circle cx="400" cy="400" r="230" fill="rgba(100,116,139,0.06)" stroke="var(--df-slate-500)" stroke-width="2"/>
+            <circle cx="400" cy="400" r="150" fill="rgba(165,28,48,0.10)" stroke="#A51C30" stroke-width="2.5"/>
+            <circle cx="400" cy="400" r="78" fill="#A51C30"/>
+            <text x="400" y="392" text-anchor="middle" font-family="var(--legal-sans)" font-size="20" font-weight="700" letter-spacing="1.5" fill="#fff">CORE</text>
+            <text x="400" y="418" text-anchor="middle" font-family="var(--legal-sans)" font-size="16" fill="rgba(255,255,255,0.82)">assistant</text>
+          </svg>
+          <div class="rings-legend">
+            <div class="rl-item"><span class="dot" style="background:var(--legal-crimson)"></span><div><h3>1 · Broad assistant</h3><p>An early general legal assistant on frontier models.</p></div></div>
+            <div class="rl-item"><span class="dot" style="background:var(--legal-crimson)"></span><div><h3>2 · Enterprise trust layer</h3><p>Security and governance as the competitive lever.</p></div></div>
+            <div class="rl-item"><span class="dot" style="background:var(--df-slate-500)"></span><div><h3>3 · Platform</h3><p>Matter-centric workspaces; thousands of custom workflows.</p></div></div>
+            <div class="rl-item"><span class="dot" style="background:var(--df-slate-400)"></span><div><h3>4 · Infrastructure</h3><p>Shared spaces — firms, clients and advisors in one workspace.</p></div></div>
+            <div class="rl-item"><span class="dot" style="background:var(--df-slate-300)"></span><div><h3>5 · Ecosystem governor</h3><p>Marketplace, benchmarks and the rules others build on.</p></div></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 03 -->
+  <section data-label="Part 03 · Practice">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Practice</div>
+        <div class="num">03</div>
+        <h2 class="d">Getting your hands <em>dirty</em></h2>
+        <p class="desc">You only learn AI by using it — and leaders can't delegate the aha.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 · ESSAY 3A — METIS -->
+  <section data-label="03 · Talking vs using">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 03 · Practice</div>
+          <h2 class="d">You only learn it by <em>doing</em> it.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">AI skills</div>
+            <h3>Learnable in weeks</h3>
+            <ul>
+              <li>Prompting, context engineering, iteration, workflow design.</li>
+              <li>Built through deliberate practice — <em>metis</em>, the practical wisdom that comes from doing, not textbooks.</li>
+              <li>Senior lawyers can acquire it — but must do the reps.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">Domain expertise</div>
+            <h3>Built over years</h3>
+            <ul>
+              <li>Taste and judgment from lived professional work.</li>
+              <li>The capability gap: tools ≠ knowing how to use them.</li>
+              <li>The "aha" doesn't spread by osmosis — leaders can't delegate it.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 · ESSAY 3C — DIRECTOR / COACH / EDITOR (live iframe) -->
+  <section data-label="03 · Collaboration modes (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · modes</div>
+            <h2 class="d">Director · Coach · <em>Editor</em>.</h2>
+            <p>Explore how human judgment stays in the loop across each mode of working with AI.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/director-coach-editor.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/director-coach-editor.html" title="Director, coach, editor — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 · ESSAY 3B — DIRECTOR / COACH / EDITOR (stylized) -->
+  <section data-label="03 · Director / Coach / Editor">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 03 · Three modes of collaboration</div>
+          <h2 class="d">You already manage people this way — now transfer it to <em>AI</em>.</h2>
+        </div>
+      </div>
+      <div class="dwrap">
+        <div class="flow3">
+          <div class="fcard">
+            <div class="role">Director</div>
+            <h3>Define</h3>
+            <p>Frame the problem and set the approach before work begins.</p>
+          </div>
+          <div class="farrow">→</div>
+          <div class="fcard">
+            <div class="role">Coach</div>
+            <h3>Correct</h3>
+            <p>Course-correct during execution as the work takes shape.</p>
+          </div>
+          <div class="farrow">→</div>
+          <div class="fcard">
+            <div class="role">Editor</div>
+            <h3>Verify</h3>
+            <p>Check the output against judgment before it goes out the door.</p>
+          </div>
+        </div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 04 -->
+  <section data-label="Part 04 · Competition">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Competition</div>
+        <div class="num">04</div>
+        <h2 class="d">The scrambled <em>map</em></h2>
+        <p class="desc">Record profits and aggressive insourcing at once — old categories no longer hold.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 · ESSAY 4A — THE PARADOX -->
+  <section data-label="04 · The paradox">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 04 · Competition</div>
+          <h2 class="d">Both are true at <em>once</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">Supply side</div>
+            <h3>Record law-firm profits</h3>
+            <ul>
+              <li>Am Law 100 profits up ~54% since 2019.</li>
+              <li>Demand for elite work still climbing.</li>
+              <li>The incumbent position looks stronger than ever.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">Demand side</div>
+            <h3>Aggressive insourcing</h3>
+            <ul>
+              <li>65% of legal departments actively insourcing.</li>
+              <li>Fewer expect to increase outside spend (37%, down from 58%).</li>
+              <li>General counsel building their own orchestration layer.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 · ESSAY 4C — SCRAMBLED MAP (live iframe) -->
+  <section data-label="04 · Scrambled map (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · competitive map</div>
+            <h2 class="d">The scrambled competitive <em>map</em>.</h2>
+            <p>Trace how player types blur and boundaries move across the live landscape.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/scrambled-map.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/scrambled-map.html" title="Scrambled competitive map — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 · ESSAY 4B — SCRAMBLED MAP (stylized) -->
+  <section data-label="04 · Scrambled map">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 04 · The players</div>
+          <h2 class="d">Old categories no longer <em>hold</em>.</h2>
+          <div class="dsub">The same player now sits on several sides at once — the boundaries are dissolving.</div>
+        </div>
+      </div>
+      <div class="dwrap">
+        <div class="matrix-stage">
+          <div class="mx-axis-y"><span>Established</span><span>New entrant</span></div>
+          <div class="mx-grid">
+            <div class="quad">
+              <div class="qchip"><h4>Platform owners</h4><p>Anthropic, OpenAI — the model layer everything else runs on.</p></div>
+            </div>
+            <div class="quad">
+              <div class="qchip"><h4>Adaptive incumbents</h4><p>Kirkland, Freshfields — building &amp; buying AI aggressively.</p></div>
+              <div class="qchip"><h4>The Big Four</h4><p>Rebuilding integrated-solution legal ambitions.</p></div>
+            </div>
+            <div class="quad">
+              <div class="qchip crimson"><h4>Tool vendors</h4><p>Harvey, Legora — software into existing firms.</p></div>
+            </div>
+            <div class="quad">
+              <div class="qchip crimson"><h4>AI-native firms</h4><p>Crosby, Covenant — built on AI economics.</p></div>
+              <div class="qchip"><h4>Capital / PE</h4><p>Blackstone, Carta — capital becomes a provider.</p></div>
+            </div>
+          </div>
+          <div class="mx-axis-x"><span>Sells tools / tech</span><span>Sells legal outcomes</span></div>
+        </div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 05 -->
+  <section data-label="Part 05 · Training">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Training</div>
+        <div class="num">05</div>
+        <h2 class="d">The training <em>crisis</em></h2>
+        <p class="desc">Good outcomes multiply, not add — and the scarcest ingredient is being destroyed.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 · ESSAY 5A — TRAINING CRISIS -->
+  <section data-label="05 · Four ingredients">
+    <div class="slide insight">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 05 · Training</div>
+          <h2 class="d">Good AI outcomes <em>multiply</em>, they don't add.</h2>
+        </div>
+        <div class="ins-list">
+          <div class="ins-item">
+            <div class="n">01</div>
+            <div class="c"><h3>Four ingredients, one product</h3><p>Model capability × context × AI skills × domain expertise — multiplicative, not additive.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">02</div>
+            <div class="c"><h3>The scarcest is being destroyed</h3><p>AI automates the junior work — document review, research, due diligence — through which domain expertise was built.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">03</div>
+            <div class="c"><h3>A coordination failure</h3><p>Each firm's choice to automate is rational; collectively the training pipeline disappears.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 · ESSAY 5C — FOUR INGREDIENTS (live iframe) -->
+  <section data-label="05 · Four ingredients (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · the multiplier</div>
+            <h2 class="d">The four <em>ingredients</em>.</h2>
+            <p>Adjust each ingredient and watch the multiplicative effect — and the binding constraint.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/four-ingredients.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/four-ingredients.html" title="Four ingredients — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 · ESSAY 5B — FOUR INGREDIENTS (stylized) -->
+  <section data-label="05 · The multiplier">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 05 · The binding constraint</div>
+          <h2 class="d">Any factor near zero collapses the <em>product</em>.</h2>
+        </div>
+      </div>
+      <div class="dwrap">
+        <div class="mult">
+          <div class="ing">
+            <div class="lbl">Ingredient 1</div>
+            <h3>Model capability</h3>
+            <div class="bar"><i style="width:88%"></i></div>
+            <div class="cap">Frontier and rising</div>
+          </div>
+          <div class="mop">×</div>
+          <div class="ing">
+            <div class="lbl">Ingredient 2</div>
+            <h3>Context</h3>
+            <div class="bar"><i style="width:72%"></i></div>
+            <div class="cap">Specific, structured</div>
+          </div>
+          <div class="mop">×</div>
+          <div class="ing">
+            <div class="lbl">Ingredient 3 · fast metis</div>
+            <h3>AI skills</h3>
+            <div class="bar"><i style="width:64%"></i></div>
+            <div class="cap">Learnable in weeks</div>
+          </div>
+          <div class="mop">×</div>
+          <div class="ing bind">
+            <div class="lbl">Ingredient 4 · slow metis</div>
+            <h3>Domain expertise</h3>
+            <div class="bar"><i style="width:26%"></i></div>
+            <div class="cap">Binding constraint — and shrinking</div>
+          </div>
+        </div>
+      </div>
+      <div class="mult-note">As AI improves, errors get <b>subtler</b> — and the judgment needed to catch them is exactly what the collective automation decisions are destroying.</div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIVIDER · Essay 06 -->
+  <section data-label="Part 06 · The profession">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">The profession</div>
+        <div class="num">06</div>
+        <h2 class="d">From up-or-out to <em>up-and-out</em></h2>
+        <p class="desc">When AI automates the base, what shape does the firm take next?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 · ESSAY 6A — UP AND OUT -->
+  <section data-label="06 · Up and out">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 06 · The profession</div>
+          <h2 class="d">From up-or-out to <em>up-and-out</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">Up</div>
+            <h3>Higher-order judgment</h3>
+            <ul>
+              <li>Toward orchestration — director, coach, editor.</li>
+              <li>Pyramid economics break when AI automates the base.</li>
+              <li>The apex is forced upward.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">Out</div>
+            <h3>Adjacent domains</h3>
+            <ul>
+              <li>Into tax, strategy, governance, AI regulation, geopolitics.</li>
+              <li>Demand grows at the intersections.</li>
+              <li>But Christensen warns: move upmarket, get disrupted anyway.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 · ESSAY 6C — PYRAMID TRANSFORMATION (live iframe) -->
+  <section data-label="06 · Pyramid transformation (live)">
+    <div class="slide vizframe">
+      <div class="pad">
+        <div class="vf-head">
+          <div class="tt">
+            <div class="d-eyebrow">Interactive · the pyramid</div>
+            <h2 class="d">Morph between the <em>shapes</em>.</h2>
+            <p>Watch the team pyramid deform under the three convergence forces.</p>
+          </div>
+          <div class="vf-actions">
+            <a class="vf-btn solid" href="../visualisations/pyramid-transformation.html" target="_blank" rel="noopener">Open ↗</a>
+          </div>
+        </div>
+        <div class="vf-holder"><iframe class="vf" data-src="../visualisations/pyramid-transformation.html" title="Pyramid transformation — interactive"></iframe></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 · ESSAY 6B — SHAPE OF FIRMS (stylized, hero) -->
+  <section data-label="06 · The shape of firms">
+    <div class="slide dia">
+      <div class="pad" style="inset:80px var(--pad); bottom:auto;">
+        <div class="head">
+          <div class="d-eyebrow">Essay 06 · The shape of firms</div>
+          <h2 class="d">The pyramid restructures into one of four <em>shapes</em>.</h2>
+          <div class="dsub">The Diamond is the shape firms are aiming for — but it depends on solving the training problem. The Barbell is the failure mode.</div>
+        </div>
+      </div>
+      <div class="dwrap" style="top:330px;">
+        <div class="team-shapes-row">
+          <div class="team-shape">
+            <div class="ts-svg"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><polygon points="50,5 85,95 15,95" fill="rgba(100,116,139,0.16)" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+            <div class="ts-name">Traditional Pyramid</div>
+            <div class="ts-tagline">today's structure — juniors subsidise seniors</div>
+          </div>
+          <div class="team-shape">
+            <div class="ts-svg"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><polygon points="50,5 55,12 58,95 42,95 45,12" fill="rgba(100,116,139,0.16)" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+            <div class="ts-name">The Obelisk</div>
+            <div class="ts-tagline">same shape, dramatically narrower</div>
+          </div>
+          <div class="team-shape ts-warning">
+            <div class="ts-svg"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><polygon points="28,5 72,5 72,25 58,38 58,62 72,75 72,95 28,95 28,75 42,62 42,38 28,25" fill="rgba(159,18,57,0.14)" stroke="#9f1239" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+            <div class="ts-name">The Barbell</div>
+            <div class="ts-tagline">missing generation in the middle</div>
+            <div class="ts-verdict">✗ failure mode</div>
+          </div>
+          <div class="team-shape ts-target">
+            <div class="ts-svg"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><polygon points="50,5 82,50 50,95 18,50" fill="rgba(165,28,48,0.16)" stroke="#A51C30" stroke-width="1.8" stroke-linejoin="round"/></svg></div>
+            <div class="ts-name">The Diamond</div>
+            <div class="ts-tagline">orchestrators in the widest band, alongside AI</div>
+            <div class="ts-verdict">the shape firms aim for</div>
+          </div>
+          <div class="team-shape">
+            <div class="ts-svg"><svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet"><polygon points="10,5 90,5 90,20 62,20 62,95 38,95 38,20 10,20" fill="rgba(100,116,139,0.16)" stroke="#64748b" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+            <div class="ts-name">The T</div>
+            <div class="ts-tagline">thin human layer over an automated stack</div>
+          </div>
+        </div>
+      </div>
+      <div class="ts-footer-note">Three convergence forces drive the deformation — AI <em>from below</em> · integrated platforms <em>laterally</em> · clients &amp; stakeholders <em>from above</em></div>
+      <div class="ts-citation">Roberts &amp; Wilkins (2026), "The Pyramid Transformation" · AI &amp; the Legal Profession</div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 · ESSAY 6D — TWO READS IN TENSION -->
+  <section data-label="06 · Two reads">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">Essay 06 · The genuine disagreement</div>
+          <h2 class="d">Two reads we hold in <em>tension</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">David</div>
+            <h3>The defences are real</h3>
+            <ul>
+              <li>Regulatory embedding and the gatekeeper function.</li>
+              <li>The institutional weight of the opinion letter.</li>
+              <li>The legalization of everything creates new demand.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">Anthea</div>
+            <h3>Disruption routes around them</h3>
+            <ul>
+              <li>Every profession thought it had structural defences.</li>
+              <li>The boundary of "pure judgment" keeps moving.</li>
+              <li>AI keeps automating what was thought un-automatable.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <a href="https://hlsclp.org/" target="_blank" rel="noopener">hlsclp.org</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 · CLOSING -->
+  <section data-label="Closing">
+    <div class="slide closing dark">
+      <div class="pad">
+        <span class="mk" data-mk="close"></span>
+        <div class="crule"></div>
+        <h2 class="d">Lenses being tested — not finished <em>pronouncements</em>.</h2>
+        <div class="url">hlsclp.org · AI &amp; the Legal Profession</div>
+      </div>
+      <div class="leads">
+        <div class="who"><b>Anthea Roberts</b>Professor, ANU · Visiting Professor, Harvard Law School</div>
+        <div class="who"><b>David B. Wilkins</b>Faculty Director, Center on the Legal Profession</div>
+        <div class="who"><b>with Dragonfly Thinking</b>Multi-lens analysis methodology</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script src="../deck-stage.js"></script>
+<script src="../mark-engine.js"></script>
+<script>
+(function () {
+  const D = window.Dragonfly;
+  const set = (k, mode, h) => document.querySelectorAll(`[data-mk="${k}"]`).forEach(e => e.innerHTML = D.svg(mode, { height: h }));
+  set('cover', 'mono', 132);
+  set('foot', 'tonal', 36);
+  set('close', 'mono', 120);
+
+  // ── Diamond links — connect each lens to the crimson centre. ──
+  const links = document.getElementById('diamondLinks');
+  if (links) {
+    const C = [500, 370];
+    [[500,140],[180,370],[820,370],[500,600]].forEach(p => {
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      l.setAttribute('x1', p[0]); l.setAttribute('y1', p[1]); l.setAttribute('x2', C[0]); l.setAttribute('y2', C[1]);
+      l.setAttribute('stroke', 'rgba(165,28,48,0.30)'); l.setAttribute('stroke-width', '2'); l.setAttribute('stroke-dasharray', '3 7'); l.setAttribute('stroke-linecap', 'round');
+      links.appendChild(l);
+    });
+  }
+
+  // ── Gateway — law at the centre; inner ring of embedded domains, outer dashed ring of emerging ones. ──
+  (function () {
+    const NS = 'http://www.w3.org/2000/svg', cx = 500, cy = 500;
+    function orbit(domains, R, nr, linkId, nodeId, crimson) {
+      const lg = document.getElementById(linkId), ng = document.getElementById(nodeId);
+      if (!lg || !ng) return;
+      domains.forEach((name, i) => {
+        const ang = -Math.PI / 2 + i * (Math.PI * 2 / domains.length);
+        const x = cx + R * Math.cos(ang), y = cy + R * Math.sin(ang);
+        const l = document.createElementNS(NS, 'line');
+        l.setAttribute('x1', cx); l.setAttribute('y1', cy); l.setAttribute('x2', x); l.setAttribute('y2', y);
+        l.setAttribute('stroke', crimson ? 'rgba(165,28,48,0.30)' : 'rgba(100,116,139,0.26)');
+        l.setAttribute('stroke-width', '1.5'); l.setAttribute('stroke-linecap', 'round');
+        if (crimson) l.setAttribute('stroke-dasharray', '3 8');
+        lg.appendChild(l);
+        const c = document.createElementNS(NS, 'circle');
+        c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', nr);
+        if (crimson) { c.setAttribute('fill', 'rgba(165,28,48,0.05)'); c.setAttribute('stroke', '#A51C30'); c.setAttribute('stroke-width', '2'); c.setAttribute('stroke-dasharray', '4 5'); }
+        else { c.setAttribute('fill', '#ffffff'); c.setAttribute('stroke', '#cbd5e1'); c.setAttribute('stroke-width', '2'); }
+        ng.appendChild(c);
+        const words = name.split(' ');
+        const t = document.createElementNS(NS, 'text');
+        t.setAttribute('x', x); t.setAttribute('y', y - (words.length > 1 ? 9 : 0));
+        t.setAttribute('text-anchor', 'middle');
+        t.setAttribute('font-family', 'var(--legal-sans)'); t.setAttribute('font-weight', '600');
+        t.setAttribute('font-size', crimson ? '19' : '21');
+        t.setAttribute('fill', crimson ? '#A51C30' : '#1e293b');
+        if (words.length > 1) {
+          words.forEach((w, j) => { const ts = document.createElementNS(NS, 'tspan'); ts.setAttribute('x', x); ts.setAttribute('dy', j === 0 ? 0 : 24); ts.textContent = w; t.appendChild(ts); });
+        } else { t.textContent = name; }
+        ng.appendChild(t);
+      });
+    }
+    orbit(['Corporate', 'Finance', 'Regulation', 'Employment', 'Tax', 'Disputes'], 235, 72, 'gwInnerLinks', 'gwInnerNodes', false);
+    orbit(['AI', 'ESG', 'Sanctions', 'Data privacy', 'Supply chain'], 415, 60, 'gwOuterLinks', 'gwOuterNodes', true);
+  })();
+
+  // ══ VIZFRAME machinery — lazy-load + never trap navigation ══
+  const stage = document.querySelector('deck-stage');
+
+  function forward(key) {
+    const ev = () => new KeyboardEvent('keydown', { key: key, bubbles: true, cancelable: true });
+    document.dispatchEvent(ev());
+    if (stage) stage.dispatchEvent(ev());
+    window.dispatchEvent(ev());
+  }
+
+  function wireFrame(f) {
+    if (f.__wired) return; f.__wired = true;
+    f.addEventListener('load', () => {
+      try {
+        const doc = f.contentDocument;
+        if (!doc || doc.__navForwarded) return;
+        doc.__navForwarded = true;
+        doc.addEventListener('keydown', function (e) {
+          if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+          const fwd = ['ArrowRight', 'ArrowLeft', 'PageDown', 'PageUp', ' ', 'Spacebar'];
+          if (fwd.indexOf(e.key) !== -1) { forward(e.key === ' ' || e.key === 'Spacebar' ? 'ArrowRight' : e.key); }
+        });
+      } catch (err) { /* cross-origin — leave Open ↗ as the fallback */ }
+    });
+  }
+
+  function activate(slide) {
+    if (!slide) return;
+    const f = slide.querySelector('iframe.vf[data-src]');
+    if (f && !f.src) { wireFrame(f); f.src = f.getAttribute('data-src'); }
+  }
+
+  // Lazy-load whichever viz slide becomes active.
+  if (stage) {
+    stage.addEventListener('slidechange', e => activate(e.detail && e.detail.slide));
+    // activate the initial slide if it happens to be a viz slide
+    const first = stage.querySelector('section .slide');
+    activate(first && first.closest ? document.querySelector('section .slide.vizframe') && null : null);
+  }
+
+  // Persistent site link, bottom-right, on slides without a footer
+  // (cover shows it in the org block; content slides show it in the credit).
+  document.querySelectorAll('deck-stage .slide').forEach(sl => {
+    if (sl.querySelector('.d-foot') || sl.classList.contains('cover')) return;
+    const a = document.createElement('a');
+    a.className = 'site-url'; a.href = 'https://hlsclp.org/'; a.target = '_blank'; a.rel = 'noopener';
+    a.textContent = 'hlsclp.org';
+    sl.appendChild(a);
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1755 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Scrambled Competitive Map — AI &amp; the Legal Profession</title>
+<meta name="description" content="Why every attempt to draw the competitive map of legal AI comes back scrambled — the players and the issues that decide the field.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="The Scrambled Competitive Map — AI &amp; the Legal Profession">
+<meta property="og:description" content="Why every attempt to draw the competitive map of legal AI comes back scrambled — the players and the issues that decide the field.">
+<meta property="og:url" content="https://hlsclp.org/visualisations/scrambled-map.html">
+<meta property="og:image" content="https://hlsclp.org/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Scrambled Competitive Map — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="Why every attempt to draw the competitive map of legal AI comes back scrambled — the players and the issues that decide the field.">
+<meta name="twitter:image" content="https://hlsclp.org/assets/reference/og-card.png">
+
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<script src="styles/d3.v7.min.js"></script>
+<script src="data/scrambled-map-data.js"></script>
+
+<style>
+/* ============================================================
+   Dragonfly Canonical Tokens (inlined from
+   vendor/dragonfly-design/canonical/tokens/tokens.css v3.1.0)
+   ============================================================ */
+:root {
+  /* Neutrals */
+  --df-slate-950: #0f172a;
+  --df-slate-900: #0f172a;
+  --df-slate-800: #1e293b;
+  --df-slate-700: #334155;
+  --df-slate-600: #475569;
+  --df-slate-500: #64748b;
+  --df-slate-400: #94a3b8;
+  --df-slate-300: #cbd5e1;
+  --df-slate-200: #e2e8f0;
+  --df-slate-100: #f1f5f9;
+  --df-slate-50:  #f8f9fb;
+  --df-white:     #ffffff;
+
+  /* Brand */
+  --df-primary:       #0563FA;
+  --df-primary-hover: #0449c4;
+  --df-callout:       #002D9C;
+
+  /* Risk severity */
+  --df-risk-extreme:  #dc2626;
+  --df-risk-high:     #ea580c;
+  --df-risk-moderate: #d97706;
+  --df-risk-low:      #059669;
+
+  /* Categories */
+  --df-cat-economic:       #0563FA;
+  --df-cat-security:       #dc2626;
+  --df-cat-social:         #7c3aed;
+  --df-cat-infrastructure: #059669;
+  --df-cat-political:      #d97706;
+
+  /* Dragonfly Lenses (canonical hues) */
+  --df-lens-cobalt:   #1575BF;
+  --df-lens-teal:     #0BAEA3;
+  --df-lens-indigo:   #446BB7;
+  --df-lens-plum:     #92448A;
+  --df-lens-green:    #0ABF67;
+  --df-lens-gold:     #EFD038;
+  --df-lens-orange:   #FF9413;
+  --df-lens-sky:      #1B99D6;
+  --df-lens-red:      #DA342A;   /* retained token; not used as a player-type hue */
+
+  /* Lens AA-dark variants — for coloured small text on white (node abbreviations) */
+  --df-lens-cobalt-dark: #0F5D99;
+  --df-lens-teal-dark:   #07756E;
+  --df-lens-indigo-dark: #3A5BA0;
+  --df-lens-plum-dark:   #7A3873;
+  --df-lens-green-dark:  #0A6B42;
+  --df-lens-gold-dark:   #8A6D00;
+  --df-lens-orange-dark: #B45309;
+  --df-lens-sky-dark:    #0F6F9E;
+
+  /* Player-type → lens hue map (full hue for fills, strokes, dots, legend, badges).
+     One distinct lens hue per competitive-landscape player TYPE.
+     Crimson (--df-accent) is reserved for SELECTION/active/hover only — never a type hue. */
+  --type-incumbent:           var(--df-lens-cobalt);   /* the fortress */
+  --type-legal-ai-vendor:     var(--df-lens-plum);     /* the platform layer */
+  --type-ai-native:           var(--df-lens-sky);      /* the autopilot challengers */
+  --type-foundation:          var(--df-lens-orange);   /* the model substrate */
+  --type-consulting-jv:       var(--df-lens-gold);     /* the new vehicles */
+  --type-strategy-consulting: var(--df-slate-600);     /* neutral — absorbed players */
+  --type-capital:             var(--df-lens-indigo);   /* capital flowing across layers */
+  --type-demand:              var(--df-lens-green);     /* GCs not waiting */
+
+  /* AA-dark counterparts for the in-node abbreviation text (small coloured glyphs on white) */
+  --type-incumbent-dark:           var(--df-lens-cobalt-dark);
+  --type-legal-ai-vendor-dark:     var(--df-lens-plum-dark);
+  --type-ai-native-dark:           var(--df-lens-sky-dark);
+  --type-foundation-dark:          var(--df-lens-orange-dark);
+  --type-consulting-jv-dark:       var(--df-lens-gold-dark);
+  --type-strategy-consulting-dark: var(--df-slate-700);
+  --type-capital-dark:             var(--df-lens-indigo-dark);
+  --type-demand-dark:              var(--df-lens-green-dark);
+
+  /* Harvard crimson accent (project override) */
+  --df-accent: #A51C30;
+  --df-accent-secondary: #8F1728;
+  --df-accent-dim: rgba(165, 28, 48, 0.08);
+  --df-accent-soft: rgba(165, 28, 48, 0.14);
+
+  /* Typography */
+  --df-font-primary: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --df-text-h1: 32px;
+  --df-text-h2: 22px;
+  --df-text-h3: 17px;
+  --df-text-h4: 15px;
+  --df-text-base: 15px;
+  --df-text-sm: 13px;
+  --df-text-xs: 12px;
+
+  /* Layout */
+  --sidebar-width: 296px;
+  --detail-width: 380px;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 400ms;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+
+  /* Semantic surfaces & text (light) */
+  --surface: var(--df-white);
+  --surface-raised: var(--df-slate-50);
+  --surface-dark: var(--df-slate-100);
+  --border: var(--df-slate-200);
+  --border-strong: var(--df-slate-300);
+  --text-heading: var(--df-slate-900);
+  --text-body: var(--df-slate-800);
+  --text-secondary: var(--df-slate-600);
+  --text-muted: var(--df-slate-500);
+  --text-label: var(--df-slate-700);
+
+  --sidebar-surface: var(--df-white);
+  --sidebar-border: rgba(148, 163, 184, 0.28);
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 4px 16px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 8px 32px rgba(15, 23, 42, 0.12);
+}
+
+/* ---- Reset & base ---- */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ---- Accessibility: focus & motion ---- */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--df-accent);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
+}
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--df-font-primary);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: var(--text-body);
+  background: var(--surface);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================================
+   LAYOUT
+   ============================================================ */
+.sidebar-left {
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  width: var(--sidebar-width);
+  background: var(--sidebar-surface);
+  border-right: 1px solid var(--sidebar-border);
+  padding: 32px 24px 24px;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+}
+
+.main-viz {
+  position: fixed;
+  top: 0; left: var(--sidebar-width); right: 0; bottom: 0;
+  overflow: hidden;
+  transition: right 300ms var(--ease-out);
+}
+.main-viz.detail-open { right: var(--detail-width); }
+
+.detail-panel {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: var(--detail-width);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  z-index: 500;
+  overflow-y: auto;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform var(--duration-slow) var(--ease-out),
+              opacity var(--duration-normal) var(--ease-out);
+}
+.detail-panel.open {
+  transform: translateX(0);
+  opacity: 1;
+  box-shadow: var(--shadow-md);
+}
+
+/* ============================================================
+   LEFT SIDEBAR
+   ============================================================ */
+.sidebar-logo {
+  display: block;
+  width: 148px;
+  height: auto;
+  margin-bottom: 0;
+}
+.sidebar-classification {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: var(--text-label);
+  margin-top: 22px;
+  line-height: 1.55;
+}
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 16px 0 16px;
+}
+.sidebar-page-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.3;
+  margin-bottom: 4px;
+}
+.sidebar-page-author {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.sidebar-page-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+.sidebar-framing {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin-bottom: 6px;
+}
+.sidebar-section-label {
+  font-size: 10.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--text-label);
+  margin-bottom: 10px;
+  margin-top: 4px;
+}
+
+/* ---- View toggle pills ---- */
+.view-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 2px;
+  background: var(--surface-raised);
+  margin-bottom: 18px;
+}
+.view-pill {
+  flex: 1;
+  padding: 7px 10px;
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--duration-fast) var(--ease-out);
+}
+.view-pill:hover { color: var(--text-body); }
+.view-pill.active {
+  background: var(--surface);
+  color: var(--df-slate-900);
+  box-shadow: var(--shadow-sm);
+}
+.view-hint {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: -10px;
+  margin-bottom: 18px;
+  font-style: italic;
+}
+
+/* ---- Filter buttons ---- */
+.filter-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 500;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out);
+  font-family: inherit;
+}
+.filter-btn:hover {
+  border-color: var(--border-strong);
+  color: var(--text-body);
+}
+.filter-btn.active {
+  background: var(--df-slate-200);
+  color: var(--df-slate-900);
+  border-color: var(--df-slate-300);
+}
+.filter-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ---- Legend ---- */
+.legend {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 20px;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--text-body);
+}
+.legend-dot {
+  width: 11px; height: 11px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.legend-swing-ring {
+  width: 11px; height: 11px; border-radius: 50%;
+  border: 2px solid var(--df-slate-500);
+  background: transparent;
+  flex-shrink: 0;
+  animation: swing-pulse 2.5s ease-in-out infinite;
+}
+.legend-line-sample {
+  width: 28px; height: 2px;
+  flex-shrink: 0;
+  border-radius: 1px;
+}
+.legend-edge-family {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin: 6px 0 4px;
+}
+
+/* ============================================================
+   SVG NETWORK
+   ============================================================ */
+.svg-container { width: 100%; height: 100%; }
+.svg-container svg { width: 100%; height: 100%; display: block; }
+
+.node-group { cursor: pointer; }
+.node-group .node-outer,
+.node-group .node-inner,
+.node-group .node-label,
+.node-group .node-abbr {
+  transition: opacity var(--duration-normal) var(--ease-out);
+}
+.node-group .node-label {
+  font-family: var(--df-font-primary);
+  font-size: 11px; font-weight: 500;
+  fill: var(--text-body);
+  text-anchor: middle;
+  pointer-events: none;
+}
+.node-group .node-abbr {
+  font-family: var(--df-font-primary);
+  font-size: 11px; font-weight: 600;
+  text-anchor: middle;
+  dominant-baseline: central;
+  pointer-events: none;
+}
+.edge {
+  transition: opacity var(--duration-normal) var(--ease-out);
+  pointer-events: none;
+}
+.edge-hit { cursor: pointer; }
+
+.dimmed { opacity: 0.10 !important; }
+.highlighted { opacity: 1 !important; }
+
+@keyframes swing-pulse {
+  0%, 100% { stroke-opacity: 0.42; stroke-width: 2; }
+  50%      { stroke-opacity: 1;    stroke-width: 4; }
+}
+.swing-ring {
+  fill: none;
+  animation: swing-pulse 2.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   DETAIL PANEL CONTENT
+   ============================================================ */
+.detail-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 1;
+  z-index: 10;
+  transition: background var(--duration-fast);
+}
+.detail-close:hover { background: var(--df-slate-200); }
+.detail-header {
+  padding: 24px 48px 18px 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+.detail-body { padding: 20px 24px 32px; }
+.detail-section { margin-bottom: 22px; }
+.detail-section-title {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+.detail-text {
+  font-size: 13.5px;
+  line-height: 1.62;
+  color: var(--text-body);
+}
+.detail-actor-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 2px;
+  line-height: 1.2;
+}
+.detail-actor-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: white;
+}
+.swing-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+  background: transparent;
+}
+.centrality-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: var(--surface-raised);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+
+.metric-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.metric-list li {
+  position: relative;
+  padding: 4px 0 4px 16px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-body);
+}
+.metric-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 11px;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--df-slate-400);
+}
+
+.detail-chip-group {
+  margin-bottom: 8px;
+}
+.detail-chip-group-label {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.detail-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.detail-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 11px;
+  font-size: 11.5px;
+  font-weight: 500;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-body);
+  cursor: pointer;
+  transition: background var(--duration-fast);
+}
+.detail-chip:hover { background: var(--surface-raised); }
+.detail-chip-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 56px 28px;
+}
+.empty-state-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-heading);
+  margin-bottom: 8px;
+}
+.empty-state-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* edge detail */
+.edge-type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 11px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: white;
+}
+.edge-detail-label {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-top: 6px;
+  line-height: 1.25;
+}
+.edge-detail-actors {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+.tooltip {
+  position: fixed;
+  pointer-events: none;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 13px;
+  box-shadow: var(--shadow-lg);
+  max-width: 280px;
+  z-index: 2000;
+  opacity: 0;
+  transition: opacity var(--duration-fast) var(--ease-out);
+  font-size: 12.5px;
+  line-height: 1.45;
+}
+.tooltip.visible { opacity: 1; }
+.tooltip-title { font-weight: 600; margin-bottom: 2px; color: var(--text-heading); }
+.tooltip-subtitle { font-size: 11.5px; color: var(--text-secondary); }
+
+/* ============================================================
+   MOBILE — stacked card list
+   ============================================================ */
+.sidebar-toggle {
+  display: none;
+  position: fixed;
+  top: 12px; left: 12px;
+  z-index: 200;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-body);
+  box-shadow: var(--shadow-sm);
+  font-family: inherit;
+}
+
+.mobile-cards {
+  display: none;
+  padding: 72px 18px 32px;
+  overflow-y: auto;
+  height: 100%;
+}
+.mobile-card {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  transition: border-color var(--duration-fast);
+}
+.mobile-card:hover { border-color: var(--border-strong); }
+.mobile-card .mc-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 6px;
+}
+.mobile-card .mc-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-heading);
+  line-height: 1.2;
+}
+.mobile-card .mc-subtitle {
+  font-size: 12.5px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.mobile-card .mc-swing {
+  margin-left: auto;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--df-slate-500);
+  flex-shrink: 0;
+  animation: swing-pulse 2.5s ease-in-out infinite;
+}
+
+@media (max-width: 1000px) {
+  .sidebar-left { transform: translateX(-100%); }
+  .sidebar-left.open { transform: translateX(0); }
+  .sidebar-toggle { display: inline-flex; align-items: center; }
+  .main-viz { left: 0; }
+}
+
+@media (max-width: 1400px) {
+  .main-viz.detail-open { right: 0; }
+  .detail-panel.open { box-shadow: var(--shadow-lg); }
+}
+
+@media (max-width: 768px) {
+  .svg-container { display: none; }
+  .mobile-cards { display: block; }
+  .detail-panel { width: 100%; max-width: 100%; }
+}
+
+/* Scrollbars (subtle) */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(15,23,42,0.16); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(15,23,42,0.28); }
+
+/* embed/preview modes — strip chrome so the viz embeds cleanly as a figure */
+html.embed-mode .sidebar-left, html.embed-mode .sidebar-toggle, html.embed-mode .project-nav,
+html.preview-mode .sidebar-left, html.preview-mode .sidebar-toggle, html.preview-mode .project-nav { display: none !important; }
+html.embed-mode .main-viz, html.preview-mode .main-viz { left: 0 !important; right: 0 !important; }
+html.preview-mode .detail-panel { display: none !important; }
+/* Embedded/hero figures are narrow but should still show the force-graph, not the
+   mobile card-list fallback — keep the SVG and suppress the cards regardless of width. */
+html.embed-mode .svg-container, html.hero-mode .svg-container, html.preview-mode .svg-container { display: block !important; }
+html.embed-mode .mobile-cards, html.hero-mode .mobile-cards, html.preview-mode .mobile-cards { display: none !important; }
+
+/* No bounding-box outline on graphical SVG marks — it renders as an ugly square
+   around the element's bbox. Keyboard focus on the canvas is still conveyed by the
+   selection/detail-panel state and the sidebar list controls (which keep their ring). */
+svg *:focus, svg *:focus-visible { outline: none !important; }
+@media print {
+  html, body { height: auto !important; overflow: visible !important; background: #fff !important; }
+  body.has-project-nav { padding-top: 0 !important; }
+  .project-nav, .sidebar-left, .sidebar-toggle, .detail-panel,
+  .zoom-reset-btn, .focus-reset-btn, .tooltip, .nav-burger { display: none !important; }
+  .main-viz, .has-project-nav .main-viz {
+    position: static !important; inset: auto !important;
+    left: 0 !important; right: 0 !important; top: 0 !important;
+    width: 100% !important; height: 96vh !important; overflow: visible !important;
+  }
+  .svg-container { display: block !important; }
+  .mobile-cards { display: none !important; }
+  .main-viz svg, #viz svg { width: 100% !important; height: 100% !important; }
+  * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  @page { size: landscape; margin: 10mm; }
+}
+</style>
+<script>(function(){var q=location.search;if(q.indexOf('embed=1')!==-1)document.documentElement.classList.add('embed-mode');if(q.indexOf('hero=1')!==-1)document.documentElement.classList.add('hero-mode');if(q.indexOf('preview=1')!==-1)document.documentElement.classList.add('preview-mode');})()</script>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-left">&#9776; Menu</button>
+
+<aside class="sidebar-left" id="sidebar-left">
+  <a href="https://dragonflythinking.com" target="_blank" rel="noopener">
+    <img src="styles/dt-logo-black.webp" alt="Dragonfly Thinking" class="sidebar-logo">
+  </a>
+  <div class="sidebar-classification">
+    Harvard Center for the Legal Profession<br>AI and the Future of Law
+  </div>
+  <hr class="sidebar-divider">
+
+  <h1 class="sidebar-page-title">The Scrambled Competitive Map</h1>
+  <div class="sidebar-page-author">Anthea Roberts &amp; David Wilkins</div>
+  <div class="sidebar-page-subtitle">Essay 5 of the series — April–June 2026</div>
+  <p class="sidebar-framing">
+    Twenty actors, five competitive dynamics, five swing actors. Arrowheads
+    show direction. Node size reflects how connected each actor is across the
+    network. Toggle the view to see the upstream-to-downstream ladder, or let
+    the graph find its own clusters.
+  </p>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-section-label">View</div>
+  <div class="view-toggle" id="view-toggle" role="group" aria-label="Layout view">
+    <button class="view-pill active" data-view="stratified" aria-pressed="true">Stratified</button>
+    <button class="view-pill" data-view="centrality" aria-pressed="false">Centrality</button>
+  </div>
+  <div class="view-hint" id="view-hint">Capital and models at the top; vendors in the middle; incumbents and demand at the bottom.</div>
+
+  <div class="sidebar-section-label">Filter by Type</div>
+  <div class="filter-group" id="type-filters"></div>
+
+  <div class="sidebar-section-label" style="margin-top: 12px;">Actor Types</div>
+  <div class="legend" id="type-legend"></div>
+
+  <div class="sidebar-section-label">Competitive Dynamics</div>
+  <div class="legend" id="edge-legend"></div>
+
+  <div class="legend">
+    <div class="legend-item"><span class="legend-swing-ring"></span>Swing actor (multiple positions)</div>
+  </div>
+</aside>
+
+<main class="main-viz" id="main-content">
+  <div class="svg-container" id="viz"></div>
+  <div class="mobile-cards" id="mobile-cards"></div>
+</main>
+
+<aside class="detail-panel" id="detail-panel">
+  <button class="detail-close" id="detail-close" aria-label="Close detail panel">&times;</button>
+  <div class="detail-header" id="detail-header"></div>
+  <div class="detail-body" id="detail-body">
+    <div class="empty-state">
+      <div class="empty-state-title">Pick an actor or an edge</div>
+      <div class="empty-state-text">
+        Click any node to read the actor brief. Click any line to read the
+        relationship that connects two actors — capital flow, distribution,
+        cannibalisation, absorption, or disintermediation.
+      </div>
+    </div>
+  </div>
+</aside>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-title" id="tooltip-title"></div>
+  <div class="tooltip-subtitle" id="tooltip-subtitle"></div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  const DATA = window.SCRAMBLED_MAP_DATA;
+  const actors = DATA.actors;
+  const edges = DATA.edges;
+
+  // ── Player-type colour map (Dragonfly "lens" palette) ──────────────────
+  // Recoloured in-page so the data file stays data-only. One distinct lens
+  // hue per player TYPE; crimson (--df-accent) stays reserved for selection.
+  // Full hue drives fills, strokes, dots, legend swatches, badges. The
+  // *-dark AA variants drive the small in-node abbreviation glyphs so
+  // coloured text on white clears AA contrast.
+  const typeColors = {
+    incumbent:             'var(--type-incumbent)',
+    'legal-ai-vendor':     'var(--type-legal-ai-vendor)',
+    'ai-native':           'var(--type-ai-native)',
+    foundation:            'var(--type-foundation)',
+    'consulting-jv':       'var(--type-consulting-jv)',
+    'strategy-consulting': 'var(--type-strategy-consulting)',
+    capital:               'var(--type-capital)',
+    demand:                'var(--type-demand)'
+  };
+  const typeColorsDark = {
+    incumbent:             'var(--type-incumbent-dark)',
+    'legal-ai-vendor':     'var(--type-legal-ai-vendor-dark)',
+    'ai-native':           'var(--type-ai-native-dark)',
+    foundation:            'var(--type-foundation-dark)',
+    'consulting-jv':       'var(--type-consulting-jv-dark)',
+    'strategy-consulting': 'var(--type-strategy-consulting-dark)',
+    capital:               'var(--type-capital-dark)',
+    demand:                'var(--type-demand-dark)'
+  };
+
+  const typeLabels = DATA.typeLabels;
+  const edgeTypes = DATA.edgeTypes;
+  const ABBR = DATA.abbreviations;
+  const swingActors = new Set(DATA.swingActors);
+
+  // ── Centrality: simple unweighted degree ───────────────────────────────
+  const degreeMap = {};
+  actors.forEach(function (a) { degreeMap[a.id] = 0; });
+  edges.forEach(function (e) {
+    degreeMap[e.source] = (degreeMap[e.source] || 0) + 1;
+    degreeMap[e.target] = (degreeMap[e.target] || 0) + 1;
+  });
+  const NODE_R_BASE = 30;
+  const NODE_R_PER_DEGREE = 3.2;
+  function radiusFor(actor) {
+    return NODE_R_BASE + (degreeMap[actor.id] || 0) * NODE_R_PER_DEGREE;
+  }
+  // Cache radii on the actor object so the force collide can read them.
+  actors.forEach(function (a) {
+    a.radius = radiusFor(a);
+    a.x_orig = a.x;
+    a.y_orig = a.y;
+  });
+
+  const actorMap = {};
+  actors.forEach(function (a) { actorMap[a.id] = a; });
+
+  function edgeKey(a, b) { return [a, b].sort().join('--'); }
+  // Multiple edges can connect the same pair (e.g. Anthropic ↔ Harvey:
+  // distribution AND cannibalisation). Index edges by ordered pair + type
+  // so the detail-panel chip resolves the right one.
+  function edgeId(e) { return e.source + '__' + e.target + '__' + e.type; }
+  const edgeById = {};
+  edges.forEach(function (e) { edgeById[edgeId(e)] = e; });
+
+  // ---- Canvas & scales (1200 x 800 logical) ------------------------------
+  const VB_W = 1200, VB_H = 800;
+
+  const container = document.getElementById('viz');
+  const svg = d3.select(container).append('svg')
+    .attr('viewBox', '0 0 ' + VB_W + ' ' + VB_H)
+    .attr('preserveAspectRatio', 'xMidYMid meet');
+
+  // Background click clears selection
+  svg.append('rect')
+    .attr('x', 0).attr('y', 0).attr('width', VB_W).attr('height', VB_H)
+    .attr('fill', 'transparent')
+    .on('click', function () {
+      if (selectedNode || selectedEdge) {
+        selectedNode = null; selectedEdge = null;
+        resetHighlight();
+        closeDetail();
+      }
+    });
+
+  // ---- Arrowhead markers (one per edge type) ----------------------------
+  // The marker inherits `opacity` from its parent path (the `<marker>` SVG
+  // spec inherits opacity, not stroke-opacity — which is why edges use
+  // `opacity` for dimming). Marker fill is set via `style` to resolve
+  // CSS custom-property tokens in modern browsers.
+  const defs = svg.append('defs');
+  Object.keys(edgeTypes).forEach(function (t) {
+    const style = edgeTypes[t];
+    const marker = defs.append('marker')
+      .attr('id', 'arrow-' + t)
+      .attr('viewBox', '0 0 10 10')
+      .attr('refX', 10)
+      .attr('refY', 5)
+      .attr('markerWidth', 7)
+      .attr('markerHeight', 7)
+      .attr('orient', 'auto-start-reverse');
+    marker.append('path')
+      .attr('d', 'M 0 0 L 10 5 L 0 10 Z')
+      .style('fill', style.color);
+  });
+
+  // ---- State ----
+  let activeFilter = 'all';
+  let selectedNode = null;
+  let selectedEdge = null;   // edgeId() string
+  let currentView = 'stratified';
+
+  // ---- Edges (curved Bezier paths) --------------------------------------
+  const edgeGroup = svg.append('g').attr('class', 'edges');
+
+  // Parallel edges between the same node pair are visually offset so they
+  // don't overlap. Compute an index within each pair so we know which
+  // direction to curve.
+  const pairCounts = {};
+  edges.forEach(function (e) {
+    const k = edgeKey(e.source, e.target);
+    pairCounts[k] = (pairCounts[k] || 0) + 1;
+  });
+  const pairSeen = {};
+  edges.forEach(function (e) {
+    const k = edgeKey(e.source, e.target);
+    pairSeen[k] = pairSeen[k] || 0;
+    e._pairIndex = pairSeen[k];
+    e._pairTotal = pairCounts[k];
+    pairSeen[k] += 1;
+  });
+
+  function computeEdgePath(e) {
+    const src = actorMap[e.source];
+    const tgt = actorMap[e.target];
+    if (!src || !tgt) return null;
+    const dx = tgt.x - src.x, dy = tgt.y - src.y;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist === 0) return null;
+    const srcR = src.radius || NODE_R_BASE;
+    const tgtR = tgt.radius || NODE_R_BASE;
+    const ox = (dx / dist), oy = (dy / dist);
+    const sx = src.x + ox * (srcR + 3);
+    const sy = src.y + oy * (srcR + 3);
+    // Target end backs off further to leave room for the arrowhead.
+    const ex = tgt.x - ox * (tgtR + 9);
+    const ey = tgt.y - oy * (tgtR + 9);
+    const mx = (sx + ex) / 2, my = (sy + ey) / 2;
+    const perpX = -(dy / dist), perpY = dx / dist;
+    // Parallel edges fan out: offset = (index - (total-1)/2)
+    const fanOffset = (e._pairIndex - (e._pairTotal - 1) / 2) * 28;
+    const curvature = 22 + dist * 0.022 + fanOffset;
+    const cx = mx + perpX * curvature;
+    const cy = my + perpY * curvature;
+    return 'M ' + sx + ' ' + sy + ' Q ' + cx + ' ' + cy + ' ' + ex + ' ' + ey;
+  }
+
+  function applyEdgeStyle(sel, e) {
+    const style = edgeTypes[e.type];
+    return sel
+      .attr('stroke', style.color)
+      .attr('stroke-width', style.family === 'supportive' ? 1.7 : 1.4)
+      .attr('stroke-dasharray', style.dash === 'none' ? null : style.dash)
+      .style('opacity', style.family === 'supportive' ? 0.62 : 0.5);
+  }
+
+  edges.forEach(function (e) {
+    const id = edgeId(e);
+
+    // Wide invisible hit area for click/hover ergonomics
+    const srcLabel = (actorMap[e.source] ? actorMap[e.source].label : e.source).replace(/\n/g, ' ');
+    const tgtLabel = (actorMap[e.target] ? actorMap[e.target].label : e.target).replace(/\n/g, ' ');
+    function selectThisEdge() {
+      selectedNode = null;
+      selectedEdge = id;
+      highlightEdge(id);
+      hideTooltip();
+      showEdgeDetail(e);
+    }
+    edgeGroup.append('path')
+      .attr('class', 'edge-hit')
+      .attr('data-edge-id', id)
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', e.label + ' — ' + edgeTypes[e.type].label + ' relationship, ' + srcLabel + ' to ' + tgtLabel)
+      .attr('fill', 'none')
+      .attr('stroke', 'transparent')
+      .attr('stroke-width', 18)
+      .on('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+          event.preventDefault();
+          event.stopPropagation();
+          selectThisEdge();
+        }
+      })
+      .on('mouseenter', function (event) {
+        if (selectedNode || selectedEdge) return;
+        highlightEdge(id);
+        showEdgeTooltip(event, e);
+      })
+      .on('mousemove', function (event) {
+        if (selectedNode || selectedEdge) return;
+        moveTooltip(event);
+      })
+      .on('mouseleave', function () {
+        if (selectedNode || selectedEdge) return;
+        resetHighlight();
+        hideTooltip();
+      })
+      .on('click', function (event) {
+        event.stopPropagation();
+        selectThisEdge();
+      });
+
+    // The visible edge line — uses `opacity` (not stroke-opacity) so the
+    // <marker> arrowheads inherit the dimming correctly when filters or
+    // selection logic dim the edge.
+    const visible = edgeGroup.append('path')
+      .attr('class', 'edge')
+      .attr('data-edge-id', id)
+      .attr('data-edge-type', e.type)
+      .attr('data-edge-family', edgeTypes[e.type].family)
+      .attr('fill', 'none')
+      .attr('marker-end', 'url(#arrow-' + e.type + ')');
+    applyEdgeStyle(visible, e);
+  });
+
+  // ---- Nodes ------------------------------------------------------------
+  const nodeGroup = svg.append('g').attr('class', 'nodes');
+
+  actors.forEach(function (actor) {
+    const color = typeColors[actor.type];
+    const isSwing = swingActors.has(actor.id);
+    const r = actor.radius;
+    const g = nodeGroup.append('g')
+      .attr('class', 'node-group')
+      .attr('data-id', actor.id)
+      .attr('data-type', actor.type)
+      .attr('tabindex', 0)
+      .attr('role', 'button')
+      .attr('aria-label', actor.label.replace(/\n/g, ' ') + ' — actor brief')
+      .attr('transform', 'translate(' + actor.x + ', ' + actor.y + ')');
+
+    if (isSwing) {
+      g.append('circle')
+        .attr('class', 'swing-ring')
+        .attr('r', r + 7)
+        .attr('stroke', color);
+    }
+    g.append('circle')
+      .attr('class', 'node-outer')
+      .attr('r', r)
+      .attr('fill', color)
+      .attr('fill-opacity', 0.08)
+      .attr('stroke', color)
+      .attr('stroke-width', 2)
+      .attr('stroke-opacity', 0.75);
+    g.append('circle')
+      .attr('class', 'node-inner')
+      .attr('r', Math.max(8, r - 9))
+      .attr('fill', color)
+      .attr('fill-opacity', 0.14)
+      .attr('stroke', color)
+      .attr('stroke-width', 0.8)
+      .attr('stroke-opacity', 0.3);
+    g.append('text')
+      .attr('class', 'node-abbr')
+      // AA-dark variant: the abbreviation is small coloured text on a near-
+      // white fill, so it must clear AA contrast — rings/dots keep full hue.
+      .attr('fill', typeColorsDark[actor.type] || color)
+      .attr('y', 1)
+      .text(ABBR[actor.id]);
+
+    // Multi-line label below the node
+    const labelLines = actor.label.split('\n');
+    labelLines.forEach(function (line, i) {
+      g.append('text')
+        .attr('class', 'node-label')
+        .attr('y', r + 16 + (i * 13))
+        .text(line);
+    });
+
+    g.on('mouseenter', function (event) {
+      if (selectedNode || selectedEdge) return;
+      highlightNode(actor.id);
+      showTooltip(event, actor);
+    });
+    g.on('mousemove', function (event) {
+      if (selectedNode || selectedEdge) return;
+      moveTooltip(event);
+    });
+    g.on('mouseleave', function () {
+      if (selectedNode || selectedEdge) return;
+      resetHighlight();
+      hideTooltip();
+    });
+    function selectThisNode() {
+      selectedEdge = null;
+      selectedNode = actor.id;
+      highlightNode(actor.id);
+      hideTooltip();
+      showDetail(actor);
+    }
+    g.on('click', function (event) {
+      event.stopPropagation();
+      selectThisNode();
+    });
+    g.on('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+        event.preventDefault();
+        event.stopPropagation();
+        selectThisNode();
+      }
+    });
+  });
+
+  // ---- Render loop helper -----------------------------------------------
+  // Reads current actor.x / actor.y and rewrites node transforms + edge
+  // paths. Called by the d3-force tick handler AND by the stratified-mode
+  // tween when transitioning back to original positions.
+  function renderPositions() {
+    svg.selectAll('.node-group').each(function () {
+      const id = d3.select(this).attr('data-id');
+      const a = actorMap[id];
+      if (a) d3.select(this).attr('transform', 'translate(' + a.x + ', ' + a.y + ')');
+    });
+    svg.selectAll('.edge').attr('d', function () {
+      const eid = d3.select(this).attr('data-edge-id');
+      const e = edgeById[eid];
+      return e ? computeEdgePath(e) : null;
+    });
+    svg.selectAll('.edge-hit').attr('d', function () {
+      const eid = d3.select(this).attr('data-edge-id');
+      const e = edgeById[eid];
+      return e ? computeEdgePath(e) : null;
+    });
+  }
+  renderPositions();
+
+  // ---- Highlight helpers ------------------------------------------------
+  function getConnectedNodes(nodeId) {
+    const connected = new Set([nodeId]);
+    edges.forEach(function (e) {
+      if (e.source === nodeId) connected.add(e.target);
+      if (e.target === nodeId) connected.add(e.source);
+    });
+    return connected;
+  }
+  function getConnectedEdgeIds(nodeId) {
+    const ids = new Set();
+    edges.forEach(function (e) {
+      if (e.source === nodeId || e.target === nodeId) ids.add(edgeId(e));
+    });
+    return ids;
+  }
+
+  function highlightNode(nodeId) {
+    const connectedNodes = getConnectedNodes(nodeId);
+    const connectedEdges = getConnectedEdgeIds(nodeId);
+    svg.selectAll('.node-group').each(function () {
+      const id = d3.select(this).attr('data-id');
+      d3.select(this)
+        .classed('dimmed', !connectedNodes.has(id))
+        .classed('highlighted', connectedNodes.has(id));
+    });
+    svg.selectAll('.edge').each(function () {
+      const el = d3.select(this);
+      const id = el.attr('data-edge-id');
+      if (connectedEdges.has(id)) {
+        el.classed('dimmed', false).classed('highlighted', true);
+        el.style('opacity', 0.92);
+      } else {
+        el.classed('dimmed', true).classed('highlighted', false);
+      }
+    });
+  }
+
+  function highlightEdge(id) {
+    const e = edgeById[id];
+    if (!e) return;
+    const connectedNodes = new Set([e.source, e.target]);
+    svg.selectAll('.node-group').each(function () {
+      const nid = d3.select(this).attr('data-id');
+      d3.select(this)
+        .classed('dimmed', !connectedNodes.has(nid))
+        .classed('highlighted', connectedNodes.has(nid));
+    });
+    svg.selectAll('.edge').each(function () {
+      const el = d3.select(this);
+      const thisId = el.attr('data-edge-id');
+      if (thisId === id) {
+        el.classed('dimmed', false).classed('highlighted', true);
+        el.style('opacity', 0.95);
+        el.attr('stroke-width', 2.6);
+      } else {
+        el.classed('dimmed', true).classed('highlighted', false);
+      }
+    });
+  }
+
+  function resetHighlight() {
+    svg.selectAll('.node-group').classed('dimmed', false).classed('highlighted', false);
+    svg.selectAll('.edge').each(function () {
+      const el = d3.select(this);
+      const eid = el.attr('data-edge-id');
+      const e = edgeById[eid];
+      el.classed('dimmed', false).classed('highlighted', false);
+      if (e) applyEdgeStyle(el, e);
+    });
+    applyFilter();
+  }
+
+  // ---- Tooltip ----------------------------------------------------------
+  const tooltip = document.getElementById('tooltip');
+  const tooltipTitle = document.getElementById('tooltip-title');
+  const tooltipSubtitle = document.getElementById('tooltip-subtitle');
+
+  function showTooltip(event, actor) {
+    tooltipTitle.textContent = actor.label.replace(/\n/g, ' ');
+    const tipDegree = degreeMap[actor.id] || 0;
+    let subtitle = typeLabels[actor.type] + ' · ' + tipDegree + (tipDegree === 1 ? ' connection' : ' connections');
+    if (swingActors.has(actor.id)) subtitle += ' · Swing actor';
+    tooltipSubtitle.textContent = subtitle;
+    tooltip.classList.add('visible');
+    moveTooltip(event);
+  }
+  function showEdgeTooltip(event, e) {
+    const src = actorMap[e.source];
+    const tgt = actorMap[e.target];
+    tooltipTitle.textContent = e.label;
+    const srcName = src ? src.label.replace(/\n/g, ' ') : e.source;
+    const tgtName = tgt ? tgt.label.replace(/\n/g, ' ') : e.target;
+    tooltipSubtitle.textContent = edgeTypes[e.type].label + ' — ' + srcName + ' → ' + tgtName;
+    tooltip.classList.add('visible');
+    moveTooltip(event);
+  }
+  function moveTooltip(event) {
+    tooltip.style.left = (event.clientX + 16) + 'px';
+    tooltip.style.top  = (event.clientY - 8)  + 'px';
+  }
+  function hideTooltip() {
+    tooltip.classList.remove('visible');
+  }
+
+  // ---- Detail panel -----------------------------------------------------
+  const panel = document.getElementById('detail-panel');
+  const main = document.getElementById('main-content');
+  const detailHeader = document.getElementById('detail-header');
+  const detailBody = document.getElementById('detail-body');
+  const closeBtn = document.getElementById('detail-close');
+
+  function openDetail() {
+    panel.classList.add('open');
+    main.classList.add('detail-open');
+  }
+  function closeDetail() {
+    if (!panel.classList.contains('open')) return;
+    panel.classList.remove('open');
+    main.classList.remove('detail-open');
+    selectedNode = null; selectedEdge = null;
+    resetHighlight();
+    detailHeader.innerHTML = '';
+    detailBody.innerHTML =
+      '<div class="empty-state">' +
+        '<div class="empty-state-title">Pick an actor or an edge</div>' +
+        '<div class="empty-state-text">Click any node to read the actor brief. Click any line to read the relationship that connects two actors — capital flow, distribution, cannibalisation, absorption, or disintermediation.</div>' +
+      '</div>';
+  }
+  closeBtn.addEventListener('click', function (ev) {
+    ev.stopPropagation();
+    closeDetail();
+  });
+  document.addEventListener('keydown', function (ev) {
+    if (ev.key === 'Escape') closeDetail();
+  });
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  // Find every edge connecting `actorId` to another actor, keyed by the
+  // OTHER actor and listing every edge type connecting them. Returns:
+  //   [{ otherId, edges: [{type, color, label, direction}], family }]
+  // grouped by family ('supportive' / 'competitive').
+  function connectionsFor(actorId) {
+    const byOther = {};
+    edges.forEach(function (e) {
+      if (e.source !== actorId && e.target !== actorId) return;
+      const otherId = e.source === actorId ? e.target : e.source;
+      const direction = e.source === actorId ? 'out' : 'in';
+      if (!byOther[otherId]) byOther[otherId] = [];
+      byOther[otherId].push({
+        type: e.type,
+        color: edgeTypes[e.type].color,
+        label: edgeTypes[e.type].label,
+        family: edgeTypes[e.type].family,
+        direction: direction,
+        edge: e
+      });
+    });
+    const result = { supportive: [], competitive: [] };
+    Object.keys(byOther).forEach(function (otherId) {
+      const list = byOther[otherId];
+      const families = new Set(list.map(function (x) { return x.family; }));
+      // If an actor has both supportive and competitive edges, surface in both
+      if (families.has('supportive')) result.supportive.push({ otherId: otherId, edges: list.filter(function (x) { return x.family === 'supportive'; }) });
+      if (families.has('competitive')) result.competitive.push({ otherId: otherId, edges: list.filter(function (x) { return x.family === 'competitive'; }) });
+    });
+    return result;
+  }
+
+  function chipHtml(otherId, edgeList) {
+    const a = actorMap[otherId];
+    if (!a) return '';
+    // Use the first edge's color as the chip border/dot
+    const dots = edgeList.map(function (e) {
+      return '<span class="detail-chip-dot" style="background:' + e.color + ';" title="' + escapeHtml(e.label) + '"></span>';
+    }).join('');
+    return '<span class="detail-chip" data-actor="' + otherId + '" ' +
+      'style="border-color: ' + edgeList[0].color + ';">' +
+      dots + escapeHtml(a.label.replace(/\n/g, ' ')) + '</span>';
+  }
+
+  function chipsListHtml(items) {
+    if (!items.length) {
+      return '<span style="font-size:12.5px; color:var(--text-muted);">None mapped</span>';
+    }
+    return items.map(function (item) {
+      return chipHtml(item.otherId, item.edges);
+    }).join('');
+  }
+
+  function showDetail(actor) {
+    const color = typeColors[actor.type];
+    const isSwing = swingActors.has(actor.id);
+    const swingHtml = isSwing
+      ? '<span class="swing-badge" style="color: ' + (typeColorsDark[actor.type] || color) + ';">Swing actor</span>'
+      : '';
+    const degree = degreeMap[actor.id] || 0;
+
+    detailHeader.innerHTML =
+      '<div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:8px;">' +
+        '<span class="type-badge" style="background:' + color + ';">' +
+          escapeHtml(typeLabels[actor.type]) +
+        '</span>' +
+        swingHtml +
+        '<span class="centrality-badge">' + degree + (degree === 1 ? ' connection' : ' connections') + '</span>' +
+      '</div>' +
+      '<div class="detail-actor-name">' + escapeHtml(actor.label.replace(/\n/g, ' ')) + '</div>' +
+      '<div class="detail-actor-subtitle">' + escapeHtml(actor.subtitle) + '</div>';
+
+    const metricsHtml = (actor.metrics || []).map(function (m) {
+      return '<li>' + escapeHtml(m) + '</li>';
+    }).join('');
+    const dataPointsHtml = (actor.dataPoints || []).map(function (d) {
+      return '<li>' + escapeHtml(d) + '</li>';
+    }).join('');
+    const dataPointsSection = dataPointsHtml
+      ? '<div class="detail-section">' +
+          '<div class="detail-section-title">Notable data points</div>' +
+          '<ul class="metric-list metric-list-evidence">' + dataPointsHtml + '</ul>' +
+        '</div>'
+      : '';
+
+    const conns = connectionsFor(actor.id);
+    const supportiveChips = chipsListHtml(conns.supportive);
+    const competitiveChips = chipsListHtml(conns.competitive);
+
+    detailBody.innerHTML =
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Description</div>' +
+        '<div class="detail-text">' + escapeHtml(actor.description) + '</div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Position</div>' +
+        '<div class="detail-text">' + escapeHtml(actor.position) + '</div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Power</div>' +
+        '<div class="detail-text">' + escapeHtml(actor.power) + '</div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Key metrics</div>' +
+        '<ul class="metric-list">' + metricsHtml + '</ul>' +
+      '</div>' +
+      dataPointsSection +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Supportive connections</div>' +
+        '<div class="detail-chip-list">' + supportiveChips + '</div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Competitive dynamics</div>' +
+        '<div class="detail-chip-list">' + competitiveChips + '</div>' +
+      '</div>';
+
+    detailBody.querySelectorAll('.detail-chip[data-actor]').forEach(function (chip) {
+      chip.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        const id = chip.getAttribute('data-actor');
+        const a = actorMap[id];
+        if (a) {
+          selectedNode = id;
+          selectedEdge = null;
+          highlightNode(id);
+          showDetail(a);
+        }
+      });
+    });
+
+    openDetail();
+  }
+
+  function showEdgeDetail(e) {
+    const style = edgeTypes[e.type];
+    const src = actorMap[e.source];
+    const tgt = actorMap[e.target];
+    const srcName = src ? src.label.replace(/\n/g, ' ') : e.source;
+    const tgtName = tgt ? tgt.label.replace(/\n/g, ' ') : e.target;
+
+    detailHeader.innerHTML =
+      '<div style="margin-bottom: 4px;">' +
+        '<span class="edge-type-badge" style="background:' + style.color + ';">' +
+          escapeHtml(style.label) +
+        '</span>' +
+      '</div>' +
+      '<div class="edge-detail-label">' + escapeHtml(e.label) + '</div>' +
+      '<div class="edge-detail-actors">' + escapeHtml(srcName) + ' → ' + escapeHtml(tgtName) + '</div>';
+
+    detailBody.innerHTML =
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Why this edge exists</div>' +
+        '<div class="detail-text">' + escapeHtml(e.description) + '</div>' +
+      '</div>' +
+      '<div class="detail-section">' +
+        '<div class="detail-section-title">Endpoints</div>' +
+        '<div class="detail-chip-list">' +
+          chipHtml(e.source, [{ color: style.color, label: style.label }]) +
+          chipHtml(e.target, [{ color: style.color, label: style.label }]) +
+        '</div>' +
+      '</div>';
+
+    detailBody.querySelectorAll('.detail-chip[data-actor]').forEach(function (chip) {
+      chip.addEventListener('click', function (ev) {
+        ev.stopPropagation();
+        const id = chip.getAttribute('data-actor');
+        const a = actorMap[id];
+        if (a) {
+          selectedNode = id;
+          selectedEdge = null;
+          highlightNode(id);
+          showDetail(a);
+        }
+      });
+    });
+
+    openDetail();
+  }
+
+  // ---- Filter buttons ---------------------------------------------------
+  const typeFilters = [
+    { id: 'all', label: 'All actors', color: null },
+    { id: 'incumbent', label: 'Incumbents', color: typeColors.incumbent },
+    { id: 'legal-ai-vendor', label: 'Legal AI', color: typeColors['legal-ai-vendor'] },
+    { id: 'ai-native', label: 'AI-native', color: typeColors['ai-native'] },
+    { id: 'foundation', label: 'Foundation', color: typeColors.foundation },
+    { id: 'consulting-jv', label: 'JV vehicles', color: typeColors['consulting-jv'] },
+    { id: 'strategy-consulting', label: 'Strategy', color: typeColors['strategy-consulting'] },
+    { id: 'capital', label: 'Capital', color: typeColors.capital },
+    { id: 'demand', label: 'Demand', color: typeColors.demand }
+  ];
+
+  const filterGroup = document.getElementById('type-filters');
+  typeFilters.forEach(function (f) {
+    const btn = document.createElement('button');
+    btn.className = 'filter-btn' + (f.id === 'all' ? ' active' : '');
+    btn.dataset.filter = f.id;
+    btn.setAttribute('aria-pressed', f.id === 'all' ? 'true' : 'false');
+    const dot = f.color
+      ? '<span class="filter-dot" style="background:' + f.color + ';"></span>'
+      : '';
+    btn.innerHTML = dot + f.label;
+    btn.addEventListener('click', function () {
+      activeFilter = f.id;
+      filterGroup.querySelectorAll('.filter-btn').forEach(function (b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      selectedNode = null; selectedEdge = null;
+      closeDetail();
+      applyFilter();
+    });
+    filterGroup.appendChild(btn);
+  });
+
+  function applyFilter() {
+    svg.selectAll('.node-group').each(function () {
+      const el = d3.select(this);
+      const type = el.attr('data-type');
+      const show = activeFilter === 'all' || type === activeFilter;
+      el.style('opacity', show ? 1 : 0.12);
+      el.style('pointer-events', show ? 'auto' : 'none');
+      el.attr('tabindex', show ? 0 : -1);
+    });
+    svg.selectAll('.edge').each(function () {
+      const el = d3.select(this);
+      const eid = el.attr('data-edge-id');
+      const e = edgeById[eid];
+      if (!e) return;
+      const src = actorMap[e.source];
+      const tgt = actorMap[e.target];
+      if (!src || !tgt) return;
+      const show = activeFilter === 'all'
+        || src.type === activeFilter
+        || tgt.type === activeFilter;
+      if (activeFilter === 'all') {
+        applyEdgeStyle(el, e);
+      } else {
+        el.style('opacity', show ? 0.78 : 0.06);
+      }
+    });
+    svg.selectAll('.edge-hit').each(function () {
+      const el = d3.select(this);
+      const eid = el.attr('data-edge-id');
+      const e = edgeById[eid];
+      if (!e) return;
+      const src = actorMap[e.source];
+      const tgt = actorMap[e.target];
+      if (!src || !tgt) return;
+      const show = activeFilter === 'all'
+        || src.type === activeFilter
+        || tgt.type === activeFilter;
+      el.style('pointer-events', show ? 'auto' : 'none');
+      el.attr('tabindex', show ? 0 : -1);
+    });
+  }
+  applyFilter();
+
+  // ---- Legend -----------------------------------------------------------
+  const typeLegend = document.getElementById('type-legend');
+  ['incumbent', 'legal-ai-vendor', 'ai-native', 'foundation',
+   'consulting-jv', 'strategy-consulting', 'capital', 'demand']
+    .forEach(function (t) {
+      const item = document.createElement('div');
+      item.className = 'legend-item';
+      item.innerHTML =
+        '<span class="legend-dot" style="background:' + typeColors[t] + ';"></span>' +
+        typeLabels[t];
+      typeLegend.appendChild(item);
+    });
+
+  // Edge-type legend (grouped by family)
+  const edgeLegend = document.getElementById('edge-legend');
+  function edgeLineSwatch(style) {
+    if (style.dash === 'none') {
+      return '<span class="legend-line-sample" style="background:' + style.color + ';"></span>';
+    }
+    return '<span class="legend-line-sample" style="background:repeating-linear-gradient(90deg, ' + style.color + ' 0, ' + style.color + ' ' + style.dash.split(',')[0] + 'px, transparent ' + style.dash.split(',')[0] + 'px, transparent ' + (Number(style.dash.split(',')[0]) + Number(style.dash.split(',')[1])) + 'px);"></span>';
+  }
+  ['capital', 'distribution'].forEach(function (t) {
+    const s = edgeTypes[t];
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = edgeLineSwatch(s) + s.label;
+    edgeLegend.appendChild(item);
+  });
+  const divLabel = document.createElement('div');
+  divLabel.className = 'legend-edge-family';
+  divLabel.textContent = 'Competitive';
+  edgeLegend.appendChild(divLabel);
+  ['cannibalisation', 'absorption', 'disintermediation'].forEach(function (t) {
+    const s = edgeTypes[t];
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = edgeLineSwatch(s) + s.label;
+    edgeLegend.appendChild(item);
+  });
+
+  // ---- View toggle ------------------------------------------------------
+  // Stratified mode: actors sit at their hand-positioned coords.
+  // Centrality mode: d3-force settles them based on connection density,
+  // anchored loosely to their stratum's y-coordinate so the upstream-
+  // downstream story isn't destroyed.
+  const VIEW_HINTS = {
+    stratified: 'Capital and models at the top; vendors in the middle; incumbents and demand at the bottom.',
+    centrality: 'Same bands, but the more connected an actor is, the closer it pulls to the centre. Most-connected nodes inflate; isolated nodes drift to the edges.'
+  };
+  const viewHintEl = document.getElementById('view-hint');
+
+  // Build the d3-force simulation (paused until the user toggles in)
+  const simLinks = edges.map(function (e) {
+    return { source: actorMap[e.source], target: actorMap[e.target] };
+  });
+  const sim = d3.forceSimulation(actors)
+    .force('y', d3.forceY(function (d) { return d.y_orig; }).strength(0.55))
+    .force('x', d3.forceX(VB_W / 2).strength(0.012))
+    .force('link', d3.forceLink(simLinks).distance(150).strength(0.22))
+    .force('charge', d3.forceManyBody().strength(-550))
+    .force('collide', d3.forceCollide(function (d) { return (d.radius || NODE_R_BASE) + 14; }))
+    .alphaDecay(0.04)
+    .on('tick', renderPositions)
+    .stop();
+
+  function setView(view) {
+    if (view === currentView) return;
+    currentView = view;
+    viewHintEl.textContent = VIEW_HINTS[view];
+    document.querySelectorAll('#view-toggle .view-pill').forEach(function (p) {
+      const isActive = p.dataset.view === view;
+      p.classList.toggle('active', isActive);
+      p.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+    if (view === 'centrality') {
+      // Reheat the simulation; it will reach a settled state and stop on its own.
+      sim.alpha(0.9).restart();
+    } else {
+      // Stop the sim and animate every actor back to its band coordinates.
+      sim.stop();
+      const start = actors.map(function (a) { return { id: a.id, x: a.x, y: a.y }; });
+      const startedAt = performance.now();
+      const DURATION = 700;
+      function tween(now) {
+        const t = Math.min(1, (now - startedAt) / DURATION);
+        // ease-out cubic
+        const k = 1 - Math.pow(1 - t, 3);
+        start.forEach(function (s) {
+          const a = actorMap[s.id];
+          a.x = s.x + (a.x_orig - s.x) * k;
+          a.y = s.y + (a.y_orig - s.y) * k;
+        });
+        renderPositions();
+        if (t < 1) requestAnimationFrame(tween);
+      }
+      requestAnimationFrame(tween);
+    }
+    // After mode change, re-apply highlight if a node is selected
+    if (selectedNode) highlightNode(selectedNode);
+    else if (selectedEdge) highlightEdge(selectedEdge);
+    else resetHighlight();
+  }
+
+  document.querySelectorAll('#view-toggle .view-pill').forEach(function (p) {
+    p.addEventListener('click', function () {
+      setView(p.dataset.view);
+    });
+  });
+
+  // Honour ?view=centrality on initial load so direct links and screenshot
+  // capture can target a specific view.
+  try {
+    const initialView = new URLSearchParams(window.location.search).get('view');
+    if (initialView === 'centrality') setView('centrality');
+  } catch (e) { /* URLSearchParams unsupported — ignore */ }
+
+  // ---- Mobile card list -------------------------------------------------
+  const mobileCards = document.getElementById('mobile-cards');
+  actors.forEach(function (actor) {
+    const color = typeColors[actor.type];
+    const isSwing = swingActors.has(actor.id);
+    const card = document.createElement('div');
+    card.className = 'mobile-card';
+    card.innerHTML =
+      '<div class="mc-row">' +
+        '<span class="type-badge" style="background:' + color + ';">' +
+          escapeHtml(typeLabels[actor.type]) +
+        '</span>' +
+        (isSwing ? '<span class="mc-swing" title="Swing actor"></span>' : '') +
+      '</div>' +
+      '<div class="mc-name">' + escapeHtml(actor.label.replace(/\n/g, ' ')) + '</div>' +
+      '<div class="mc-subtitle">' + escapeHtml(actor.subtitle) + '</div>';
+    card.addEventListener('click', function () {
+      selectedNode = actor.id;
+      selectedEdge = null;
+      showDetail(actor);
+    });
+    mobileCards.appendChild(card);
+  });
+
+  // ---- Sidebar toggle (mobile) ------------------------------------------
+  const sidebarToggle = document.getElementById('sidebar-toggle');
+  const sidebarLeft = document.getElementById('sidebar-left');
+  if (sidebarToggle && sidebarLeft) {
+    sidebarToggle.addEventListener('click', function (ev) {
+      ev.stopPropagation();
+      const isOpen = sidebarLeft.classList.toggle('open');
+      sidebarToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+    });
+    document.addEventListener('click', function (ev) {
+      if (window.innerWidth > 1000) return;
+      if (ev.target.closest('.sidebar-left')) return;
+      if (ev.target.closest('.sidebar-toggle')) return;
+      sidebarLeft.classList.remove('open');
+      sidebarToggle.setAttribute('aria-expanded', 'false');
+    });
+  }
+
+  // ---- Click-outside closes the detail panel ----------------------------
+  document.addEventListener('click', function (ev) {
+    if (!panel.classList.contains('open')) return;
+    if (panel.contains(ev.target)) return;
+    if (ev.target.closest('.sidebar-left')) return;
+    if (ev.target.closest('.sidebar-toggle')) return;
+    if (main.contains(ev.target)) return;
+    closeDetail();
+  });
+
+})();
+</script>
+
+</body>
+</html>
