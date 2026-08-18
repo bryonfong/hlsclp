@@ -15,6 +15,6 @@ jobs:
           WPE_SSHG_KEY_PRIVATE: ${{ secrets.WPE_SSHG_KEY_PRIVATE }}
           WPE_ENV: hlsclp
           SRC_PATH: "."
-          REMOTE_PATH: "AI-and-the-legal-profession-project/"
+          REMOTE_PATH: "ai-and-the-legal-profession/"
           FLAGS: -azvr --inplace --delete --exclude=.*
           CACHE_CLEAR: TRUE
