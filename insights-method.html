@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
+<title>Method — Dragonfly Insights · AI &amp; the Legal Profession</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="Method — Dragonfly Insights · AI &amp; the Legal Profession">
+<meta property="og:description" content="How the Second Chair reading was produced — the seven-stage Insight Bridge pipeline, what Dragonfly does with the structure, and the rules for reading the figures.">
+<meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/insights-method.html">
+<meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Method — Dragonfly Insights · AI &amp; the Legal Profession">
+<meta name="twitter:description" content="How the Second Chair reading was produced — the seven-stage Insight Bridge pipeline, what Dragonfly does with the structure, and the rules for reading the figures.">
+<meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+
+<meta name="description" content="How the Second Chair reading was produced — the seven-stage Insight Bridge pipeline, what Dragonfly does with the structure, and the rules for reading the figures.">
+<link rel="icon" href="assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="assets/reference/apple-touch-icon.png">
+<link rel="stylesheet" href="legal-design-system.css">
+<link rel="stylesheet" href="legal-site.css?v=dragonfly-navigation-20260920">
+<link rel="stylesheet" href="insights.css?v=insights-loading-20260920">
+<script src="site-accessibility.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- NAV -->
+<header class="site-nav">
+  <a class="brand" href="index.html" aria-label="Home">
+    <img class="hls-shield" src="assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="index.html#essays">Essays</a>
+    <a href="insights.html" aria-current="true">Dragonfly Insights</a>
+    <a href="course.html">Harvard Course</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="powerpoints.html">PowerPoints</a>
+    <a href="project-leads.html">About</a>
+  </nav>
+  <div class="nav-right">
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.36 6.36-.7-.7M6.34 6.34l-.7-.7m12.72 0-.7.7M6.34 17.66l-.7.7"/><circle cx="12" cy="12" r="4"/></svg></button>
+    <a class="btn btn-primary" href="insights.html">Explore the corpus</a>
+    <button class="icon-btn nav-burger" aria-label="Menu" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<div class="corpus-sub">
+  <div class="inner">
+    <nav class="items aligned-nav insights-nav" aria-label="Dragonfly Insights"><a href="insights.html" data-insights-view="overview">Overview</a><a href="insights-topics.html" data-insights-view="guide">Topic guide</a><a href="insights-analysis.html#topics" data-insights-view="topics">Topic map</a><a href="insights-analysis.html#actors" data-insights-view="actors">Actors</a><!-- HIDDEN 2026-09-26: Dynamics + Scenarios lenses withheld from view. Pages, panels and data all remain in place. To restore: delete this comment wrapper here AND re-add the two ids in insights-analysis.js. -->
+<!-- <a href="insights-analysis.html#dynamics" data-insights-view="dynamics">Dynamics</a><a href="insights-analysis.html#scenarios" data-insights-view="scenarios">Scenarios</a> --><a href="insights-sources.html" data-insights-view="search">Search</a><a href="insights-method.html" data-insights-view="method" aria-current="page">Method</a><a href="insights-mcp.html" data-insights-view="mcp">MCP</a></nav>
+  </div>
+</div>
+<main id="main-content" tabindex="-1">
+<section class="wrap lede">
+  <div class="eyebrow-row"><span class="eyebrow">Method</span><span class="label-chip">Second Chair &middot; Insight Bridge &times; Dragonfly Thinking</span></div>
+  <h1>How the record was read</h1>
+  <p class="standfirst">Insight Bridge reads each source, groups its passages into topics, and maps how sources and voices stand against each topic’s proposition. Dragonfly Thinking then uses that structure for multi-perspective analysis.</p>
+  <p class="measure" style="margin-top:16px;">The corpus contains 1,501 sources on AI and the legal profession, 1949&ndash;2026. These pages use the record harvested on 11 September 2026.</p>
+</section>
+
+<section class="wrap" style="margin-top:64px;">
+  <div class="sec-head"><div><span class="eyebrow">The pipeline</span><h2>Seven stages</h2></div><p>The topic list is an output of the process. Nothing supplies it beforehand.</p></div>
+  <div class="steps">
+    <div class="step"><div class="no">01</div><div><h4>Curation &amp; ingest</h4><p>The sources &mdash; scholarship, industry evidence, primary legal materials and practitioner interview transcripts, 1949&ndash;2026 &mdash; are collected by hand, normalized into one document each, chunked into 400-token passages and embedded. Cross-domain, historical and theoretical sources &mdash; other professions, medicine, economics, sociology &mdash; are included deliberately, as analogy and framework evidence. This is a hand-built evidence base rather than a sampling frame: the selection is the first and largest analytical choice in the pipeline, and counts describe what was gathered, never what is common in the world.</p></div></div><div class="step"><div class="no">02</div><div><h4>Facets</h4><p>Each source carries the curator&rsquo;s coding from the corpus manifest: a voice (who is speaking, ten values), a source class and type, jurisdiction, evidence type and topic dimension (the last three multi-valued), year, publication, author and URL. The era &mdash; five ordinal buckets over publication year &mdash; is derived from the year with the run profile&rsquo;s cut-points. Voice answers who is speaking; era answers when, and every comparative view on these pages is parameterized by one or the other. The curator&rsquo;s own working facets &mdash; which thesis paper a source feeds, reading priority &mdash; are not carried.</p></div></div><div class="step"><div class="no">03</div><div><h4>Extraction</h4><p>Every document is read end-to-end by a language model against the run&rsquo;s profile: key points with verbatim supporting quotes, each quote checked against the source text, and a claims analysis under four fixed headings &mdash; the concrete claim or prediction, the evidence basis offered for it, the stated or implied timeframe and conditions, and who is affected and how. Views are attributed to the author or interviewed speaker, never to hosts or people they merely quote.</p></div></div><div class="step"><div class="no">04</div><div><h4>Clustering</h4><p>Every passage is embedded and clustered bottom-up with HDBSCAN under a cross-source distance penalty. Passages and sources carry graded memberships &mdash; exemplar, high-value, member &mdash; and each document is assigned its dominant cluster. An advisory junk review flagged clusters whose syntheses reported no substantive shared content; a reviewer confirmed them, and they are excluded from every count.</p></div></div><div class="step"><div class="no">05</div><div><h4>Perspectives</h4><p>Each cluster&rsquo;s proposition and key points are synthesized first; only then is every exemplar and high-value source assessed against that completed proposition &mdash; a position from Supports to Opposes, with framing, analysis, key points and quotes. The same is done per voice and per era, giving the two lenses. The model never writes quote text at this stage: every citation is chosen from a catalog of the source&rsquo;s own sentences and verified before it is stored. Positions are therefore relative to each cluster&rsquo;s own framing, never absolute agreement.</p></div></div><div class="step"><div class="no">06</div><div><h4>Grouping</h4><p>The substantive clusters are grouped upward, generation by generation, into named groups &mdash; themes, then families in this run. The tree is read as the pipeline left it, however many generations it has; nothing above the topics is chosen by hand, and a group is a neighborhood in embedding space rather than a category anyone drew.</p></div></div><div class="step"><div class="no">07</div><div><h4>Preparation</h4><p>Outside the pipeline, before the record is served: the facet table is flattened and the era derived; every quote the pipeline could not verify is re-checked with a rule that reads across page furniture; the passage text and vectors of restricted-distribution sources are withheld; the tree is flattened per generation; and the duplicate groups the entity review suggested are recorded rather than collapsed.</p></div></div>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:64px;">
+  <div class="sec-head"><div><span class="eyebrow">Reading rules</span><h2>How to read the output</h2></div><p>These rules apply to every Insight Bridge corpus. They are properties of the method, not caveats about a particular run.</p></div>
+  <div class="prose"><ul><li><strong>Positions are relative to a proposition.</strong> A source’s position records how it stands against that cluster’s particular framing — not whether it agrees with some absolute claim. The same source can support one cluster and redirect a neighbouring one that covers similar ground differently.</li><li><strong>Propositions are synthesised from the cluster’s own members.</strong> Because the argument is built from the sources that were grouped together, and those sources are then assessed against it, a degree of agreement is built into the method. Comparisons between groups carry weight; a corpus-wide agreement rate does not.</li><li><strong>Counts describe the corpus, not the world.</strong> Every corpus here is curated. “N sources say X” measures what was collected and is never a measure of how common X is in the field.</li><li><strong>Clusters differ in how many distinct sources back them.</strong> A long document can fragment across many clusters, so weight a theme by the distinct sources beneath it rather than by how many clusters it contains.</li><li><strong>Every extraction and position is a model judgement.</strong> Key points, stances, propositions and syntheses are produced by a language model reading the source. They inherit its calibration and are not determinations of fact.</li></ul></div>
+</section>
+
+<section class="wrap" style="margin-top:64px;">
+  <div class="sec-head"><div><span class="eyebrow">The positions</span><h2>Reading positions in this corpus</h2></div></div>
+  <div class="prose"><p><strong>Where the disagreement is.</strong> The propositions here are things this literature actually argues, and 83.7% of source stances read supportive against them. Dissent therefore rarely surfaces as an Opposes count. It surfaces in the <em>Supports vs Builds on</em> split (plain endorsement versus endorsement-with-conditions), in <em>voice divergence</em> inside a single cluster, and in <em>who is absent</em> from a cluster altogether.</p>
+<p><strong>The tree is the pipeline's.</strong> Groups above the topics were produced by clustering the clusters, generation by generation, and named from their members. A group is a neighbourhood in embedding space, not a category anyone drew.</p></div>
+</section>
+
+<section class="wrap" style="margin-top:44px;">
+  <figure class="cfig">
+  <figcaption><span class="fig-label">Fig. 1 · Where the 9,642 stances sit</span><span class="fig-read">Agreement is the default; disagreement is the exception worth chasing</span></figcaption>
+  <div class="stack"><i class="" style="width:50.052%" title="Supports: 4,826"></i><i class="" style="width:33.655%" title="Builds on: 3,245"></i><i class="" style="width:11.896%" title="Unclear: 1,147"></i><i class="contest" style="width:3.682%" title="Redirects: 355"></i><i class="contest" style="width:0.560%" title="Mixed: 54"></i><i class="contest" style="width:0.156%" title="Opposes: 15"></i></div><div class="stack-key"><span class="key ">Supports <b>4,826</b></span><span class="key ">Builds on <b>3,245</b></span><span class="key ">Unclear <b>1,147</b></span><span class="key contest">Redirects <b>355</b></span><span class="key contest">Mixed <b>54</b></span><span class="key contest">Opposes <b>15</b></span></div>
+  <p class="fig-note">Positions are recorded against each cluster's own proposition, so they measure stance toward a framing rather than agreement in the abstract. 83.7% support or build on the proposition; only 424 stances push back — the crimson sliver — which is why the contested clusters are worth more than the count suggests. The bar is at source-stance grain, as the app counts it.</p>
+</figure>
+</section>
+
+<section class="wrap" style="margin-top:96px;">
+  <div class="sec-head"><div><span class="eyebrow">And then the second method</span><h2>What Dragonfly does with the structure</h2></div><p>A structured record is not yet an analysis. We are applying a set of analytical lenses to examine the record.</p></div>
+  <div class="prose">
+    <p><a class="legal-link" href="https://dragonflythinking.com" target="_blank" rel="noopener">Dragonfly Thinking</a> focuses on improving the quality of thinking about hard questions rather than the speed of producing an answer to them. Its methodology is inspired by Philip Tetlock&rsquo;s two-decade study of 284 experts making 28,000 forecasts. Tetlock found that the experts tended to be poor forecasters because they often saw the world through one dominant lens based on their expertise. Instead, the forecasters who consistently outperformed the others shared a single habit: they went looking for diverse sources and perspectives, and they integrated what they found into more calibrated judgments. Tetlock called it seeing through <em>dragonfly eyes</em> because of the way that dragonflies integrate thousands of lenses to produce their superior, almost 360 degree, compound vision.</p>
+    <p>We are applying analytical lenses to the corpus: topic mapping and actor mapping are published, with driver and dynamics mapping and scenario mapping in progress.</p>
+    <p><a href="insights-analysis.html">Open Analysis &rarr;</a></p>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:96px;">
+  <div class="sec-head"><div><span class="eyebrow">Speak &middot; Surface &middot; Synthesize</span><h2>AI agents and Insight Bridge</h2></div><p>Insight Bridge does the structuring. An agent does the reading, the matching and the interpreting.</p></div>
+  <div class="steps">
+    <div class="step"><div class="no">01</div><div><h4>Speak</h4><p>Say what you care about, in your own language: the thing you have spent a career on, the situation you are actually in, what you are trying to change. No one should have to learn a corpus&rsquo;s vocabulary to get an answer from it.</p></div></div>
+    <div class="step"><div class="no">02</div><div><h4>Surface</h4><p>An agent translates that into the record&rsquo;s own terms and brings up what speaks to it, across the whole body of evidence, including material you could not have named, written for a purpose that was not yours. The structure is what lets it do that without reading fifteen hundred documents itself: it searches the analysis, walks the topic tree, and pulls the passages and quotes sitting behind anything it finds.</p></div></div>
+    <div class="step"><div class="no">03</div><div><h4>Synthesize</h4><p>The agent then reads what it surfaced against the context you gave it in the first step. It works out which findings bear on what you are trying to do, organizes them around your problem, and writes the result in the terms you arrived with.</p></div></div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+<section class="wrap" style="margin-top:96px;">
+  <div class="statrail" style="margin-top:0;"><span><b>1,501</b> sources</span><span><b>43,432</b> passages served</span><span><b>369</b> topic clusters</span><span><b>46</b> themes</span><span><b>5</b> families</span><span><b>9,642</b> source-level stances</span></div>
+
+  <div class="credit">
+    <div class="k">How this was made</div>
+    <p>Second Chair is a jointly developed corpus. The corpus underlying this project was created by
+       Anthea Roberts and David B. Wilkins. It was structured and analyzed using
+       <b style="color:var(--text-heading);font-weight:600;">Insight Bridge</b>, the corpus-reading pipeline
+       built by Sam Bide at AI CoLab, which reads each source end-to-end, embeds its passages and clusters
+       them into topics, themes and families. It was then analyzed through
+       <b style="color:var(--text-heading);font-weight:600;">Dragonfly Thinking</b>&rsquo;s multi-perspective
+       agentic method. <a class="legal-link" href="https://insightbridge-secondchair.aicolab.org/insight-bridge">Insight Bridge &nearr;</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand-block">
+        <span class="mk" data-mk="foot"></span>
+        <div class="bt">
+          <b>AI &amp; the Legal Profession</b>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School.
+             Project leads David B. Wilkins &amp; Anthea Roberts. Powered by
+             <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and
+             <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Series</h4>
+        <a href="index.html#essays">Essays</a>
+        <a href="insights.html">Insights</a>
+        <a href="visualisations/index.html">Visuals</a>
+        <a href="course.html">Harvard course</a>
+        <a href="workshops.html">Workshops</a>
+      </div>
+      <div class="foot-col">
+        <h4>About</h4>
+        <a href="essays/series-introduction.html">The project</a>
+        <a href="project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
+        <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 President &amp; Fellows of Harvard College</span>
+      <span>Corpus figures from Insight Bridge, harvested 2026-09-11. Analyses being tested and refined &mdash; not finished pronouncements.</span>
+    </div>
+  </div>
+</footer>
+<script src="mark-engine.js"></script>
+<script>
+(function(){
+  const D = window.Dragonfly;
+  document.querySelectorAll('[data-mk="brand"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 30 }));
+  document.querySelectorAll('[data-mk="foot"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 40 }));
+
+  // Theme
+  const btn = document.getElementById('themeBtn'), root = document.documentElement;
+  let stored = null; try { stored = localStorage.getItem('legal-theme'); } catch (e) {}
+  const _mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  root.setAttribute('data-theme', stored || (_mq && _mq.matches ? 'dark' : 'light'));
+  if (_mq) _mq.addEventListener('change', e => {
+    let s = null; try { s = localStorage.getItem('legal-theme'); } catch (_) {}
+    if (!s) root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  });
+  btn.addEventListener('click', () => {
+    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n); try { localStorage.setItem('legal-theme', n); } catch (e) {}
+  });
+
+  // Mobile menu
+  const burger = document.querySelector('.nav-burger'), links = document.querySelector('.site-nav .links');
+  if (burger && links) burger.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>

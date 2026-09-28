@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
+<title>The seminar — AI &amp; the Legal Profession</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="The seminar — AI &amp; the Legal Profession">
+<meta property="og:description" content="AI, Complex Decision-Making and the Future of the Legal Profession — a Harvard Law School seminar taught by David B. Wilkins and Anthea Roberts, 14 September to 1 October 2026.">
+<meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/course.html">
+<meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The seminar — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="AI, Complex Decision-Making and the Future of the Legal Profession — a Harvard Law School seminar taught by David B. Wilkins and Anthea Roberts, 14 September to 1 October 2026.">
+<meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+
+<meta name="description" content="AI, Complex Decision-Making and the Future of the Legal Profession — a Harvard Law School seminar taught by David B. Wilkins and Anthea Roberts, 14 September to 1 October 2026.">
+<link rel="icon" href="assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="assets/reference/apple-touch-icon.png">
+<link rel="stylesheet" href="legal-design-system.css">
+<link rel="stylesheet" href="legal-site.css?v=dragonfly-navigation-20260920">
+<link rel="stylesheet" href="insights.css">
+<style>
+  /* Seminar photo strip. Sources are mixed orientation (the OpenAI pair is portrait
+     3:4, the classroom pair landscape 4:3), so every frame is a uniform 4/3 window and
+     object-position carries the subject for the two that get cropped.
+     height:auto is load-bearing — the width/height attributes would otherwise make the
+     box definite and turn aspect-ratio into a no-op. */
+  .strip, .wk-shots { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  .strip { margin-top: 38px; }
+  .wk-shots { padding: 20px 8px 28px; }           /* sits between the week blocks in the map */
+  .strip figure, .wk-shots figure { margin: 0; }
+  .strip img, .wk-shots img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; display: block;
+    border: 1px solid var(--border); border-radius: var(--radius-card); background: var(--bg-subtle); }
+  .strip .tall img { object-position: center 38%; }
+  .strip figcaption, .wk-shots figcaption { margin-top: 11px; font-size: 13px; line-height: 1.5; color: var(--text-faint); }
+  .strip figcaption b, .wk-shots figcaption b { color: var(--legal-crimson); font-weight: 600; }
+  @media (max-width: 620px) { .strip, .wk-shots { grid-template-columns: 1fr; gap: 24px; } }
+
+  /* Guest line: 5th child of the 4-column .ses grid, pinned to the title column
+     so it wraps under the session title rather than starting a new column. */
+  .ses-g { grid-column: 3; margin-top: 5px; font-size: 13.5px; line-height: 1.5; color: var(--text-faint); }
+  .ses-g b { color: var(--text-muted); font-weight: 600; }
+  @media (max-width: 860px) { .ses-g { grid-column: 2; } }
+</style>
+<script src="site-accessibility.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- NAV -->
+<header class="site-nav">
+  <a class="brand" href="index.html" aria-label="Home">
+    <img class="hls-shield" src="assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="index.html#essays">Essays</a>
+    <a href="insights.html" aria-current="true">Dragonfly Insights</a>
+    <a href="course.html">Harvard Course</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="powerpoints.html">PowerPoints</a>
+    <a href="project-leads.html">About</a>
+  </nav>
+  <div class="nav-right">
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.36 6.36-.7-.7M6.34 6.34l-.7-.7m12.72 0-.7.7M6.34 17.66l-.7.7"/><circle cx="12" cy="12" r="4"/></svg></button>
+    <a class="btn btn-primary" href="index.html#essays">Read the series</a>
+    <button class="icon-btn nav-burger" aria-label="Menu" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<main id="main-content" tabindex="-1">
+<section class="wrap lede">
+  <div class="eyebrow-row">
+    <span class="eyebrow">The seminar</span>
+    <span class="label-chip">Harvard Law School &middot; Fall 2026 &middot; 2 credits</span>
+  </div>
+  <h1>AI, Complex Decision-Making and the <em>Future of the Legal Profession</em></h1>
+  <p class="standfirst">A seminar taught by David B. Wilkins and Anthea Roberts, running 14 September
+  to 1 October 2026. It asks what AI is doing to legal work, legal organizations and the formation of
+  lawyers &mdash; and how anyone could know whether the leading claims are true. This series is the
+  research program the seminar sits inside.</p>
+  <div class="cta-row" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;">
+    <a class="btn btn-primary" href="https://live-hls.pantheonsite.io/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener" target="_blank">Catalog entry &amp; enrollment<span class="arr">&nearr;</span></a>
+    <a class="btn btn-ghost" href="index.html#essays">Read the series<span class="arr">&rarr;</span></a>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:58px;">
+  <div class="strip">
+    <figure class="tall">
+      <img src="assets/course/openai-visit-class.jpg" width="1200" height="1600" loading="lazy"
+           alt="The seminar seated around a long conference table at OpenAI's New York headquarters, with further participants joining on the wall screen by Zoom.">
+      <figcaption><b>17 Sep.</b> Session 4 at OpenAI, New York &mdash; in the room and by Zoom.</figcaption>
+    </figure>
+    <figure class="tall">
+      <img src="assets/course/openai-law-summit-group.jpg" width="1200" height="1600" loading="lazy"
+           alt="Eight people, lanyards on, in front of a backdrop reading &ldquo;OpenAI for Law Summit&rdquo;.">
+      <figcaption><b>17 Sep.</b> The OpenAI for Law Summit, later that afternoon.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:88px;">
+  <div class="sec-head">
+    <div><span class="eyebrow">Twelve sessions &middot; three weeks</span><h2>The course map</h2></div>
+  </div>
+  <div class="ses-map"><div class="wk"><span class="wk-n">Week one</span><span class="wk-t">The structure and the mechanism</span></div><div class="ses"><div class="ses-n">01</div><div class="ses-d">Mon 14 Sep</div><div class="ses-t">Introduction: Two Predictions and a Third</div><div class="ses-l">Course &middot; field</div></div><div class="ses"><div class="ses-n">02</div><div class="ses-d">Tue 15 Sep</div><div class="ses-t">Mapping the AI and Legal Landscape</div><div class="ses-l">Field &middot; history</div></div><div class="ses"><div class="ses-n">03</div><div class="ses-d">Wed 16 Sep</div><div class="ses-t">Hands-On with AI Tools and the Corpus</div><div class="ses-l">Method &middot; practice</div></div><div class="ses"><div class="ses-n">04</div><div class="ses-d">Thu 17 Sep</div><div class="ses-t">OpenAI, New York: The Model Layer Enters Law</div><div class="ses-l">Technology &middot; field</div><div class="ses-g"><b>Guests</b> Jason Boehmig, head of the legal vertical, OpenAI; Stacey Wang.</div></div><div class="wk"><span class="wk-n">Week two</span><span class="wk-t">Organizations competing to deliver legal work</span></div><div class="ses"><div class="ses-n">05</div><div class="ses-d">Mon 21 Sep</div><div class="ses-t">Application Companies: Harvey, Legora and the Vertical Layer</div><div class="ses-l">Organization</div><div class="ses-g"><b>Guests</b> Winston Weinberg, co-founder and CEO, Harvey; Tracey Brady Yurko, Chief Legal Officer, Bridgewater Associates; Isabel Yishu Yang, micro1.</div></div><div class="ses"><div class="ses-n">06</div><div class="ses-d">Tue 22 Sep</div><div class="ses-t">GC 4.0: The Client as System Architect</div><div class="ses-l">Client &middot; organization</div><div class="ses-g"><b>Guest</b> Bjarne P. Tellmann, formerly General Counsel, Haleon; author of <em>Law in the Era of AI</em>.</div></div><div class="ses"><div class="ses-n">07</div><div class="ses-d">Wed 23 Sep</div><div class="ses-t">Incumbent Law Firms: Strategy, Economics and the Pyramid</div><div class="ses-l">Organization</div><div class="ses-g"><b>Guest</b> Mitch Zuklie, Chairman and Chief Executive Officer, Orrick.</div></div><div class="ses"><div class="ses-n">08</div><div class="ses-d">Thu 24 Sep</div><div class="ses-t">AI-Native Law Firms: Selling the Work, Not the Tool</div><div class="ses-l">Organization &middot; governance</div><div class="ses-g"><b>Guests</b> Zach Posner, co-founder and managing partner, The LegalTech Fund; Hariolf Wenzler, Bucerius Center on the Legal Profession, on managed services organizations.</div></div><div class="wk-shots">
+    <figure>
+      <img src="assets/course/monday-application-layer.jpg" width="1024" height="768" loading="lazy"
+           alt="Two people seated at a seminar-room table beside a window, with Winston Weinberg of Harvey filling the wall screen on a video call.">
+      <figcaption><b>21 Sep.</b> Session 5: Tracey Brady Yurko and David Wilkins in the room, Winston Weinberg of Harvey joining by video.</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/course/tuesday-dragonfly-lawyering.jpg" width="1024" height="768" loading="lazy"
+           alt="Bjarne Tellmann speaking beside a projected slide headed &ldquo;Dragonfly lawyering&rdquo;, illustrated with a dragonfly's compound eyes.">
+      <figcaption><b>22 Sep.</b> Bjarne Tellmann on GC 4.0, and what he calls dragonfly lawyering.</figcaption>
+    </figure>
+</div><div class="wk"><span class="wk-n">Week three</span><span class="wk-t">Distribution, judgment, formation and futures</span></div><div class="ses"><div class="ses-n">09</div><div class="ses-d">Mon 28 Sep</div><div class="ses-t">Professional Judgment and the Diamond-Complete Lawyer</div><div class="ses-l">Individual</div></div><div class="ses"><div class="ses-n">10</div><div class="ses-d">Tue 29 Sep</div><div class="ses-t">Where Do We Go from Here? Actors, Systems and Scenarios</div><div class="ses-l">Synthesis &middot; strategy</div><div class="ses-g"><b>Guest</b> Ryan Daniels, Crosby.</div></div><div class="ses"><div class="ses-n">11</div><div class="ses-d">Wed 30 Sep</div><div class="ses-t">Distribution: Entry-Level Opportunity and Access to Justice</div><div class="ses-l">Distribution &middot; evidence</div><div class="ses-g"><b>Guests</b> Damien Charlotin, Sciences Po Law School, on hallucinated citations in court filings; Gerald Abila, founder and chief executive, BarefootLaw.</div></div><div class="ses"><div class="ses-n">12</div><div class="ses-d">Thu 1 Oct</div><div class="ses-t">The Formation Problem: Apprenticeship and Legal Education</div><div class="ses-l">Formation</div><div class="ses-g"><b>Guest</b> Andrew Perlman, Dean, Suffolk University Law School.</div></div></div>
+</section>
+
+<section class="wrap" style="margin-top:88px;">
+  <div class="sec-head">
+    <div><span class="eyebrow">The evidence base</span><h2>Students work the same record this site is built on</h2></div>
+    <p>The seminar is taught against a live corpus rather than a reading list frozen when the syllabus
+       was written.</p>
+  </div>
+  <div class="prose">
+    <p>Students receive access to <b>Second Chair</b>, the living research corpus behind this series
+    &mdash; scholarship, primary legal materials, industry evidence and practitioner interviews, created
+    by Anthea Roberts and David B. Wilkins as part of this project, structured and analyzed by Insight
+    Bridge. It can be searched, compared and traced from a synthesis back to the underlying source, and
+    connected to a compatible AI tool through its read-only MCP connector.</p>
+    <p>The course also draws on the Dragonfly field analysis &mdash; the actor map, the drivers and
+    systems map, and the scenarios. Those are analytical interpretations of the evidence base rather
+    than additional evidence, and students are asked to test their assumptions and causal claims against
+    the underlying sources. <b>Any proposition used in assessed work must still be checked against the
+    underlying document: the corpus is research infrastructure, not an authority in its own right.</b></p>
+  </div>
+  <div class="tools" style="margin-top:34px;">
+    <a class="tool" href="insights.html"><b>Second Chair</b><span>The corpus: 1,501 sources, 369 topic clusters, 1949&ndash;2026.</span></a>
+    <a class="tool" href="insights-explorer.html"><b>The explorer</b><span>Every cluster, what it argues, and the sources behind it.</span></a>
+    <a class="tool" href="insights-analysis.html"><b>The lenses</b><span>The topic map and the actor map &mdash; the field analysis.</span></a>
+    <a class="tool" href="insights-mcp.html"><b>MCP connector</b><span>Connect your own agent to the corpus, read-only.</span></a>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:88px;">
+  <div class="sec-head">
+    <div><span class="eyebrow">Learning outcomes</span><h2>What students should be able to do</h2></div>
+    <p>The seminar is career-facing as well as analytical: by the end, students should be equipped to
+       evaluate not only a technology but a prospective employer&rsquo;s strategy, training system,
+       economic model and approach to professional responsibility.</p>
+  </div>
+  <div class="prose"><ul><li>distinguish task-level capability and productivity evidence from evidence about jobs, organizations and markets;</li><li>explain why generation and verification may move at different rates, and apply the verification-frontier framework to a legal matter;</li><li>compare application companies, AI-native law firms, incumbent firms and AI-enabled legal departments by what they sell, what capital they require and who remains answerable;</li><li>evaluate how AI may redistribute access to entry-level professional opportunities and access to legal assistance, without collapsing those distinct questions;</li><li>weigh claims from scholarship, company announcements, founder interviews, benchmarks, professional rules and labor-market data according to what each source can establish;</li><li>describe the domain depth, breadth, practical AI fluency and orchestration involved in the diamond-complete ideal of professional excellence;</li><li>distinguish preserving junior tasks from preserving the developmental functions of apprenticeship;</li><li>use actor maps, system-dynamics maps and scenarios to identify feedback effects, signposts and robust institutional responses; and</li><li>develop an original, falsifiable argument using AI transparently and with source-level verification.</li></ul></div>
+</section>
+
+<section class="wrap" style="margin-top:88px;">
+  <div class="credit">
+    <div class="k">Enrollment &amp; requirements</div>
+    <p>This page is the seminar as it sits inside the research program. Registration, prerequisites,
+       credit and the formal requirements are held by the Law School:
+       <a class="legal-link" href="https://live-hls.pantheonsite.io/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener" target="_blank">the Harvard Law School catalog entry &nearr;</a>.
+       The program it belongs to is the
+       <a class="legal-link" href="https://clp.law.harvard.edu/ai-in-the-legal-profession/" rel="noopener" target="_blank">AI and the Legal Profession project &nearr;</a>
+       at the Center on the Legal Profession.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand-block">
+        <span class="mk" data-mk="foot"></span>
+        <div class="bt">
+          <b>AI &amp; the Legal Profession</b>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School.
+             Project leads David B. Wilkins &amp; Anthea Roberts. Powered by
+             <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and
+             <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Series</h4>
+        <a href="index.html#essays">Essays</a>
+        <a href="insights.html">Insights</a>
+        <a href="visualisations/index.html">Visuals</a>
+        <a href="course.html">Harvard course</a>
+        <a href="workshops.html">Workshops</a>
+      </div>
+      <div class="foot-col">
+        <h4>About</h4>
+        <a href="essays/series-introduction.html">The project</a>
+        <a href="project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
+        <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 President &amp; Fellows of Harvard College</span>
+      <span>Corpus figures from Insight Bridge, harvested 2026-09-11. Analyses being tested and refined &mdash; not finished pronouncements.</span>
+    </div>
+  </div>
+</footer>
+<script src="mark-engine.js"></script>
+<script>
+(function(){
+  const D = window.Dragonfly;
+  document.querySelectorAll('[data-mk="brand"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 30 }));
+  document.querySelectorAll('[data-mk="foot"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 40 }));
+
+  // Theme
+  const btn = document.getElementById('themeBtn'), root = document.documentElement;
+  let stored = null; try { stored = localStorage.getItem('legal-theme'); } catch (e) {}
+  const _mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  root.setAttribute('data-theme', stored || (_mq && _mq.matches ? 'dark' : 'light'));
+  if (_mq) _mq.addEventListener('change', e => {
+    let s = null; try { s = localStorage.getItem('legal-theme'); } catch (_) {}
+    if (!s) root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  });
+  btn.addEventListener('click', () => {
+    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n); try { localStorage.setItem('legal-theme', n); } catch (e) {}
+  });
+
+  // Mobile menu
+  const burger = document.querySelector('.nav-burger'), links = document.querySelector('.site-nav .links');
+  if (burger && links) burger.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+</body>
+</html>

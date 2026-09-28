@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Scenarios — AI and the legal profession</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../../../../visual-library/foundations/tokens.css">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--df-surface);color:var(--df-ink)}
+body{display:flex;flex-direction:column;font-family:var(--df-font,"IBM Plex Sans",system-ui,sans-serif)}
+.scenarios-stage{flex:1 1 auto;min-height:0;background:var(--df-surface)}
+#scenarios-frame{display:block;width:100%;height:100%;border:0;background:var(--df-surface)}
+.df-support-strip{flex:none;background:var(--df-surface);border-top:1px solid var(--df-border)}
+.scenarios-guide{min-height:38px;padding:8px 18px 10px;color:var(--df-ink-muted);font-size:12px;line-height:1.45}
+.scenarios-guide a{color:var(--df-primary);text-decoration:none;white-space:nowrap}
+.scenarios-guide a:hover{text-decoration:underline}
+@media(max-width:700px){.scenarios-guide{padding:7px 10px 9px}}
+</style>
+</head>
+<body>
+<main class="scenarios-stage viz-workspace">
+  <iframe id="scenarios-frame" title="Scenario tree and nonlinear pathways" src="../../../second-chair-expanded-2026-09-13/delivery/scenarios.html?embed=1&amp;theme=light&amp;v=scenarios-readings-20260914"></iframe>
+</main>
+<div class="df-support-strip scenarios-guide" id="scenarios-note">Four possible settlements for 2030–2031, reached by platform choice and then pricing conditions. Dashed links are jumps from one route to another, driven by the feedback loops in Dynamics. Select a settlement for its full reading, or a dashed link for why the jump could happen. Use <strong>View</strong> for the two-axes grid. No probabilities are assigned. <a id="scenarios-direct" href="../../../second-chair-expanded-2026-09-13/delivery/scenarios.html?embed=1&amp;theme=light&amp;v=scenarios-readings-20260914" target="_blank" rel="noopener">Open full view</a></div>
+<script>
+(function(){
+  'use strict';
+  const frame=document.getElementById('scenarios-frame'),note=document.getElementById('scenarios-note'),direct=document.getElementById('scenarios-direct');
+  const base='../../../second-chair-expanded-2026-09-13/delivery/scenarios.html';
+  let theme=document.documentElement.dataset.theme||'light';
+  function url(){return base+'?embed=1&theme='+theme+'&v=scenarios-readings-20260914'}
+  function applyTheme(value){
+    theme=value==='dark'?'dark':'light';document.documentElement.dataset.theme=theme;
+    try{frame.contentDocument.documentElement.dataset.theme=theme}catch(e){}
+    try{frame.contentWindow.postMessage({kind:'df-theme',theme},location.origin)}catch(e){}
+    direct.href=url();
+  }
+  // Same reading layout as Dynamics: figure top-left, its controls as support rows
+  // beneath it, the guide note last, and the reading panel full height on the right.
+  function arrangeChild(){
+    const d=frame.contentDocument;if(!d)return;
+    const app=d.querySelector('.viz-app'),workspace=app&&app.querySelector('.viz-workspace'),palette=app&&app.querySelector('#palette');
+    if(!(app&&workspace&&palette))return;
+    const records=d.querySelector('.lens-records'),outcomes=d.getElementById('prob-mass');
+    const supportRows=[palette,outcomes,records,note].filter(Boolean);
+    workspace.classList.add('df-reading-layout');
+    workspace.style.setProperty('--df-support-row-count',supportRows.length);
+    supportRows.forEach(row=>{
+      if(row===note){const clone=d.importNode(note,true);clone.id='scenarios-note-inner';clone.classList.add('df-support-row');const old=d.getElementById('scenarios-note-inner');if(old)old.remove();workspace.appendChild(clone);return}
+      row.classList.add('df-support-row');workspace.appendChild(row);
+    });
+    note.hidden=true;
+    let style=d.getElementById('df-scenarios-presentation');
+    if(!style){style=d.createElement('style');style.id='df-scenarios-presentation';style.textContent=`
+    .viz-app{height:100%!important}.viz-workspace.df-reading-layout{height:100%;min-height:0;grid-template-rows:minmax(0,1fr) repeat(var(--df-support-row-count),auto)!important}
+    .viz-workspace.df-reading-layout>.viz-canvas{grid-column:1;grid-row:1;min-height:0;overflow:auto}
+    .viz-workspace.df-reading-layout>.viz-panel{grid-column:2;grid-row:1/-1;height:auto;max-height:none;min-height:0}
+    .viz-workspace.df-reading-layout>.df-support-row{grid-column:1;min-width:0;width:auto!important}
+    .viz-workspace.df-reading-layout>.panel-resize{grid-row:1/-1}
+    .df-support-row{flex:none;background:var(--df-surface);border-top:1px solid var(--df-border);border-bottom:0}
+    .cmd-palette{border-top:1px solid var(--df-border)!important;border-bottom:0!important;background:var(--df-surface)!important;flex-wrap:wrap}
+    .viz-workspace.df-reading-layout>.viz-canvas svg[role="img"]{min-width:0!important;min-height:0!important;width:100%!important;height:100%!important}
+    .viz-workspace.df-reading-layout>.viz-canvas .figure,.viz-workspace.df-reading-layout>.viz-canvas .fig-body,.viz-workspace.df-reading-layout>.viz-canvas .canvas{height:100%!important}
+    .prob-mass.df-support-row{padding:6px 18px;margin:0}.prob-mass.df-support-row .outcome-cards{margin:0;gap:8px;flex-wrap:nowrap;overflow-x:auto}.prob-mass.df-support-row .outcome-card{flex:1 0 auto;padding:6px 10px;font-size:14px}
+    .lens-records.df-support-row{padding:6px 18px;gap:6px;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin}.lens-records.df-support-row .chip{font-size:13px;white-space:nowrap;flex:0 0 auto}
+    .lens-records.df-support-row::before{content:"Records";flex:0 0 auto;align-self:center;font:600 11px var(--df-font-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--df-slate-500);margin-right:6px}
+    #scenarios-note-inner{min-height:38px;padding:8px 18px 10px;color:var(--df-ink-muted);font-size:12px;line-height:1.45}
+    #scenarios-note-inner a{color:var(--df-primary);text-decoration:none;white-space:nowrap}
+    @media(max-width:700px){
+     html,body{height:auto!important;min-height:100%;overflow:auto!important}.viz-app{height:auto!important;min-height:100vh}
+     .viz-workspace.df-reading-layout{display:flex!important;flex-direction:column;height:auto!important}
+     .viz-workspace.df-reading-layout>.viz-canvas{order:0;min-height:520px;overflow-x:auto!important;overflow-y:hidden!important;-webkit-overflow-scrolling:touch}
+     .viz-workspace.df-reading-layout>.viz-canvas svg[role="img"]{min-width:960px!important;width:960px!important;height:520px!important}
+     .viz-workspace.df-reading-layout>.df-support-row{order:1;width:100%!important}
+     .viz-workspace.df-reading-layout>.viz-panel{order:2;width:100%!important;min-height:520px}
+    }`;d.head.appendChild(style)}
+    applyTheme(theme);
+  }
+  frame.addEventListener('load',arrangeChild);
+  window.addEventListener('message',event=>{const data=event.data||{};if(data.kind==='df-theme')applyTheme(data.theme)});
+  if(frame.contentDocument&&frame.contentDocument.readyState==='complete')arrangeChild();
+})();
+</script>
+</body>
+</html>

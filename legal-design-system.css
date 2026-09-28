@@ -60,12 +60,27 @@
   --legal-crimson-14: rgba(165, 28, 48, 0.14);  /* active chip / stronger wash */
   --legal-crimson-20: rgba(165, 28, 48, 0.20);  /* borders */
 
+  /* Two crimsons that must be able to move independently of --legal-crimson.
+     Dark mode LIFTS --legal-crimson (#A51C30 → #E55C73) so crimson TEXT clears
+     4.5:1 on dark slate. That lift is right for text and wrong for the two
+     places crimson is a FIELD rather than ink:
+       --btn-fill        crimson behind white text (filled button, pressed chip,
+                         card numeral). Lifting it drove white-on-crimson to
+                         3.44:1 — the lift moved the button the wrong way.
+       --crimson-on-wash crimson ink ON a crimson wash (badge, cluster flag).
+                         The wash lightens the dark panel, so the lifted ink
+                         landed at 4.26:1 against the surface it sits on.
+     Light mode needs no separation: both resolve to the Harvard crimson. */
+  --btn-fill:        var(--legal-crimson);       /* white on it: 7.48:1 */
+  --btn-fill-hover:  var(--legal-crimson-deep);  /* white on it: 9.05:1 */
+  --crimson-on-wash: var(--legal-crimson);       /* on crimson-08: 6.53:1 */
+
   /* Tonal set for the dragonfly mark (deep→shadow, mid, Harvard crimson) */
   --legal-mark-1: #6E1020;
   --legal-mark-2: #8F1728;
   --legal-mark-3: #A51C30;
 
-  /* ─── Functional data states ONLY (never decorative; never colour-alone) ─── */
+  /* ─── Functional data states ONLY (never decorative; never color-alone) ─── */
   --legal-data-green: #0a6b42;
   --legal-data-amber: #b45309;
   --legal-data-red:   #9f1239;
@@ -90,6 +105,10 @@
   /* ─── Typography ──────────────────────────────────────────────────────── */
   --legal-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
   --legal-sans:  'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  /* There was no mono token, and two rules in insights.css reached for
+     --legal-mark-2 as if it were one. It is a crimson. See the note there.
+     Stack copied from the five places insights.css already spells it out. */
+  --legal-mono:  ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   /* Display register (serif). Web guide sizes — deck scales these ~2.4×. */
   --t-hero: 52px;   /* 40–56 */
@@ -130,6 +149,15 @@
   --legal-crimson-08: rgba(229, 92, 115, 0.10);
   --legal-crimson-14: rgba(229, 92, 115, 0.18);
   --legal-crimson-20: rgba(229, 92, 115, 0.26);
+
+  /* Crimson as a FIELD stays deep in dark mode — white on the lifted #E55C73 is
+     3.44:1. Deepening the fill rather than darkening the text keeps
+     white-on-crimson, which is the correct Harvard reading. */
+  --btn-fill:        #B02A40;   /* white on it: 6.46:1 */
+  --btn-fill-hover:  #8F1728;   /* white on it: 9.05:1 */
+  /* Crimson INK on a crimson wash lifts further than body crimson does, because
+     the wash lightens the panel underneath it. */
+  --crimson-on-wash: #F07A8E;   /* on crimson-08 over --bg-panel: 5.50:1 */
 
   --bg-page:     #0f141d;
   --bg-subtle:   #141b26;
@@ -198,6 +226,27 @@ a.legal-link:hover {
   text-decoration-color: var(--legal-crimson);
 }
 
+/* ── The same treatment for prose links that carry no class ──────────────
+   Every CLASSED link here is crimson-mono. Bare <a>s in running text were not,
+   so they fell through to the UA default #0000EE — raw browser blue on a
+   crimson-mono site, and 1.84:1 against the dark footer. Four places had it:
+   the footer's two partner credits (on all 20 pages), the design-system credit
+   line, and two inline links in the visuals index. One missing rule, not four.
+   Scoped to running text, so the footer's link COLUMNS, the cards and the nav —
+   each of which styles its own anchors — are untouched. */
+.wrap :is(p, li, dd, figcaption, .meta, .standfirst) a:not([class]) {
+  color: var(--text-heading);
+  text-decoration: underline;
+  text-decoration-color: var(--link-underline);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color .15s ease, text-decoration-color .15s ease;
+}
+.wrap :is(p, li, dd, figcaption, .meta, .standfirst) a:not([class]):hover {
+  color: var(--legal-crimson);
+  text-decoration-color: var(--legal-crimson);
+}
+
 /* Visible keyboard focus on every interactive element (WCAG 2.1 AA) */
 :where(a, button, input, select, textarea, [tabindex]):focus-visible {
   outline: 2px solid var(--focus-ring);
@@ -223,6 +272,7 @@ a.legal-link:hover {
     --legal-crimson-08: rgba(165,28,48,0.08);
     --legal-crimson-14: rgba(165,28,48,0.14);
     --legal-crimson-20: rgba(165,28,48,0.20);
+    --btn-fill: #A51C30; --btn-fill-hover: #8F1728; --crimson-on-wash: #A51C30;
     --bg-page: #fff; --bg-subtle: #f8f9fb; --bg-panel: #fff; --bg-hover: #f1f5f9;
     --border: #e2e8f0; --border-soft: #eef1f5;
     --text-display: #0f172a; --text-heading: #111c30; --text-body: #1e293b;

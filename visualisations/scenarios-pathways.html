@@ -1,0 +1,2296 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Four routes through five gates — AI and the Legal Profession</title>
+<link rel="icon" href="data:,">
+<!-- The `legal-theme` key is the HANDOFF, and it is last on purpose. The rest of the
+     insights site stores the reader's choice under that key; these pages read `df-theme`
+     (what chrome.js writes) and the older `dragonfly-viz-theme`. Without it, following a
+     link from Insights into a lens drops a reader from their chosen theme back to the
+     system default, mid-journey. Carried into source at W1-4, which retires the patcher
+     that used to append it to the deployed copy after every build. -->
+<script>(function(){var p=new URLSearchParams(location.search);var t=p.get('theme')||localStorage.getItem('df-theme')||localStorage.getItem('legal-theme');if(!t&&window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)t='dark';if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})()</script>
+<style>
+@font-face { font-family:'IBM Plex Sans'; font-style:normal; font-weight:300 700; font-display:swap; src:url('styles/ibm-plex-sans.woff2') format('woff2'); }
+</style>
+<style>/*
+ * Dragonfly Design System — Canonical Tokens
+ *
+ * Single source of truth for all --df-* tokens. Both reference sites
+ * and downstream consumer agents @import this file.
+ *
+ * Narrative authority: ../rules/Dragonfly-Design-System.md
+ * Stability contract: ../STABILITY.md
+ *
+ * Change rules: any value change here requires a VERSION bump.
+ * See canonical/DISCIPLE_INTEGRATION_CONTRACT.md for semver semantics.
+ */
+
+:root {
+	/* ─── Neutrals (Tailwind Slate — 90% of all colour on any page) ─── */
+	--df-slate-950: #0f172a; /* Headings, primary text */
+	--df-slate-800: #1e293b; /* Body text, card text — DEFAULT readable text */
+	--df-slate-700: #334155; /* Labels, tertiary text */
+	--df-slate-600: #475569; /* Links, sidebar descriptions, legend text */
+	--df-slate-500: #64748b; /* Metadata, muted text */
+	--df-slate-400: #94a3b8; /* Placeholder, divider text */
+	--df-slate-300: #cbd5e1; /* Subtle borders */
+	--df-slate-200: #e2e8f0; /* Primary borders, dividers */
+	--df-slate-100: #f1f5f9; /* Hover states, panel fills */
+	--df-slate-50:  #f8f9fb; /* Sidebar bg, subtle panels */
+	--df-white:     #fff;    /* Page background */
+
+	/* ─── Text ink (job-named text colour — reach for these, not a raw slate rung) ───
+	 * Alias onto the slate ramp so the text-colour rule lives in the NAME, not in
+	 * something you have to remember. Body is the default; lighter inks are
+	 * caption/metadata only. They inherit the dark zinc reassignment for free via
+	 * var(). Rule: foundations/colour.md + typography.md. */
+	--df-ink:        var(--df-slate-800); /* DEFAULT readable text — body, labels, descriptions */
+	--df-ink-strong: var(--df-slate-950); /* headings, primary emphasis */
+	--df-ink-muted:  var(--df-slate-600); /* links, sidebar descriptions, legend */
+	--df-ink-faint:  var(--df-slate-500); /* captions, footers, metadata — never body */
+
+	/* ─── Surfaces & Borders (theme-aware semantic chrome) ─── */
+	/* Light values mirror today's canon so light mode renders pixel-identical.
+	   Dark values live in the [data-theme="dark"] block at the foot of this file. */
+	--df-surface:        #fff;     /* Page background */
+	--df-surface-soft:   #f8f9fb;  /* Sidebar / subtle panel */
+	--df-surface-raised: #f1f5f9;  /* Hover / raised card */
+	--df-surface-sunk:   #f8f9fb;  /* Recessed / soft card */
+	--df-surface-rail:   #f8f9fb;  /* Rail / deepest chrome */
+	--df-border:         #e2e8f0;  /* Primary border (= slate-200) */
+	--df-border-soft:    #f1f5f9;  /* Subtle border (= slate-100) */
+
+	/* ─── Brand ─── */
+	--df-primary:       #0563FA; /* Dragonfly blue — sole primary; sparing use only */
+	--df-primary-hover: #0449c4;
+	--df-mint:          #0E9E6E; /* Mint accent (hovers, links, gradient tail); the dark layer reassigns to #34D399 AND promotes it to the dark primary (dark leads mint). */
+	--df-mint-hover:    #0B845C;
+	--df-callout:       #002D9C;
+	--df-mark-red:      #BA1B23; /* Dragonfly logo mark red — fixed brand colour, NOT a risk signal */
+	--df-mark-red-dark: #8b1a14; /* darker mark-red — for mark-red TEXT on a light surface (the gradient's deep-red end); dark theme lifts it for legibility */
+	--df-accent-report: var(--df-callout); /* reading-column accent — reuses the navy callout in LIGHT; the dark theme brightens it to a vivid azure that pairs with the mint primary (opt-in via report.css) */
+	--df-brand-blue:    #0563FA; /* The blue that STAYS blue — brand-gradient start. Independent of --df-primary (which leads mint in dark). */
+	/* ─── Midnight — a blue-tinted dark substrate + its elevation family ───
+	   A bluer, deeper alternative to the #121212 neutral substrate, with two
+	   lifted panel steps and a matching border so cards/panels sit ON midnight
+	   without going muddy-grey. FIXED dark colours (same value in both themes);
+	   they do NOT replace the global --df-surface — opt in per-surface (e.g. the
+	   presentation deck's dark ground in deck.css). */
+	--df-midnight:        #0B1120; /* ground — deepest midnight navy */
+	--df-midnight-soft:   #141D33; /* subtle panel / soft card (+1 step, blue-tinted) */
+	--df-midnight-raised: #1E2A47; /* raised / hover card (+2 steps — reads as elevated) */
+	--df-midnight-border: #283759; /* border / divider on midnight — navy, not neutral grey */
+
+	/* ─── Brand gradient — theme-aware ───
+	   Light: the full 6-stop Dragonfly brand gradient (navy → royal → brand-blue →
+	   plum → orange-red → dark-red), matching the briefing reference. The dark layer
+	   (below) reassigns this to blue → mint. Consumed by the nav/module underlines and
+	   the viz-card accent via var(--df-gradient-brand[-vertical]); never hardcode in
+	   consumers — only here. */
+	--df-gradient-brand:          linear-gradient(90deg,  #002d9c 0%, #1d4ed8 22%, var(--df-brand-blue) 42%, #92448a 62%, #da342a 82%, #8b1a14 100%);
+	--df-gradient-brand-vertical: linear-gradient(180deg, #002d9c 0%, #1d4ed8 22%, var(--df-brand-blue) 42%, #92448a 62%, #da342a 82%, #8b1a14 100%);
+
+	/* Brand accent extensions — secondary accent + brand-blue tint fills */
+	--df-accent-secondary: #3b82f6;             /* Tailwind blue-500 — supporting accent for charts, secondary emphasis */
+	--df-accent-05:        rgba(5,99,250,0.05); /* Brand blue at 5% — subtle hover/wash fills */
+	--df-accent-10:        rgba(5,99,250,0.10); /* Brand blue at 10% — soft surface tint, callout backgrounds */
+
+	/* ─── Dragonfly Signature Palette ───
+	   A 10-stop tint→shade ramp generated from the signature blue (#0563FA). Reach for
+	   it when a single blue accent isn't enough — sequential data, layered blue-on-blue
+	   fills, hover/active steps, charted series. The mid stop (500) IS the signature
+	   (= --df-primary / --df-brand-blue in light); lower stops are pale grounds, higher
+	   stops deep inks. The dark layer re-points every stop so each KEEPS ITS JOB across
+	   the theme (50 = subtle blue ground · 900 = strongest blue ink). See colour.md. */
+	--df-blue-50:  #e6f4ff; /* lightest wash — subtle blue ground */
+	--df-blue-100: #a8d5ff;
+	--df-blue-200: #80bdff;
+	--df-blue-300: #57a2ff;
+	--df-blue-400: #2e85ff;
+	--df-blue-500: #0563fa; /* SIGNATURE — Dragonfly blue (= --df-primary / --df-brand-blue) */
+	--df-blue-600: #004ad4;
+	--df-blue-700: #0037ad;
+	--df-blue-800: #002687;
+	--df-blue-900: #001861; /* deepest shade — strongest blue ink */
+
+	/* ─── Risk Severity (badges, viz nodes, status indicators) ─── */
+	--df-risk-catastrophic: #991b1b; /* maroon — deepest tail, one rung below extreme (red-800) */
+	--df-risk-extreme:  #dc2626;
+	--df-risk-high:     #ea580c;
+	--df-risk-moderate: #d97706;
+	--df-risk-low:      #059669;
+
+	/* ─── Semantic palette (the role quartet) ───────────────────────────────
+	 * Valence/status by JOB, not by hue — bind meaning to these roles, never to
+	 * ad-hoc colours. Aliases of the ramp + slate, so they re-resolve in dark
+	 * mode untouched. Contract: ../contracts/viz-acceptance.md (ENC·4, THM·1).
+	 * Promoted from the visual-library token contract — the packer no longer
+	 * appends them at sync. */
+	--df-pos:      var(--df-risk-low);
+	--df-neutral:  var(--df-slate-500);
+	--df-caution:  var(--df-risk-moderate);
+	--df-critical: var(--df-risk-extreme);
+
+	/* ─── Confidence (data source signalling) ─── */
+	--df-conf-public: #059669;
+	--df-conf-gov:    #0563FA;
+	--df-conf-est:    #d97706;
+
+	/* ─── Categories (domain colour coding) ─── */
+	--df-cat-economic:       #0563FA;
+	--df-cat-security:       #dc2626;
+	--df-cat-social:         #7c3aed;
+	--df-cat-infrastructure: #059669;
+	--df-cat-political:      #d97706;
+
+	/* ─── PESTLE (driver / system-dynamics domains) ─── */
+	/* Reference existing tokens via var() so the whole family auto-themes — */
+	/* no separate dark reassignment needed. Used by the Driver / System-Dynamics viz. */
+	--df-pestle-political:     var(--df-risk-moderate);
+	--df-pestle-economic:      var(--df-primary);
+	--df-pestle-social:        var(--df-cat-social);
+	--df-pestle-technological: var(--df-lens-teal);
+	--df-pestle-legal:         var(--df-lens-plum);
+	--df-pestle-environmental: var(--df-lens-green);
+
+	/* ─── Sequential ramp (ordered emphasis — navy → blue → slate) ─── */
+	/* One ordered, monotonic scale for SEQUENTIAL emphasis — executive-briefing
+	   blocks, ranked rows, depth. Read 1 → 5 (deep → pale). Job-named aliases onto
+	   existing tokens so the whole ramp auto-themes; the two blue stops (1 navy, 2
+	   blue) get a dark repoint in the [data-theme="dark"] block onto the signature
+	   blue scale. Origin: the Dubai briefing watchlist rail (navy #002D9C → blue → slate). */
+	--df-seq-1: var(--df-callout);       /* deepest — navy  #002D9C */
+	--df-seq-2: var(--df-brand-blue);    /* bright blue     #0563FA (stays blue in dark) */
+	--df-seq-3: var(--df-slate-400);     /* mid slate       #94a3b8 */
+	--df-seq-4: var(--df-slate-300);     /* light slate     #cbd5e1 */
+	--df-seq-5: var(--df-slate-200);     /* palest          #e2e8f0 */
+
+	/* ─── Risk / Reward / Resilience ─── */
+	--df-rrr-risk:       #8f2d2d;
+	--df-rrr-reward:     #0a6b42;
+	--df-rrr-resilience: #145f86;
+
+	/* RRR brand swatch palette */
+	--df-rrr-red:    #FF0103;
+	--df-rrr-green:  #00CA00;
+	--df-rrr-navy:   #1C48C5;
+
+	/* ─── Dragonfly Lenses palette (unified --df-lens-*) ─── */
+	--df-lens-primary:  #0563FA;
+	--df-lens-plum:     #92448A;
+	--df-lens-magenta:  #E1208D;
+	--df-lens-rose:     #F81369;
+	--df-lens-red:      #DA342A;
+	--df-lens-red-dm:   #FF252F;
+	--df-lens-orange:   #FF9413;
+	--df-lens-yellow:   #EFE338;
+	--df-lens-gold:     #FFDB58; /* mustard gold. Dark theme keeps its own gold below. */
+	--df-lens-green:    #0ABF67;
+	--df-lens-teal:     #0BAEA3;
+	--df-lens-sky:      #1B99D6;
+	--df-lens-cobalt:   #1575BF;
+	--df-lens-indigo:   #446BB7;
+
+	/* ─── Lens → Agent identity ───────────────────────────────────────────
+	 * The twelve analyst agents ARE the twelve lenses: each agent renders in
+	 * its lens hue. These are var() aliases, not new colours — so they inherit
+	 * the dark-theme lens reassignment automatically (declared once, here).
+	 * Order follows the methodology wheel: blue → purple → pink → red →
+	 * orange → yellow → green → teal → blue.
+	 */
+	--df-agent-research:      var(--df-lens-indigo);   /* research-analyst */
+	--df-agent-actors:        var(--df-lens-plum);     /* actors-analyst */
+	--df-agent-drivers:       var(--df-lens-magenta);  /* drivers-analyst */
+	--df-agent-scale:         var(--df-lens-rose);     /* scale-analyst */
+	--df-agent-systems:       var(--df-lens-red);      /* systems-analyst */
+	--df-agent-scenarios:     var(--df-lens-orange);   /* scenarios-analyst */
+	--df-agent-strategy:      var(--df-lens-gold);     /* strategic-analyst */
+	--df-agent-interventions: var(--df-lens-green);    /* interventions-analyst */
+	--df-agent-challenge:     var(--df-lens-teal);     /* challenge-analyst */
+	--df-agent-data:          var(--df-lens-sky);      /* data-analyst */
+	--df-agent-writer:        var(--df-lens-cobalt);   /* strategic-writer */
+	--df-agent-visualizer:    var(--df-lens-primary);  /* strategic-visualizer */
+
+	/* Ink companion — when an agent accent has to carry TEXT on a light
+	   surface, consumers read --df-agent-<x>-ink and fall back to the accent
+	   itself: var(--df-agent-<x>-ink, var(--df-agent-<x>)). Gold is the one
+	   lens that fails on white, so it is the one that carries an ink.
+	   (Dark mode reassigns it back to the accent at the foot of this file.) */
+	--df-agent-strategy-ink:  var(--df-slate-800);     /* gold text is unreadable on white */
+
+	/* ─── Skills ──────────────────────────────────────────────────────────
+	 * A skill takes the hue of the agent that loads it (--df-skill-tint, set
+	 * per-instance at render to the owner's --df-agent-* value). On a hex node:
+	 *   fill   = owner hue at --df-skill-fill-alpha over the surface
+	 *   stroke = owner hue at full strength
+	 * A skill loaded by 2+ agents is "shared": neutral slate, dashed stroke.
+	 */
+	--df-skill-tint:       var(--df-slate-400); /* fallback when no owner is set */
+	--df-skill-shared:     var(--df-slate-500); /* shared skill (2+ agents) — neutral */
+	--df-skill-fill-alpha: 8%;                  /* tint strength of the hex fill */
+
+	/* ─── Typography ─── */
+	--df-font:      'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+	--df-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; /* mono meta, code, tabular labels */
+	--df-font-serif:'IBM Plex Serif', Georgia, 'Times New Roman', serif; /* RESTRICTED display face — headers ONLY, and only on
+	                   Proposals, Presentations, and Official Dragonfly Websites. Never body prose, never labels.
+	                   The system still runs on two faces (sans + mono); serif is a sanctioned headline exception,
+	                   not a third everyday typeface. Narrative: typography.md → The display serif (restricted). */
+	/* The minimum-size law (5.0.0): any text the reader actually reads is ≥ 14px
+	   on screen; mono uppercase tracked labels are ≥ 11.5px; NOTHING sits below
+	   11.5px anywhere. The floor lives in these values — reach for a token and you
+	   cannot go under it. Narrative: typography.md → Minimum sizes. */
+	--df-text-h1:    32px;
+	--df-text-h2:    22px;
+	--df-text-h3:    17px;
+	--df-text-h4:    15px;
+	--df-text-base:  15px;
+	--df-text-sm:    14px;   /* smallest READING size — the readable-text floor */
+	--df-text-xs:    13px;   /* dense scanned metadata — never running prose */
+	--df-text-label: 11.5px; /* mono uppercase tracked labels — the absolute floor */
+	--df-text-micro: 11.5px; /* mono-only. Deliberately value-CONVERGED with
+	                            --df-text-label (5.0.0): the floor leaves no rung
+	                            below label size, but the name is kept so micro
+	                            consumers keep their intent and the two jobs can
+	                            diverge again if the scale ever grows downward. */
+
+	/* ─── Editorial / report type scale (long-form reading column) ──────────
+	 * The reading scale for the single-visual-report family — larger than the
+	 * compact UI scale above so a 760px prose column reads as an article, not a
+	 * dashboard. Documented in typography.md (the "report scale"); shipped here
+	 * as job-named tokens so the divergence is RESOLVED, not just noted. Opt in
+	 * by consuming --df-text-article-* in a reading column (templates/
+	 * single-visual-report/report.css); the UI scale (32/22/17/15) is untouched. */
+	--df-text-article-h1:        44px; /* cover title + bare section numeral */
+	--df-text-article-h2:        28px; /* section heading */
+	--df-text-article-h3:        22px; /* sub-heading inside a section */
+	--df-text-article-h4:        20px; /* sub-sub-heading — a titled block inside a sub-section */
+	--df-text-article-standfirst:19px; /* deck / standfirst under the title */
+	--df-text-article-body:      18px; /* reading body copy */
+	--df-text-article-table:     16px; /* prose-table cell text — table cells are
+	                                      reading surfaces, never below 16px in an
+	                                      article/report context */
+
+	/* ─── Viz-panel type (job-named — alias onto the UI scale above) ─────────
+	 * The _viz-shell context panel is read at arm's length beside a canvas; these
+	 * name what the text is FOR so the panel can't drift under the floor again.
+	 * var() aliases, not new sizes — they track the UI scale automatically.
+	 * Consumed by visualisations/_viz-shell/viz-shell.css. */
+	--df-text-panel-body:     var(--df-text-base);  /* 15px — panel prose: .p-lead, .detail-line, ties, tooltip names */
+	--df-text-panel-takeaway: var(--df-text-base);  /* 15px — takeaway lines (.p-takeaway) */
+	--df-text-panel-label:    var(--df-text-label); /* 11.5px — mono uppercase tracked: .p-block-label, .cmd-inline-label, .tie-type, .src-tag, .tag */
+	--df-text-panel-badge:    var(--df-text-label); /* 11.5px — pills + counters: .p-badge, .chip-count, .reset-btn */
+
+	/* ─── Projection type scale (1920×1080 decks) ───────────────────────────
+	 * Anchored to PowerPoint point sizes, not an arbitrary screen multiplier. A
+	 * 16:9 slide authored on a 1920×1080 canvas is 13.333in wide, so 1920/13.333
+	 * = 144px/in and 1pt = 2px EXACTLY (px = 2 × point-size). TWO floors, mirroring
+	 * the screen scale's readable/label split: 24pt = 48px for anything read as a
+	 * sentence, 16pt = 32px for captions. Revised 5.6.0 off a single 30pt/60px
+	 * Kawasaki floor, which is a sparse-keynote standard and left briefing slides
+	 * holding ~40 words. The 2.4×-from-screen scale stays rejected: it put the
+	 * floor at 29px and read too small at conference-room distance — anchor to the
+	 * point size, never a screen multiplier. Toggle in with data-display="projection" on the
+	 * slide root; the screen preview keeps the compact UI sizes. Light-only
+	 * (decks don't project in dark). Narrative: typography.md -> Projection scale. */
+	--df-proj-display: 120px; /* cover hero / single big number — 60pt */
+	--df-proj-h1:       88px; /* slide title — 44pt */
+	--df-proj-h2:       68px; /* slide heading — 34pt */
+	--df-proj-h3:       60px; /* sub-heading — 30pt */
+	--df-proj-body:     56px; /* body / bullets — 28pt */
+	--df-proj-label:    40px; /* caption / footnote — 20pt */
+	/* TWO floors, mirroring the screen scale's readable/label split. Revised
+	   5.6.0 from a single 30pt/60px Kawasaki floor — see typography.md
+	   § Projection & presentation scale for the change and its reasoning. */
+	--df-proj-floor-body:  48px; /* 24pt — readable deck text never goes below this */
+	--df-proj-floor-label: 32px; /* 16pt — supplementary captions only */
+
+	/* ─── Spacing ladder ───────────────────────────────────────────────────
+	 * The named step scale on a 4px grid. Reach for a rung for any gap
+	 * *between* blocks; see foundations/spacing.md for role-by-rung.
+	 * Type-derived rhythm (paragraph 24, heading 44/11) stays in typography.
+	 */
+	--df-space-3xs:  4px;   /* hairline — chip inset, icon↔label */
+	--df-space-2xs:  8px;   /* tight stack — dense list, tag row */
+	--df-space-xs:  12px;   /* default small gap — label↔value, grid gap */
+	--df-space-sm:  16px;   /* standard block gap; card-grid gutter */
+	--df-space-md:  24px;   /* generous block gap; paragraph rhythm */
+	--df-space-lg:  32px;   /* figure / callout separation from prose */
+	--df-space-xl:  48px;   /* sub-section break; page padding */
+	--df-space-2xl: 56px;   /* major section break (.section top) */
+	--df-space-3xl: 80px;   /* rail gutter; page-foot breathing */
+	--df-space-4xl: 96px;   /* cover bottom — the longest exhale */
+
+	/* ─── Spacing roles (job-named gaps — alias onto the ladder above) ───────
+	 * The ladder is value-named (which rung?); these say what the gap is FOR, so
+	 * you don't have to recall the role-by-rung map. See spacing.md. */
+	--df-space-tight:     var(--df-space-2xs); /* 8px  — dense stack: list items, tag row */
+	--df-space-block:     var(--df-space-sm);  /* 16px — block gap, card-grid gutter */
+	--df-space-paragraph: var(--df-space-md);  /* 24px — paragraph rhythm */
+	--df-space-section:   var(--df-space-2xl); /* 56px — major section break */
+
+	/* ─── Layout & legacy spacing ───────────────────────────────────────────
+	 * Page frame + the older UI-scale gaps. NOTE: --df-section-gap (52) is the
+	 * compact-UI value; the report scale uses --df-space-2xl (56). The two
+	 * resolve when the UI-vs-report scale call lands (see typography.md note).
+	 */
+	--df-section-gap:         52px;
+	--df-page-padding:        48px;
+	--df-page-padding-x:      56px;
+	--df-card-padding:        20px;
+	--df-sidebar-width:       280px;
+	--df-sidebar-right-width: 230px;
+	--df-content-max-width:   760px;  /* canonical reading frame — matches typography.md / spacing.md */
+
+	/* ─── Border Radius ─── */
+	--df-radius-card:  10px;
+	--df-radius-md:    8px;
+	--df-radius-sm:    6px;
+	--df-radius-badge: 4px;
+	--df-radius-xs:    3px;
+	--df-radius-pill:  999px;  /* fully-rounded — pills, chips, toggles, status dots */
+
+	/* ─── Shadows ─── */
+	--df-shadow-light:   0 1px 3px rgba(0,0,0,0.08);
+	--df-shadow-card:    0 2px 8px rgba(0,0,0,0.04);
+	--df-shadow-tooltip: 0 4px 12px rgba(0,0,0,0.08);
+	--df-shadow-panel:   0 4px 16px rgba(0,0,0,0.08);
+
+	/* ─── Motion (theme-invariant — no dark reassignment needed) ───────────
+	 * Durations + easings for hovers, popovers, panel slides and surface
+	 * fades. Two speeds, two curves: fast/soft for micro-interactions,
+	 * base/out for entering panels. Reach for a named rung, never a literal.
+	 */
+	--df-dur-fast: 150ms;  /* hovers, chip toggles, icon nudges */
+	--df-dur-base: 220ms;  /* popovers, panel slides, surface fades */
+	--df-ease-out:  cubic-bezier(0.16, 1, 0.3, 1);  /* decisive enter — overshoot-free */
+	--df-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);   /* standard ease-in-out — hovers, fades */
+	/* These two ARE the complete set — there is no --df-ease-standard, -in, -in-out
+	 * or -linear, and none will be added. The curve most systems call "standard" is
+	 * --df-ease-soft; it is named for its job, not its shape, like every token here.
+	 * Stated because a consumer guessed the other name, and an unresolved var()
+	 * invalidates its whole declaration in silence — the actors map in
+	 * dragonfly-claude-config lost every citation hover to it and nothing reported
+	 * a fault. (Recorded 2026-08-12, sprint corpus-lens-review, DD-002.) */
+}
+
+/*
+ * ─── Dark theme ──────────────────────────────────────────────────────
+ *
+ * One token vocabulary, two themes. Activate by setting data-theme="dark"
+ * on <html>. Every value below REASSIGNS an existing --df-* name to a
+ * dark-legible value (the 7 surface/border tokens are declared in :root
+ * above and re-pointed here). No new token names; no --dk-* prefix.
+ *
+ * Text rule (dark-mode equivalent of the light slate-800 rule):
+ *   headings = lightest legible ink (NOT pure #fff — pure white glows on
+ *   black); default readable body text = #d4d4d8. Measured contrast on
+ *   the #000 substrate is recorded in ../rules/Dragonfly-Design-System.md
+ *   and references/dark-theme/dark-theme.md.
+ *
+ * Seeded from the UAE "Neon" palette. Light :root above is byte-identical
+ * to pre-dark canon — light mode is unchanged.
+ */
+[data-theme="dark"] {
+	/* ─── Zinc text ramp (dark reassignment of the slate scale) ─── */
+	/* Substrate is NOT pure black — the page is #121212 (Material baseline) to
+	   stop the glare/halo of light text on absolute black. Inks 950–500 stay
+	   off-white (never pure #fff); the low end 400–50 are lifted off black so
+	   panels/borders read as ELEVATION (lighter grey = higher), not shadow.
+	   Ratios below are on the #121212 page (WCAG AA+; small text ≥7:1). */
+	--df-slate-950: #e4e4e7; /* Headings — soft off-white, not pure white (≈14.0:1) */
+	--df-slate-800: #d4d4d8; /* Body text — DEFAULT readable text (≈12.0:1) */
+	--df-slate-700: #a1a1aa; /* Labels, tertiary text (≈6.9:1) */
+	--df-slate-600: #9b9ba5; /* Links, sidebar descriptions (≈6.4:1) */
+	--df-slate-500: #82828d; /* Metadata, muted text (≈4.6:1) */
+	--df-slate-400: #52525b; /* Placeholder / strong divider — borders only, never body */
+	--df-slate-300: #3f3f46; /* Subtle borders (sits just below --df-border) */
+	--df-slate-200: #2e2e35; /* Primary borders, dividers (= --df-border) */
+	--df-slate-100: #26262b; /* Hover states, raised panel fills (= --df-surface-raised) */
+	--df-slate-50:  #1c1c20; /* Subtle panels (= --df-surface-soft) */
+	--df-white:     #121212; /* Page background — off-black, not pure black */
+
+	/* ─── Surfaces & Borders — dark elevation ramp ───
+	   Higher elevation = lighter grey (Material dark guidance), since shadows
+	   read poorly on a dark page. base #121212 → soft → raised, each a clear step. */
+	--df-surface:        #121212; /* Page background (off-black base) */
+	--df-surface-soft:   #1c1c20; /* Sidebar / subtle panel (+1 step) */
+	--df-surface-raised: #26262b; /* Hover / raised card (+2 steps — reads as elevated) */
+	--df-surface-sunk:   #18181b; /* Recessed / soft card (just above base) */
+	--df-surface-rail:   #0e0e10; /* Rail / deepest chrome (just below base) */
+	--df-border:         #2e2e35; /* Primary border — visible but soft on #121212 */
+	--df-border-soft:    #242429; /* Subtle border */
+
+	/* ─── Brand ─── */
+	/* DARK LEADS THE SIGNATURE BLUE. In dark mode --df-primary resolves to the
+	   Signature Palette mid (--df-blue-500 = #0757d8), so links, active nav, buttons
+	   and hovers lead the dragonfly blue. --df-mint is kept as a named accent (it still
+	   tracks --df-lens-green and tails the brand gradient), but no longer drives the
+	   primary. (Earlier direction had dark leading mint — reversed at the request of the
+	   palette work; the brand gradient stays blue → mint.) */
+	--df-mint:          #34D399; /* Dark-mode mint accent (≈10.3:1 on #121212) — = --df-lens-green; gradient tail + named accent */
+	--df-mint-hover:    #6EE7B7; /* lighter mint — hover / active */
+	--df-brand-blue:    #4d8bff; /* The blue that stays blue — gradient start only (6.45:1) */
+	--df-primary:       var(--df-blue-600);   /* dark accent leads the SIGNATURE BLUE (#2b7ae8; was --df-mint) */
+	--df-primary-hover: var(--df-blue-700);   /* lighter blue hover step — dark blue siblings run lighter as the number rises */
+	/* Brand gradient (dark) — blue → mint. */
+	--df-gradient-brand:          linear-gradient(90deg,  var(--df-brand-blue) 0%, var(--df-mint) 100%);
+	--df-gradient-brand-vertical: linear-gradient(180deg, var(--df-brand-blue) 0%, var(--df-mint) 100%);
+	--df-callout:       #6fa3ff;
+	/* --df-mark-red intentionally NOT reassigned — the logo mark keeps its #BA1B23 in both themes */
+	--df-mark-red-dark: #f87171; /* mark-red TEXT lifted for legibility on the #121212 substrate (≈7.6:1) */
+	--df-accent-report: #10B981; /* emerald reading-column accent — a deeper green that complements the mint primary in dark (≈7.6:1 on #121212), vs the muted periwinkle callout */
+	--df-accent-secondary: #60a5fa;
+	--df-accent-05:        rgba(77,139,255,0.06); /* primary at ~6% on the dark base */
+	--df-accent-10:        rgba(77,139,255,0.12); /* primary at ~12% on the dark base */
+
+	/* ─── Dragonfly Signature Palette (dark) ───
+	   Role-preserving inversion of the light ramp: each stop keeps its job (50 = subtle
+	   blue ground · 900 = strongest blue ink) but re-points for the #121212 substrate.
+	   The signature (500) is lifted to #0757d8 for legibility on dark. */
+	--df-blue-50:  #11192b; /* subtle blue-navy ground */
+	--df-blue-100: #0f2244;
+	--df-blue-200: #102c59;
+	--df-blue-300: #0d387c;
+	--df-blue-400: #0a47aa;
+	--df-blue-500: #0757d8; /* SIGNATURE — lifted for dark */
+	--df-blue-600: #2b7ae8;
+	--df-blue-700: #549bf3;
+	--df-blue-800: #7db8f8;
+	--df-blue-900: #a5d1fa; /* strongest blue ink on dark */
+
+	/* ─── Risk Severity ─── */
+	--df-risk-catastrophic: #f43f5e; /* maroon tail, lifted for legibility on #000 (5.30:1) */
+	--df-risk-extreme:  #f87171; /* (7.59:1) */
+	--df-risk-high:     #FBA94B; /* (10.88:1) */
+	--df-risk-moderate: #fbbf24; /* (12.58:1) */
+	--df-risk-low:      #34D399; /* (10.92:1) */
+
+	/* ─── Confidence ─── */
+	--df-conf-public: #34D399;
+	--df-conf-gov:    #4d8bff;
+	--df-conf-est:    #fbbf24;
+
+	/* ─── Categories ─── */
+	--df-cat-economic:       #4d8bff;
+	--df-cat-security:       #f87171;
+	--df-cat-social:         #a78bfa; /* (7.72:1) */
+	--df-cat-infrastructure: #34D399;
+	--df-cat-political:      #fbbf24;
+
+	/* ─── PESTLE (dark repoint) ─── */
+	/* In light, economic = --df-primary (#0563FA blue). In dark, --df-primary leads
+	   MINT — which collides with technological (teal) and environmental (emerald).
+	   Repoint economic to cobalt so the six PESTLE domains stay distinct in dark. */
+	--df-pestle-economic:    var(--df-lens-cobalt); /* blue, not mint (8.21:1) */
+
+	/* ─── Sequential ramp (dark repoint) ─── */
+	/* In light, seq-1/seq-2 alias the navy callout + brand blue. On the dark
+	   substrate those lift too bright for a deep→pale ramp, so repoint the two
+	   blue stops onto the signature dark blue scale: a low navy ground (200) and
+	   a vivid mid blue (600). Stops 3–5 stay on the slate aliases. */
+	--df-seq-1: var(--df-blue-300);   /* deepest — navy  #0d387c */
+	--df-seq-2: var(--df-blue-600);   /* mid blue        #2b7ae8 */
+
+	/* ─── Risk / Reward / Resilience ─── */
+	--df-rrr-risk:       #f87171;
+	--df-rrr-reward:     #34D399;
+	--df-rrr-resilience: #60a5fa;
+	--df-rrr-red:        #FF6B6B;
+	--df-rrr-green:      #34D399;
+	--df-rrr-navy:       #6fa3ff;
+
+	/* ─── Dragonfly Lenses ─── */
+	/* Dark hues match the v2.1 methodology-eye reference exactly; every rung
+	   clears WCAG AA (≥4.5:1) on the #000 substrate. Ratios in parentheses. */
+	--df-lens-primary:  #4d8bff; /* (6.45:1) */
+	--df-lens-plum:     #C084CC; /* (7.41:1) */
+	--df-lens-magenta:  #F472B6; /* (7.93:1) */
+	--df-lens-rose:     #F81369; /* (5.29:1) */
+	--df-lens-red:      #FF252F; /* (5.56:1) */
+	/* --df-lens-red-dm intentionally NOT reassigned (legacy one-off; stays light) */
+	--df-lens-orange:   #FBA94B; /* (10.88:1) */
+	--df-lens-yellow:   #EFE338; /* (15.71:1) */
+	--df-lens-gold:     #EFD038; /* (13.75:1) */
+	--df-lens-green:    #34D399; /* emerald verdict-mint lands here (10.92:1) */
+	--df-lens-teal:     #2DD4BF; /* (11.28:1) */
+	--df-lens-sky:      #60B8E8; /* (9.52:1) */
+	--df-lens-cobalt:   #5BA8E8; /* (8.21:1) */
+	--df-lens-indigo:   #7C9BE0; /* (7.62:1) */
+	/* Agent + skill tokens are var() aliases of the lenses and --df-slate-*,
+	   so they re-resolve to these dark values automatically — none reassigned. */
+	--df-agent-strategy-ink: var(--df-agent-strategy); /* dark gold clears 13.75:1 — text may take the accent again */
+
+	/* ─── Shadows (deeper on the dark substrate) ─── */
+	--df-shadow-light:   0 1px 3px rgba(0,0,0,0.5);
+	--df-shadow-card:    0 2px 8px rgba(0,0,0,0.4);
+	--df-shadow-tooltip: 0 4px 12px rgba(0,0,0,0.6);
+	--df-shadow-panel:   0 4px 16px rgba(0,0,0,0.6);
+}
+</style>
+<style>
+/* Editorial accent — the canonical report mechanism: --df-callout carries the
+   editorial accent (navy in light); dark reassigns it to --df-accent-report,
+   exactly as report.css does for reading modules. */
+[data-theme="dark"] { --df-callout: var(--df-accent-report); }
+</style>
+<style>/* ════════════════════════════════════════════════════════════════════════════
+   _viz-shell — the shared visualisation app-shell
+   ----------------------------------------------------------------------------
+   The furniture INSIDE a visualisation: the command-palette bar, the
+   canvas | resizable-collapsible panel workspace, the detail overlay and the
+   tooltip. Extracted verbatim from the actors-network exemplar so every viz
+   carries the same structure and can't drift. Link it after foundations/tokens.css;
+   follow it with _viz-shell/viz-patterns.css (the shared MARK layer — states,
+   labels, axes, links); pair it with _viz-shell/viz-shell.js (palette/panel wiring
+   + DFViz.tip + DFViz.markers). This file owns the furniture AROUND the canvas;
+   viz-patterns.css owns the grammar ON it.
+
+   Each viz sets its own accent via  --viz-accent  (defaults to --df-primary):
+     <div class="viz-app" style="--viz-accent: var(--df-agent-actors)"> …
+   Everything here is on --df-* tokens — no raw hex.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.viz-app { --viz-accent: var(--df-primary); }
+
+/* Panel title slash (.viz-panel h2 .accent) — its hue is the SAME colour as the
+   viz's tab in the library railway. The tab hue is keyed to the producing AGENT,
+   not the family (a family is not a palette) — so the exact value is set per page
+   as inline  --viz-slash: var(--df-agent-…)  mirroring the dashboard's VIZ_COLOR
+   map (_interactive-visual-dashboard/index.html). These body[data-family] rules
+   are the FALLBACK only — the family accent, used when a page sets no --viz-slash
+   — exactly the dashboard's `VIZ_COLOR[m] || family.accent` resolution.
+   Keep the family accents in sync with visualisations/families.json. */
+body[data-family="network"]  { --viz-slash: var(--df-agent-actors);   }
+body[data-family="grids"]    { --viz-slash: var(--df-risk-moderate);  }
+body[data-family="canvases"] { --viz-slash: var(--df-agent-strategy); }
+body[data-family="flows"]    { --viz-slash: var(--df-lens-teal);      }  /* challenge lens */
+body[data-family="maps"]     { --viz-slash: var(--df-lens-green);     }  /* interventions lens */
+
+*, *::before, *::after { box-sizing: border-box; }
+/* The page is a flex column: _shell injects header + family railway as the first
+   children (unless ?embed), and the viz-app fills the rest. No magic number. */
+html, body { height: 100%; margin: 0; overflow: hidden; }
+body { font-family: var(--df-font); background: var(--df-surface); color: var(--df-slate-800); display: flex; flex-direction: column; }
+
+:root { --panel-w: clamp(340px, 30vw, 420px); --panel-min: 300px; --panel-max: 620px; }
+.viz-app { display: flex; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+.viz-workspace {
+  flex: 1 1 auto; min-height: 0; position: relative; display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--panel-w);
+}
+/* Collapsed → a single canvas cell at EVERY width (the panel leaves the grid
+   flow entirely, so the responsive row-stack below never reserves a panel row).
+   This keeps the canvas a definite-height cell, which the --doc contain rules
+   need to fit the svg. Used standalone (collapse button) and by embeds that
+   open with ?panel=collapsed. */
+.viz-workspace.panel-collapsed { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
+.viz-workspace.panel-collapsed .viz-panel { display: none; }
+.viz-canvas { position: relative; min-width: 0; overflow: hidden; background: var(--df-surface); }
+.viz-canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+/* document-style figures hold a single chart svg. Fit it the same way the
+   full-bleed viz do: the svg is absolutely positioned to fill the canvas cell
+   (a definite-size grid track), and preserveAspectRatio="xMidYMid meet" letter-
+   boxes + centres the chart inside it. This avoids any percentage-height chain
+   through .figure/.fig-body/.canvas — which silently collapses at narrow widths
+   and in the responsive row-stack — so the chart fits at EVERY width and panel
+   state, never overflowing the frame and never rendering blank. */
+.viz-canvas--doc { position: relative; overflow: hidden; }
+.viz-canvas--doc .figure,
+.viz-canvas--doc .fig-body,
+.viz-canvas--doc .canvas { position: static; height: 100%; min-height: 0; width: 100%; max-width: none; margin: 0; display: block; }
+.viz-canvas--doc .canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ── Selection / focus — never the browser's blue box ───────────────────────
+   Focusable marks (nodes, cells, paths, tiles) carry tabindex for keyboard
+   reach, which makes the browser paint its default focus rectangle on click —
+   the "ugly blue box". Kill that everywhere, and give keyboard focus a quiet
+   branded ring on --viz-accent instead. The DESIGNED selected state (a node
+   lighting up, a cell pulling forward) is layered on top by each figure via
+   .is-selected / .is-active — this only removes the UA artefact. */
+.viz-canvas :focus { outline: none; }
+.viz-canvas :focus:not(:focus-visible) { outline: none; }
+.viz-canvas [tabindex]:focus-visible,
+.viz-canvas svg [tabindex]:focus-visible {
+  outline: 2px solid var(--viz-accent);
+  outline-offset: 2px;
+  border-radius: var(--df-radius-xs);
+}
+/* …except on a GROUP, which is a container rather than a mark. A <g> holding a
+   circle and the label beside it has a bounding box as wide as the label, so an
+   outline on it draws a hard rectangle around the marker and its name together —
+   a crop mark, not a selection, and on a page with speaker photos it boxes the
+   photo. A drop-shadow follows the shapes that were actually painted, so focus
+   stays visible without any box. Two shadows: a tight one to hold the edge, a
+   soft one to carry it at distance. */
+.viz-canvas svg g[tabindex]:focus-visible {
+  outline: none;
+  filter: drop-shadow(0 0 1px var(--viz-accent)) drop-shadow(0 0 4px var(--viz-accent));
+}
+
+/* panel resize handle (drag the left edge) — a visible grip */
+.panel-resize { position: absolute; top: 0; bottom: 0; right: var(--panel-w); margin-right: -8px; width: 16px; cursor: col-resize; z-index: 8; touch-action: none; display: flex; align-items: center; justify-content: center; }
+.panel-resize::after { content: ''; width: 4px; height: 46px; border-radius: 3px; background: var(--df-slate-400); transition: background var(--df-dur-fast) var(--df-ease-soft), height var(--df-dur-fast) var(--df-ease-soft); }
+.panel-resize:hover::after, .panel-resize.is-dragging::after { background: var(--df-primary); height: 72px; }
+.viz-workspace.panel-collapsed .panel-resize { display: none; }
+
+/* collapse / re-open buttons */
+.panel-toggle, .panel-reopen {
+  display: inline-flex; align-items: center; justify-content: center; padding: 0; cursor: pointer;
+  background: var(--df-surface); border: 1px solid var(--df-border); color: var(--df-slate-600);
+  transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.panel-toggle:hover, .panel-reopen:hover { background: var(--df-surface-raised); color: var(--df-slate-950); border-color: var(--df-slate-400); }
+.panel-toggle { position: absolute; top: 12px; right: 16px; z-index: 7; width: 26px; height: 26px; border-radius: var(--df-radius-sm); }
+.panel-toggle svg { width: 14px; height: 14px; }
+.viz-workspace.panel-collapsed .panel-toggle { display: none; }   /* gone when collapsed — no stray button */
+.panel-reopen { position: absolute; top: 50%; right: 0; transform: translateY(-50%); z-index: 7; width: 22px; height: 56px; border-right: 0; border-radius: var(--df-radius-sm) 0 0 var(--df-radius-sm); display: none; }
+.panel-reopen svg { width: 14px; height: 14px; }
+.viz-workspace.panel-collapsed .panel-reopen { display: inline-flex; }
+
+/* ── Framed mode (?framed) — the CANVAS-ONLY presentation ─────────────────────
+   The interactive viz stripped to its living canvas: no command palette, no
+   context panel, no resize/collapse controls — just the marks and the shared
+   hover .tooltip. This is the live figure that interactive-framed.html frames as
+   a clean editorial alternative to static.html, with the full dashboard one click
+   away. Set at first paint from ?framed (same idiom as ?embed); reuses the
+   panel-collapsed grid so the canvas stays a single definite-height cell. */
+[data-framed] .cmd-palette { display: none; }
+/* Let the host's light field show through, so the framed graphic and its legend
+   read as one surface (the viz-framed page paints the --df-slate-50 field). */
+[data-framed] body, [data-framed] .viz-canvas { background: transparent; }
+[data-framed] .viz-workspace { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
+[data-framed] .viz-panel,
+[data-framed] .panel-resize,
+[data-framed] .panel-toggle,
+[data-framed] .panel-reopen { display: none; }
+/* Table/dashboard figures (the few with no fittable svg) centre their content in
+   the frame at natural size. Harmless to svg figures — their canvas svg is
+   absolutely positioned, so it stays out of this flex flow and still fills. */
+[data-framed] .viz-canvas--doc .canvas { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+
+/* ── Command palette ──────────────────────────────────────────────────────── */
+.cmd-palette {
+  flex: 0 0 auto; display: flex; align-items: center; flex-wrap: wrap; gap: 8px 10px;
+  min-height: 44px; padding: 6px 20px; overflow: visible;   /* visible so the dropdown popover isn't clipped; wraps instead of scrolling */
+  background: var(--df-surface-raised); border-bottom: 1px solid var(--df-border);
+}
+.cmd-inline-label { display: inline-flex; align-items: center; gap: 5px; font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--df-slate-500); white-space: nowrap; }
+.cmd-inline-label svg { width: 14px; height: 14px; flex: 0 0 auto; }
+.cmd-group { display: inline-flex; align-items: center; gap: 8px; flex: 0 0 auto; }
+.cmd-sep { width: 1px; height: 18px; background: var(--df-border); flex: 0 0 auto; }
+.cmd-divider { width: 1px; height: 18px; background: var(--df-border); margin: 0 6px 0 4px; flex: 0 0 auto; align-self: center; }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; flex: 0 0 auto;
+  background: transparent; border: 1px solid var(--df-border-soft); border-radius: var(--df-radius-pill);
+  color: var(--df-slate-700); font-family: var(--df-font); font-size: var(--df-text-panel-badge); font-weight: 500; white-space: nowrap; cursor: pointer;
+  transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.chip:hover { background: var(--df-surface); color: var(--df-slate-950); }
+.chip.active { border-color: var(--chip-color, var(--viz-accent)); background: color-mix(in srgb, var(--chip-color, var(--viz-accent)) 16%, transparent); color: var(--df-slate-950); font-weight: 600; }
+.chip .dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 auto; }
+.chip .line { width: 16px; height: 0; border-top: 2px solid currentColor; flex: 0 0 auto; }
+
+/* dropdown */
+.cmd-section { position: relative; display: inline-flex; align-items: center; flex: 0 0 auto; }
+.cmd-trigger {
+  display: inline-flex; align-items: center; gap: 6px; height: 28px; padding: 0 10px;
+  background: transparent; border: 1px solid transparent; border-radius: var(--df-radius-xs);
+  color: var(--df-slate-700); font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500; cursor: pointer; white-space: nowrap;
+  transition: background var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft);
+}
+.cmd-trigger svg { width: 14px; height: 14px; }
+.cmd-trigger:hover { background: var(--df-surface); color: var(--df-slate-950); }
+.cmd-section.is-open .cmd-trigger { background: var(--df-surface); border-color: var(--df-border); color: var(--df-slate-950); }
+.cmd-chev { width: 9px; height: 9px; opacity: 0.5; transition: transform var(--df-dur-fast) var(--df-ease-soft); }
+.cmd-section.is-open .cmd-chev { transform: rotate(180deg); opacity: 1; }
+.cmd-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; flex: 0 0 auto; }
+.cmd-dot.on { background: var(--df-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--df-primary) 18%, transparent); }
+.cmd-popover { position: absolute; top: calc(100% + 6px); left: 0; display: none; flex-direction: column; gap: 4px; min-width: 200px; padding: 6px; background: var(--df-surface); border: 1px solid var(--df-border); border-radius: var(--df-radius-sm); box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft); z-index: 60; }
+.cmd-section.is-open .cmd-popover { display: flex; }
+.cmd-popover .chip { width: 100%; justify-content: flex-start; border-color: transparent; border-radius: var(--df-radius-xs); }
+.cmd-popover .filter-rows { display: flex; flex-direction: column; gap: 1px; }
+.cmd-filter-desc { margin: 2px 4px 6px; padding: 0 6px; font-size: var(--df-text-sm); line-height: 1.5; color: var(--df-slate-700); max-width: 240px; }
+.cmd-filter-divider { border: 0; border-top: 1px solid var(--df-border); margin: 0 0 6px; }
+.chip .chip-count { margin-left: auto; padding-left: 10px; font-family: var(--df-font-mono); font-size: var(--df-text-panel-badge); color: var(--df-slate-500); font-variant-numeric: tabular-nums; }
+.chip.active .chip-count { color: var(--df-slate-700); }
+
+.reset-btn { padding: 0 12px; height: 26px; background: transparent; border: 1px solid transparent; border-radius: var(--df-radius-xs); font-family: var(--df-font-mono); font-size: var(--df-text-panel-badge); letter-spacing: 0.14em; text-transform: uppercase; color: var(--df-slate-600); cursor: pointer; transition: background var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft); }
+.reset-btn:hover { color: var(--df-slate-950); border-color: var(--df-border); background: var(--df-surface); }
+
+/* ── Right context panel ──────────────────────────────────────────────────── */
+.viz-panel { background: var(--df-surface-rail); border-left: 1px solid var(--df-border); overflow-y: auto; scrollbar-gutter: stable; min-height: 0; }
+.panel-inner { padding: 20px 24px 28px; display: flex; flex-direction: column; gap: 15px; }
+.panel-inner.is-hidden { display: none; }
+.p-eyebrow { font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--df-slate-700); display: flex; align-items: center; gap: 10px; }
+.p-badge-row { margin-top: 0; }
+.p-badge { font-family: var(--df-font-mono); font-size: var(--df-text-panel-badge); font-weight: 600; letter-spacing: 0.14em; padding: 2px 8px; border-radius: var(--df-radius-pill); color: var(--viz-accent); border: 1px solid color-mix(in srgb, var(--viz-accent) 35%, transparent); background: color-mix(in srgb, var(--viz-accent) 14%, transparent); display: inline-block; }
+.viz-panel h2 { font-size: var(--df-text-h2); font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; color: var(--df-slate-950); margin: 0; }
+.viz-panel h2 .accent { color: var(--viz-slash, var(--viz-accent)); }
+/* Accordion — bottom-of-panel provenance/reference sections, collapsed by default */
+.p-accordion { display: flex; flex-direction: column; }
+.p-accordion-item { border-top: 1px solid var(--df-border); }
+.p-accordion-item:last-child { border-bottom: 1px solid var(--df-border); }
+.p-accordion-summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 12px 0; }
+.p-accordion-summary::-webkit-details-marker { display: none; }
+.p-accordion-summary .p-block-label { margin-bottom: 0; }
+.p-accordion-icon { font-family: var(--df-font-mono); font-size: 15px; font-weight: 600; color: var(--df-slate-500); flex: none; transition: transform var(--df-dur-fast) var(--df-ease-soft); }
+.p-accordion-item[open] > .p-accordion-summary .p-accordion-icon { transform: rotate(45deg); }
+.p-accordion-body { padding: 0 0 16px; }
+.p-lead { font-size: var(--df-text-panel-body); line-height: 1.65; color: var(--df-slate-700); margin: 0; }
+.p-lead strong { color: var(--df-slate-950); font-weight: 600; }
+/* inline code — any literal token or code referenced in panel copy (e.g. --df-*) */
+.viz-panel code { font-family: var(--df-font-mono); font-size: 0.86em; font-weight: 500; color: var(--df-slate-800); background: color-mix(in srgb, var(--df-slate-500) 10%, var(--df-surface-raised)); border: 1px solid var(--df-border-soft); border-radius: var(--df-radius-xs); padding: 1px 5px; white-space: nowrap; }
+.p-block-label { font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--df-slate-700); display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+/* "How to read it" — icon-chip rows. Each row pairs a glyph chip with one line of
+   grammar; the chip's --rc carries the row's reference colour (slate by default). */
+.p-howto { display: flex; flex-direction: column; gap: 13px; }
+.p-howto-row { display: flex; gap: 12px; align-items: flex-start; }
+.p-howto-icon { --rc: var(--df-slate-600); flex: 0 0 auto; width: 30px; height: 30px; display: grid; place-items: center; margin-top: 1px; border: 1px solid color-mix(in srgb, var(--rc) 28%, var(--df-border)); border-radius: var(--df-radius-xs); background: color-mix(in srgb, var(--rc) 9%, var(--df-surface-raised)); color: var(--rc); }
+.p-howto-icon svg { width: 15px; height: 15px; }
+.p-howto-text { flex: 1; min-width: 0; font-size: var(--df-text-panel-body); line-height: 1.55; color: var(--df-slate-800); }
+.p-howto-text strong { color: var(--df-slate-950); font-weight: 600; }
+.p-takeaways { display: flex; flex-direction: column; gap: 10px; }
+.p-takeaway { display: flex; gap: 10px; font-size: var(--df-text-panel-takeaway); line-height: 1.55; color: var(--df-slate-800); }
+.p-takeaway .marker { flex: 0 0 auto; font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.14em; color: var(--df-slate-500); margin-top: 2px; min-width: 22px; }
+.p-takeaway strong { color: var(--df-slate-950); font-weight: 600; }
+.p-takeaway .o { color: var(--df-risk-extreme); font-weight: 600; }
+.p-sources { display: flex; flex-direction: column; gap: 6px; }
+.p-source { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 500; letter-spacing: 0.04em; color: var(--df-slate-700); display: flex; align-items: baseline; gap: 8px; }
+.src-tag { font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; padding: 2px 7px; border-radius: var(--df-radius-pill); border: 1px solid; flex: 0 0 auto; }
+.src-tag.is-public { color: var(--df-conf-public); border-color: color-mix(in srgb, var(--df-conf-public) 32%, transparent); background: color-mix(in srgb, var(--df-conf-public) 16%, transparent); }
+.src-tag.is-estimate { color: var(--df-conf-est); border-color: color-mix(in srgb, var(--df-conf-est) 30%, transparent); background: color-mix(in srgb, var(--df-conf-est) 12%, transparent); }
+
+/* detail overlay (on selection) */
+.panel-detail { display: none; }
+.panel-detail.is-open { display: flex; flex-direction: column; gap: 15px; padding: 20px 24px 28px; }
+#detail-host { display: flex; flex-direction: column; gap: 15px; }
+.detail-back { align-self: flex-start; display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px; background: transparent; border: 1px solid var(--df-border); border-radius: var(--df-radius-sm); color: var(--df-slate-700); font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft); }
+.detail-back:hover { background: var(--df-surface-raised); color: var(--df-slate-950); border-color: var(--df-slate-400); }
+.detail-head { display: flex; flex-direction: column; gap: 8px; }
+/* Same rung as .viz-panel h2 — it used to be 19px against that block's 18px, a 1px
+   hierarchy no reader can perceive. Collapsed to one rung 2026-08-12 (DD-003). */
+.detail-head h2 { font-size: var(--df-text-h3); }
+.detail-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 3px 9px; border-radius: var(--df-radius-pill); border: 1px solid; }
+.detail-line { font-size: var(--df-text-panel-body); color: var(--df-slate-800); line-height: 1.6; margin: 0; }
+.detail-line strong { color: var(--df-slate-950); }
+.ties { display: flex; flex-direction: column; gap: 2px; }
+.tie { display: flex; align-items: center; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--df-border-soft); font-size: var(--df-text-panel-body); color: var(--df-slate-800); }
+.tie:last-child { border-bottom: none; }
+.tie-type { font-family: var(--df-font-mono); font-size: var(--df-text-panel-label); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 6px; border-radius: var(--df-radius-xs); flex: 0 0 auto; }
+.tie-name { flex: 1 1 auto; }
+
+/* ── Tooltip ──────────────────────────────────────────────────────────────── */
+.tooltip { position: fixed; pointer-events: none; opacity: 0; z-index: 300; max-width: 240px; padding: 8px 12px; background: var(--df-surface); border: 1px solid var(--df-border); border-radius: var(--df-radius-sm); box-shadow: var(--df-shadow-panel); transition: opacity var(--df-dur-fast) var(--df-ease-soft); }
+.tooltip.show { opacity: 1; }
+.tt-name { font-weight: 600; font-size: var(--df-text-panel-body); color: var(--df-slate-950); }
+.tt-meta { font-size: var(--df-text-xs); color: var(--df-slate-600); margin-top: 2px; }
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 920px) {
+  .viz-workspace { grid-template-columns: 1fr; grid-template-rows: minmax(320px, 55vh) 1fr; }
+  .viz-panel { border-left: 0; border-top: 1px solid var(--df-border); }
+  /* collapsed stays a single canvas cell — never the stacked panel row */
+  .viz-workspace.panel-collapsed { grid-template-columns: 1fr; grid-template-rows: minmax(0, 1fr); }
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   figure-frame — document-style figure chrome (folded in from the former
+   components/figure-frame so the viz suite is self-contained on _viz-shell).
+   The wrapper, eyebrow/title/sub, the canvas + legend row, and the
+   "How to read it" block (narrative + grammar). Loaded by the document-style
+   viz that wrap their SVG in .figure > .fig-body (not by actors-network, which
+   is full-bleed and self-contained). Every value resolves from a --df-* token.
+   ════════════════════════════════════════════════════════════════════════ */
+@font-face {
+	font-family: 'IBM Plex Sans';
+	src: url('styles/ibm-plex-sans.woff2') format('woff2');
+	font-weight: 100 700; font-style: normal; font-display: swap;
+}
+
+/* ── Figure header ── */
+.figure { max-width: 1000px; margin: 0 auto; }
+.eyebrow { display: inline-block; font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--df-slate-500); }
+.fig-title { font-size: var(--df-text-h2); font-weight: 600; color: var(--df-slate-950); margin: 10px 0 2px; }
+.fig-sub { font-size: var(--df-text-sm); color: var(--df-slate-600); margin: 0 0 20px; max-width: 680px; }
+
+/* ── Viz canvas row ── */
+.fig-body { display: flex; gap: 32px; align-items: flex-start; }
+.canvas { flex: 1; min-width: 0; overflow-x: auto; }
+.canvas svg { display: block; width: 100%; height: auto; }
+
+/* NO LEGEND HERE, deliberately. A 180px rail-legend block used to sit on this line
+   — .legend / .lg-head / .legend-item / .lg-label / .lg-note, unnamespaced. It had
+   zero consumers in this repo, and the anatomy it duplicated already lives properly
+   namespaced in components/figure-frame/figure-frame.css (.df-fig-legend, .df-lg-*)
+   with a narrow-width stack this copy never had.
+   Being dead did not make it harmless. `.legend` and `.lg-label` also name the
+   legend STRIP in viz-legend.css, with opposite meanings — in the rail .lg-label is
+   an item's text (14px sans, flex:1); in the strip it is a group's HEADING (11.5px
+   mono, uppercase, tracked). Canonical's three forms link one sheet each and never
+   collided. A HYBRID page — app shell above the fold, framed figure below — links
+   both and collides immediately, which is what happened in dragonfly-claude-config:
+   17 legend items stacked into a 640px column, patched there with scoped overrides
+   because the cause was here.
+   If a viz app shell ever wants a rail legend, borrow figure-frame's df- classes.
+   Do not reintroduce these names. (Deleted 2026-08-12, DD-006.) */
+
+/* ── "How to read it" — narrative + grammar ── */
+.read { max-width: 1000px; margin: 30px auto 0; border-top: 1px solid var(--df-border); padding-top: 26px; }
+.read-head { font-size: var(--df-text-h3); font-weight: 600; color: var(--df-slate-950); margin: 0 0 16px; }
+.read-grid { display: flex; gap: 40px; align-items: flex-start; }
+.read-prose { flex: 1; min-width: 0; }
+.read-block { margin-bottom: 16px; }
+.read-block h3 { font-size: var(--df-text-sm); font-weight: 600; color: var(--df-slate-950); margin: 0 0 4px; }
+.read-block p { font-size: var(--df-text-base); line-height: 1.6; color: var(--df-slate-800); margin: 0; }
+.grammar { width: 330px; flex-shrink: 0; }
+.grammar .gh { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--df-slate-600); margin-bottom: 8px; }
+.grammar table { border-collapse: collapse; width: 100%; }
+.grammar td { padding: 6px 0; border-bottom: 1px solid var(--df-border-soft); vertical-align: top; font-size: var(--df-text-sm); line-height: 1.45; }
+.grammar .gm { font-weight: 600; color: var(--df-slate-950); white-space: nowrap; padding-right: 14px; }
+.grammar .gv { color: var(--df-slate-800); }
+
+@media (max-width: 760px) {
+	.fig-body { flex-direction: column; }
+	/* `.legend { width: 100% }` sat here until 2026-08-12 — the last orphan of the
+	   rail block deleted above, three lines under a comment saying the names were
+	   gone. DD-006 missed it because it hides inside this media block, indented,
+	   where a `^\.legend` grep does not reach. It still reached a hybrid page: below
+	   760px it injected a width onto viz-legend.css's strip, which declares none.
+	   Found by validate.mjs's shell-class-collision check, which is the whole reason
+	   that check exists — the defect is invisible from inside the file. */
+	.read-grid { flex-direction: column; }
+	.grammar { width: 100%; }
+}
+
+.idref { font-family: var(--df-font-mono, ui-monospace, monospace); font-size: 0.88em;
+         color: var(--df-slate-500); letter-spacing: .01em; white-space: nowrap;
+         border-bottom: 1px dotted color-mix(in srgb, currentColor 35%, transparent);
+         cursor: help; }
+</style>
+<style>/* ════════════════════════════════════════════════════════════════════════
+   DRAGONFLY · CHROME SHELL  (canonical)
+   ────────────────────────────────────────────────────────────────────────
+   The shared page furniture for app-style deliverables: top bar, global nav,
+   identity meta, tools (provenance + modules), theme toggle, the tab railway,
+   and the command-palette band — plus the right-rail base + resize handle and
+   the visual-stage frame.
+
+   Pairs with chrome.js (injects the markup from a DF_CHROME config) and
+   foundations/tokens.css (every value resolves from a --df-* token). Curated
+   from the UAE Trade-Routes briefing chrome, decoupled from that deliverable.
+
+   TOKEN DISCIPLINE: no raw hex. Colours/radii/motion = --df-*; only the shell
+   LAYOUT constants (max width, bar heights) live in the :root below — they are
+   chrome geometry, not design tokens.
+   ════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --shell-max:    1440px;  /* inner content cap; bars go full-bleed, content centres */
+  --shell-pad-x:  32px;    /* horizontal page padding */
+  --top-bar-h:    51px;    /* logo 22 + 14×2 padding + 1px border */
+  --rail-right-w: 380px;   /* rail width — min/default; the resize handle writes this up to 620 */
+}
+
+/* ─── Content links — canonical default for any page that loads the shell.
+   Tokenised for both themes (Dragonfly blue in light, mint in dark) and, being
+   author-origin, this overrides the browser's default link colours in EVERY
+   state — including :visited, which otherwise falls to UA dark purple,
+   unreadable on the dark substrate. Deliberately element-level (lowest
+   specificity): the header chrome (.global-nav-item, .family-nav-item, …) and
+   component links (.viz-open, .card-link, …) set their own colour on a more
+   specific selector, so this default never touches them. */
+a { color: var(--df-primary); }
+
+/* ─── Top bar ───────────────────────────────────────────────────────────── */
+/* Glassmorphism: a translucent, blurred substrate so page content shows
+   through the sticky header. The fill is derived from --df-surface, so it
+   tracks the theme (frosted white in light, frosted black in dark). Browsers
+   without backdrop-filter fall back to the solid surface (see @supports). */
+.top-bar-wrap {
+  position: sticky; top: 0; z-index: 50; width: 100%;
+  background: color-mix(in srgb, var(--df-surface) 72%, transparent);
+  border-bottom: 1px solid var(--df-border);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .top-bar-wrap { background: var(--df-surface); }
+}
+.top-bar {
+  max-width: var(--shell-max); margin: 0 auto; padding: 0 var(--shell-pad-x);
+  min-height: calc(var(--top-bar-h) - 1px);
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.top-bar-lead  { display: inline-flex; align-items: stretch; gap: 30px; min-width: 0; }
+.top-bar-right { display: inline-flex; align-items: center; gap: 24px; }
+/* Chrome links never show the browser's default text underline — only the
+   intentional brand-gradient underline (nav ::after, module .mod-underline). */
+.top-bar-wrap a, .tab-bar a { text-decoration: none; }
+
+/* Brand — theme-swapped logo (black in light, white in dark) */
+.top-bar-brand { display: inline-flex; align-items: center; }
+.top-bar-brand img { height: 22px; width: auto; display: block; opacity: 0.92; }
+.top-bar-brand .brand-logo { display: none; }
+:root:not([data-theme="dark"]) .top-bar-brand .brand-logo--black { display: block; }
+:root[data-theme="dark"]        .top-bar-brand .brand-logo--white { display: block; }
+
+/* Active Visual Family breadcrumb — sits just right of the logo */
+.top-bar-breadcrumb { display: inline-flex; align-items: center; gap: 8px; }
+.top-bar-breadcrumb .bc-sep { width: 1px; height: 18px; background: var(--df-border); margin: 0 6px 0 2px; }
+.top-bar-breadcrumb .bc-num { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600; letter-spacing: 0.06em; color: var(--df-slate-500); }
+.top-bar-breadcrumb .bc-name { font-family: var(--df-font); font-size: var(--df-text-sm); font-weight: 600; letter-spacing: -0.005em; color: var(--df-slate-900); }
+
+/* Classification pill — first item in the right cluster */
+.top-bar-classification { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 10px; border-radius: var(--df-radius-pill); color: var(--df-slate-700); border: 1px solid var(--df-border); background: var(--df-surface-raised); white-space: nowrap; }
+/* Status variants for the pill, opted into via DF_CHROME.classification:
+   { label, cls } — the `cls` hook chrome.js already supports. Additive: the
+   default neutral pill is unchanged, so no existing page moves.
+   .is-working — red. The artefact is IN PROGRESS and must not be treated as
+   settled. Loud on purpose: a quiet "working" badge gets read as "reference". */
+.top-bar-classification.is-working {
+  color: var(--df-risk-extreme);
+  border-color: color-mix(in srgb, var(--df-risk-extreme) 42%, transparent);
+  background: color-mix(in srgb, var(--df-risk-extreme) 12%, transparent);
+  font-weight: 700;
+}
+
+/* Global section nav — gradient underline grows 0→full on hover/active */
+.global-nav { display: inline-flex; align-items: stretch; gap: 26px; }
+.global-nav-item {
+  position: relative; display: inline-flex; align-items: center;
+  font-family: var(--df-font); font-size: var(--df-text-base); font-weight: 500; letter-spacing: -0.005em;
+  color: var(--df-slate-700); white-space: nowrap; transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.global-nav-item::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0;
+  background-image: var(--df-gradient-brand);
+  transition: width 500ms var(--df-ease-out); pointer-events: none;
+}
+.global-nav-item:hover, .global-nav-item.active { color: var(--df-primary); }
+.global-nav-item:hover::after, .global-nav-item.active::after { width: 100%; }
+.global-nav-item.active { font-weight: 600; }
+
+/* ─── Section drop-down (.nav-mega) ─────────────────────────────────────────
+   A nav item that owns a group of pages drops a two-column panel: the pages
+   down the left (title · what it is), the hovered one shown on the right (motif ·
+   title · what you get). The motif is the SAME symbol the page's card uses on
+   index.html, out of canonical/assets/motifs.js — the menu carries no artwork of
+   its own, and it draws that artwork ONCE, at the size it can be read. The list
+   rows carry no picture: a 64px motif was a mark rather than a drawing, and a row
+   does not need two things pointing at the same page.
+
+   --nm-accent is the section's colour, set per menu by chrome.js from
+   DF_CHROME.nav[].accent (red · blue · plum, matching index.html's three filter
+   cards). It also lands as --mv-accent, which is the property the motifs
+   themselves read — so one declaration colours the chrome AND the drawings. */
+.nav-mega { position: relative; display: inline-flex; align-items: stretch; }
+.nav-mega .global-nav-item { gap: 5px; }
+.nav-mega-chev { flex: none; opacity: 0.6; transition: transform var(--df-dur-base) var(--df-ease-soft), opacity var(--df-dur-base) var(--df-ease-soft); }
+.nav-mega.is-open .nav-mega-chev { transform: rotate(180deg); opacity: 1; }
+.nav-mega.is-open > .global-nav-item { color: var(--df-primary); }
+.nav-mega.is-open > .global-nav-item::after { width: 100%; }
+
+/* The panel. Frosted like the bar it hangs from, so the two read as one piece of
+   chrome rather than a card dropped on the page. It sizes to its content
+   (max-content) — one column of rows for a short section, two for Templates —
+   and chrome.js nudges it left if that would overrun the window. */
+.nav-mega-panel {
+  position: absolute; top: calc(100% + 9px); left: 0; z-index: 60;
+  display: none; grid-template-columns: max-content 300px; gap: 0;
+  max-width: calc(100vw - 32px);
+  background: color-mix(in srgb, var(--df-surface) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft);
+  overflow: hidden;
+}
+.nav-mega.is-open .nav-mega-panel { display: grid; }
+
+/* ── Left column — the pages ──────────────────────────────────────────────── */
+.nav-mega-list { display: grid; grid-template-columns: repeat(var(--nm-cols, 1), 300px); align-content: start; padding: 10px; gap: 1px; max-height: min(70vh, 620px); overflow-y: auto; }
+.nav-mega-item {
+  position: relative; display: block; padding: 9px 12px; min-height: 52px;
+  border-radius: var(--df-radius-sm); color: var(--df-slate-900);
+  transition: background var(--df-dur-base) var(--df-ease-soft);
+}
+.nav-mega-item.is-on { background: var(--df-surface-raised); }
+.nav-mega-item:focus-visible { outline: 2px solid var(--df-primary); outline-offset: -2px; }
+.nav-mega-item .nmi-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nav-mega-item .nmi-title {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--df-slate-950);
+  transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.nav-mega-item.is-on .nmi-title { color: var(--nm-accent, var(--df-primary)); }
+.nav-mega-item .nmi-tag { font-size: var(--df-text-sm); line-height: 1.35; color: var(--df-slate-700); }
+/* A page that does not exist yet reads muted in the list — and says so in full
+   on the preview beside it. The word lives there, not in the row, because a chip
+   in the row pushed long titles onto a second line and broke the list's rhythm;
+   the panel has the room the row does not.
+
+   The mute is one step (950 → 700), not two: a planned page is still a page you
+   are meant to read about, so its row stays above the readable floor and only
+   the title stops being the darkest thing in the list. */
+.nav-mega-item.is-planned .nmi-title { color: var(--df-slate-700); font-weight: 600; }
+
+/* ── Right column — the enlarged preview ──────────────────────────────────── */
+.nav-mega-previews { position: relative; border-left: 1px solid var(--df-border); padding: 16px; background: color-mix(in srgb, var(--df-surface-raised) 55%, transparent); }
+.nav-mega-preview { display: none; }
+.nav-mega-preview.is-on { display: block; }
+.nav-mega-preview .nmp-frame {
+  display: flex; align-items: center; justify-content: center; height: 132px; margin-bottom: 14px; padding: 10px;
+  background: var(--df-surface); border: 1px solid var(--df-border); border-radius: var(--df-radius-sm);
+}
+.nav-mega-preview .nmp-frame svg { display: block; width: 100%; height: 100%; }
+.nav-mega-preview .nmp-title {
+  display: flex; align-items: center; gap: 9px; font-family: var(--df-font); font-size: var(--df-text-base);
+  font-weight: 600; letter-spacing: -0.01em; color: var(--df-slate-950); margin-bottom: 5px;
+}
+.nav-mega-preview .nmp-flag {
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600;
+  letter-spacing: 0.06em; color: var(--df-slate-700); white-space: nowrap;
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-pill); padding: 1px 8px;
+}
+.nav-mega-preview .nmp-blurb { margin: 0; font-size: var(--df-text-sm); line-height: 1.5; color: var(--df-slate-700); }
+
+/* Four-family global nav — same gradient-underline behaviour as .global-nav,
+   but each item carries a mono family number + the family name. Sits just right
+   of the logo, replacing the single-family breadcrumb on the viz pages. */
+.family-nav { display: inline-flex; align-items: stretch; gap: 22px; }
+.family-nav-item {
+  position: relative; display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--df-font); font-size: var(--df-text-base); font-weight: 500; letter-spacing: -0.005em;
+  color: var(--df-slate-700); white-space: nowrap; transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.family-nav-item .fam-num { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600; letter-spacing: 0.06em; color: var(--df-slate-500); transition: color var(--df-dur-base) var(--df-ease-soft); }
+.family-nav-item::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0;
+  background-image: var(--df-gradient-brand);
+  transition: width 500ms var(--df-ease-out); pointer-events: none;
+}
+.family-nav-item:hover, .family-nav-item.active { color: var(--df-primary); }
+.family-nav-item:hover .fam-num, .family-nav-item.active .fam-num { color: var(--df-primary); }
+.family-nav-item:hover::after, .family-nav-item.active::after { width: 100%; }
+.family-nav-item.active { font-weight: 600; }
+.family-nav-item.is-disabled { color: var(--df-slate-400); cursor: default; pointer-events: none; }
+.family-nav-item.is-disabled .fam-num { color: var(--df-slate-300); }
+
+/* Identity meta strip */
+.top-bar-meta {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500; letter-spacing: 0.01em; color: var(--df-slate-700);
+}
+.top-bar-meta .meta-label { color: var(--df-slate-700); }
+.top-bar-meta .meta-label.is-client { color: var(--df-primary); font-weight: 600; }   /* client-name slot — Dragonfly blue */
+.top-bar-meta .meta-icon { display: inline-flex; align-items: center; justify-content: center; color: var(--df-slate-700); }
+.top-bar-meta .meta-icon-dragonfly img { width: 16px; height: 16px; display: block; }
+.top-bar-meta .meta-icon svg, .top-bar-meta .meta-clock svg { display: block; }
+.top-bar-meta .meta-clock { display: inline-flex; align-items: center; color: var(--df-slate-700); }
+.top-bar-meta .meta-icon + .meta-label, .top-bar-meta .meta-clock + .meta-label { margin-left: -2px; }
+.top-bar-meta .meta-icon-workflow, .top-bar-meta .meta-clock { margin-left: 18px; }
+/* Version chip — the same object as index.html's hero .ds-version (home.css),
+   at header size. Only the padding shrinks: the type stays at --df-text-label,
+   the 11.5px floor, because a chip in a 13px strip is made smaller by tightening
+   its box, not by going under the floor. Fill and border are one mixed hue so
+   the pair moves with the token, and the fill stays light (8%) — the plate is
+   there to seat the number, not to shout over it. Rendered from a meta[] entry
+   carrying `badge` (see chrome.js metaHTML), so its place in the strip is set
+   by array order. */
+.top-bar-meta .meta-badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600;
+  letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap;
+  color: var(--df-blue-700);
+  background: color-mix(in srgb, var(--df-callout) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--df-callout) 32%, transparent);
+  border-radius: var(--df-radius-pill); padding: 1px 8px;
+}
+
+/* Tools cluster (provenance + modules) */
+.top-bar-tools { display: inline-flex; align-items: center; gap: 16px; }
+.top-bar-conf-trigger {
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--df-slate-950); padding: 4px 0 4px 8px; gap: 7px;
+}
+
+/* ─── Shared dropdown primitive (.cmd-section) ──────────────────────────── */
+.cmd-section { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; }
+.cmd-section-trigger {
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px;
+  background: transparent; border: 1px solid transparent; border-radius: var(--df-radius-xs);
+  color: var(--df-slate-700); font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.cmd-section-trigger:hover { background: var(--df-surface-raised); color: var(--df-slate-950); }
+.cmd-section.is-open .cmd-section-trigger { background: var(--df-surface-raised); border-color: var(--df-border); color: var(--df-slate-950); }
+.cmd-section-icon { width: 14px; height: 14px; flex: 0 0 auto; }
+.cmd-section-name { letter-spacing: 0.01em; }
+.cmd-section-chev { width: 9px; height: 9px; opacity: 0.5; transition: transform var(--df-dur-fast) var(--df-ease-soft), opacity var(--df-dur-fast) var(--df-ease-soft); }
+.cmd-section.is-open .cmd-section-chev { transform: rotate(180deg); opacity: 1; }
+.cmd-section-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; flex-shrink: 0; transition: background var(--df-dur-fast) var(--df-ease-soft); }
+.cmd-section-dot.on { background: var(--df-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--df-primary) 18%, transparent); }
+.cmd-section-popover {
+  position: absolute; top: calc(100% + 6px); left: 0; display: none;
+  min-width: 240px; padding: 6px; background: var(--df-surface);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-sm);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft); z-index: 60;
+}
+.cmd-section.is-open .cmd-section-popover { display: block; }
+/* right-aligned popovers for the right-cluster tools */
+.top-bar-tools .cmd-section-popover { left: auto; right: 0; }
+
+/* Provenance popover content */
+.top-bar-conf-popover { min-width: 320px; }
+.top-bar-conf-caption { font-size: var(--df-text-xs); line-height: 1.5; color: var(--df-slate-700); margin: 4px 6px 10px; }
+.prov-row { display: flex; justify-content: space-between; gap: 16px; padding: 4px 6px; font-size: var(--df-text-xs); }
+.prov-row .prov-k { color: var(--df-slate-500); font-family: var(--df-font-mono); font-size: var(--df-text-micro); letter-spacing: 0.08em; text-transform: uppercase; }
+.prov-row .prov-v { color: var(--df-slate-800); text-align: right; }
+.conf-divider { border: 0; border-top: 1px solid var(--df-border); margin: 8px 0; }
+.footer-block-label { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--df-slate-600); margin: 6px 6px 8px; }
+.footer-tag-legend { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 6px; }
+.footer-tag { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: var(--df-radius-pill); border: 1px solid; }
+.footer-tag.is-public   { color: var(--df-conf-public); border-color: color-mix(in srgb, var(--df-conf-public) 32%, transparent); background: color-mix(in srgb, var(--df-conf-public) 14%, transparent); }
+.footer-tag.is-gov      { color: var(--df-conf-gov);    border-color: color-mix(in srgb, var(--df-conf-gov) 30%, transparent);    background: color-mix(in srgb, var(--df-conf-gov) 12%, transparent); }
+.footer-tag.is-estimate { color: var(--df-conf-est);    border-color: color-mix(in srgb, var(--df-conf-est) 30%, transparent);    background: color-mix(in srgb, var(--df-conf-est) 12%, transparent); }
+.footer-tag.is-client   { color: var(--df-cat-social);  border-color: color-mix(in srgb, var(--df-cat-social) 30%, transparent);  background: color-mix(in srgb, var(--df-cat-social) 12%, transparent); }
+.conf-note { font-size: var(--df-text-label); color: var(--df-slate-500); margin: 10px 6px 4px; }
+
+/* All-Modules hamburger → X */
+.modules-burger { position: relative; width: 16px; height: 12px; opacity: 0.8; }
+.top-bar-modules-trigger:hover .modules-burger, .cmd-section.is-open .modules-burger { opacity: 1; }
+.modules-burger .mb-bar { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 1px; background: currentColor; transition: transform var(--df-dur-fast) var(--df-ease-soft), opacity var(--df-dur-fast) var(--df-ease-soft), top var(--df-dur-fast) var(--df-ease-soft); }
+.modules-burger .mb-bar:nth-child(1) { top: 0; }
+.modules-burger .mb-bar:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.modules-burger .mb-bar:nth-child(3) { bottom: 0; }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(2) { opacity: 0; }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(3) { top: 50%; bottom: auto; transform: translateY(-50%) rotate(-45deg); }
+/* All-Modules dropdown — the dtsite navbar treatment (exact to the reference):
+   no side padding so the dashed dividers run full width; each row's brand-gradient
+   underline grows 0→full and the title slides 4px + turns brand-blue on hover/active. */
+.top-bar-modules-popover { min-width: 240px; max-width: 280px; max-height: 92vh; overflow-y: auto; padding: 8px 0 4px; text-align: left; text-transform: none; }
+.modules-caption { font-size: var(--df-text-label); line-height: 1.45; color: var(--df-slate-600); margin: 0 0 4px; padding: 0 13px; }
+/* Family group header inside the modules menu ("Family N: <name>") */
+.modules-group-label { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--df-slate-500); padding: 11px 13px 5px; }
+.modules-menu > .modules-group-label:first-child { padding-top: 4px; }
+.modules-group-empty { margin: 0; padding: 2px 13px 8px; font-size: var(--df-text-label); font-style: italic; color: var(--df-slate-400); }
+.modules-menu { display: flex; flex-direction: column; }
+.modules-menu-item { position: relative; display: grid; grid-template-columns: 20px 1fr; align-items: baseline; gap: 9px; padding: 6px 13px; border-bottom: 1px dashed var(--df-slate-300); color: var(--df-slate-900); }
+.modules-menu-item .mod-num { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.04em; color: var(--df-slate-500); font-variant-numeric: tabular-nums; transition: color 200ms ease; }
+.modules-menu-item .mod-title { display: inline-block; font-size: var(--df-text-xs); line-height: 1.35; color: inherit; transition: transform 200ms ease, color 200ms ease; }
+.modules-menu-item .mod-underline { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background-image: var(--df-gradient-brand); transition: width 500ms var(--df-ease-out); pointer-events: none; }
+.modules-menu-item:hover .mod-underline, .modules-menu-item.is-active .mod-underline { width: 100%; }
+.modules-menu-item:hover .mod-title, .modules-menu-item.is-active .mod-title { transform: translateX(4px); color: var(--df-brand-blue); }
+.modules-menu-item:hover .mod-num, .modules-menu-item.is-active .mod-num { color: var(--df-brand-blue); }
+.modules-menu-item.is-active .mod-title { font-weight: 600; }
+
+/* Action cluster — updates · repo link · theme toggle, kept tight together */
+.top-bar-actions { display: inline-flex; align-items: center; gap: 8px; }
+
+/* Theme toggle + repo link + updates — same square icon-button shape */
+.top-bar-theme-toggle,
+.top-bar-github,
+.top-bar-updates {
+  display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex-shrink: 0;
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md); background: transparent; color: var(--df-slate-700);
+  cursor: pointer; -webkit-appearance: none; appearance: none;
+  transition: background var(--df-dur-base) var(--df-ease-soft), border-color var(--df-dur-base) var(--df-ease-soft), color var(--df-dur-base) var(--df-ease-soft);
+}
+.top-bar-theme-toggle:hover,
+.top-bar-github:hover,
+.top-bar-updates:hover { background: var(--df-surface-raised); border-color: var(--df-slate-400); color: var(--df-slate-950); }
+.top-bar-theme-toggle:focus-visible,
+.top-bar-github:focus-visible,
+.top-bar-updates:focus-visible { outline: 2px solid var(--df-primary); outline-offset: 2px; }
+/* Red "new briefing" dot on the updates button — lit by chrome.js when an unseen
+   briefing exists. The surface-coloured ring lifts it off the megaphone glyph. */
+.top-bar-updates { position: relative; }
+.top-bar-updates-dot {
+  position: absolute; top: 4px; right: 4px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--df-risk-extreme); box-shadow: 0 0 0 2px var(--df-surface); pointer-events: none;
+}
+
+/* ─── Updates dropdown — megaphone → glassmorphism briefing calendar ─────────
+   The button drops a frosted calendar in the header; dated days link to their
+   timestamped briefing. Right-aligned under the action cluster. */
+.top-bar-updates-wrap { position: relative; display: inline-flex; }
+.top-bar-updates-cal {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 60; width: 288px; padding: 14px;
+  background: color-mix(in srgb, var(--df-surface) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft);
+}
+.top-bar-updates-cal[hidden] { display: none; }
+.top-bar-updates-cal .uc-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
+.top-bar-updates-cal .uc-month { flex: 1; text-align: center; font-family: var(--df-font-mono); font-size: var(--df-text-sm); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--df-slate-950); }
+.top-bar-updates-cal .uc-nav { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; flex: none; padding: 0; border: 1px solid var(--df-border); border-radius: var(--df-radius-sm); background: var(--df-surface); color: var(--df-slate-700); font-size: var(--df-text-md); line-height: 1; cursor: pointer; }
+.top-bar-updates-cal .uc-nav:hover:not(:disabled) { border-color: var(--df-callout); color: var(--df-callout); }
+.top-bar-updates-cal .uc-nav:disabled { opacity: 0.35; cursor: default; }
+.top-bar-updates-cal .uc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.top-bar-updates-cal .uc-dow { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 700; color: var(--df-slate-500); text-align: center; padding: 2px 0 6px; }
+.top-bar-updates-cal .uc-day { display: flex; align-items: center; justify-content: center; height: 30px; border-radius: var(--df-radius-sm); font-size: var(--df-text-sm); color: var(--df-slate-300); text-decoration: none; }
+.top-bar-updates-cal .uc-day.is-empty { visibility: hidden; }
+.top-bar-updates-cal .uc-day.is-available { color: var(--df-callout); font-weight: 700; border: 1px solid var(--df-callout); cursor: pointer; }
+.top-bar-updates-cal .uc-day.is-available:hover { background: var(--df-callout); color: var(--df-surface); }
+.top-bar-updates-cal .uc-day.is-latest { background: var(--df-callout); color: var(--df-surface); border: 1px solid var(--df-callout); }
+/* Dark mode mirrors light mode's STATE: the latest day is a FILLED chip (mint =
+   primary in dark) and previous briefing days stay outlined — same distinction,
+   dark palette. */
+:root[data-theme="dark"] .top-bar-updates-cal .uc-day.is-latest { background: var(--df-primary); color: var(--df-surface); border-color: var(--df-primary); }
+.top-bar-updates-cal .uc-note { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--df-border-soft, var(--df-border)); font-size: var(--df-text-sm); color: var(--df-slate-700); line-height: 1.4; }
+.top-bar-updates-cal .uc-empty { font-size: var(--df-text-sm); color: var(--df-slate-700); line-height: 1.45; }
+.top-bar-theme-toggle .theme-ic { display: none; pointer-events: none; }
+:root:not([data-theme="dark"]) .top-bar-theme-toggle .theme-ic-moon { display: block; }
+:root[data-theme="dark"]        .top-bar-theme-toggle .theme-ic-sun  { display: block; }
+
+/* ─── Tab railway ───────────────────────────────────────────────────────── */
+.tab-bar-wrap {
+  position: sticky; top: var(--top-bar-h); z-index: 30;
+  background: var(--df-surface); border-bottom: 1px solid var(--df-border);
+  margin: 0 calc(50% - 50vw); padding: 0;   /* full-bleed */
+}
+.tab-bar {
+  display: flex; flex-direction: row; gap: 0; overflow-x: auto; scrollbar-width: none;
+  padding-left:  max(var(--shell-pad-x), calc(50vw - var(--shell-max) / 2 + var(--shell-pad-x)));
+  padding-right: max(var(--shell-pad-x), calc(50vw - var(--shell-max) / 2 + var(--shell-pad-x)));
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  --tab-color: var(--df-slate-950);
+  display: inline-flex; align-items: center; gap: 10px; padding: 9px 0; margin-right: 22px;
+  background: transparent; border: none; border-bottom: 2px solid transparent; font-family: inherit;
+  font-size: var(--df-text-sm); font-weight: 500; letter-spacing: -0.005em; color: var(--df-slate-700);
+  white-space: nowrap; cursor: pointer; position: relative;
+  transition: color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.tab-btn:last-child { margin-right: 0; }
+.tab-btn .tab-btn-name { letter-spacing: -0.005em; }
+.tab-btn .tab-btn-hex { display: inline-flex; align-items: center; justify-content: center; color: var(--df-slate-700); transition: color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn .tab-btn-hex svg { display: block; width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linejoin: round; transition: fill var(--df-dur-fast) var(--df-ease-soft), stroke var(--df-dur-fast) var(--df-ease-soft); }
+/* Text takes --tab-ink (the accent's readable-ink companion, when the token
+   has one — gold text fails on white); underline + hex keep the accent. */
+.tab-btn:hover, .tab-btn.active { color: var(--tab-ink, var(--tab-color)); border-bottom-color: var(--tab-color); }
+.tab-btn:hover .tab-btn-name, .tab-btn.active .tab-btn-name { color: var(--tab-ink, var(--tab-color)); }
+.tab-btn:hover .tab-btn-hex, .tab-btn.active .tab-btn-hex { color: var(--tab-color); }
+.tab-btn:hover .tab-btn-hex svg, .tab-btn.active .tab-btn-hex svg { fill: var(--tab-color); stroke: var(--tab-color); }
+.tab-btn.active { font-weight: 600; }
+/* Family tabs: a leading 01-04 numeral + a trailing count badge */
+.tab-btn-num { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.04em; color: var(--df-slate-400); transition: color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn:hover .tab-btn-num, .tab-btn.active .tab-btn-num { color: var(--tab-ink, var(--tab-color)); }
+.tab-btn-count { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 15px; padding: 0 5px; border-radius: 8px; background: var(--df-surface-raised); color: var(--df-slate-600); font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; font-variant-numeric: tabular-nums; transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn:hover .tab-btn-count, .tab-btn.active .tab-btn-count { background: color-mix(in srgb, var(--tab-color) 16%, transparent); color: var(--tab-ink, var(--tab-color)); }
+
+/* ─── NOTE — palette, context rail, and stage are NOT here ──────────────────
+   The command palette, the context/detail panel, and the visual stage belong
+   to the visualisation (visualisations/<slug>/rendered.html), not the shell.
+   The shell renders navigation only: top bar + tab railway + theme. A host
+   template frames the viz iframe with its own page <style>. ──────────────── */
+
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 1080px) { .top-bar-meta { display: none; } .family-nav { gap: 16px; } .family-nav-item { font-size: var(--df-text-sm); } }
+/* Tight windows: the section menu drops to a single column of rows and a
+   narrower preview, rather than being clamped until it overlaps the nav. */
+@media (max-width: 1180px) {
+  .nav-mega-panel { grid-template-columns: max-content 250px; }
+  .nav-mega-list { grid-template-columns: repeat(1, 252px); }
+  .nav-mega-preview .nmp-frame { height: 112px; }
+}
+@media (max-width: 768px) {
+  .top-bar-lead { gap: 16px; } .top-bar-right { gap: 16px; }
+  .global-nav { gap: 16px; } .global-nav-item { font-size: var(--df-text-sm); } .top-bar-tools { gap: 10px; }
+  /* tight headers: keep the family numbers, drop the names to stop overflow */
+  .family-nav { gap: 14px; } .family-nav-item .fam-name { display: none; }
+}
+
+/* Phones: the bar holds a 200px wordmark, the Menu, and three 32px action
+   icons — 387px of content in a 326px line, so the wordmark was being squeezed
+   to 123px while the logo itself kept its intrinsic width and slid underneath
+   the Menu. Nothing here shrinks the brand: the furniture gives way instead.
+   The theme toggle stays because it changes what you can read; the updates and
+   github links are a tap away in the Menu. */
+@media (max-width: 520px) {
+  .top-bar { padding: 0 20px; }
+  .top-bar-lead, .top-bar-brand { flex: 0 0 auto; }
+  .top-bar-updates-wrap, .top-bar-github { display: none; }
+}
+/* 360px is a real Android width and the wordmark + "Menu" meet exactly there.
+   The burger carries the control alone; the button keeps its name from the
+   aria-label chrome.js sets, not from this text. */
+@media (max-width: 400px) {
+  .top-bar { padding: 0 14px; }
+  .top-bar-right { gap: 10px; }
+  .top-bar-modules-trigger .cmd-section-name { display: none; }
+}
+
+/* ─── Workspace site header — section nav ⇄ hamburger, mobile only ─────────
+   The workspace pages (marked .df-site-chrome by site-chrome.js) carry the
+   "Menu" burger as their MOBILE navigation. On desktop the inline .global-nav
+   shows and the burger is hidden; below 768px they swap. Scoped to
+   .df-site-chrome so template consumers (multi-report) that show both an inline
+   nav AND the All-Modules burger at every width are unaffected. */
+html.df-site-chrome .top-bar-tools { display: none; }              /* desktop: inline nav, no burger (hide the whole wrapper so the action icons don't shift) */
+@media (max-width: 768px) {
+  html.df-site-chrome .global-nav    { display: none; }            /* mobile: hide the inline nav … */
+  html.df-site-chrome .top-bar-tools { display: inline-flex; }     /* … and reveal the hamburger */
+}
+
+/* Crimson Pro, self-hosted (vendored beside chrome.js as styles/crimson-pro-latin.woff2,
+   the same file the insights site's own h1/h2/h3 use — see legal-design-system.css).
+   Scoped to .lens-project-title alone: the nine pages otherwise run IBM Plex Sans /
+   Inter throughout, and this is the one place the insights site's display serif is
+   meant to show through. */
+@font-face {
+  font-family: 'Crimson Pro';
+  src: url('styles/crimson-pro-latin.woff2') format('woff2');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* The project mark (W-header-2). The red dragonfly + project title that opens the
+   header's actions group — same silhouette and colour as the crimson mark in the
+   insights site's own nav brand, and the same serif the insights site's h1/h2/h3
+   carry, sized down to sit on the partnership line's rung (--df-text-xs) rather
+   than at display scale. A vertical rule separates it from the partnership line
+   the way the theme toggle is set off from everything to its left — a boundary
+   between "whose project this is" and "who built the lens". */
+.lens-project-id {
+  display: inline-flex; align-items: center; gap: 7px; margin-right: 12px; padding-right: 12px;
+  border-right: 1px solid var(--df-border);
+  text-decoration: none; white-space: nowrap; min-width: 0;
+}
+.lens-project-id svg { flex-shrink: 0; }
+.lens-project-title {
+  font-family: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+  font-weight: 560; letter-spacing: -0.01em;
+  font-size: var(--df-text-xs); color: var(--df-ink-strong);
+}
+.lens-project-id:hover .lens-project-title { color: var(--df-primary); }
+
+/* The partnership line (W1-1). Page-side rather than in the vendored shell above,
+   because chrome.js escapes config strings and cannot carry a line of three links;
+   styles/lens-chrome.js appends the markup on `chrome:ready`. Keeping it out of the
+   vendored block is what lets that block stay byte-identical to canonical.
+
+   It lives in the header's actions group, immediately left of the theme toggle, so
+   the gap below is what separates it from that button. */
+.lens-partnership {
+  display: inline-flex; align-items: center; gap: 6px; margin-right: 10px;
+  font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500;
+  color: var(--df-ink-muted); white-space: nowrap; min-width: 0;
+}
+.lens-partnership a { color: var(--df-ink-muted); text-decoration: none; }
+.lens-partnership a:hover { color: var(--df-primary); }
+/* The × is a separator, not decoration — it sat on --df-border, a HAIRLINE token,
+   and at 11px that is close to invisible against the bar. On the metadata rung
+   instead: readable in both themes (#64748b light, #82828d dark, ≈4.6:1), and
+   still a step back from the link text at --df-ink-muted. The trailing "·" that
+   used to sit after Dragonfly Thinking is gone — the credit is a button now
+   (.lp-credit below) and a button supplies its own boundary; a separator in
+   front of it doubled up on a border that was already there. */
+.lens-partnership .lp-x { color: var(--df-slate-500); }
+/* "who did what" as a small outline button rather than a bare link with a trailing
+   arrow — the arrow is now an icon INSIDE the button (top-right corner arrow, the
+   external-link convention) rather than punctuation after the text. Slate outline
+   at rest; on hover the outline and the text both move to --df-primary (Dragonfly
+   blue) rather than swapping to a filled state, so it reads as "still an outline
+   button" and not a second, louder control next to the theme toggle. */
+.lens-partnership .lp-credit {
+  display: inline-flex; align-items: center; gap: 4px; margin-left: 2px;
+  padding: 3px 9px 3px 10px; border: 1px solid var(--df-slate-400); border-radius: 999px;
+  color: var(--df-slate-600); font-weight: 500;
+  transition: color .15s ease, border-color .15s ease;
+}
+.lens-partnership .lp-credit:hover { color: var(--df-primary); border-color: var(--df-primary); }
+.lens-partnership .lp-credit svg { flex-shrink: 0; }
+/* The project mark and the credit are the first things to go when the bar runs out
+   of room — the back link and the theme toggle are what a reader actually uses. */
+@media (max-width: 1100px) {
+  .lens-project-id, .lens-partnership { display: none; }
+}
+
+/* One hue per lens (W1-3). Generated from LENS_HUES in build/chromeshell.py — the
+   single declaration site, keyed by the <body data-tab> value the lens railway
+   matches on. Do not add a hue to a page; add it to the map. */
+body[data-tab="topic"] .viz-app { --viz-accent: var(--df-lens-cobalt); --viz-slash: var(--df-lens-cobalt); }
+body[data-tab="actors"] .viz-app { --viz-accent: var(--df-lens-plum); --viz-slash: var(--df-lens-plum); }
+body[data-tab="drivers"] .viz-app { --viz-accent: var(--df-lens-magenta); --viz-slash: var(--df-lens-magenta); }
+body[data-tab="doctrine"] .viz-app { --viz-accent: var(--df-lens-teal); --viz-slash: var(--df-lens-teal); }
+body[data-tab="practitioner"] .viz-app { --viz-accent: var(--df-lens-indigo); --viz-slash: var(--df-lens-indigo); }
+body[data-tab="interventions"] .viz-app { --viz-accent: var(--df-lens-green); --viz-slash: var(--df-lens-green); }
+body[data-tab="scenarios"] .viz-app { --viz-accent: var(--df-lens-orange); --viz-slash: var(--df-lens-orange); }
+
+/* ── W3-3 · one panel type scale, and it is foundations' ───────────────────
+   Every size in this block was a private number: 16.5 / 13.5 / 12 / 11, none
+   of them a rung on the scale in tokens.css, and all four shipped on all nine
+   pages because this block is the shared one. They are tokens now.
+     .p-title      16.5 -> --df-text-h3 (17). On eight pages the vendored
+                   shell's `.viz-panel h2` already out-specified this and set
+                   17, so only drivers-v3 — whose rail is not .viz-panel — was
+                   actually rendering 16.5. The token makes the nine agree.
+     .p-figlead    13.5 -> --df-text-panel-body (15). It is the panel's lead
+                   paragraph. Running prose does not sit below the reading floor.
+     .cover-meta   11   -> --df-text-label (11.5). Scanned counts, not prose;
+                   11.5 is the floor rung and 11 was under it.
+     .p-built-note 12   -> --df-text-sm (14). Two sentences of running prose.
+   Measured, not read: verify/lens-type.mjs walks the rendered panel and reports
+   any computed size that is not a rung. Run it before changing a size here. */
+
+/* ── One panel, in one order (W3-1) ────────────────────────────────────────
+   Identity, then the lead, then the view, then how to read it, then whatever
+   this figure alone needs, then what it is built from. Provenance last: a
+   reader wants the reading before the receipts. */
+/* The panel's own title. Its SIZE comes from the vendored shell's `.viz-panel h2`
+   (0,1,1), which out-specifies this (0,1,0) — that is the shell's panel-title
+   treatment and it is the same on all nine, which is the point. What this rule
+   actually carries is the accent on an emphasised word, which the scenario titles
+   use and nothing else defines. */
+.p-title { margin: 0; font-size: var(--df-text-h2); line-height: 1.28; font-weight: 600; color: var(--df-ink-strong); }
+.p-title em { font-style: normal; color: var(--viz-accent); }
+
+.p-figlead { margin: 0; font-size: var(--df-text-panel-body); line-height: 1.68; color: var(--df-slate-700); }
+.p-figlead em { font-style: italic; color: var(--df-slate-900); }
+.p-figlead b, .p-figlead strong { color: var(--df-slate-900); font-weight: 600; }
+
+.p-built { margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--df-border); }
+/* Counts as a plain list, one per row. Four different item shapes ship across
+   these nine pages, so any rule that promotes the <strong> to a display number
+   sets the LABEL big on a third of them. */
+.p-built .cover-meta {
+  display: flex; flex-direction: column; gap: 5px; margin: 0 0 12px;
+  font-size: var(--df-text-label); letter-spacing: .06em; line-height: 1.5;
+  color: var(--df-slate-500); opacity: 1;
+}
+.p-built .cover-meta .cm-item { display: block; padding: 0; }
+.p-built .cover-meta .cm-item strong { color: var(--df-slate-900); font-weight: 700; }
+.p-built-note { margin: 0; font-size: var(--df-text-sm); line-height: 1.6; color: var(--df-slate-600); }
+.p-built-note b { color: var(--df-slate-900); font-weight: 700; }
+
+/* W3-3 · the detail panel had no size of its own. Anything inside it that no rule
+   reached therefore fell through to the user-agent default, 16px — a size nobody
+   chose and one that is not on the scale. It showed up as bare SPAN, STRONG and
+   EM in the type harness, plus topic's `.detail-figure`, which has no rule at all.
+   Setting the HOST is the fix rather than chasing each element: an unstyled node
+   inherits the panel body rung, and every node that already has a token keeps it. */
+#panel-detail, .rail-detail { font-size: var(--df-text-panel-body); }
+
+/* W3-3 · "How to read it" is emitted as `.rg-howto-row` / `.rg-howto-key` by a
+   howto() helper that four pages carry a copy of, but the RULES for those two
+   classes existed on exactly one page — drivers-v3, which is where the markup
+   was first written. Everywhere else the block was unstyled and every line of
+   it rendered at the user-agent default. It was the single largest off-scale
+   block in the panel and it was invisible as a defect: unstyled prose looks
+   like prose. Same values drivers-v3 uses, so that page is unchanged by this
+   and the other three now match it. */
+.p-howto .rg-howto-row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px;
+  font-size: var(--df-text-panel-body); line-height: 1.55; color: var(--df-slate-700); }
+.p-howto .rg-howto-key { flex-shrink: 0; margin-top: 3px; color: var(--df-slate-500); }
+.p-howto .rg-howto-row strong { color: var(--df-slate-900); font-weight: 600; }
+
+/* ── Measure ───────────────────────────────────────────────────────────────
+   Prose needs a line length, not a container width. On the drivers map the rail
+   is full-bleed under the stage (its arithmetic: a 1150px map plus a 380px rail
+   needs 1530px, so 1440 stacks), and every paragraph in it was running the whole
+   1,396px — 207 characters to the line, where readable is 45 to 75. The panel
+   pages were fine only because their rail happens to be 413px wide, which is a
+   container doing a typographer's job. Capping the measure directly fixes the
+   one and cannot affect the others. */
+.p-figlead, .p-built-note, .rg-framing, .p-lead, .detail-text, .era-note { max-width: 68ch; }
+/* The standing prose under a stage, which sat at 79ch on four pages. */
+.sec-sub, .fig-note, .exp-note { max-width: 72ch; }
+/* Practitioner testimony is the reading surface on its page and ran to 131ch. */
+.qt-q, .qt-ctx { max-width: 74ch; }
+/* The methods and caveat lists under the stage — 99 to 102 characters a line on
+   four pages. These carry the standing warnings about what the corpus cannot
+   show, which is exactly the prose a reader must not skid off. */
+.methods .methods-body, .methods li, .methods p, .caveats li, .caveats p { max-width: 76ch; }
+/* The rail's closing note on the drivers map: 212 characters a line, because the
+   rail is full-bleed there and nothing had ever capped it. */
+.rg-foot, .rg-foot p { max-width: 76ch; }
+
+/* The cap is on the MEASURE, not on the content. Nothing here removes a word —
+   a long note stays long, it just stops running the full width of a 1,440px
+   window, which is what made it unreadable rather than merely detailed. */
+
+/* ── The page gutter ───────────────────────────────────────────────────────
+   Text was sitting 22–30px from the window edge, and on two pages the standing
+   prose under the stage was at 0 — literally touching it. A 26px inset is a
+   padding value borrowed from a control bar; it is not a margin a page of prose
+   can be read against.
+
+   The STAGE stays full-bleed: a map wants the width, and it is a picture rather
+   than a column of text. Everything you read gets a real gutter that grows with
+   the window.
+
+   `body X`, not a bare `.x`: the page's own `.rg-pad { padding: 24px 22px 40px }`
+   and `.control-bar { padding: 0 18px 0 22px }` are single-class rules declared
+   LATER in the document than this block, so matching their specificity would lose
+   the tie. The descendant selector wins it outright. */
+body .control-bar,
+body .cmd,
+body .viz-main > .lens,
+body .below-stage,
+body .methods,
+body .rg-pad {
+  padding-left: clamp(30px, 3.6vw, 60px);
+  padding-right: clamp(30px, 3.6vw, 60px);
+}
+/* .sec-sub sat flush at 0 because its section carries no inset of its own. */
+body .viz-main .sec-sub,
+body .viz-main .sec-head { padding-left: 0; padding-right: 0; }
+
+/* ── Disclosure groups in a command bar ────────────────────────────────────*/
+.control-groups { display: flex; align-items: center; gap: 6px; }
+.cg { position: relative; }
+.cg-trigger {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 11px; border: 1px solid transparent; border-radius: 6px;
+  background: none; cursor: pointer; font: inherit;
+  font-size: 12.5px; font-weight: 600; color: var(--df-ink-soft);
+}
+.cg-trigger:hover { background: var(--df-surface-raised); color: var(--df-ink); }
+.cg.open > .cg-trigger { background: var(--df-surface-raised); color: var(--df-ink); border-color: var(--df-border); }
+.cg-caret { transition: transform .16s ease; color: var(--df-ink-faint); }
+.cg.open > .cg-trigger .cg-caret { transform: rotate(180deg); }
+/* The trigger carries its own VALUE. A control that hides what it is set to has hidden
+   state, and the bar is the only place these settings live. */
+.cg-val, .cg-count {
+  font-family: var(--df-font-mono); font-size: 10.5px; font-weight: 600;
+  letter-spacing: .04em; color: var(--df-ink-faint);
+  background: var(--df-surface-raised); border: 1px solid var(--df-border);
+  padding: 1px 6px; border-radius: 4px; max-width: 148px;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cg.open > .cg-trigger .cg-val, .cg.open > .cg-trigger .cg-count { color: var(--df-ink-soft); }
+.cg-clear {
+  margin-left: 6px; padding: 6px 12px; font: inherit; font-size: 12px; font-weight: 600;
+  color: var(--df-ink-soft); background: var(--df-surface-raised);
+  border: 1px solid var(--df-border); border-radius: 6px; cursor: pointer;
+}
+.cg-clear:hover { color: var(--df-ink); }
+
+.cg-menu {
+  position: absolute; top: calc(100% + 8px); left: 0;
+  /* A fixed width on an absolutely positioned box near the right of a narrow viewport runs
+     straight off it, and these pages set overflow-x:hidden — so the far edge of the menu is
+     not scrolled to, it is gone. The cap is the viewport minus the page gutter. */
+  width: 300px; max-width: calc(100vw - 32px); max-height: min(66vh, 560px); overflow-y: auto;
+  background: var(--df-surface); border: 1px solid var(--df-border);
+  border-radius: 10px; box-shadow: 0 18px 44px rgba(0,0,0,.42);
+  padding: 14px; z-index: 950;
+  opacity: 0; transform: translateY(-6px); pointer-events: none;
+  transition: opacity .16s ease, transform .16s ease;
+}
+/* Right-anchored variant, for a group sitting at the right end of its bar. */
+.cg-menu--right { left: auto; right: 0; }
+.cg.open > .cg-menu { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.cg-menu-narrow { width: 250px; }
+.cg-menu-wide { width: 380px; }
+.cg-menu-tall { max-height: min(76vh, 720px); }
+.cg-menu-blurb {
+  font-size: 12px; line-height: 1.55; color: var(--df-ink-faint);
+  margin: 0 0 12px; padding-bottom: 10px; border-bottom: 1px solid var(--df-border);
+}
+/* Inside a menu the chips get room to sit as full rows rather than a wrapped strip. The
+   chips themselves are the shell's, untouched: every existing handler, every data-* hook
+   and every id stays live, which is the whole point of the pattern. */
+.cg-menu .cmd-group { display: flex; flex-wrap: wrap; gap: 6px; }
+.cg-sec-title {
+  font-family: var(--df-font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--df-ink-faint);
+  margin: 18px 0 8px; padding-bottom: 6px; border-bottom: 1px solid var(--df-border);
+}
+.cg-sub { font-size: 12px; line-height: 1.6; color: var(--df-ink-soft); margin: 0 0 10px; }
+
+/* A chip group has to be allowed to wrap INSIDE its bar. The vendored shell declares
+   `.cmd-group { flex: 0 0 auto }` with no wrap, which is right for a palette that owns a
+   full-width band and wrong once a bar carries several groups: at 375 the drivers map's
+   three layout chips measured 463px in a 375px window and simply ran off it, and these
+   pages set overflow-x:hidden, so a chip past the edge is not scrolled to — it is gone.
+   Scoped to `.control-bar` for now. The seven `.cmd-palette` pages have the same latent
+   defect and it belongs to whichever item next touches their bars. */
+.control-bar .cmd-group { flex: 0 1 auto; min-width: 0; flex-wrap: wrap; }
+
+/* THE MENU'S ANCHOR CHANGES ON A NARROW VIEWPORT. A `.cg-menu` hangs off its own trigger,
+   and `--right` opens it leftwards — correct while the trigger is near the right of a wide
+   bar, and wrong the moment the bar wraps and that trigger lands at the left. Measured on
+   the drivers map at 1024: the Overlay menu opened at x=-222 with its whole blurb and first
+   rows off the screen. Below this breakpoint the `.cg` stops being the positioning context
+   and the BAR takes over, so every menu opens from the bar's own left edge and is capped to
+   the viewport. */
+@media (max-width: 1100px) {
+  .control-bar, .cmd-palette { position: relative; }
+  .cg { position: static; }
+  .cg-menu { left: 12px; right: auto; width: min(380px, calc(100vw - 32px)); }
+}
+</style>
+<style>
+html,body{margin:0;padding:0;height:100%;}
+body{background:var(--df-surface);color:var(--df-ink);
+  font-family:'IBM Plex Sans',system-ui,-apple-system,sans-serif;
+  display:flex;flex-direction:column;min-height:100%;}
+*{box-sizing:border-box;}
+
+/* ── suite rail ─────────────────────────────────────────────── */
+/* The rail is one row that must never clip. Both the mark and the nav are allowed to
+   SHRINK (min-width:0 the whole way down) rather than being pinned at flex:0 0 auto —
+   a rigid ancestor is what stopped the nav collapsing on a phone even once its own
+   rule was correct. min-height, not height, so a wrapped row grows instead of
+   overflowing its own box. */
+/* Background matches .cmd-palette's `var(--df-surface-raised)` (viz-shell.snapshot.css) —
+   the tinted band every other lens page uses for its second, control-carrying rail. This
+   rail was left on `var(--df-surface)`, the top chrome bar's own white, so it read as a
+   continuation of the bar above rather than a second strip in its own right. */
+.suite{display:flex;align-items:center;gap:10px;flex:0 0 auto;flex-wrap:wrap;
+  padding:0 16px;min-height:52px;background:var(--df-surface-raised);
+  border-bottom:1px solid var(--df-border);}
+/* `.suite-mark` DELETED. It said "AI and the Legal Profession · Scenarios lens" on a page
+   whose header already carries the wordmark and whose railway already says which lens this
+   is — a third statement of both, in the one strip a reader uses to move between views.
+   The nav now starts at the left edge, where a step control belongs. */
+.suite-nav{display:flex;gap:4px;flex:0 1 auto;min-width:0;}
+/* The view's own controls live in this rail, not above the stage. On pathways and signposts
+   the filter chips ARE the legend — each carries its pathway's or settlement's hue — so a
+   reader was reading the key in one band and the switch in another. One secondary header:
+   which view, then what this view lets you do. Settlements passes nothing and the rail is
+   just the nav. */
+/* justify-content is flex-START, deliberately. flex-END was the first draft and it CLIPS:
+   when the tools are wider than the row — signposts carries four settlement chips, seven
+   area chips and a Clear — a flex-end row overflows off the LEFT edge, so the "Settlement"
+   label and the first chip were cut in half and "Clear" ran under the panel. Overflow in a
+   flex-start row goes right, where the palette's own flex-wrap catches it. */
+.suite-tools{display:flex;align-items:center;gap:10px;flex:1 1 auto;flex-wrap:wrap;
+  justify-content:flex-start;min-width:0;}
+/* A hairline between the view switch and the view's controls, so the rail reads as two
+   jobs rather than one long strip. Drawn only when there are tools: settlements has none. */
+.suite-tools:not(:empty){border-left:1px solid var(--df-border);padding-left:10px;}
+/* The palettes carry `.cmd-palette` for its chip vocabulary, but inside the rail they must
+   not also bring the strip's own surface, padding and bottom border — that would draw a
+   second bar inside the first. */
+/* min-width:0 is what makes the palette's own flex-wrap work. A flex ITEM defaults to
+   min-width:auto, so the palette refused to shrink below its content and signposts' seven
+   area chips ran "work-organisation" to the window edge with Clear off it entirely —
+   wrapping was declared and could never fire. */
+.suite-tools .cmd-palette{min-height:0;padding:0;background:none;border-bottom:0;
+  flex:1 1 auto;min-width:0;}
+/* And the same again one level down. The shell declares `.cmd-group { flex: 0 0 auto }`
+   with no wrap, which is right for a palette that owns a full-width band and wrong for one
+   sharing a rail: at 768 and below the chips inside a group ran straight off the viewport,
+   and the page sets overflow-x:hidden, so they were not scrolled to — they were gone. */
+.suite-tools .cmd-group{flex:0 1 auto;min-width:0;flex-wrap:wrap;}
+
+/* ── Rail density ──────────────────────────────────────────────────────────
+   The palette was built for a band of its own and brings that band's spacing into a
+   strip it now shares with the view switch. Signposts is the case that sets the budget:
+   three nav links, a label, four settlement chips plus cross-cutting, a divider, a
+   second label, seven area chips, and Clear. At the palette's own metrics that wrapped
+   to two rows at 1440. Everything below is spacing and type-scale only — no chip, no
+   label and no control is removed, and the group structure is untouched. */
+/* THE BUDGET IS SIGNPOSTS AT 1440, and it is arithmetic rather than taste. That rail
+   carries three nav links, a label, five settlement chips, a divider, a second label,
+   seven area chips, a divider and Clear — 1,730px of content in 1,408px of rail.
+   IT WAS SOLVED THE WRONG WAY FIRST: shrinking the type and the padding until it fitted,
+   which reached one line at 1440 and read as a different, smaller page than its siblings.
+   Linda's call: keep the palette's own metrics and put AREA in a dropdown instead. Seven
+   options behind one trigger is 700px of rail returned, and the type scale stays the
+   house one. Only the gaps are tightened here. */
+.suite-tools{gap:8px;}
+.suite-tools .cmd-palette{gap:6px 8px;}
+.suite-tools .cmd-group{gap:5px;}
+.suite-tools .cmd-divider{margin:0 2px;}
+/* Clear is the least-used control in the rail and was taking a full chip's width in mono
+   uppercase at 26px tall. Sized down to what it is: an escape hatch, not a filter. */
+.suite-tools .reset-btn{height:22px;padding:0 9px;}
+/* THE MENU'S ANCHOR CHANGES ON A PHONE. It hangs off its trigger, which is right-anchored
+   so it opens leftwards — correct at 1024 and up, and at 375 it opened at x=-104 with the
+   first three area options off the screen entirely. `overflow-x:hidden` means they were not
+   scrolled to; they were gone. Below 700px the `.cg` stops being the positioning context and
+   the palette takes over, so the menu opens from the bar's own left edge instead. */
+@media (max-width:700px){
+  .suite-tools .cmd-palette{position:relative;}
+  .suite-tools .cg{position:static;}
+  .suite-tools .cg-menu{left:0;right:auto;width:min(250px,calc(100vw - 32px));}
+}
+
+.suite-nav a{display:inline-flex;align-items:center;gap:9px;padding:6px 13px;
+  border-radius:var(--df-radius-sm);text-decoration:none;
+  font-size:12.5px;font-weight:500;color:var(--df-slate-600);
+  border:1px solid transparent;transition:background .16s,color .16s,border-color .16s;}
+.suite-nav a:hover{background:var(--df-surface-raised);color:var(--df-ink-strong);}
+.suite-nav a[aria-current]{background:color-mix(in srgb,var(--viz-accent) 12%,transparent);
+  border-color:color-mix(in srgb,var(--viz-accent) 34%,transparent);color:var(--df-ink-strong);font-weight:600;}
+.suite-nav a i{font-family:var(--df-font-mono);font-style:normal;font-size:10px;
+  font-weight:600;color:var(--df-slate-400);}
+.suite-nav a[aria-current] i{color:var(--viz-accent);}
+/* The nav pays a small share of the rail budget. It was set for a strip it had to itself,
+   and it now shares one with the view's palette. DECLARED AFTER the base rules above, not
+   with the .suite-tools block: same specificity, so the later declaration is the only thing
+   that makes it win — the first draft sat above them and did nothing at all. */
+.suite-nav a{padding:6px 11px;gap:8px;}
+
+/* ── masthead remnants ──────────────────────────────────────── */
+/* HISTORY, because it explains why anything is left here at all. These three pages once
+   carried a private `.phead` / `.pkicker` head, then took the shared masthead block from
+   actor-map.template.html copied VERBATIM, because they assemble their own head from
+   viz-shell.snapshot.css and do not splice the sibling template. W1-2 deleted the masthead
+   on all nine, so most of that copied block has gone from both files.
+
+   WHAT SURVIVES, and why: `.cover-meta` only. W3-1 carries the counts strip into
+   `.p-built` at the foot of the panel, so that rule is live. `.eyebrow-row` and
+   `.classification-pill` went WITH the masthead: W3-1 rehomed the eyebrow and the pill
+   under the panel's own vocabulary, `.p-eyebrow` + `.p-badge`, which these three pages
+   were already using for their view header. Two type scales for one row was the thing to
+   avoid. `.fig-title`, `.fig-sub` and `.eyebrow` come from the vendored shell, as they do
+   everywhere, and are not this file's to keep or drop.
+
+   THE FORK STILL BITES. Two head sources feed the nine, and this is the second one. Any
+   change to the surviving rules must be made in actor-map.template.html as well, or three
+   of nine pages silently miss it. */
+/* `.figure` and the `.brand-logo` rules went in W1-2 with the markup they styled. The
+   brand rules in particular had to go: chrome.js emits its own wordmark as
+   `.brand-logo brand-logo--black`, so a page-level `.brand-logo { width: 148px }` would
+   override the shell's sizing for the header chrome.js injects. `.eyebrow-row` and
+   `.classification-pill` went in W3-1, with the masthead vocabulary they belonged to —
+   nothing this file emits carries either class any more. `.cover-meta` STAYS: W3-1 moves
+   the counts strip into `.p-built`, so it is still styling a live element. */
+.cover-meta {
+  display: flex; flex-wrap: wrap; gap: 8px 18px;
+  margin-top: 18px;
+  font-family: var(--df-font-mono);
+  font-size: var(--df-text-label); font-weight: 500;
+  letter-spacing: 0.10em; text-transform: uppercase;
+  color: var(--df-slate-700);
+}
+.cover-meta .cm-item strong { color: var(--df-slate-950); font-weight: 700; }
+
+/* The `body.mast-rail` two-column rail went in W1-2 with `header.figure`. Its whole
+   job was to spend less vertical on a masthead; deleting the masthead is the same
+   saving, taken once. `class="mast-rail"` came off <body> above in the same pass. */
+
+.viz-app{flex:1 1 auto;min-height:0;}
+.viz-workspace{flex:1 1 auto;min-height:0;}
+.viz-canvas{display:flex;flex-direction:column;min-height:0;}
+
+.stage{flex:1 1 auto;min-height:0;overflow:auto;padding:22px 26px 26px;}
+.stage-note{flex:0 0 auto;padding:11px 26px 14px;border-top:1px solid var(--df-border);
+  background:var(--df-surface-soft);font-size:12px;line-height:1.6;color:var(--df-slate-600);}
+.stage-note b{color:var(--df-slate-800);font-weight:600;}
+
+/* ── panel layout corrections ───────────────────────────────────
+   The vendored shell defines .panel-detail only as `display:none`. The renderer
+   flips it to `display:flex`, which made it a ROW flex container — the Back button
+   and the detail content laid out side by side, squeezing the content and running
+   it off the right edge. It also inherited none of .panel-inner's padding, so its
+   text sat flush against the window. Both are corrected here rather than upstream,
+   because the shell snapshot is vendored and must stay a faithful copy. */
+.panel-detail{flex-direction:column;gap:15px;padding:20px 24px 28px;min-width:0;}
+#detail-host{display:flex;flex-direction:column;gap:15px;min-width:0;}
+.panel-inner{min-width:0;}
+/* Long words and ids must not punch out of the column either. */
+.viz-panel :where(p,h2,div,span,li){overflow-wrap:anywhere;}
+/* The collapse control is absolutely positioned over the panel's top-right corner,
+   so whatever leads each panel state has to leave room for it. `.p-badge-row` (the
+   panel-inner's own lead row, now that the eyebrow is dropped) is a left-aligned
+   pill, not a full-width row, so it does not reach under the button — no reservation
+   needed there, unlike `.detail-head` which still spans the width. */
+#detail-host > .detail-head{padding-right:38px;}
+
+/* ── panel extras ───────────────────────────────────────────── */
+/* `.p-title` and `.p-title em` MOVED to chromeshell.PANEL_CSS at W3-1, not deleted.
+   The other six pages gained a panel title in that item, and a rule that styles the
+   same class on three of nine pages is the fork this file's own note warns about.
+   It arrives here through CHROME_SHELL above, byte-identical. */
+.p-rule{border:0;border-top:1px solid var(--df-border);margin:3px 0;}
+.p-kv{display:flex;flex-direction:column;gap:9px;}
+/* W3-3 · the .p-* panel family below was on private sizes — 12.5 / 11.5 / 10 / 9.5,
+   none of them a rung. Bound to foundations. The stage marks further down (.ax-*,
+   .cell-*, .gate-*, .phase-band, .opt-row) are NOT panel type and keep their own
+   sizes: a scale built for a reading column does not govern an SVG label. */
+.p-kv div{font-size:var(--df-text-sm);line-height:1.55;color:var(--df-slate-700);}
+.p-kv b{display:block;font-family:var(--df-font-mono);font-size:var(--df-text-panel-label);font-weight:600;
+  letter-spacing:0.15em;text-transform:uppercase;color:var(--df-slate-500);margin-bottom:3px;}
+.p-quote{border-left:2px solid color-mix(in srgb,var(--viz-accent) 55%,transparent);
+  padding:2px 0 2px 12px;font-size:var(--df-text-panel-body);line-height:1.6;color:var(--df-slate-700);}
+.p-list{display:flex;flex-direction:column;gap:5px;}
+.p-list button{display:flex;align-items:center;gap:9px;padding:7px 10px;text-align:left;
+  background:var(--df-surface);border:1px solid var(--df-border);
+  border-radius:var(--df-radius-sm);cursor:pointer;font:inherit;
+  font-size:var(--df-text-sm);color:var(--df-slate-800);transition:border-color .16s,background .16s;}
+.p-list button:hover{border-color:var(--df-slate-400);background:var(--df-surface-raised);}
+.p-list button .sw{width:9px;height:9px;border-radius:50%;flex:0 0 auto;}
+.p-list button .id{font-family:var(--df-font-mono);font-size:var(--df-text-panel-label);color:var(--df-slate-500);flex:0 0 auto;}
+.p-empty{font-size:var(--df-text-sm);line-height:1.6;color:var(--df-slate-500);
+  padding:16px;border:1px dashed var(--df-border);border-radius:var(--df-radius-sm);text-align:center;}
+.p-warrant{font-size:var(--df-text-xs);line-height:1.55;color:var(--df-slate-600);
+  background:var(--df-surface-raised);border:1px solid var(--df-border-soft);
+  border-radius:var(--df-radius-sm);padding:9px 11px;}
+.p-warrant b{font-family:var(--df-font-mono);font-size:var(--df-text-panel-label);letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--df-slate-500);display:block;margin-bottom:4px;}
+
+@media (max-width:1080px){
+  .viz-workspace{flex-direction:column;}
+  .viz-panel{border-left:0;border-top:1px solid var(--df-border);max-height:46vh;}
+  .panel-resize,.panel-toggle,.panel-reopen{display:none;}
+  .suite-nav a span{display:none;}
+  .suite-nav a{padding:6px 9px;}
+}
+
+/* Below the phone breakpoint the kicker goes too. At 390px the rail carries the mark,
+   three numbered links and the theme button, and it has to do it inside 390px because
+   the page sets overflow-x:hidden — anything that does not fit is not scrolled to, it
+   is gone. Measured, not assumed: see verify/deployed-smoke.mjs, which fails the run
+   if any element's right edge crosses the viewport on a clipped page. */
+@media (max-width:560px){
+  .suite{gap:10px;padding:0 12px;}
+}
+</style>
+<style>
+.path-stage{display:flex;flex-direction:column;gap:14px;height:100%;min-height:0;}
+.path-bar{position:relative;z-index:2;display:flex;align-items:center;gap:10px;
+  flex-wrap:wrap;flex:0 0 auto;}
+.path-host{position:relative;z-index:1;flex:1 1 auto;min-height:430px;overflow:hidden;}
+.path-host svg{position:absolute;inset:0;width:100%;height:100%;display:block;}
+
+.gate-col rect{fill:var(--df-surface-soft);}
+.gate-col rect.alt{fill:var(--df-surface-raised);}
+.gate-head{font-family:var(--df-font-mono);font-size:9.5px;font-weight:700;
+  letter-spacing:.15em;text-transform:uppercase;fill:var(--df-slate-700);text-anchor:middle;}
+.gate-sub{font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;fill:var(--df-slate-500);
+  text-anchor:middle;}
+.gate-unk{font-family:var(--df-font-mono);font-size:8px;font-weight:700;letter-spacing:.1em;
+  fill:var(--df-slate-500);text-anchor:middle;}
+.phase-band{font-family:var(--df-font-mono);font-size:9px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;fill:var(--df-slate-500);}
+.phase-rule{stroke:var(--df-border);stroke-width:1;}
+
+.opt-row text{font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;fill:var(--df-slate-600);}
+.opt-dot{fill:var(--df-surface);stroke:var(--df-slate-300);stroke-width:1.5;}
+
+.pw{fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;
+  transition:opacity .2s,stroke-width .15s;}
+.pw-hit{fill:none;stroke:transparent;stroke-width:20;cursor:pointer;pointer-events:stroke;}
+.pw.is-dimmed,.pwnode.is-dimmed,.pwend.is-dimmed{opacity:.11;}
+.pw.is-lit{stroke-width:4.6;}
+.pwnode circle{stroke:var(--df-surface);stroke-width:2;}
+.pwnode .ring{fill:none;stroke-width:1.6;stroke-dasharray:3 3;}
+.pwroot text{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;
+  fill:var(--df-ink-strong);text-anchor:end;}
+.pwroot tspan.sub{font-family:var(--df-font-mono);font-size:9px;font-weight:500;
+  letter-spacing:.11em;fill:var(--df-slate-500);text-transform:uppercase;}
+.pwend{cursor:pointer;}
+.pwend rect{rx:5;stroke-width:1.3;}
+.pwend .en{font-family:'IBM Plex Sans',sans-serif;font-size:12px;font-weight:600;}
+.pwend .es{font-family:'IBM Plex Sans',sans-serif;font-size:10.5px;fill:var(--df-slate-600);}
+.pwend.is-open rect{stroke-width:2.4;}
+</style>
+<link rel="stylesheet" href="../chart-contrast.css">
+</head>
+<body data-tab="scenarios">
+
+<!-- The suite rail STAYS. It is not masthead furniture: it is the only way a reader moves
+     between the three scenario views, and collapsing it once left the third page with no
+     route back to the other two. What follows it is the shared masthead every other page
+     in the suite carries. -->
+<header class="suite">
+  <nav class="suite-nav"><a href="scenarios-settlements.html"><i>01</i><span>Settlements</span></a><a href="scenarios-pathways.html" aria-current="page"><i>02</i><span>Pathways</span></a><a href="scenarios-signposts.html"><i>03</i><span>Signposts</span></a></nav>
+  <div class="suite-tools"><div class="path-bar cmd-palette" role="toolbar" aria-label="Pathway filter">
+    <span class="cmd-inline-label">Pathway</span>
+    <div class="cmd-group"><button class="chip" data-pw-chip="PW-1" type="button" style="--chip-color:var(--df-lens-cobalt)"><span class="dot" style="background:var(--df-lens-cobalt)"></span><span class="chip-label">PW-1 The permission that wasn&#x27;t taken</span></button><button class="chip" data-pw-chip="PW-2" type="button" style="--chip-color:var(--df-lens-plum)"><span class="dot" style="background:var(--df-lens-plum)"></span><span class="chip-label">PW-2 The answer key closes first</span></button><button class="chip" data-pw-chip="PW-3" type="button" style="--chip-color:var(--df-lens-red)"><span class="dot" style="background:var(--df-lens-red)"></span><span class="chip-label">PW-3 The stall</span></button><button class="chip" data-pw-chip="PW-4" type="button" style="--chip-color:var(--df-lens-orange)"><span class="dot" style="background:var(--df-lens-orange)"></span><span class="chip-label">PW-4 The cliff lands late</span></button></div>
+    <span class="cmd-divider" aria-hidden="true"></span>
+    <button class="reset-btn" type="button" id="pw-clear">Clear</button>
+  </div></div>
+  <!-- The theme button left this rail in W1-1. styles/chrome.js is the one broadcaster
+       and its toggle is in the header's right corner. The pre-paint bootstrap above is
+       untouched and still reads localStorage['df-theme'], the key chrome.js writes. -->
+</header>
+
+<!-- The accent lives in build/chromeshell.py, keyed by the data-tab above (W1-3).
+     These three views are ONE lens, so they take one hue between them: the suite
+     used to run magenta, cobalt and orange, which read as three lenses. -->
+<div class="viz-app">
+
+  <!-- MASTHEAD — DELETED IN W1-2, on all nine pages including these three. The header
+       is now one shared object injected by styles/chrome.js and nothing editorial lives
+       in it. W3-1 relocated Scenarios lens and <span class="cm-item"><strong>4</strong> pathways</span><span class="cm-item"><strong>5</strong> gates</span><span class="cm-item"><strong>3</strong> unmeasurable</span> into panel-general, in shell() above.
+       Four routes through five gates and Each gate is a threshold on a quantity that is already accumulating. What separates the futures is not which gate fires but which option is taken at each one. are still computed at the call sites and deliberately unused
+       — see the note in shell(). Do not delete their producers. -->
+
+  <div class="viz-workspace">
+    <div class="viz-canvas ">
+      <div class="stage"><div class="path-stage">
+  <div class="path-host" id="path-host"></div>
+</div></div>
+      <div class="stage-note"><b>Height is the option taken, not a quantity.</b> At each gate a pathway sits on the row of the option it takes, so where the lines separate is where the futures separate. <b>3 of 5 gates carry a threshold nobody measures</b> — those are ringed, and they can be recognized only after they are crossed. Column order is modal, not necessary: the prior cycle has stack absorption firing before the rules settled.</div>
+    </div>
+    <aside class="viz-panel">
+      <div class="panel-inner" id="panel-general"><div class="p-badge-row"><span class="p-badge">multi-pathway</span></div>
+<h2 class="p-title">Not where the field lands — <em>how</em> it gets there</h2>
+<div class="p-block-label">What holds on every route</div>
+<div class="p-takeaways">
+<div class="p-takeaway"><span class="p-tk-n">1</span><span>Answerability for legally effective output is relocatable but not eliminable: in every settlement some identified party — practitioner, authorised entity or licensed provider — remains reachable for it.<div class="ev-block is-compact"><div class="ev-cite"><div class="ev-quote">“nothing goes out the door without that human supervision uh by a barred attorney”</div><a class="ev-link" href="https://www.youtube.com/watch?v=6Ojs2wW7zzA" target="_blank" rel="noopener" title="transcript-71-nay-norm-ai-agentic-law">John Nay — Norm Ai / Norm Law (agentic law and the AI-native full-service firm)<span class="ev-out" aria-hidden="true">↗</span></a><div class="ev-sub">AAA \&quot;AI and the Future of Law\&quot; (YouTube) · 2026</div></div></div></span></div><div class="p-takeaway"><span class="p-tk-n">2</span><span>Generation cost falls faster than verification cost.<div class="ev-block is-compact"><div class="ev-cite"><div class="ev-quote">“Claude Opus 4.7 leads at 7.1%”</div><a class="ev-link" href="https://www.harvey.ai/blog/legal-agent-benchmark-initial-results" target="_blank" rel="noopener" title="harvey-lab-initial-results-may-2026">Initial Results on Legal Agent Benchmark: A First Look at Frontier Model Performance on Long-Horizon Legal-Agent Work<span class="ev-out" aria-hidden="true">↗</span></a><div class="ev-sub">Harvey (Insights) · 2026</div></div></div></span></div><div class="p-takeaway"><span class="p-tk-n">3</span><span>Published capability scores do not transfer to practice.<div class="ev-block is-compact"><div class="ev-cite"><div class="ev-quote">“Under an independently re-implemented harness, Claude Fable 5 leads Harvey LAB-AA with a 14.2% all-pass rate”</div><a class="ev-link" href="https://artificialanalysis.ai/articles/harvey-lab-aa" target="_blank" rel="noopener" title="artificial-analysis-harvey-lab-aa-2026">Announcing Harvey LAB-AA: evaluating AI agents on real-world legal work<span class="ev-out" aria-hidden="true">↗</span></a><div class="ev-sub">Artificial Analysis · 2026</div></div></div></span></div><div class="p-takeaway"><span class="p-tk-n">4</span><span>The time–value linkage is broken and does not re-form.<div class="ev-block is-compact"><div class="ev-cite"><div class="ev-quote">“Around 90% of legal dollars still flow through standard hourly billing”</div><a class="ev-link" href="https://www.attorneyatwork.com/2026-report-on-the-state-of-the-us-legal-market-5-highlights/" target="_blank" rel="noopener" title="state-of-legal-market-2026-thomson-reuters">Peaks and Fault Lines: Highlights from the 2026 Report on the State of the US Legal Market<span class="ev-out" aria-hidden="true">↗</span></a><div class="ev-sub">Attorney at Work · 2026</div></div></div></span></div><div class="p-takeaway"><span class="p-tk-n">5</span><span>A written permission changes what is allowed, not what is done, and the gap between them is measured in years.</span></div>
+</div>
+<hr class="p-rule">
+<div class="p-warrant"><b>Adversarial pass</b>7 (2 P1, 3 P2, 2 P3) — 5 accepted and amended, 1 partially accepted and recorded, 1 verified as already handled. Most consequential: P1-2 — the spine&#x27;s gate ordering contradicted the prior-cycle evidence the set itself cites. The artefact asserted in DN-4 that assuming the rules settle first has the sequence backwards, and then its own spine assumed exactly that.</div>
+<div class="p-warrant" style="margin-top:8px"><b>No probabilities</b>Ordered gates with calibrated duration ranges, named observable triggers, and an explicit stall branch at every gate.</div>
+<!-- `.p-accordion` OPENS here and stays open — shell() appends the "What it is built
+     from" item as this same accordion's second (and closing) child, so the two
+     accordion sections read as one continuous list, matching doctrine/practitioner.
+     See shell()'s own note on the other end of this split. -->
+<div class="p-accordion">
+  <details class="p-accordion-item">
+    <summary class="p-accordion-summary"><span class="p-block-label">What this shows</span><span class="p-accordion-icon">+</span></summary>
+    <div class="p-accordion-body"><p class="p-lead">The 2×2 answers where legal production can sit. This answers how it arrives:
+five gates in sequence, each a threshold on an accumulating quantity, each with three real
+options. A pathway is one coherent route through all five. Click any route for its full reading.</p></div>
+  </details>
+  <details class="p-accordion-item">
+    <summary class="p-accordion-summary"><span class="p-block-label">How to read it</span><span class="p-accordion-icon">+</span></summary>
+    <div class="p-accordion-body">
+      <div class="p-howto">
+        <div class="p-howto-row"><span class="p-howto-icon"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h4M10 4v8M6 8l4-4M6 8l4 4"/></svg></span>
+          <span class="p-howto-text"><b>Each column is a gate</b> and each row is an option. A pathway's height at a column is the option it takes there — so the lines part exactly where the futures do.</span></div>
+        <div class="p-howto-row"><span class="p-howto-icon"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8" cy="8" r="5.5" stroke-dasharray="2.6 2.6"/><circle cx="8" cy="8" r="2"/></svg></span>
+          <span class="p-howto-text"><b>Ringed markers are gates with no measurable threshold.</b> Three of the five. They cannot be watched, only recognized afterwards, and that is the set's largest inherited weakness.</span></div>
+        <div class="p-howto-row"><span class="p-howto-icon"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 13V3M2 13h12M5 10V6M9 10V4M13 10V8"/></svg></span>
+          <span class="p-howto-text"><b>Every duration is anchored on a prior cycle</b> — expert systems, legal process outsourcing, predictive coding — because none of the 2×2's evidence predates 2024 and a time-based reading needs cases that finished.</span></div>
+      </div>
+    </div>
+  </details>
+  <details class="p-accordion-item">
+    <summary class="p-accordion-summary"><span class="p-block-label">What it is built from</span><span class="p-accordion-icon">+</span></summary>
+    <div class="p-accordion-body">
+      <div class="cover-meta"><span class="cm-item"><strong>4</strong> pathways</span><span class="cm-item"><strong>5</strong> gates</span><span class="cm-item"><strong>3</strong> unmeasurable</span></div>
+      <p class="p-built-note"><b>Second Chair</b> is this project&rsquo;s evidence base: 600 works on AI and the legal profession, 1953&ndash;2026 &mdash; scholarship, industry evidence, court materials and practitioner interviews &mdash; each read end to end. The Analysis section applies two published analytical lenses: topic mapping and actor mapping, with driver and dynamics mapping and scenario mapping in progress.</p>
+    </div>
+  </details>
+</div></div>
+      <div class="panel-detail" id="panel-detail" aria-hidden="true">
+        <button class="detail-back" type="button" id="detail-back">
+          <svg viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M6.5 2.5 3.5 5l3 2.5"/></svg>Back
+        </button>
+        <div id="detail-host"></div>
+      </div>
+    </aside>
+    <div class="panel-resize" id="panel-resize" role="separator" aria-orientation="vertical" aria-label="Resize panel" title="Drag to resize"></div>
+    <button class="panel-toggle" id="panel-collapse" type="button" title="Collapse panel" aria-label="Collapse panel">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M6 3l5 5l-5 5"/></svg>
+    </button>
+    <button class="panel-reopen" id="panel-reopen" type="button" title="Show panel" aria-label="Show panel">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M10 3l-5 5l5 5"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip" role="status"></div>
+
+<script type="application/json" id="viz-data">{"gates": [{"id": "DN-1", "tp": "T-02", "name": "The review-regime switch", "phase": "PH-1", "thresholdKnown": true, "threshold": "Task-class specific. There is no single field-wide crossing; each task class crosses on its own.", "options": [{"id": "DN-1-O1", "label": "Sampling accepted with a stated process", "detail": "A crossing on the PC-3 template: permission granted for a defined task class, conditioned on a transparent validated process, with the standard explicitly short of perfection. Da Silva Moore: 'While this Court recognizes that computer-assisted review is not perfect, the Federal Rules of Civil Procedure do not require perfection.'"}, {"id": "DN-1-O2", "label": "Sampling accepted de facto, without a stated process", "detail": "Review thins without anyone certifying that it may. This is the the vanishing check (B-04) case — the vanishing check, a balancing loop whose signal is suppressed — and it is the option with no observable trigger at all."}, {"id": "DN-1-O3", "label": "Full review holds", "detail": "Verification cost stays binding, the review queue keeps absorbing the gains (B-01), and machine-led share plateaus below the level at which the later gates can fire."}], "evidenceHTML": "<div class=\"ev-block is-compact\"><div class=\"ev-cite\"><a class=\"ev-link\" href=\"https://www.courtlistener.com/opinion/8782929/moore-v-publicis-groupe/\" target=\"_blank\" rel=\"noopener\" title=\"da-silva-moore-v-publicis-predictive-coding-2012\">Da Silva Moore v. Publicis Groupe &amp; MSL Group, 287 F.R.D. 182 (S.D.N.Y. Feb. 24, 2012) (Peck, M.J.)<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">United States District Court, Southern District of New York · 2012</div></div><div class=\"ev-cite\"><a class=\"ev-link\" href=\"https://scholarship.richmond.edu/jolt/vol17/iss3/5/\" target=\"_blank\" rel=\"noopener\" title=\"grossman-cormack-tar-ediscovery-2011\">Technology-Assisted Review in E-Discovery Can Be More Effective and More Efficient Than Exhaustive Manual Review<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">Richmond Journal of Law &amp; Technology, vol. XVII, issue 3 · 2011</div></div><div class=\"ev-cite\"><div class=\"ev-quote\">“Due to limitations in lawyer review capacity and client budgets the manual process was no longer feasible.”</div><a class=\"ev-link\" href=\"https://ssrn.com/abstract=3725949\" target=\"_blank\" rel=\"noopener\" title=\"legg-bell-ai-legal-profession-ai-enhanced-lawyer-2019\">Artificial Intelligence and the Legal Profession: Becoming the AI-Enhanced Lawyer<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">University of Tasmania Law Review 38, no. 2 (2019): 34-59 · 2019</div></div></div>", "evidenceWhy": "States the mechanism that drove the one prior crossing: capacity and budget, not capability. The same two constraints are what the review backlog (D-05) describes accumulating now."}, {"id": "DN-2", "tp": "T-03", "name": "Answer-key capture", "phase": "PH-2", "thresholdKnown": true, "threshold": "When one layer's evaluation suite becomes the de facto cross-market standard.", "options": [{"id": "DN-2-O1", "label": "A private criterion becomes field infrastructure", "detail": "One actor's evaluation suite governs. Rivals must use, license or translate through it to participate."}, {"id": "DN-2-O2", "label": "A public or federated criterion is built first", "detail": "Courts, regulators or a coalition establish an interoperable standard before the private one closes. governing the answer key (L-02): set the answer key deliberately, and govern who authors it."}, {"id": "DN-2-O3", "label": "No criterion consolidates", "detail": "Evaluation stays plural and shallow. The field runs on many incompatible answer keys, none authoritative — which is not neutrality but the condition in which benchmark scores that do not transfer (D-06) bites hardest, because published scores keep failing to transfer to practice."}], "evidenceHTML": "<div class=\"ev-block is-compact\"><div class=\"ev-cite\"><div class=\"ev-quote\">“The Court recognizes that computer-assisted review is not a magic, Staples-Easy-Button, solution appropriate for all cases.”</div><a class=\"ev-link\" href=\"https://www.courtlistener.com/opinion/8782929/moore-v-publicis-groupe/\" target=\"_blank\" rel=\"noopener\" title=\"da-silva-moore-v-publicis-predictive-coding-2012\">Da Silva Moore v. Publicis Groupe &amp; MSL Group, 287 F.R.D. 182 (S.D.N.Y. Feb. 24, 2012) (Peck, M.J.)<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">United States District Court, Southern District of New York · 2012</div></div></div>", "evidenceWhy": "The prior cycle's permission was granted with the criterion left deliberately open and case-specific. Capture was available and was not taken."}, {"id": "DN-3", "tp": "T-04", "name": "The authorisation cascade", "phase": "PH-2", "thresholdKnown": false, "threshold": "UNKNOWN. Upstream records only that 'the corpus documents two US reform jurisdictions plus England and Wales'. No source states how many, or which, would constitute a cascade. Carried forward unknown rather than estimated.", "options": [{"id": "DN-3-O1", "label": "Cascade proceeds", "detail": "Further jurisdictions adopt; the authorisation gate stops being the binding constraint on who may produce legal work."}, {"id": "DN-3-O2", "label": "Cascade stalls or reverses", "detail": "Adoption plateaus or is rolled back. This is not hypothetical: upstream records that 'reform has been reversed in at least one jurisdiction, so the cascade is not one-way', and the actor register carries Utah's trajectory as reversed."}, {"id": "DN-3-O3", "label": "Assurance arrives by incident instead", "detail": "A salient failure or court sanction raises the assurance required before reliance (D-08, the sanction loop (B-02), visible failures steering the roadmap (R-05)), and the constraint tightens through liability rather than loosening through authorisation."}], "evidenceHTML": "<div class=\"ev-block is-compact\"><div class=\"ev-cite\"><div class=\"ev-quote\">“RESOLVED, That the American Bar Association amends the ABA Model Rules of Professional Conduct … to provide guidance regarding the ethical implications of retaining lawyers and nonlawyers outside the firm to work on client matters (i.e. outsourcing)”</div><a class=\"ev-link\" href=\"https://www.americanbar.org/content/dam/aba/administrative/ethics_2020/2012_hod_annual_meeting_105c.pdf\" target=\"_blank\" rel=\"noopener\" title=\"aba-ethics-2020-resolution-105c-outsourcing-2012\">ABA Commission on Ethics 20/20, Resolution 105C: Outsourcing<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">American Bar Association House of Delegates, Annual Meeting 2012 · 2012</div></div><div class=\"ev-cite\"><a class=\"ev-link\" href=\"https://www.americanbar.org/products/ecd/chapter/220013/\" target=\"_blank\" rel=\"noopener\" title=\"aba-formal-opinion-08-451-outsourcing-2008\">ABA Formal Opinion 08-451: Lawyer&#x27;s Obligations When Outsourcing Legal and Nonlegal Support Services<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">American Bar Association, Standing Committee on Ethics and Professional Responsibility · 2008</div></div><div class=\"ev-cite\"><a class=\"ev-link\" href=\"https://www.nycbar.org/pdf/report/Formal_Opinion_2006-3_1392806.pdf\" target=\"_blank\" rel=\"noopener\" title=\"nycbar-formal-opinion-2006-3-outsourcing-2006\">New York City Bar Formal Opinion 2006-3: Outsourcing Legal Support Services Overseas<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">Association of the Bar of the City of New York · 2006</div></div></div>", "evidenceWhy": "The end of the prior authorisation sequence, and the measure of its pace: six years after the first local opinion, and two years after the market had already consolidated."}, {"id": "DN-4", "tp": "T-05", "name": "Stack absorption", "phase": "PH-3", "thresholdKnown": false, "threshold": "UNKNOWN. Upstream records the mechanism and the switching-cost dynamic but no level.", "options": [{"id": "DN-4-O1", "label": "Absorption completes", "detail": "The agent layer is taken beneath. Switching costs are already high because playbooks are encoded as platform instructions."}, {"id": "DN-4-O2", "label": "The layer holds", "detail": "The provider layer retains the relationship by owning the matter record and the domain engineering rather than the model (D-11, selling outcomes instead of seats (D-19))."}, {"id": "DN-4-O3", "label": "The buyer takes it in-house", "detail": "In-house procurement unbundles the matter and holds the criteria itself (D-26)."}], "evidenceHTML": "<div class=\"ev-block is-compact\"><div class=\"ev-cite\"><div class=\"ev-quote\">“Thomson Reuters acquired Pangea3 in 2010 — four years after the first ethics opinion and two years before the Model Rules caught up.”</div><a class=\"ev-link\" href=\"https://www.prnewswire.com/news-releases/thomson-reuters-acquires-pangea3-109038544.html\" target=\"_blank\" rel=\"noopener\" title=\"thomson-reuters-pangea3-acquisition-2010\">Thomson Reuters Acquires Pangea3 (press release)<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">Thomson Reuters / PR Newswire · 2010</div></div><div class=\"ev-cite\"><a class=\"ev-link\" href=\"https://www.forbesindia.com/article/close-range/india-is-the-place-for-legal-outsourcing-pangea3-md/36877/1\" target=\"_blank\" rel=\"noopener\" title=\"srivastava-forbesindia-pangea3-lpo-2014\">India is the Place for Legal Outsourcing: Pangea3 MD<span class=\"ev-out\" aria-hidden=\"true\">↗</span></a><div class=\"ev-sub\">Forbes India · 2014</div></div></div>", "evidenceWhy": "Establishes that absorption can precede settlement. This is a derived statement of dates, not a quotation from the source."}, {"id": "DN-5", "tp": "T-01", "name": "The formation cliff", "phase": "PH-4", "thresholdKnown": false, "threshold": "UNKNOWN — and worse than unknown. Upstream: 'No source estimates it, and the corpus contains no measurement of the current level.' The signpost register of the 2×2 set records the corresponding indicator as not measured: whether firms measure any unaided junior work product at all has no published baseline.", "options": [{"id": "DN-5-O1", "label": "Formation is rebuilt deliberately", "detail": "Supervised responsibility, simulation with real consequences, later unaided assessment, new recognised pathways. rebuilding formation deliberately (L-04) and writing training into procurement (L-06) — including writing formation into procurement so the cost is borne by someone with a reason to bear it."}, {"id": "DN-5-O2", "label": "Formation is externalised", "detail": "It leaves firms for law schools, simulation vendors and clients. Neither rebuilt inside nor abandoned."}, {"id": "DN-5-O3", "label": "Nothing is done and the cohort does not form", "detail": "The default. training as a shared commons (D-23) makes formation non-excludable, so no individual firm captures the return on funding it, and partnership payout horizons (D-16) gives none of them the horizon to try."}], "evidenceHTML": "", "evidenceWhy": ""}], "gateOrder": ["DN-1", "DN-2", "DN-3", "DN-4", "DN-5"], "pathways": [{"id": "PW-1", "name": "The permission that wasn't taken", "hue": "--df-lens-cobalt", "endState": "Closest to SC-01 Fortified Profession, reached without anyone fortifying anything.", "narrative": "The review-regime switch is crossed cleanly and on the record: a court or regulator permits sampling for a defined task class, on stated conditions, with the standard explicitly short of perfection. The permission is real, and then very little happens. Adoption runs far behind authorisation because the constraint was never only permission — it was matter decomposition, domain engineering and the absence of a criterion anyone trusts (D-11, benchmark scores that do not transfer (D-06)). Firms hold the permission and keep reviewing everything, because the liability sits with an identified human either way (D-20) and no insurer has repriced. The field acquires the language of transformation and the practice of continuity. This is the pathway the prior-cycle layer supports most directly and the current corpus is least equipped to see, because a permission is an event and a non-adoption is not.", "priorCycleAnchor": "PC-3 exactly. Da Silva Moore answered an explicitly stated demand for judicial permission in February 2012; seven years later FTI's retrospective still described much of e-discovery practice as unchanged. Permission is not adoption, and the gap is measured in years.", "action": {"headline": "Measure practice change, not permission events.", "detail": "Instrument the gap between what is permitted and what is done. The observable that matters is the share of matters actually running on sampling, not the count of jurisdictions or opinions allowing it. making outcomes visible (L-01), make outcomes observable, is the enabling move; without it this pathway is indistinguishable from PW-3 for years."}, "topRisk": "Declaring victory on a permission. Strategy calibrated to the authorisation calendar rather than the adoption curve will be years early, and the cost of being early is the formation damage in PW-4 taken for a capability shift that has not arrived.", "leadIndicators": ["Share of matters in a permitted task class actually run on sampling", "Whether professional liability insurers reprice sampling", "Whether any firm publishes a validated process rather than citing a permission"], "evidentialAsymmetry": "", "route": {"DN-1": 0, "DN-2": 2, "DN-3": 0, "DN-4": 1, "DN-5": 1}, "refs": {"actors": ["A-023", "A-021", "A-010"], "drivers": ["D-11", "D-06", "D-20"], "systems": ["B-01", "B-04"]}}, {"id": "PW-2", "name": "The answer key closes first", "hue": "--df-lens-plum", "endState": "SC-03 Client and Platform Sovereignty.", "narrative": "Answer-key capture resolves before the authorisation question does. One layer's evaluation suite becomes the criterion by which acceptable legal work is judged, and because standards entrench through adoption, the question of who should have authored it arrives after it is unanswerable. the measure shaping the build (R-03) closes: the measure shapes what gets built, and the measure now has an owner. Absorption follows rather than precedes — the layer holding the criteria is worth acquiring, and switching costs are already high because playbooks are encoded as platform instructions. The regulatory settlement, when it comes, ratifies an arrangement that was decided commercially years earlier. Nobody breaches a rule at any point.", "priorCycleAnchor": "PC-2's sequence, not its outcome. Thomson Reuters acquired Pangea3 in 2010; the ABA amended the Model Rules in 2012. The commercial consolidation of the prior cycle completed two years before its regulatory settlement, which is the order this pathway assumes.", "action": {"headline": "Contest the answer key while it is still contestable, and treat that as a narrower window than the authorisation debate.", "detail": "governing the answer key (L-02), set the answer key deliberately and govern who authors it, is the only move that operates before entrenchment. The prior cycle shows this is genuinely available: in Da Silva Moore the court was invited to nominate a standard and explicitly declined, so capture is not automatic even under active judicial engagement. opening the permission architecture (L-03), reopening the permission architecture for verification data, is the supporting move, because a criterion nobody can audit cannot be contested."}, "topRisk": "Capture completes quietly and the standard that wins is the one nobody evaluated. There is no incident, no breach and no moment at which the profession is asked to consent.", "leadIndicators": ["Whether any evaluation suite is cited by parties who did not buy it", "Whether rivals must license or translate through one actor's criteria", "Acquisition activity at the agent layer relative to the pace of the ownership debate"], "evidentialAsymmetry": "", "route": {"DN-1": 0, "DN-2": 0, "DN-3": 0, "DN-4": 0, "DN-5": 2}, "refs": {"actors": ["A-001", "A-002", "A-011"], "drivers": ["D-06", "D-17", "D-12"], "systems": ["R-03", "R-02"]}}, {"id": "PW-3", "name": "The stall", "hue": "--df-lens-red", "endState": "A modified status quo. Nearest to SC-01, but reached with the formation damage of a transition that did not occur.", "narrative": "The review-regime switch is never cleanly crossed. Verification cost stays binding, the review queue keeps absorbing the gains (B-01), and machine-led share plateaus below the level at which the later gates can fire. The mechanism is current, not historical: published capability scores keep failing to transfer to practice (D-06, INV-3), confidentiality fragments the learning inputs a criterion would need (D-09), and matter decomposition rather than the model turns out to be the product (D-11) — so each new capability increment lands on the same unsolved integration problem. Authorisation reform plateaus or is rolled back. Capital rotates to a sector with a shorter proof cycle. The field is left with substantial sunk encoding investment, a formation pipeline already thinned in anticipation of a shift that did not arrive, and no settlement of any kind — because a stall does not produce one.", "priorCycleAnchor": "PC-1, the only prior cycle that ended without a settlement — but the analogy must be split. What PC-1 licenses: that an encoding cycle in legal production can run for 24 years and terminate in abandonment rather than settlement, with funding gone within four years of the opening claim and the programme's own leading figure conceding the case at fifteen. What PC-1 does NOT license: the reasons. Leith's diagnosis — a jurisprudentially naive clear-rules conception of law, and knowledge acquisition that never scaled — describes hand-built symbolic rule encoding. The current cycle has no knowledge-engineering bottleneck of that kind. PC-1 grounds the OUTCOME of this pathway and not its MECHANISM.", "action": {"headline": "Do not spend irreversible capacity on a reversible bet.", "detail": "The asymmetry is the whole point: encoding investment retains option value if the shift arrives late, and formation capacity does not — the two clocks's (D-24) clock is 7–15 years and does not restart on demand. rebuilding formation deliberately (L-04) is therefore the move that is correct here for a reason that has nothing to do with whether this pathway obtains: it is the hedge whose cost is bounded and whose absence is not recoverable."}, "topRisk": "Having dismantled the apprenticeship structure for a capability that did not arrive, and discovering it on the slowest clock in the system. The stall is survivable; the stall plus a formation cliff is not.", "leadIndicators": ["Whether machine-led share plateaus rather than climbing", "Whether capability scores continue to fail to transfer to practice", "Capital rotation away from the sector", "Authorisation reform plateauing or reversing in further jurisdictions"], "evidentialAsymmetry": "This pathway has the strongest historical analogue and the weakest current-corpus support. The served corpus is 2024+ and weighted toward vendors and founders — the population least likely to voice a stall, and the one whose institutional position makes a forward claim of stall costly. Its inclusion rests on PC-1, not on current testimony. Read that as a limit on confidence in its timing rather than in its plausibility.", "route": {"DN-1": 2, "DN-2": 2, "DN-3": 1, "DN-4": 1, "DN-5": 2}, "refs": {"actors": ["A-010", "A-040"], "drivers": ["D-01", "D-06", "D-09"], "systems": ["B-01", "R-01"]}}, {"id": "PW-4", "name": "The cliff lands late", "hue": "--df-lens-orange", "endState": "SC-04 Fragmented Verification, reached by default rather than by choice.", "narrative": "The review-regime switch happens without anyone certifying it — review thins by attrition rather than by decision, which is the the vanishing check (B-04) case, a balancing loop whose signal is suppressed. Because there is no stated process, there is no record, and because there is no record, the accumulating consequence is invisible. Assurance eventually arrives by incident rather than by authorisation: a salient failure raises the bar (D-08, the sanction loop (B-02), visible failures steering the roadmap (R-05)), and the correction lands on a field whose reviewing population has already thinned. The formation cliff then fires last and hardest, on the slowest clock in the system, at the point where the hysteresis makes correction unavailable rather than merely expensive. Every visible indicator looks healthy until it does not, because the indicator that would have shown it — whether anyone measures unaided junior work product — was never collected.", "priorCycleAnchor": "None available, and that is the finding. No prior cycle removed a formation pathway: PC-2 relocated junior work but left apprenticeship structures intact at both ends, and PC-3 removed first-pass review, which was already the least formative work in the sequence. This is the one gate the historical record cannot calibrate.", "action": {"headline": "Fund formation as infrastructure now, and measure unaided capability before you need the number.", "detail": "This is the only pathway whose defining gate cannot be watched, so the action cannot be triggered by an indicator — it has to be taken in advance or not at all. Two moves, and the order matters: making outcomes visible (L-01) to establish a baseline for unaided junior work product while there is still a cohort to measure, and rebuilding formation deliberately (L-04) plus writing training into procurement (L-06) to fund formation through procurement, because training as a shared commons (D-23) makes it non-excludable and partnership payout horizons (D-16) means no firm has the horizon to fund it alone."}, "topRisk": "The crossing fires while every visible indicator is healthy, and the failures arrive clustered — because they were undetected, not absent.", "leadIndicators": ["Whether any firm measures unaided junior work product at all (currently unmeasured)", "Rate of thinning in supervised-practice hours", "Whether assurance requirements arrive via incident rather than via rule"], "evidentialAsymmetry": "", "route": {"DN-1": 1, "DN-2": 2, "DN-3": 2, "DN-4": 2, "DN-5": 2}, "refs": {"actors": ["A-010", "A-012", "A-050"], "drivers": ["D-22", "D-23", "D-24"], "systems": ["R-04", "B-04", "B-02"]}}]}</script>
+<script>
+  /* Wrap cross-lens identifiers in a quiet, glossed tag AFTER render. Text nodes only:
+     a regex over innerHTML would also hit codes inside href/title attributes and break
+     the citation links. The label was already spliced in at build time, so this only
+     has to style the code and hang the tooltip. */
+  var ID_GLOSS = {"D-01": "generation is getting cheaper much faster than verification is", "D-02": "agents sustain longer tasks while their reliability stays patchy", "D-03": "assigned tasks raise the floor; self-directed work raises the ceiling", "D-04": "what can be checked, not what is hard or prestigious, goes to the machine", "D-05": "checking piles up faster than senior lawyers can work through it", "D-06": "test performance does not predict performance on real matters", "D-07": "making something measurable can shrink what it was meant to measure", "D-08": "each visible failure raises the assurance required before anyone relies on output", "D-09": "privilege and confidentiality keep the learning inputs apart", "D-10": "good legal advice prevents the event that would have shown whether it was good", "D-11": "the domain engineering, not the model, is what is actually being sold", "D-12": "each cycle of encoded know-how starts from a higher base", "D-13": "billed time stops tracking what was actually delivered", "D-14": "firm leverage rests on billable junior work that automation removes", "D-15": "lower production cost grows the volume of legal work rather than only displacing it", "D-16": "annual profit distribution shortens how far ahead partnerships will invest", "D-17": "frontier labs absorb the agent layer legal software sits on", "D-18": "MSO and ABS structures let non-lawyer money into legal services", "D-19": "AI-native providers sell completed work, not software licences", "D-20": "a named human stays answerable for what the machine produced", "D-21": "the right to practise is conferred by law, not earned by capability", "D-22": "the junior work that taught the craft is the work being automated", "D-23": "lateral hiring free-rides on training nobody is paid to provide", "D-24": "AI fluency forms in months; professional judgment takes years", "D-25": "sustained reliance erodes unaided capability in those who already had it", "D-26": "corporate legal departments split the matter and reassign the pieces", "D-27": "filing gets easier while outcomes do not improve", "B-01": "review load eventually damps the adoption creating it", "B-02": "a visible failure raises the required standard of care", "B-03": "new work absorbs the lawyers automation displaces", "B-04": "the correction that should fire cannot, because nobody can see the failure", "B-05": "punishing AI filings without providing checking tools shuts out self-represented litigants", "R-01": "capability compounds wherever checking can scale", "R-02": "each captured workflow becomes a reusable asset", "R-03": "what gets scored is what gets built", "R-04": "everyone hires trained lawyers; fewer firms train them", "R-05": "the failures that make the news are the ones vendors build against", "L-01": "build a way to see whether legal advice actually worked", "L-02": "decide deliberately what counts as a right answer, and who says so", "L-03": "change the confidentiality rules that keep verification data apart", "L-04": "train lawyers on purpose rather than as a by-product of billable work", "L-05": "state the required standard up front instead of discovering it by sanction", "L-06": "make clients buy formation when they buy legal services", "T-01": "the point past which the training pipeline cannot be restarted for 7–15 years", "T-02": "the point where checking flips from spot-check to full review, or the reverse", "T-03": "the point where whoever sets the benchmark controls what counts as competent", "T-04": "the point where one jurisdiction's licensing change forces the others", "T-05": "the point where model companies swallow the legal software layer", "A-001": "legal-AI platform, the most-discussed vendor in the corpus", "A-002": "Swedish legal-AI platform", "A-003": "incumbent legal information company — Westlaw, CoCounsel", "A-004": "incumbent legal information company (RELX)", "A-005": "frontier model company", "A-006": "frontier model company", "A-007": "AI-native law firm", "A-008": "AI-native small-claims firm, authorised in England and Wales", "A-009": "large firm, early Harvey adopter", "A-010": "Am Law 100 and comparable UK firms, as a class", "A-011": "corporate legal departments and legal ops, as a class", "A-012": "national professional body; issues ethics opinions and accredits law schools", "A-013": "the regulator for solicitors in England and Wales", "A-014": "runs the alternative business structure regime that lets non-lawyers own firms", "A-015": "the Big Four accounting firm's Arizona-licensed law practice", "A-016": "Minnesota law professor; runs empirical studies of AI in legal work", "A-017": "RegLab, the Rhode Center and the Legal Design Lab", "A-018": "the LSC-funded and NLADA-network organisations, as a class", "A-019": "vendor CEO arguing the billable hour survives", "A-020": "ABA-accredited JD programmes — the profession's reproduction system", "A-021": "professional liability carriers, mutuals and mandatory funds", "A-022": "judges imposing penalties for fabricated or unchecked filings", "A-023": "judicial conferences and supreme courts setting filing rules", "A-024": "the dean-entrepreneurs setting institutional AI policy", "A-025": "adopting AI faster than their institutions are governing it", "A-026": "the federal funder of US civil legal aid", "A-030": "shipping legal AI inside Word and Microsoft 365", "A-031": "the largest US law firm by revenue", "A-032": "magic-circle firm", "A-033": "regulatory-compliance AI company with an affiliated law firm", "A-034": "legal workflow infrastructure company", "A-035": "AI-first private-markets law firm", "A-036": "cap-table company that acquired a law firm", "A-037": "distributed-model law firm", "A-038": "private-equity firm backing AI services ventures", "A-039": "venture investor in legal AI", "A-040": "the Supreme Court office licensing non-traditional legal providers", "A-041": "joint ventures selling AI-delivered professional services", "A-050": "California, D.C., Texas and Florida ethics committees, as a class", "A-051": "consumer-protection enforcement against AI claims", "A-052": "the nonprofit litigating the boundary of unauthorised practice", "A-053": "debt buyers and collection filers, as a class", "A-054": "people appearing without a lawyer, as a class", "A-055": "US criminal indigent-defence lawyers, as a class"};
+  function glossIds(root) {
+    if (!root) return;
+    var re = /\b([ABDLRT]-\d{2,3})\b/g;
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode: function (n) {
+        if (!n.nodeValue || !/[ABDLRT]-\d{2,3}/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+        var p = n.parentElement;
+        if (!p || p.closest('.idref, a, code')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var targets = [], n;
+    while ((n = walker.nextNode())) targets.push(n);
+    targets.forEach(function (node) {
+      var frag = document.createDocumentFragment(), last = 0, m;
+      re.lastIndex = 0;
+      while ((m = re.exec(node.nodeValue))) {
+        if (m.index > last) frag.appendChild(document.createTextNode(node.nodeValue.slice(last, m.index)));
+        var s = document.createElement('span');
+        s.className = 'idref';
+        s.textContent = m[1];
+        if (ID_GLOSS[m[1]]) s.title = ID_GLOSS[m[1]];
+        frag.appendChild(s);
+        last = m.index + m[1].length;
+      }
+      if (last < node.nodeValue.length) frag.appendChild(document.createTextNode(node.nodeValue.slice(last)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+
+(function () {
+  if (typeof glossIds !== 'function') return;
+  function boot() {
+    glossIds(document.body);
+    var pd = document.getElementById('panel-detail') || document.getElementById('panel');
+    if (!pd) return;
+    var busy = false;
+    new MutationObserver(function () {
+      if (busy) return;
+      busy = true; glossIds(pd); busy = false;
+    }).observe(pd, { childList: true, subtree: true });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+  else boot();
+})();
+</script>
+<script>
+/* Panel: general <-> detail, plus collapse/resize. Shared by all three views. */
+var PANEL={
+  general:document.getElementById('panel-general'),
+  detail:document.getElementById('panel-detail'),
+  host:document.getElementById('detail-host'),
+  show:function(hmtl){
+    this.host.innerHTML=hmtl;
+    this.general.style.display='none';
+    this.detail.style.display='flex';
+    this.detail.setAttribute('aria-hidden','false');
+    this.detail.scrollTop=0;
+    var p=this.detail.closest('.viz-panel'); if(p)p.scrollTop=0;
+  },
+  back:function(){
+    this.detail.style.display='none';
+    this.detail.setAttribute('aria-hidden','true');
+    this.general.style.display='flex';
+  }
+};
+document.getElementById('detail-back').addEventListener('click',function(){
+  PANEL.back(); if(window.onPanelBack)window.onPanelBack();
+});
+/* Collapse/reopen toggle `.panel-collapsed` on the workspace, matching the shell's
+   wirePanel() (driver-map-v2.body.html). The old version drove `pn`/`cl`/`ro` inline
+   `style.display` directly and never touched the workspace class, so the grid column
+   the panel used to occupy (`var(--panel-w)`) never collapsed to `1fr` — collapsing
+   left a blank panel-width gap instead of the canvas filling the freed space. */
+(function(){
+  var ws=document.querySelector('.viz-workspace'),
+      rz=document.getElementById('panel-resize'),
+      cl=document.getElementById('panel-collapse'),
+      ro=document.getElementById('panel-reopen');
+  if(cl)cl.addEventListener('click',function(){
+    ws.classList.add('panel-collapsed');window.dispatchEvent(new Event('resize'));
+  });
+  if(ro)ro.addEventListener('click',function(){
+    ws.classList.remove('panel-collapsed');window.dispatchEvent(new Event('resize'));
+  });
+  if(rz){
+    var drag=false;
+    rz.addEventListener('pointerdown',function(e){drag=true;rz.setPointerCapture(e.pointerId);rz.classList.add('is-dragging');});
+    rz.addEventListener('pointermove',function(e){
+      if(!drag)return;
+      var w=Math.min(620,Math.max(300,ws.getBoundingClientRect().right-e.clientX));
+      ws.style.setProperty('--panel-w',w+'px');
+    });
+    rz.addEventListener('pointerup',function(e){drag=false;rz.releasePointerCapture(e.pointerId);rz.classList.remove('is-dragging');});
+  }
+})();
+</script>
+<script>
+(function(){
+var D=JSON.parse(document.getElementById('viz-data').textContent);
+var host=document.getElementById('path-host');
+var NS='http://www.w3.org/2000/svg';
+var W=1240,H=760;
+var filter=null,open=null;
+var HASH=(location.hash||'').replace('#','');
+
+function el(n,a){var e=document.createElementNS(NS,n);for(var k in(a||{}))e.setAttribute(k,a[k]);return e;}
+function hue(t){return 'var('+t+')';}
+function S(x1,y1,x2,y2){var dx=(x2-x1)*0.45;
+  return 'M'+x1+','+y1+'C'+(x1+dx)+','+y1+' '+(x2-dx)+','+y2+' '+x2+','+y2;}
+function wrap(s,n){var w=String(s).split(' '),o=[],c='';
+  w.forEach(function(x){if(!c)c=x;else if((c+' '+x).length<=n)c+=' '+x;else{o.push(c);c=x;}});
+  if(c)o.push(c);return o;}
+
+function frame(){var w=host.clientWidth||W,h=host.clientHeight||H;
+  return Math.max(600,Math.min(940,W*h/Math.max(w,1)));}
+
+function draw(){
+  host.innerHTML='';
+  var vbH=frame(), sy=vbH/H;
+  var svg=el('svg',{viewBox:'0 0 '+W+' '+vbH,preserveAspectRatio:'xMidYMid meet',role:'group',
+    'aria-label':'Four pathways routed through five decision gates, one column per gate'});
+  host.appendChild(svg);
+
+  var ROOTX=146, GX0=252, GW=130, ENDX=930, ENDW=300, ENDH=40;
+  var TOP=118*sy, BOT=(vbH-52);
+  var gates=D.gates;
+
+  /* gate columns */
+  var gcol=el('g',{'class':'gate-col'});svg.appendChild(gcol);
+  gates.forEach(function(g,i){
+    var x=GX0+i*GW;
+    gcol.appendChild(el('rect',{x:x-GW/2+8,y:TOP-30,width:GW-16,height:(BOT-TOP)+52,rx:7,
+      'class':(i%2?'alt':'')}));
+    var hd=el('text',{x:x,y:TOP-56,'class':'gate-head'});hd.textContent=g.id+' · '+g.tp;svg.appendChild(hd);
+    wrap(g.name,17).forEach(function(l,j,arr){
+      var t=el('text',{x:x,y:TOP-40+j*12,'class':'gate-sub'});t.textContent=l;svg.appendChild(t);
+    });
+    if(!g.thresholdKnown){
+      var u=el('text',{x:x,y:BOT+30,'class':'gate-unk'});
+      u.textContent='THRESHOLD UNKNOWN';svg.appendChild(u);
+    }
+  });
+
+  /* option rows — y encodes WHICH option a pathway takes at that gate */
+  var rows=3, rowY=function(k){return TOP+((BOT-TOP)/(rows+1))*(k+1);};
+  var orow=el('g',{'class':'opt-row'});svg.appendChild(orow);
+  gates.forEach(function(g,i){
+    var x=GX0+i*GW;
+    g.options.forEach(function(o,k){
+      orow.appendChild(el('circle',{cx:x,cy:rowY(k),r:5,'class':'opt-dot'}));
+    });
+  });
+  ['Option 1','Option 2','Option 3'].forEach(function(lab,k){
+    var t=el('text',{x:GX0-GW/2-4,y:rowY(k)-13,'class':'phase-band','text-anchor':'middle'});
+    t.textContent=lab;svg.appendChild(t);
+  });
+
+  /* root */
+  var rootY=(TOP+BOT)/2;
+  var rg=el('g',{'class':'pwroot'});svg.appendChild(rg);
+  rg.appendChild(el('circle',{cx:ROOTX,cy:rootY,r:8,fill:'var(--df-slate-500)',
+    stroke:'var(--df-surface)','stroke-width':2}));
+  var rt=el('text',{x:ROOTX-16,y:rootY+2});rt.textContent='Legal production';rg.appendChild(rt);
+  var rt2=el('text',{x:ROOTX-16,y:rootY+17});
+  var ts=el('tspan',{'class':'sub'});ts.textContent='TODAY';rt2.appendChild(ts);rg.appendChild(rt2);
+
+  var gLine=el('g',{});svg.appendChild(gLine);
+  var gNode=el('g',{});svg.appendChild(gNode);
+  var gEnd=el('g',{});svg.appendChild(gEnd);
+
+  var slot=(BOT-TOP)/(D.pathways.length+1);
+  D.pathways.forEach(function(p,pi){
+    var c=hue(p.hue), pts=[{x:ROOTX,y:rootY}];
+    gates.forEach(function(g,i){
+      var k=p.route[g.id];               /* index of the option taken at this gate */
+      pts.push({x:GX0+i*GW,y:rowY(k)});
+    });
+    var ey=TOP+slot*(pi+1);
+    pts.push({x:ENDX-8,y:ey});
+
+    var dstr='';
+    for(var i=0;i<pts.length-1;i++){
+      var seg=S(pts[i].x,pts[i].y,pts[i+1].x,pts[i+1].y);
+      dstr+= (i===0?seg:seg.replace(/^M[^C]*/,''));
+    }
+    gLine.appendChild(el('path',{d:dstr,'class':'pw',stroke:c,'data-p':p.id}));
+    gLine.appendChild(el('path',{d:dstr,'class':'pw-hit','data-p':p.id}));
+
+    /* a marker at each gate, ringed where the gate's threshold is unknown */
+    gates.forEach(function(g,i){
+      var k=p.route[g.id], n=el('g',{'class':'pwnode','data-p':p.id});
+      n.appendChild(el('circle',{cx:GX0+i*GW,cy:rowY(k),r:6.5,fill:c}));
+      if(!g.thresholdKnown)
+        n.appendChild(el('circle',{cx:GX0+i*GW,cy:rowY(k),r:11,'class':'ring',stroke:c}));
+      gNode.appendChild(n);
+    });
+
+    var card=el('g',{'class':'pwend','data-p':p.id,tabindex:0,role:'button'});
+    card.appendChild(el('rect',{x:ENDX,y:ey-ENDH/2,width:ENDW,height:ENDH,
+      fill:'color-mix(in srgb,'+c+' 9%,var(--df-surface))',
+      stroke:'color-mix(in srgb,'+c+' 45%,transparent)'}));
+    var nm=el('text',{x:ENDX+13,y:ey-3,'class':'en',fill:c});nm.textContent=p.name;card.appendChild(nm);
+    var st=el('text',{x:ENDX+13,y:ey+13,'class':'es'});
+    /* the card is 286 wide at 10.5px — roughly 46 characters. The full end-state
+       reading lives in the panel; the card carries only as much as it can hold. */
+    st.textContent=(p.endState.length>46?p.endState.slice(0,45).replace(/[ ,.]+$/,'')+'…':p.endState);
+    card.appendChild(st);
+    gEnd.appendChild(card);
+  });
+
+  function apply(){
+    svg.querySelectorAll('.pw,.pwnode,.pwend').forEach(function(n){
+      n.classList.toggle('is-dimmed',filter!==null&&n.getAttribute('data-p')!==filter);});
+    svg.querySelectorAll('.pwend').forEach(function(n){
+      n.classList.toggle('is-open',open===n.getAttribute('data-p'));});
+  }
+  svg.addEventListener('mouseover',function(e){
+    var t=e.target.closest('[data-p]');if(!t||filter!==null)return;
+    var id=t.getAttribute('data-p');
+    svg.querySelectorAll('.pw').forEach(function(n){
+      n.classList.toggle('is-lit',n.getAttribute('data-p')===id);});
+  });
+  svg.addEventListener('mouseleave',function(){
+    if(filter===null)svg.querySelectorAll('.pw').forEach(function(n){n.classList.remove('is-lit');});});
+  svg.addEventListener('click',function(e){
+    var t=e.target.closest('[data-p]');if(t)openPath(t.getAttribute('data-p'));});
+  svg.addEventListener('keydown',function(e){
+    if(e.key!=='Enter'&&e.key!==' ')return;
+    var t=e.target.closest('[data-p]');if(t){e.preventDefault();openPath(t.getAttribute('data-p'));}});
+  apply();window.__papply=apply;
+}
+
+function tag(t,c){return '<span class="tag" style="color:'+c+';border-color:color-mix(in srgb,'+c+
+  ' 40%,transparent);background:color-mix(in srgb,'+c+' 12%,transparent)">'+t+'</span>';}
+
+function openPath(id){
+  var p=D.pathways.filter(function(x){return x.id===id;})[0];if(!p)return;
+  filter=id;open=id;sync();draw();
+  var c=hue(p.hue),h='';
+  /* the end state is a sentence, not a label — a tag would set it in caps and it
+     would swamp the header. Title tag only; the sentence runs underneath. */
+  h+='<div class="detail-head"><div class="detail-tags">'+tag(p.id,c)+'</div>';
+  h+='<h2 class="p-title" style="color:'+c+'">'+p.name+'</h2>';
+  h+='<div class="detail-line" style="color:var(--df-slate-600);font-size:12.5px"><b>Ends:</b> '+p.endState+'</div></div>';
+  h+='<p class="detail-line">'+p.narrative+'</p>';
+  h+='<hr class="p-rule"><div class="p-block-label">Route through the gates</div><div class="p-kv">';
+  D.gates.forEach(function(g){
+    /* The gate's own evidence, rendered under the route. These pages carried none for
+       weeks because an audit scanned this file for `sourceEntityId`, found zero, and
+       concluded there were no anchors — the anchors are real, they just sit under a
+       `sources` array with a separate `quote` object. */
+    var ev=(g.evidenceHTML||'')+(g.evidenceWhy?'<div class="ev-why"><b>Why this passage</b> '+g.evidenceWhy+'</div>':'');
+    h+='<div><b>'+g.id+' · '+g.name+'</b>'+g.options[p.route[g.id]].label+'<br><span style="color:var(--df-slate-600)">'+g.options[p.route[g.id]].detail+'</span>'+ev+'</div>';
+  });
+  h+='</div>';
+  h+='<hr class="p-rule"><div class="p-block-label">Prior-cycle anchor</div><p class="detail-line">'+p.priorCycleAnchor+'</p>';
+  h+='<hr class="p-rule"><div class="p-block-label">What to do</div><div class="p-quote">'+p.action.headline+'</div>';
+  h+='<p class="detail-line">'+p.action.detail+'</p>';
+  h+='<div class="p-block-label" style="margin-top:12px">Top risk</div><div class="p-quote">'+p.topRisk+'</div>';
+  h+='<hr class="p-rule"><div class="p-block-label">Lead indicators</div><div class="p-kv">';
+  p.leadIndicators.forEach(function(x,i){h+='<div><b>'+(i+1)+'</b>'+x+'</div>';});
+  h+='</div>';
+  if(p.evidentialAsymmetry)
+    h+='<hr class="p-rule"><div class="p-warrant"><b>Evidential asymmetry</b>'+p.evidentialAsymmetry+'</div>';
+  h+='<div class="p-warrant" style="margin-top:8px"><b>Upstream</b>actors '+p.refs.actors.join(', ')+
+     ' · drivers '+p.refs.drivers.join(', ')+' · system '+p.refs.systems.join(', ')+'</div>';
+  PANEL.show(h);
+}
+
+function sync(){
+  document.querySelectorAll('[data-pw-chip]').forEach(function(b){
+    b.classList.toggle('is-active',b.getAttribute('data-pw-chip')===filter);});
+}
+document.querySelectorAll('[data-pw-chip]').forEach(function(b){
+  b.addEventListener('click',function(){
+    var v=b.getAttribute('data-pw-chip');
+    if(filter===v){filter=null;open=null;sync();draw();PANEL.back();}
+    else openPath(v);});});
+/* GUARDED: #pw-clear moved from the stage into the suite rail, and a moved id is exactly
+   where an unguarded lookup throws and takes the rest of the script with it. */
+var pwClear=document.getElementById('pw-clear');
+if(pwClear)pwClear.addEventListener('click',function(){
+  filter=null;open=null;sync();draw();PANEL.back();});
+window.onPanelBack=function(){filter=null;open=null;sync();draw();};
+(function(){var t=null;window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,120);});})();
+
+sync();draw();
+if(HASH&&D.pathways.some(function(p){return p.id===HASH;}))openPath(HASH);
+})();
+</script>
+<script src="styles/lens-chrome.js"></script>
+<script src="styles/chrome.js"></script>
+</body>
+</html>

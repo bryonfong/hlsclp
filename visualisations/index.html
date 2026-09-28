@@ -1,41 +1,48 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
-<title>Visualisation suite — AI &amp; the Legal Profession</title>
+<title>Essay visuals — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/index.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
-<meta property="og:title" content="Visualisation suite — AI &amp; the Legal Profession">
-<meta property="og:description" content="Interactive D3 visualisations underpinning the AI &amp; the Legal Profession series: a 170-source topic network, systems maps, and concentric-evolution diagrams.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/index.html">
+<meta property="og:title" content="Essay visuals — AI &amp; the Legal Profession">
+<meta property="og:description" content="Six interactive visuals, each built for and paired with an essay in the series. The seven corpus-derived analytical lenses live under Dragonfly Insights.">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/index.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Visualisation suite — AI &amp; the Legal Profession">
-<meta name="twitter:description" content="Interactive D3 visualisations underpinning the AI &amp; the Legal Profession series: a 170-source topic network, systems maps, and concentric-evolution diagrams.">
+<meta name="twitter:title" content="Essay visuals — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="Six interactive visuals, each built for and paired with an essay in the series. The seven corpus-derived analytical lenses live under Dragonfly Insights.">
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
-<meta name="description" content="Interactive D3 visualisations underpinning the AI &amp; the Legal Profession series: a 170-source topic network, systems maps, and concentric-evolution diagrams.">
-<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<meta name="description" content="Six interactive visuals, each built for and paired with an essay in the series. The seven corpus-derived analytical lenses live under Dragonfly Insights.">
+<link rel="icon" href="../assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="../assets/reference/apple-touch-icon.png">
 <link rel="stylesheet" href="../legal-design-system.css">
-<link rel="stylesheet" href="../legal-site.css">
+<link rel="stylesheet" href="../legal-site.css?v=dragonfly-navigation-20260920">
+<link rel="stylesheet" href="../chart-contrast.css">
+<script src="../site-accessibility.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- NAV -->
 <header class="site-nav">
   <a class="brand" href="../index.html" aria-label="Home">
-    <span class="mk" data-mk="brand"></span>
-    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Visualisation suite</small></span>
+    <img class="hls-shield" src="../assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Essay visuals</small><small class="institution-name">Harvard Law School</small></span>
   </a>
   <nav class="links" aria-label="Primary">
     <a href="../index.html#essays">Essays</a>
-    <a href="index.html" aria-current="page">Visualisations</a>
-    <a href="../deck/series-deck.html">Presentation</a>
-    <a href="../essays/series-introduction.html">About</a>
+    <a href="../insights.html">Dragonfly Insights</a>
+    <a href="../course.html">Harvard Course</a>
+    <a href="../presentations.html">Presentations</a>
+    <a href="../powerpoints.html">PowerPoints</a>
+    <a href="../project-leads.html">About</a>
   </nav>
   <div class="nav-right">
     <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark">
@@ -47,41 +54,25 @@
 </header>
 
 <!-- HERO -->
+<main id="main-content" tabindex="-1">
 <section class="wrap" style="padding:72px 0 8px;">
   <div class="eyebrow-row" style="display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap;margin-bottom:24px;">
-    <span class="eyebrow">Interactive · D3</span>
+    <span class="eyebrow">By essay · interactive</span>
     <span class="label-chip">Light / dark · keyboard-navigable</span>
   </div>
-  <h1 style="font-size:clamp(34px,5vw,52px);font-weight:600;letter-spacing:-0.02em;max-width:20ch;line-height:1.06;">The visualisation suite</h1>
-  <p class="measure" style="margin-top:24px;font-size:18px;line-height:1.6;color:var(--text-muted);max-width:62ch;">Each visualisation is a different lens on the same corpus — the sources, structures, and tensions that the essays read in prose.</p>
+  <h1 style="font-size:clamp(34px,5vw,52px);font-weight:600;letter-spacing:-0.02em;max-width:20ch;line-height:1.06;">The essay visuals</h1>
+  <p class="measure" style="margin-top:24px;font-size:18px;line-height:1.6;color:var(--text-muted);max-width:64ch;">Six figures, each built for an essay in the series and published alongside it — analysis you can read, then turn and inspect. They argue the essay's point rather than survey the evidence base &mdash; the <a class="legal-link" href="../insights-analysis.html">Analysis</a> section applies two published analytical lenses: topic mapping and actor mapping, with driver and dynamics mapping and scenario mapping in progress.</p>
+
 </section>
 
-<!-- FEATURED: TOPIC NETWORK -->
-<section class="wrap" style="margin-top:44px;">
-  <div class="viz-teaser">
-    <div class="canvas" id="netCanvas" aria-hidden="true"></div>
-    <div class="copy">
-      <span class="eyebrow" style="margin-bottom:14px;display:block;">Featured</span>
-      <h3>The topic network</h3>
-      <p>A living map of the corpus underpinning the series. Each source is coded across dimensions — surfacing which issues are most discussed, where structural tensions live, and which sources bridge multiple domains.</p>
-      <div class="viz-stats">
-        <div class="stat"><div class="n">170</div><div class="l">Sources</div></div>
-        <div class="stat"><div class="n">39</div><div class="l">Topics</div></div>
-        <div class="stat"><div class="n">11</div><div class="l">Dimensions</div></div>
-      </div>
-      <a class="btn btn-primary" href="topic-network.html">Open the topic network<span class="arr">→</span></a>
-    </div>
-  </div>
-</section>
-
-<!-- GRID -->
+<!-- ESSAY VISUALISATIONS -->
 <section class="wrap" style="margin-top:72px;">
   <div class="sec-head">
     <div>
-      <span class="eyebrow">By essay</span>
-      <h2>Explore each lens</h2>
+      <span class="eyebrow">One per essay</span>
+      <h2>Six figures, six arguments</h2>
     </div>
-    <p>Every visualisation pairs with an essay in the series — analysis you can read, then turn and inspect.</p>
+    <p>Each pairs with an essay in the series — analysis you can read, then turn and inspect.</p>
   </div>
   <div class="essay-grid">
     <a class="essay-card" href="law-gateway-systems.html">
@@ -90,7 +81,7 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Systems map</span></div>
         <h3>Law as the gateway</h3>
         <p>The legal node as connective tissue — how every professional function routes through law, and what an AI system at that node can see.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
     <a class="essay-card" href="harveys-strategic-evolution.html">
@@ -99,7 +90,7 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Concentric</span></div>
         <h3>Harvey's strategic evolution</h3>
         <p>The expanding rings of what the most-discussed legal-AI company appears to be building — read as strategy, not a wrapper.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
     <a class="essay-card" href="director-coach-editor.html">
@@ -108,7 +99,7 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Interactive</span></div>
         <h3>Director, coach, editor</h3>
         <p>The shift in the human role when you actually work with AI agents on complex intellectual tasks — directing, coaching, and editing rather than drafting.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
     <a class="essay-card" href="scrambled-map.html">
@@ -117,7 +108,7 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Competitive map</span></div>
         <h3>The scrambled competitive map</h3>
         <p>The landscape AI is redrawing — incumbents, challengers, and clients all exerting gravitational pull on where value settles.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
     <a class="essay-card" href="four-ingredients.html">
@@ -126,7 +117,7 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Framework</span></div>
         <h3>The four ingredients</h3>
         <p>What good AI outcomes actually require — and why the profession is systematically undermining the scarcest of the four.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
     <a class="essay-card" href="pyramid-transformation.html">
@@ -135,13 +126,17 @@
         <div class="meta-row"><span class="badge"><span class="dot"></span>Transformation</span></div>
         <h3>Pyramid transformation</h3>
         <p>Where elite lawyering goes when AI automates the base of the pyramid — from up-or-out to up-and-out.</p>
-        <span class="read">Open visualisation<span>→</span></span>
+        <span class="read">Open visual<span>→</span></span>
       </div>
     </a>
   </div>
+  <p class="measure" style="margin-top:26px;font-size:14px;line-height:1.65;color:var(--text-faint);max-width:74ch;">
+    These six were built against an earlier and smaller corpus (170 sources, 39 topics). They are kept as published rather than regenerated, so the essays they pair with continue to describe what a reader actually sees. The <a href="topic-network.html">original topic network</a> is preserved for the same reason; its successor, built on the full 600-source record, is <a href="../insights-analysis.html">the first lens in the chain</a>.
+  </p>
 </section>
 
 <!-- FOOTER -->
+</main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -149,27 +144,29 @@
         <span class="mk" data-mk="foot"></span>
         <div class="bt">
           <b>AI &amp; the Legal Profession</b>
-          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins, using <a href="https://dragonflythinking.com" rel="noopener">Dragonfly Thinking</a> methodology and AI agents.</p>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads David B. Wilkins &amp; Anthea Roberts. Powered by <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
         </div>
       </div>
       <div class="foot-col">
         <h4>Series</h4>
         <a href="../index.html#essays">Essays</a>
-        <a href="index.html">Visualisations</a>
-        <a href="https://hls.harvard.edu/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener">The Harvard course</a>
+        <a href="../insights.html">Insights</a>
+        <a href="index.html">Visuals</a>
+        <a href="../course.html">Harvard course</a>
         <a href="../workshops.html">Workshops</a>
       </div>
       <div class="foot-col">
         <h4>About</h4>
         <a href="../essays/series-introduction.html">The project</a>
-        <a href="../project-leads.html">Project leads</a>
+        <a href="../project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
         <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
-        <a href="https://clp.law.harvard.edu" rel="noopener">Contact</a>
       </div>
     </div>
     <div class="foot-base">
       <span>© 2026 President &amp; Fellows of Harvard College</span>
-      <span>Lenses being tested and refined — not finished pronouncements.</span>
+      <span>Analyses being tested and refined — not finished pronouncements.</span>
     </div>
   </div>
 </footer>
@@ -180,24 +177,6 @@
   const D = window.Dragonfly;
   document.querySelectorAll('[data-mk="brand"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 30 }));
   document.querySelectorAll('[data-mk="foot"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 40 }));
-
-  // Featured topic-network teaser — restrained slate field, crimson bridge nodes.
-  const c = document.getElementById('netCanvas');
-  if (c) {
-    const W = 520, H = 380, NS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(NS, 'svg');
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
-    svg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
-    let seed = 7; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
-    const N = 46, nodes = [];
-    for (let i = 0; i < N; i++) nodes.push({ x: 50 + rnd() * (W - 100), y: 40 + rnd() * (H - 80), r: 3 + rnd() * 5, bridge: rnd() > 0.82 });
-    nodes.forEach((a, i) => {
-      const d = nodes.map((b, j) => ({ j, d: Math.hypot(a.x - b.x, a.y - b.y) })).filter(o => o.j !== i).sort((p, q) => p.d - q.d).slice(0, 2);
-      d.forEach(o => { if (o.j > i) { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', a.x); l.setAttribute('y1', a.y); l.setAttribute('x2', nodes[o.j].x); l.setAttribute('y2', nodes[o.j].y); l.setAttribute('stroke', (a.bridge || nodes[o.j].bridge) ? 'rgba(165,28,48,0.28)' : 'rgba(100,116,139,0.22)'); l.setAttribute('stroke-width', '1'); svg.appendChild(l); } });
-    });
-    nodes.forEach(n => { const cir = document.createElementNS(NS, 'circle'); cir.setAttribute('cx', n.x); cir.setAttribute('cy', n.y); cir.setAttribute('r', n.r); cir.setAttribute('fill', n.bridge ? '#A51C30' : '#cbd5e1'); if (n.bridge) cir.setAttribute('stroke', 'rgba(165,28,48,0.18)'), cir.setAttribute('stroke-width', '6'); svg.appendChild(cir); });
-    c.appendChild(svg);
-  }
 
   // Theme
   const btn = document.getElementById('themeBtn'), root = document.documentElement;

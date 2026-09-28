@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);var q=location.search;if(q.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(q.indexOf('hero=1')!==-1){document.documentElement.classList.add('hero-mode');}if(q.indexOf('preview=1')!==-1){document.documentElement.classList.add('preview-mode');}})()</script>
+<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme')||localStorage.getItem('legal-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);var q=location.search;if(q.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(q.indexOf('hero=1')!==-1){document.documentElement.classList.add('hero-mode');}if(q.indexOf('preview=1')!==-1){document.documentElement.classList.add('preview-mode');}})()</script>
 <title>Topic Network — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/topic-network.html">
 <meta name="description" content="An interactive map of 170 sources across 39 topics and 11 analytical dimensions — the research corpus underpinning the series.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Topic Network — AI &amp; the Legal Profession">
 <meta property="og:description" content="An interactive map of 170 sources across 39 topics and 11 analytical dimensions — the research corpus underpinning the series.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/topic-network.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/topic-network.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -2419,6 +2419,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
     @page { size: landscape; margin: 10mm; }
   }
 </style>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -2445,7 +2446,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
   <details class="onboarding-block" open>
     <summary>How to Read This</summary>
     <div class="onboarding-content">
-      This network maps 170 sources across 39 topics in 11 dimensions. Large coloured circles are topics, sized by source count. Small dots are individual sources, connected to every topic they address. Use the dimension filters to focus on one area. Toggle bridge sources to highlight works that span 10+ topics. Toggle tension edges to see where the literature holds competing views. Click any node for detail.
+      This network maps 170 sources across 39 topics in 11 dimensions. Large colored circles are topics, sized by source count. Small dots are individual sources, connected to every topic they address. Use the dimension filters to focus on one area. Toggle bridge sources to highlight works that span 10+ topics. Toggle tension edges to see where the literature holds competing views. Click any node for detail.
     </div>
   </details>
 
@@ -2615,7 +2616,7 @@ const TOPICS = [
     "name": "Copilot vs Autopilot Spectrum",
     "shortName": "Copilot/Autopilot",
     "dimension": "business-model-transformation",
-    "description": "The spectrum from AI assisting lawyers (copilot) to AI replacing lawyers for specific tasks (autopilot) — Sequoia's organising metaphor.",
+    "description": "The spectrum from AI assisting lawyers (copilot) to AI replacing lawyers for specific tasks (autopilot) — Sequoia's organizing metaphor.",
     "sourceCount": 72,
     "tensionsWith": [
       "training-crisis"
@@ -2637,7 +2638,7 @@ const TOPICS = [
     "name": "MSO/ABS Ownership Models",
     "shortName": "MSO/ABS",
     "dimension": "business-model-transformation",
-    "description": "Managed services organisations and alternative business structures challenging traditional lawyer-only ownership rules.",
+    "description": "Managed services organizations and alternative business structures challenging traditional lawyer-only ownership rules.",
     "sourceCount": 21,
     "tensionsWith": []
   },
@@ -2848,7 +2849,7 @@ const TOPICS = [
     "name": "AI as Legal Aid Multiplier",
     "shortName": "AI Legal Aid",
     "dimension": "access-to-justice",
-    "description": "AI tools enabling legal aid organisations to serve dramatically more clients — 50% more with the same resources.",
+    "description": "AI tools enabling legal aid organizations to serve dramatically more clients — 50% more with the same resources.",
     "sourceCount": 4,
     "tensionsWith": [
       "two-tiered-justice"
@@ -2897,7 +2898,7 @@ const TOPICS = [
     "name": "Expertise Redefinition",
     "shortName": "Expertise",
     "dimension": "professional-identity",
-    "description": "What legal expertise means when AI can do research, draft documents, and analyse cases — the shift from knowledge mastery to judgment and strategy.",
+    "description": "What legal expertise means when AI can do research, draft documents, and analyze cases — the shift from knowledge mastery to judgment and strategy.",
     "sourceCount": 14,
     "tensionsWith": [
       "role-evolution"
@@ -3116,7 +3117,7 @@ const SOURCES = [
       "Company has raised more than $1 billion total",
       "Valuation 3.5x increase in one year ($3B Feb 2025 → $11B Mar 2026)",
       "$190 million ARR as of January 2026 (up from $100M in August 2025)",
-      "100,000+ lawyers across 1,300 organisations in 60 countries",
+      "100,000+ lawyers across 1,300 organizations in 60 countries",
       "Majority of AmLaw 100, 500+ in-house legal teams, 50 asset management firms",
       "25,000+ custom agents operating on Harvey",
       "Long-horizon agents handling multi-step workflows over extended periods (e.g., fund formation)",
@@ -3333,7 +3334,7 @@ const SOURCES = [
       "Mike Schmidtberger left Sidley Austin (7 years as executive committee chair) to become chairman of Norm Law",
       "'Movie theater economics': traditional firms bundle commodity work with high-margin judgment work; AI-native firms target the profitable commodity segment",
       "AI systems capture methodology and reasoning, creating portable knowledge assets clients own rather than rent",
-      "Partnership structures prioritising annual cash distributions over infrastructure investment create structural disadvantage",
+      "Partnership structures prioritizing annual cash distributions over infrastructure investment create structural disadvantage",
       "Norm Law backed by Bain Capital, Blackstone, and Vanguard",
       "Harvey raised $300 million at a $3 billion valuation; Anthropic entered the market with a legal plugin for Claude that sent shockwaves through legal tech valuations",
       "Quinn Emanuel and McDermott Will & Schulte have signaled openness to outside investment"
@@ -3425,7 +3426,7 @@ const SOURCES = [
     "url": "https://thelegalwire.ai/the-double-edged-sword-of-agentic-ai-will-autonomous-workflows-break-the-billable-hour/",
     "keyClaims": [
       "74% of billable work could potentially be automated by agentic AI systems",
-      "AI agents can analyse 175,000 discovery pages in minutes, previously taking weeks of junior associate time",
+      "AI agents can analyze 175,000 discovery pages in minutes, previously taking weeks of junior associate time",
       "Complex medical timelines can be constructed in 1-4 hours versus traditional timeframes",
       "EU AI Act's most demanding obligations for 'high-risk' systems become fully applicable August 2, 2026"
     ],
@@ -3904,10 +3905,10 @@ const SOURCES = [
     "url": "https://www.fticonsulting.com/about/newsroom/press-releases/ai-adoption-in-corporate-legal-departments-doubles-according-to-the-general-counsel-report",
     "keyClaims": [
       "87% of GCs report AI use in 2026, up from 44% in 2025 and 20% in 2023 — nearly doubled year-over-year",
-      "53% have formalised technology roadmaps, up from 25% — more than doubled",
+      "53% have formalized technology roadmaps, up from 25% — more than doubled",
       "39% identify AI as a strategic priority",
       "70% plan technology investment within 12 months",
-      "Most common AI uses: summarisation (83%), clause identification (63%), transcription (53%), analysis of foreign language materials (40%), first-pass review (37%)",
+      "Most common AI uses: summarization (83%), clause identification (63%), transcription (53%), analysis of foreign language materials (40%), first-pass review (37%)",
       "AI adoption in corporate legal departments has doubled according to quantitative survey of 224 GCs across 12 countries"
     ],
     "themes": [
@@ -4057,7 +4058,7 @@ const SOURCES = [
     "keyClaims": [
       "92% of surveyed lawyers already use at least one AI tool daily",
       "62% report weekly time savings of 6-20%, averaging approximately 10% of the workweek",
-      "52% of organisations report revenue growth after implementing AI, with approximately 50% of those reporting increases of 6-20%",
+      "52% of organizations report revenue growth after implementing AI, with approximately 50% of those reporting increases of 6-20%",
       "54% anticipate firms will leverage efficiency to service higher volume or drive competitive pricing",
       "Top obstacles: ethical/data privacy concerns (39%), lack of training/resources (39%), resistance to change (35%)",
       "61% say finding skilled professionals is more challenging than a year ago",
@@ -4250,7 +4251,7 @@ const SOURCES = [
       "The next $1T company will be a software company masquerading as a services firm",
       "A copilot sells the tool; an autopilot sells the work",
       "The work budget is 6x larger than the tool budget — autopilots address the larger market",
-      "Today's judgement will become tomorrow's intelligence as AI accumulates proprietary domain data",
+      "Today's judgment will become tomorrow's intelligence as AI accumulates proprietary domain data",
       "Transactional legal ($20-25B market) is a high-priority autopilot opportunity",
       "Harvey and Crosby are examples of companies on the autopilot trajectory",
       "Insurance brokerage ($140-200B), accounting/audit ($50-80B outsourced US), healthcare revenue cycle ($50-80B), claims adjusting ($50-80B)",
@@ -4499,7 +4500,7 @@ const SOURCES = [
       "55% of in-house teams say Harvey is helping them reimagine collaboration with their law firms",
       "82% of legal teams report increased capacity without adding headcount",
       "50% of law firms say Harvey improves client service through faster delivery and better quality work",
-      "IFS SVP Corporate Development: 'whether it's our corporate development team, advisors like PwC, or our law firms' — three types of organisation in one workspace",
+      "IFS SVP Corporate Development: 'whether it's our corporate development team, advisors like PwC, or our law firms' — three types of organization in one workspace",
       "PwC Deals Partner: 'It's a new model for professional services' — working in same intelligent workspace, sharing insights in real-time",
       "Deutsche Telekom GC: 'empowers our legal team and external counsel including Gleiss Lutz to work as one integrated unit'",
       "KWM Chief Innovation Officer: 'Harvey is evolving from a legal productivity tool to a collaborative platform with our clients'",
@@ -4509,7 +4510,7 @@ const SOURCES = [
       "technology/multi-party-collaboration",
       "business-model/professional-services-platform",
       "strategy/law-firm-as-distribution-node",
-      "governance/cross-organisational-security"
+      "governance/cross-organizational-security"
     ],
     "topics": [
       {
@@ -4585,7 +4586,7 @@ const SOURCES = [
       "Legal ops priorities in 2026: data-driven law firm relationships, AI scaling, team role evolution",
       "Shift from reactive rate negotiations to collaborative partnerships using benchmarking tools",
       "Legal professionals view AI as a 'superpower' allowing shift from tactical, manual work to high-value strategic enablement",
-      "Some organisations using market data to assess rate increase reasonableness; others implementing rate freezes",
+      "Some organizations using market data to assess rate increase reasonableness; others implementing rate freezes",
       "Hiring shifting toward candidates who can manage technology and drive process improvements"
     ],
     "themes": [
@@ -7103,7 +7104,7 @@ const SOURCES = [
       "technology/multi-party-collaboration",
       "business-model/platform-as-relationship-layer",
       "strategy/law-firm-as-distribution-node",
-      "governance/cross-organisational-security"
+      "governance/cross-organizational-security"
     ],
     "topics": [
       {
@@ -7262,7 +7263,7 @@ const SOURCES = [
     ],
     "themes": [
       "private-equity-in-legal",
-      "management-services-organisations",
+      "management-services-organizations",
       "alternative-business-structures",
       "law-firm-ownership",
       "regulatory-arbitrage",
@@ -7624,7 +7625,7 @@ const SOURCES = [
     "type": "industry-report",
     "url": "https://unity-connect.com/our-resources/blog/big-4-ai-agents/",
     "keyClaims": [
-      "Deloitte launched Zora AI in March 2025 as an 'AI-powered procurement specialist' focused on finance and procurement workflows including invoice automation, contract review, spend analysis, and predictive modelling",
+      "Deloitte launched Zora AI in March 2025 as an 'AI-powered procurement specialist' focused on finance and procurement workflows including invoice automation, contract review, spend analysis, and predictive modeling",
       "EY launched the EY.ai Agentic Platform on March 18, 2025, embedding 150+ specialized tax agents to support 80,000 professionals worldwide",
       "KPMG launched Workbench in June 2025, a multi-agent collaboration environment mirroring human audit teams with data, compliance, drafting, and supervisor agents",
       "PwC rolled out Agent OS in 2025, an enterprise AI operating system for deploying AI agents across departments, backed by a multibillion-dollar AI commitment announced in 2022",
@@ -7703,7 +7704,7 @@ const SOURCES = [
       "Only 35% plan to increase first-year associate classes",
       "Entry-level median salaries dropped 3% in 2025 — first decline since 2009",
       "Firms adjusting associate populations to more senior demographic",
-      "Oversupply of traditional legal skills; critical shortages in specialised areas"
+      "Oversupply of traditional legal skills; critical shortages in specialized areas"
     ],
     "themes": [
       "entry-level-contraction",
@@ -7749,12 +7750,12 @@ const SOURCES = [
     "type": "journalism",
     "url": "https://www.lawnext.com/2025/10/on-lawnext-how-ai-is-helping-legal-aid-serve-50-more-clients-thomson-reuters-ai-for-justice-program-one-year-in.html",
     "keyClaims": [
-      "Legal aid partners serving 50% more clients one year into the programme",
+      "Legal aid partners serving 50% more clients one year into the program",
       "Attorneys save up to 15 hours per week",
       "Urgent case materials prepared up to 75% faster",
-      "Programme provides CoCounsel (TR's AI legal assistant) to legal aid organisations",
+      "Programme provides CoCounsel (TR's AI legal assistant) to legal aid organizations",
       "Three pillars: Access (tool provision), Support (training), Scale (replicable blueprint)",
-      "Legal Aid Society of San Bernardino: 45-person organisation serving 9,000+ annual clients",
+      "Legal Aid Society of San Bernardino: 45-person organization serving 9,000+ annual clients",
       "Over 90% of civil legal needs in the US go unrepresented"
     ],
     "themes": [
@@ -8525,7 +8526,7 @@ const SOURCES = [
     "type": "survey",
     "url": "https://www.lawnext.com/2025/09/legal-aid-organizations-embrace-ai-at-twice-the-rate-of-other-lawyers-new-study-reveals.html",
     "keyClaims": [
-      "74% of legal aid organisations currently use AI — nearly double the 37% rate across the wider profession",
+      "74% of legal aid organizations currently use AI — nearly double the 37% rate across the wider profession",
       "88% believe AI can address the access to justice gap",
       "26% use AI daily; 12% use it multiple times per day; 40% use AI at least weekly",
       "90% said fully leveraging AI would enable them to serve more clients",
@@ -8597,7 +8598,7 @@ const SOURCES = [
     "url": "https://contractpodai.com/news/agentic-ai-legal/",
     "keyClaims": [
       "40% of enterprise applications expected to integrate task-specific AI agents by 2026, up from <5% in 2025 (Gartner)",
-      "Over 40% of agentic AI projects will be cancelled by end of 2027 due to escalating costs, unclear value, or inadequate risk controls (Gartner)",
+      "Over 40% of agentic AI projects will be canceled by end of 2027 due to escalating costs, unclear value, or inadequate risk controls (Gartner)",
       "Up to 30% of hours currently worked in the US could be automated through generative AI by 2030 (McKinsey)",
       "15% of day-to-day work decisions will be made autonomously by 2028, versus 0% in 2024 (Gartner)",
       "80% of common customer service issues projected to be autonomously resolved by 2029, reducing costs by 30% (Gartner)",
@@ -8672,7 +8673,7 @@ const SOURCES = [
     "type": "strategic-analysis",
     "url": "https://a16z.com/law-order-gpu/",
     "keyClaims": [
-      "Key missing pieces in legal AI: (1) Multiplayer mode — connecting different organisations; (2) Workflow coverage — end-to-end process, not point solutions",
+      "Key missing pieces in legal AI: (1) Multiplayer mode — connecting different organizations; (2) Workflow coverage — end-to-end process, not point solutions",
       "Accounting distribution node analogy: QuickBooks, Sage Intacct, Bill.com benefited from accountants as key distribution nodes. A small business and its CPA shared the same QuickBooks file. No legal tool has achieved this yet.",
       "Harvey: 'Nobody gets fired for buying Harvey.' Brand and trust function like network effects. Top-down GTM with enterprise-wide agreements.",
       "Harvey may not be deeply embedded in most lawyers' daily workflows — 'not heavily used yet, but very much there and available'",
@@ -9310,7 +9311,7 @@ const SOURCES = [
       "Speech transcription reducing probation note-taking by approximately 50%",
       "UK legal services sector worth £37 billion with 44% share of European LawTech startups",
       "AI 'should support, not substitute, human judgment'",
-      "Justice AI Fellowship and Justice AI Academy programmes launched",
+      "Justice AI Fellowship and Justice AI Academy programs launched",
       "Over 90,000 staff across the justice system targeted for AI productivity tools"
     ],
     "themes": [
@@ -9621,7 +9622,7 @@ const SOURCES = [
     "url": "https://docket.acc.com/ai-empowered-counsel-practical-framework-house-legal-teams",
     "keyClaims": [
       "ACC provides operational guidance for AI implementation — not just aspirational frameworks",
-      "Framework covers vendor evaluation criteria, governance frameworks, training programmes, and KPI measurement",
+      "Framework covers vendor evaluation criteria, governance frameworks, training programs, and KPI measurement",
       "AI positioned not as a separate technology project but as embedded in everyday legal operations",
       "Specific use cases: contract review, litigation management, compliance monitoring, knowledge management",
       "Addresses the 'how' that most surveys miss — implementation mechanics, not just adoption rates"
@@ -10017,7 +10018,7 @@ const SOURCES = [
       "AI productivity tools have potential to save lawyers nearly 240 hours per year, up from 200 hours estimated in 2024",
       "Productivity savings worth $19,000 per person annually",
       "$32 billion annual impact across US legal and tax/accounting sectors",
-      "53% of organisations already seeing ROI from AI",
+      "53% of organizations already seeing ROI from AI",
       "80% of legal professionals believe AI will have high or transformational impact within 5 years",
       "Over 95% of legal professionals expect Gen AI to become central to workflow within five years",
       "Organisations with clear AI strategies are 2x more likely to see revenue growth",
@@ -10117,7 +10118,7 @@ const SOURCES = [
     "keyClaims": [
       "GC AI usage at 44% — up from less than 33% in 2024",
       "Confidence highest for document review (85%), e-discovery (80%), legal operations (79%)",
-      "53% had formalised tech roadmaps — doubled from 25% the previous year",
+      "53% had formalized tech roadmaps — doubled from 25% the previous year",
       "85% of GCs felt minimally or not prepared for GenAI risks",
       "Majority of GCs indicate openness to AI in nearly every major legal use case"
     ],
@@ -10249,7 +10250,7 @@ const SOURCES = [
     "type": "strategic-analysis",
     "url": "https://www.diligent.com/resources/blog/general-counsel-ai-champion",
     "keyClaims": [
-      "General counsel are emerging as 'unlikely AI champions' within their organisations",
+      "General counsel are emerging as 'unlikely AI champions' within their organizations",
       "GCs are uniquely positioned to embed AI with both ambition and accountability",
       "GCs have opportunity to serve as 'early architects of responsible innovation'",
       "78% of legal teams expressed interest in AI implementation",
@@ -10330,7 +10331,7 @@ const SOURCES = [
       "Firms expect AI investment recovered through value recognition baked into rates, not line-item surcharges",
       "90% of firms expect improved quality of service rather than cost reductions",
       "Approximately 50% of firms indicated willingness to accept lower-margin work previously outsourced to smaller firms or ALSPs",
-      "Large-scale AI investments create competitive advantages favouring financially strong firms",
+      "Large-scale AI investments create competitive advantages favoring financially strong firms",
       "All firms interviewed are working collaboratively with clients on AI use case development, often with software vendors as third partner"
     ],
     "themes": [
@@ -10633,12 +10634,12 @@ const SOURCES = [
     "type": "academic",
     "url": "https://digitalcommons.lmu.edu/llr/vol57/iss4/2/",
     "keyClaims": [
-      "Identifies 100 specific use cases where generative AI could help bridge the access to justice gap through legal aid organisations",
+      "Identifies 100 specific use cases where generative AI could help bridge the access to justice gap through legal aid organizations",
       "Field study of 91 legal aid professionals given up to two months of access to paid generative AI tools, plus a companion survey of 202 legal aid professionals",
       "90% of pilot participants reported increased productivity; 75% reported intent to continue using generative AI tools",
       "Before the trial, women were far less likely than men to use or value AI tools; by the trial's end, men's and women's outcomes were statistically indistinguishable",
       "Participants receiving concierge support (peer use cases, office hours, assistance) had significantly better outcomes than control group counterparts",
-      "Participants managed risks by focusing on lower-risk applications: document summarisation, confirmatory or preliminary research, first drafts, and translation",
+      "Participants managed risks by focusing on lower-risk applications: document summarization, confirmatory or preliminary research, first drafts, and translation",
       "The access to justice gap: approximately 90% of low-income Americans lack adequate legal assistance (per abstract; LSC data cites 92%)",
       "Hallucination risk is especially dangerous in the access-to-justice context because the users least able to verify AI output are those who most need the help"
     ],
@@ -10905,7 +10906,7 @@ const SOURCES = [
     "url": "https://www.klover.ai/baker-mckenzie-ai-strategic-positioning-in-legal-ai/",
     "keyClaims": [
       "Baker McKenzie operates from 74 offices across 46 countries — the world's most geographically dispersed major law firm",
-      "AI strategy centres on cross-border regulatory compliance, leveraging global scale to help clients navigate jurisdictional divergence",
+      "AI strategy centers on cross-border regulatory compliance, leveraging global scale to help clients navigate jurisdictional divergence",
       "Custom-trained models developed for cross-border M&A, regulatory compliance, and employment law",
       "Multilingual, multi-jurisdictional data used for fine-tuning — a unique advantage from global footprint",
       "Partners with both Harvey and Microsoft for AI infrastructure"
@@ -11581,9 +11582,9 @@ const SOURCES = [
     "keyClaims": [
       "Women represent 51.62% of associates — a record high",
       "Women represent only 28% of partners",
-      "Associates of colour represent 31.46% of all associates — a record high",
-      "Partners of colour represent only 12% of all partners",
-      "Women of colour exceeded 5% of partners for the first time",
+      "Associates of color represent 31.46% of all associates — a record high",
+      "Partners of color represent only 12% of all partners",
+      "Women of color exceeded 5% of partners for the first time",
       "Black/African American associate growth may be 'sluggish' due to declining summer associate representation",
       "The diversity pipeline is described as 'fragile'",
       "AI disruption risks compounding pipeline fragilities — if AI automates entry-level work that is the on-ramp for diverse associates, the pipeline narrows further"
@@ -12321,7 +12322,7 @@ const SOURCES = [
     "keyClaims": [
       "IMF says 40% of all jobs could be affected by AI, mostly in white collar and professional ranks",
       "Most lawyers say ChatGPT can produce a memo approximately as good as a first-year law firm associate",
-      "AI moving from non-specialised to AI trained on legal materials for specific complex legal problems",
+      "AI moving from non-specialized to AI trained on legal materials for specific complex legal problems",
       "Access to sophisticated AI legal tools will not be equally available — magnifying existing inequality",
       "Technology produces exponential change that can magnify existing inequalities exponentially",
       "You don't need seven or eight years of junior work just to be a competent partner",
@@ -13233,7 +13234,7 @@ const SOURCES = [
     "keyClaims": [
       "The American justice system fails to deliver on its promise of equal justice under law — the majority of legal needs of the poor and a significant portion of needs of the middle class go unmet",
       "The legal profession's self-regulatory structure — bar admission, UPL rules, ethical prohibitions on fee-sharing and non-lawyer ownership — is itself a major barrier to access, protecting professional interests at the expense of public needs",
-      "The justice gap is not primarily a resource problem but a structural one — the way legal services are organised, regulated, and delivered systematically excludes those who cannot afford private lawyers",
+      "The justice gap is not primarily a resource problem but a structural one — the way legal services are organized, regulated, and delivered systematically excludes those who cannot afford private lawyers",
       "Meaningful reform requires challenging the profession's self-regulatory monopoly — enabling non-lawyer providers, loosening UPL restrictions, reforming fee structures, and expanding pro bono obligations",
       "The profession's rhetoric of access to justice is not matched by its institutional commitment — bar associations resist reforms that would expand access if those reforms also reduce lawyer monopoly"
     ],
@@ -13300,7 +13301,7 @@ const SOURCES = [
     "url": "https://www.jstor.org/stable/3053023",
     "keyClaims": [
       "Repeat players (the 'haves') — parties who engage in litigation frequently — systematically outperform one-shotters (the 'have-nots') who litigate rarely",
-      "This advantage is structural, not incidental: repeat players can play for rules rather than individual outcomes, develop specialised expertise, build relationships with institutional actors, and absorb the costs of individual losses",
+      "This advantage is structural, not incidental: repeat players can play for rules rather than individual outcomes, develop specialized expertise, build relationships with institutional actors, and absorb the costs of individual losses",
       "The formal equality of the legal system masks substantive inequality — equal rules applied to unequal parties produce unequal outcomes",
       "Legal change through litigation is limited by the structural advantages of repeat players, which tend to reproduce existing distributions of advantage",
       "One of the most cited articles in law and society scholarship — the repeat player / one-shotter framework has become a standard analytical tool"
@@ -13368,7 +13369,7 @@ const SOURCES = [
     "url": "https://www.harvey.ai/blog/agentic-platform-updates",
     "keyClaims": [
       "Harvey launched a library of 500+ pre-built legal agents covering every major practice area, plus an Agent Builder for plain-English customisation",
-      "Customer footprint disclosed at 100,000+ lawyers across 1,500 organisations, with 25,000+ custom agents already built by customers",
+      "Customer footprint disclosed at 100,000+ lawyers across 1,500 organizations, with 25,000+ custom agents already built by customers",
       "Agents now produce Word, PowerPoint, and Excel deliverables end-to-end — 'from intake to client-ready deliverables in a single click'",
       "Design partners include Gowling WLG, Willkie, Clayton Utz, Mallesons, Hengeler Mueller — Harvey is positioning itself as the ecosystem governor for agentic legal AI",
       "CEO Winston Weinberg: 'The legal industry is now well past AI as an assistant and officially in the era of legal agents'",
@@ -13426,7 +13427,7 @@ const SOURCES = [
     "url": "https://www.artificiallawyer.com/2026/05/06/harvey-launches-legal-agent-bench/",
     "keyClaims": [
       "Harvey launched LAB, an open-source benchmark with 1,200+ agent tasks across 24 practice areas, evaluated by 75,000+ expert-written rubric criteria",
-      "Major foundation-model backers signed on: Nvidia, OpenAI, Anthropic, Mistral, DeepMind — establishing Harvey as the recognised arbiter of agent quality in legal",
+      "Major foundation-model backers signed on: Nvidia, OpenAI, Anthropic, Mistral, DeepMind — establishing Harvey as the recognized arbiter of agent quality in legal",
       "LAB tests three areas: planning (decomposing tasks), executing (interacting with data and tools), and adapting (handling new information)",
       "Public leaderboard ranking AI systems by task performance is forthcoming",
       "Open-source format is consistent with the ecosystem-governor thesis: published standards let others build to them",
@@ -13482,7 +13483,7 @@ const SOURCES = [
       "$200M growth round at $11B valuation, co-led by GIC and Sequoia (March 25, 2026)",
       "Total raised to date exceeds $1 billion since founding",
       "Valuation up from $8B in December 2025 — sets the baseline used in Essay 2's 'Harvey ~10x the largest accounting AI company' framing",
-      "Disclosed customer footprint at the time: 100,000+ lawyers across 1,300 organisations",
+      "Disclosed customer footprint at the time: 100,000+ lawyers across 1,300 organizations",
       "Stated use of funds: 'Expand the agents customers run on Harvey and grow the embedded legal engineering teams supporting them globally'",
       "Participating investors: Andreessen Horowitz, Coatue, Conviction Partners, Elad Gil, Evantic, Kleiner Perkins"
     ],
@@ -13677,11 +13678,11 @@ const SOURCES = [
     "url": "https://www.artificiallawyer.com/2026/04/11/anthropic-targets-lawyers-with-claude-for-word/",
     "keyClaims": [
       "Anthropic launched Claude for Word in beta, available to Claude Team and Enterprise customers — product page leads with legal contract review as primary use case",
-      "Capabilities: review, redline, and draft documents directly within Word; summarise commercial terms; flag non-standard provisions; manage tracked changes; analyse counterparty modifications",
+      "Capabilities: review, redline, and draft documents directly within Word; summarize commercial terms; flag non-standard provisions; manage tracked changes; analyze counterparty modifications",
       "Direct evidence for the 'general models will eat vertical legal AI' argument — Anthropic going horizontally at the legal market through the dominant document substrate",
       "Combined with the Freshfields-Anthropic direct partnership 12 days later, this signals a coordinated Anthropic push into the legal vertical",
       "Forces legal-tech vendors 'primarily selling a way to review or draft, especially via Word' to add more value as core AI review capabilities become commoditised",
-      "Anthropic recognises common document patterns including multi-level legal numbering, defined terms, cross-references, and standard contract structures"
+      "Anthropic recognizes common document patterns including multi-level legal numbering, defined terms, cross-references, and standard contract structures"
     ],
     "themes": [
       "foundation-model-going-vertical",
@@ -13866,7 +13867,7 @@ const SOURCES = [
     "url": "https://www.damiencharlotin.com/hallucinations/",
     "keyClaims": [
       "US courts imposed >$145,000 in AI-hallucination sanctions in Q1 2026 alone",
-      "Oregon Court of Appeals (Dec 2025) established a per-infraction tariff schedule: $500 per fabricated citation, $1,000 per fabricated quotation — first US appellate court to formalise a price for AI-generated misconduct",
+      "Oregon Court of Appeals (Dec 2025) established a per-infraction tariff schedule: $500 per fabricated citation, $1,000 per fabricated quotation — first US appellate court to formalize a price for AI-generated misconduct",
       "Sullivan & Cromwell apologised to Chief Judge Martin Glenn (April 2026) for an emergency motion containing roughly 28 erroneous citations in Prince Global Holdings Chapter 15 bankruptcy — major-firm fingerprints on hallucination is a new pattern",
       "Sixth Circuit Court of Appeals (March 2026) sanctioned attorneys in Whiting v. City of Athens, Tennessee for briefs containing more than two dozen fake or misrepresented citations",
       "Nebraska issued its first AI-hallucination license suspension in the same window",
@@ -13936,7 +13937,7 @@ const SOURCES = [
       "Posner & Saran, 'Silicon Formalism: Rules, Standards, and Judge AI' — engages with how AI shifts the rules-vs-standards dial in adjudication",
       "Bednar, Cleveland, Erbsen, Schwarcz, 'Artificial Intelligence and Human Legal Reasoning' — argues effect of AI on legal reasoning depends on when and how law students and junior lawyers use AI",
       "Yuvaraj (Auckland), 'The Verification-Value Paradox' — top-downloaded paper engaging with the verification-cost problem at the heart of AI-assisted legal practice",
-      "Choi, Monahan, Schwarcz, 'Lawyering in the Age of Artificial Intelligence' — foundational empirical paper on AI use among practising lawyers",
+      "Choi, Monahan, Schwarcz, 'Lawyering in the Age of Artificial Intelligence' — foundational empirical paper on AI use among practicing lawyers",
       "Fernández Tamames & Checa Prieto, 'Why AI Cannot Sign: Deliberative Suspension, Reflective Judgment, and the Ontological Foundations of Legal Accountability' — engages directly with the agentic-AI-and-judgment frame",
       "These four to five papers move the corpus's academic share meaningfully toward target representation"
     ],
@@ -14230,7 +14231,7 @@ const SOURCES = [
       "Base case: 6-7% of workers displaced over 10-year transition with 0.6pp unemployment increase",
       "AI can potentially automate tasks accounting for 25% of all US work hours",
       "Tech, knowledge, and creative sectors already showing displacement — entry-level workers in 20s-30s in knowledge sectors most affected",
-      "AI revolution can create three new job categories: AI-skilled roles, specialised technical occupations, and discretionary-demand roles",
+      "AI revolution can create three new job categories: AI-skilled roles, specialized technical occupations, and discretionary-demand roles",
       "Frontloaded adoption could trigger Fed rate cuts; the labor market story for 2026 is AI"
     ],
     "themes": [
@@ -14737,7 +14738,7 @@ const SOURCES = [
     "keyClaims": [
       "Harvey raised $200M at $11B valuation — led by Singapore's GIC and Sequoia",
       "Total capital raised approximately $1B — valuation arc: $3B (Feb 2025) → $5B (May) → $8B (Dec) → $11B (Mar 2026)",
-      "100,000+ lawyers and 1,300+ organisations using Harvey — 8 of top 10 US law firms as customers",
+      "100,000+ lawyers and 1,300+ organizations using Harvey — 8 of top 10 US law firms as customers",
       "$190M ARR as of January 2026 — investors positioning Harvey as dominant vertical AI platform for professional services",
       "Pricing model: ~$1,000/user/month with custom enterprise pricing — plus revenue from bespoke product development with law firm partners",
       "Strategic alliances with A&O Shearman (merger control), Paul Weiss (Workflow Builder), LexisNexis (legal data), PwC (custom tax models)",
@@ -14804,7 +14805,7 @@ const SOURCES = [
       "Two diverging strategies: LexisNexis embeds Claude inside its Protégé moat; Harvey positions as 'complementary middleware' going to where users already are",
       "Harvey moved from OpenAI exclusivity to multi-model strategy including Anthropic Claude and Google Gemini — reducing dependency on any single foundation model",
       "Weinberg framing: MCP integration means 'easier access to Harvey, as enterprises generally will adopt Anthropic'",
-      "Strategic implication: Harvey is choosing to be the legal intelligence layer that plugs into whatever foundation model enterprises standardise on"
+      "Strategic implication: Harvey is choosing to be the legal intelligence layer that plugs into whatever foundation model enterprises standardize on"
     ],
     "themes": [
       "claude-marketplace",
@@ -14948,7 +14949,7 @@ const SOURCES = [
       "$1B+ raised across 7 rounds; $11B valuation (3.5x in 12 months); ~460 employees with ~20% lawyers and 40% senior infrastructure engineers",
       "75% DAU/MAU for users on 4+ product lines (now reportedly closer to 85%); 18,000+ custom workflows; 500M+ documents processed",
       "Prestige-led distribution: win top firms first → trust cascades downward through the entire industry — 'Allen & Overy then everyone else'",
-      "Expand and collapse strategy: build specialised AI agents for narrow legal workflows then collapse them into one routing interface",
+      "Expand and collapse strategy: build specialized AI agents for narrow legal workflows then collapse them into one routing interface",
       "'Sell work, not just software' shift: revenue-share deals where Harvey helps firms productise services for clients — budget moves from technology spend (millions) to professional services spend (billions)",
       "GRR (Gross Revenue Retention) flagged as the hidden metric — predicts post-$100M reckoning for AI companies that can't support customers at scale",
       "Anthropic's Claude legal plugin caused publicly listed legal software companies to drop 18% overnight — flagged as foundation-model-going-deeper risk for vertical AI"
@@ -24799,7 +24800,7 @@ function getColor(role) {
       'David B. Wilkins': 'https://hls.harvard.edu/faculty/david-b-wilkins/'
     },
     projectAuthorsLabel: 'David Wilkins and Anthea Roberts',
-    homeDescription: 'Interactive essays and visualisations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
+    homeDescription: 'Interactive essays and visualizations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
     leadsLabel: 'Project leads',
     leads: [
       'David Wilkins',
@@ -24810,7 +24811,7 @@ function getColor(role) {
       'Artificial intelligence is not simply another technology being adopted by the legal profession. It is structurally reconfiguring the profession: how legal services are delivered, who delivers them, how lawyers are trained, and what it means to exercise professional judgment.',
       'This project brings together David Wilkins and Anthea Roberts to read that transformation through complementary lenses. One reads the legal profession as a century-long institutional system; the other reads these developments through AI and complex decision-making.'
     ],
-    overviewNote: 'The first release pairs essays with interactive visualisations so the argument and the evidence architecture travel together.',
+    overviewNote: 'The first release pairs essays with interactive visualizations so the argument and the evidence architecture travel together.',
     articles: [
       {
         id: 'series-introduction',
@@ -24833,7 +24834,7 @@ function getColor(role) {
         dateLabel: '3 April 2026',
         authorsLabel: 'Anthea Roberts and David Wilkins',
         markdownPath: 'outputs/2026-04-07-2-law-is-the-gateway-drug.md',
-        excerpt: 'Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
+        excerpt: 'Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
         sidebarNote: 'Law\'s structural centrality explains why the serious early AI money is flowing into legal.',
         heroVisualId: 'law-gateway',
         heroCaption: 'A systems map of law\'s structural centrality and the expanding legalisation of everything.',
@@ -24911,7 +24912,7 @@ function getColor(role) {
         accent: '#A51C30'
       }
     ],
-    visualisations: [
+    visualizations: [
       {
         id: 'topic-network',
         title: 'Topic Network',
@@ -25035,7 +25036,7 @@ function getColor(role) {
   };
 
   site.getVisual = function (id) {
-    return site.visualisations.find(function (visual) { return visual.id === id; }) || site.visualisations[0];
+    return site.visualizations.find(function (visual) { return visual.id === id; }) || site.visualizations[0];
   };
 
   site.getArticleUrl = function (id) {
@@ -25073,7 +25074,13 @@ function getColor(role) {
 
   function currentTheme() {
     var stored;
-    try { stored = localStorage.getItem('harvard-project-theme'); } catch (e) {}
+    /* The site's own key is the SEED here too, not only in the head script:
+       currentTheme() feeds applyTheme(), which then PERSISTS what it resolved.
+       Reading only harvard-project-theme meant this function resolved 'light',
+       overwrote the head script's dark, and wrote 'light' back into a key four
+       other lens pages read — so one visit pinned all of them. */
+    try { stored = localStorage.getItem('harvard-project-theme')
+                || localStorage.getItem('legal-theme'); } catch (e) {}
     return stored === 'dark' ? 'dark' : 'light';
   }
 
@@ -25114,7 +25121,7 @@ function getColor(role) {
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(site.getArticleUrl(article.id)) + '">' + article.title + '</a>';
     }).join('');
 
-    var visualItems = site.visualisations.map(function (visual) {
+    var visualItems = site.visualizations.map(function (visual) {
       var active = visual.id === currentVisualId ? ' active' : '';
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(visual.path) + '">' + visual.title + '</a>';
     }).join('');
@@ -25131,7 +25138,6 @@ function getColor(role) {
       '  </a>' +
       '  <div class="project-nav-links">' +
       '    <a class="project-nav-link" href="../index.html#essays">Essays</a>' +
-      '    <a class="project-nav-link project-nav-link-active" href="index.html">Visualisations</a>' +
       '    <a class="project-nav-link" href="../essays/series-introduction.html">About</a>' +
       '  </div>' +
       '</nav>';
@@ -25182,7 +25188,7 @@ function getColor(role) {
 
 </script>
 <script>
-injectHarvardProjectNav({ currentSection: 'visualisations', currentVisualId: 'topic-network' });
+injectHarvardProjectNav({ currentSection: 'visualizations', currentVisualId: 'topic-network' });
 </script>
 </body>
 </html>

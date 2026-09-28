@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}})();</script>
+<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme')||localStorage.getItem('legal-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}})();</script>
 <title>Directors, Coaches, and Editors — AI and the Future of the Legal Profession</title>
 <link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
 <style>
@@ -548,7 +548,7 @@ a:hover { color: var(--text-heading); }
   outline-offset: 2px;
 }
 
-/* Accessibility — honour reduced-motion preference */
+/* Accessibility — honor reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: .001ms !important;
@@ -2320,6 +2320,7 @@ html.embed-mode .view-toggle-bar {
   @page { size: landscape; margin: 10mm; }
 }
 </style>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -2351,9 +2352,9 @@ html.embed-mode .view-toggle-bar {
 
   <div class="sidebar-section-label">Roles</div>
   <div class="toc-list" id="role-shortcuts">
-    <div class="toc-item" role="button" tabindex="0" data-role="director"><span class="toc-dot" style="background:#446BB7"></span><span class="toc-text">Director &mdash; Define the problem and approach</span></div>
-    <div class="toc-item" role="button" tabindex="0" data-role="coach"><span class="toc-dot" style="background:#0BAEA3"></span><span class="toc-text">Coach &mdash; Course-correct during execution</span></div>
-    <div class="toc-item" role="button" tabindex="0" data-role="editor"><span class="toc-dot" style="background:#92448A"></span><span class="toc-text">Editor &mdash; Verify output before it goes out</span></div>
+    <div class="toc-item" role="button" tabindex="0" data-role="director"><span class="toc-dot" style="background:var(--df-lens-indigo)"></span><span class="toc-text">Director &mdash; Define the problem and approach</span></div>
+    <div class="toc-item" role="button" tabindex="0" data-role="coach"><span class="toc-dot" style="background:var(--df-lens-teal)"></span><span class="toc-text">Coach &mdash; Course-correct during execution</span></div>
+    <div class="toc-item" role="button" tabindex="0" data-role="editor"><span class="toc-dot" style="background:var(--df-lens-plum)"></span><span class="toc-text">Editor &mdash; Verify output before it goes out</span></div>
   </div>
 
   <hr class="sidebar-divider">
@@ -2361,7 +2362,7 @@ html.embed-mode .view-toggle-bar {
   <div class="sidebar-section-label">Legend</div>
   <div class="legend">
     <div class="legend-item"><span class="legend-dot" style="border:2px solid var(--df-slate-400);background:transparent;width:10px;height:10px;"></span><span>Primary Roles &mdash; The traditional doing roles</span></div>
-    <div class="legend-item"><span class="legend-line" style="background:linear-gradient(90deg,#446BB7,#0BAEA3,#92448A);"></span><span>Upward shift / cycle flow</span></div>
+    <div class="legend-item"><span class="legend-line" style="background:linear-gradient(90deg,var(--df-lens-indigo),var(--df-lens-teal),var(--df-lens-plum));"></span><span>Upward shift / cycle flow</span></div>
   </div>
 
   <hr class="sidebar-divider">
@@ -2430,8 +2431,8 @@ var SECONDARY_ROLES = {
     fillLight: 'rgba(11,174,163,0.08)',
     cycleLabel: 'Correct',
     cycleFull: 'Course-correct during execution',
-    whatItDoes: 'Course-corrects during AI execution. Requires AI skills to know how agents work and when they\u2019re going off track, plus domain expertise to recognise when the analysis is drifting.',
-    domainExpertise: 'Recognises when the analysis has drifted off course',
+    whatItDoes: 'Course-corrects during AI execution. Requires AI skills to know how agents work and when they\u2019re going off track, plus domain expertise to recognize when the analysis is drifting.',
+    domainExpertise: 'Recognizes when the analysis has drifted off course',
     aiExpertise: 'Knows how to redirect: when to provide more context, when to try a different approach, when the model is confabulating with confidence',
     legalParallel: 'A senior counsel who sits with a junior during a negotiation prep session, redirecting their analysis when it drifts',
     origin: 'The shift from primary actor to coach \u2014 you\u2019re no longer executing each step yourself, you\u2019re watching the execution unfold and course-correcting when it drifts.',
@@ -2448,7 +2449,7 @@ var SECONDARY_ROLES = {
     cycleFull: 'Verify output before it goes out',
     whatItDoes: 'Verifies output before it goes out. Requires domain expertise above all \u2014 knowing what \u201cright\u201d looks like before seeing the output.',
     domainExpertise: 'Knows what \u201cright\u201d looks like before seeing the output',
-    aiExpertise: 'Recognises the characteristic patterns of AI error, the plausible-but-generic response that misses the specific context',
+    aiExpertise: 'Recognizes the characteristic patterns of AI error, the plausible-but-generic response that misses the specific context',
     legalParallel: 'A GC who reviews an associate\u2019s memorandum before it goes to the board',
     origin: 'The shift from primary actor to editor \u2014 you\u2019re no longer producing the first draft, you\u2019re verifying what AI produces against what \u201cright\u201d looks like.',
     quote: '\u201cThe editor needs domain expertise to know what \u201cright\u201d looks like before seeing the output \u2014 but also AI expertise to recognize the characteristic patterns of AI error, the plausible-but-generic response that misses the specific context that makes this deal different.\u201d'
@@ -3160,7 +3161,7 @@ renderView();
       'David B. Wilkins': 'https://hls.harvard.edu/faculty/david-b-wilkins/'
     },
     projectAuthorsLabel: 'David Wilkins and Anthea Roberts',
-    homeDescription: 'Interactive essays and visualisations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
+    homeDescription: 'Interactive essays and visualizations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
     leadsLabel: 'Project leads',
     leads: [
       'David Wilkins',
@@ -3171,7 +3172,7 @@ renderView();
       'Artificial intelligence is not simply another technology being adopted by the legal profession. It is structurally reconfiguring the profession: how legal services are delivered, who delivers them, how lawyers are trained, and what it means to exercise professional judgment.',
       'This project brings together David Wilkins and Anthea Roberts to read that transformation through complementary lenses. One reads the legal profession as a century-long institutional system; the other reads these developments through AI and complex decision-making.'
     ],
-    overviewNote: 'The first release pairs essays with interactive visualisations so the argument and the evidence architecture travel together.',
+    overviewNote: 'The first release pairs essays with interactive visualizations so the argument and the evidence architecture travel together.',
     articles: [
       {
         id: 'series-introduction',
@@ -3194,7 +3195,7 @@ renderView();
         dateLabel: '3 April 2026',
         authorsLabel: 'Anthea Roberts and David Wilkins',
         markdownPath: 'outputs/2026-04-07-2-law-is-the-gateway-drug.md',
-        excerpt: 'Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
+        excerpt: 'Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
         sidebarNote: 'Law\'s structural centrality explains why the serious early AI money is flowing into legal.',
         heroVisualId: 'law-gateway',
         heroCaption: 'A systems map of law\'s structural centrality and the expanding legalisation of everything.',
@@ -3272,7 +3273,7 @@ renderView();
         accent: '#A51C30'
       }
     ],
-    visualisations: [
+    visualizations: [
       {
         id: 'topic-network',
         title: 'Topic Network',
@@ -3396,7 +3397,7 @@ renderView();
   };
 
   site.getVisual = function (id) {
-    return site.visualisations.find(function (visual) { return visual.id === id; }) || site.visualisations[0];
+    return site.visualizations.find(function (visual) { return visual.id === id; }) || site.visualizations[0];
   };
 
   site.getArticleUrl = function (id) {
@@ -3434,7 +3435,13 @@ renderView();
 
   function currentTheme() {
     var stored;
-    try { stored = localStorage.getItem('harvard-project-theme'); } catch (e) {}
+    /* The site's own key is the SEED here too, not only in the head script:
+       currentTheme() feeds applyTheme(), which then PERSISTS what it resolved.
+       Reading only harvard-project-theme meant this function resolved 'light',
+       overwrote the head script's dark, and wrote 'light' back into a key four
+       other lens pages read — so one visit pinned all of them. */
+    try { stored = localStorage.getItem('harvard-project-theme')
+                || localStorage.getItem('legal-theme'); } catch (e) {}
     return stored === 'dark' ? 'dark' : 'light';
   }
 
@@ -3475,7 +3482,7 @@ renderView();
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(site.getArticleUrl(article.id)) + '">' + article.title + '</a>';
     }).join('');
 
-    var visualItems = site.visualisations.map(function (visual) {
+    var visualItems = site.visualizations.map(function (visual) {
       var active = visual.id === currentVisualId ? ' active' : '';
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(visual.path) + '">' + visual.title + '</a>';
     }).join('');
@@ -3492,7 +3499,6 @@ renderView();
       '  </a>' +
       '  <div class="project-nav-links">' +
       '    <a class="project-nav-link" href="../index.html#essays">Essays</a>' +
-      '    <a class="project-nav-link project-nav-link-active" href="index.html">Visualisations</a>' +
       '    <a class="project-nav-link" href="../essays/series-introduction.html">About</a>' +
       '  </div>' +
       '</nav>';
@@ -3543,7 +3549,7 @@ renderView();
 
 </script>
 <script>
-injectHarvardProjectNav({ currentSection: 'visualisations', currentVisualId: 'director-coach-editor' });
+injectHarvardProjectNav({ currentSection: 'visualizations', currentVisualId: 'director-coach-editor' });
 </script>
 </body>
 </html>

@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
 <title>Workshops — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/workshops.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Workshops — AI &amp; the Legal Profession">
 <meta property="og:description" content="Senior-leader workshops and sessions bringing dragonfly thinking and AI-enabled complex decision-making to the legal profession — at Harvard Law School and the Berkman Klein Center.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/workshops.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/workshops.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -20,9 +20,11 @@
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
 <meta name="description" content="Senior-leader workshops and sessions bringing dragonfly thinking and AI-enabled complex decision-making to the legal profession — at Harvard Law School and the Berkman Klein Center.">
-<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg">
+<link rel="icon" href="assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="assets/reference/apple-touch-icon.png">
 <link rel="stylesheet" href="legal-design-system.css">
-<link rel="stylesheet" href="legal-site.css">
+<link rel="stylesheet" href="legal-site.css?v=dragonfly-navigation-20260920">
 <style>
   .ws { padding: 64px 0 0; }
   .ws-item { display: grid; grid-template-columns: 1.15fr 1fr; gap: 48px; align-items: start; padding: 56px 0; border-top: 1px solid var(--border); }
@@ -48,18 +50,22 @@
     .ws-pair { grid-template-columns: 1fr; gap: 18px; }
   }
 </style>
+<script src="site-accessibility.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- NAV -->
 <header class="site-nav">
   <a class="brand" href="index.html" aria-label="Home">
-    <span class="mk" data-mk="brand"></span>
-    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small></span>
+    <img class="hls-shield" src="assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
   </a>
   <nav class="links" aria-label="Primary">
     <a href="index.html#essays">Essays</a>
-    <a href="visualisations/index.html">Visualisations</a>
-    <a href="deck/series-deck.html">Presentation</a>
+    <a href="insights.html">Dragonfly Insights</a>
+    <a href="course.html">Harvard Course</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="powerpoints.html">PowerPoints</a>
     <a href="essays/series-introduction.html">About</a>
   </nav>
   <div class="nav-right">
@@ -72,13 +78,14 @@
 </header>
 
 <!-- HERO -->
+<main id="main-content" tabindex="-1">
 <section class="wrap" style="padding:72px 0 4px;">
   <div class="eyebrow-row" style="display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap;margin-bottom:24px;">
     <span class="eyebrow">Workshops</span>
     <span class="label-chip">Harvard Law School · Berkman Klein</span>
   </div>
   <h1 style="font-size:clamp(34px,5vw,52px);font-weight:600;letter-spacing:-0.02em;max-width:22ch;line-height:1.06;">Bringing dragonfly thinking to the profession</h1>
-  <p class="measure" style="margin-top:24px;font-size:18px;line-height:1.6;color:var(--text-muted);max-width:62ch;">Alongside the essays and visualisations, this work reaches senior decision-makers directly — through invitation-only workshops and public sessions that put the frameworks, and the AI tools that operationalise them, in front of general counsel, managing partners, and faculty.</p>
+  <p class="measure" style="margin-top:24px;font-size:18px;line-height:1.6;color:var(--text-muted);max-width:62ch;">Alongside the essays and visualizations, this work reaches senior decision-makers directly — through invitation-only workshops and public sessions that put the frameworks, and the AI tools that operationalize them, in front of general counsel, managing partners, and faculty.</p>
 </section>
 
 <!-- WORKSHOPS -->
@@ -111,7 +118,7 @@
       <a class="btn btn-ghost" href="https://clp.law.harvard.edu/events/dragonfly-thinking-in-house-lawyering-in-a-vuca-world/" rel="noopener">View the event<span class="arr">→</span></a>
     </article>
     <article class="ws-card">
-      <span class="badge"><span class="dot"></span>Public session</span>
+      <span class="badge"><span class="dot"></span>Harvard talk</span>
       <h2>Agentic AI and Complex Decision-Making: How to Think Like a Dragonfly</h2>
       <div class="ws-meta"><span class="ws-host">Berkman Klein Center for Internet &amp; Society, Harvard</span></div>
       <p>A Berkman Klein session on agentic AI and complex decision-making. AI provokes more competing narratives than any technology in history — not because people disagree about the facts, but because they are asking different questions about jobs, power, truth, safety, the environment, and human meaning all at once. Anthea Roberts maps nine narratives about AI, then pushes beyond mapping to ask why the disagreements persist — and how dragonfly thinking helps leaders hold them in view at once.</p>
@@ -121,6 +128,7 @@
 </section>
 
 <!-- FOOTER -->
+</main>
 <footer class="site-foot" style="margin-top:72px;">
   <div class="wrap">
     <div class="foot-grid">
@@ -128,22 +136,24 @@
         <span class="mk" data-mk="foot"></span>
         <div class="bt">
           <b>AI &amp; the Legal Profession</b>
-          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins, using <a href="https://dragonflythinking.com" rel="noopener">Dragonfly Thinking</a> methodology and AI agents.</p>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins. Powered by <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
         </div>
       </div>
       <div class="foot-col">
         <h4>Series</h4>
         <a href="index.html#essays">Essays</a>
-        <a href="visualisations/index.html">Visualisations</a>
-        <a href="https://hls.harvard.edu/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener">The Harvard course</a>
+        <a href="insights.html">Insights</a>
+        <a href="visualisations/index.html">Visuals</a>
+        <a href="course.html">Harvard course</a>
         <a href="workshops.html" aria-current="page">Workshops</a>
       </div>
       <div class="foot-col">
         <h4>About</h4>
         <a href="essays/series-introduction.html">The project</a>
-        <a href="project-leads.html">Project leads</a>
+        <a href="project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
         <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
-        <a href="https://clp.law.harvard.edu" rel="noopener">Contact</a>
       </div>
     </div>
     <div class="foot-base">

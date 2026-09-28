@@ -45,7 +45,7 @@
   --df-accent-soft: rgba(165, 28, 48, 0.14);
   --df-accent-active-text: #7a1e2c;
 
-  /* ── Curated lens palette (shared across all essay visualisations) ──────
+  /* ── Curated lens palette (shared across all essay visualizations) ──────
      ONE ordered, sanctioned set so the whole suite reads as one family.
      Crimson (--df-accent) is the brand SPINE/FOCAL only — never just one
      category among peers. Categories draw from this fixed order:
@@ -64,7 +64,7 @@
   --df-lens-sky:     #1B99D6;  --df-lens-sky-text:     #0F6F9E;
   --df-lens-green:   #0ABF67;  --df-lens-green-text:   #0A6B42;
   --df-lens-cobalt:  #1575BF;  --df-lens-cobalt-text:  #0F5D99;
-  /* crimson-as-spine label colour (use --df-accent for fills/strokes) */
+  /* crimson-as-spine label color (use --df-accent for fills/strokes) */
   --df-lens-crimson-text: #8a1626;
 
   /* ── Typography ── */

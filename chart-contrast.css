@@ -1,0 +1,61 @@
+/* Project-owned contrast adaptations for the bundled chart and deck families.
+   Text inks are separate from category marks and solid button backgrounds.
+   Load after each generated page's source styles; keep canonical token snapshots intact. */
+:root { --legal-chart-ink-strength: 60%; --legal-solid-crimson: #a51c30; }
+html[data-theme="dark"] { --legal-chart-ink-strength: 100%; }
+
+/* Older essay charts keep a fixed slate ramp and explicit semantic theme tokens. */
+html[data-theme="dark"] {
+  --df-text-muted: #94a3b8;
+  --df-text-label: #94a3b8;
+}
+.persona-list-item { color: var(--df-text-secondary); }
+.toc-item .toc-text { color: var(--df-text-secondary); }
+.toc-item.active .toc-text { color: var(--df-text-heading); }
+.view-toggle-btn.active { background: var(--legal-solid-crimson); color: #fff; }
+
+/* Corpus charts reassign the slate ramp with the theme. Metadata on raised
+   surfaces needs the muted ink rather than the faint caption ink. */
+.cmd-inline-label, .cg-val, .cg-count, .rd-count, .chip-count,
+.suite-nav a i, .cell-foot, .p-warrant b { color: var(--df-slate-600); }
+
+/* Shared chrome emits inline --tab-ink references to these companions. */
+:root {
+  --df-lens-cobalt-ink: color-mix(in srgb, var(--df-lens-cobalt) var(--legal-chart-ink-strength), #000);
+  --df-lens-plum-ink: color-mix(in srgb, var(--df-lens-plum) var(--legal-chart-ink-strength), #000);
+  --df-lens-magenta-ink: color-mix(in srgb, var(--df-lens-magenta) var(--legal-chart-ink-strength), #000);
+  --df-lens-teal-ink: color-mix(in srgb, var(--df-lens-teal) var(--legal-chart-ink-strength), #000);
+  --df-lens-indigo-ink: color-mix(in srgb, var(--df-lens-indigo) var(--legal-chart-ink-strength), #000);
+  --df-lens-green-ink: color-mix(in srgb, var(--df-lens-green) var(--legal-chart-ink-strength), #000);
+  --df-lens-orange-ink: color-mix(in srgb, var(--df-lens-orange) var(--legal-chart-ink-strength), #000);
+}
+
+/* Keep the vivid category hues for marks, borders and tints. Text uses a
+   darker companion on light surfaces; dark surfaces use the original hue. */
+.tab-btn { --tab-ink: color-mix(in srgb, var(--tab-color) var(--legal-chart-ink-strength), #000); }
+.viz-app { --viz-ink: color-mix(in srgb, var(--viz-accent) var(--legal-chart-ink-strength), #000); }
+.p-badge { color: var(--viz-ink); }
+.viz-panel h2 .accent, .viz-panel h2 em, .p-title em { color: var(--viz-ink); }
+.cell, .sg, .sg-group, .st-card { --c-ink: color-mix(in srgb, var(--c) var(--legal-chart-ink-strength), #000); }
+.cell-id, .cell-name, .cell-br b, .sg-head b, .sg-id, .st-card h3 { color: var(--c-ink); }
+.v-real { color: color-mix(in srgb, var(--df-pos) var(--legal-chart-ink-strength), #000); }
+.v-parallel { color: color-mix(in srgb, var(--df-critical) var(--legal-chart-ink-strength), #000); }
+.rung.b b { color: color-mix(in srgb, var(--df-risk-low) var(--legal-chart-ink-strength), #000); }
+.rung.a b { color: color-mix(in srgb, var(--df-risk-moderate) var(--legal-chart-ink-strength), #000); }
+.rung.r b { color: color-mix(in srgb, var(--df-risk-extreme) var(--legal-chart-ink-strength), #000); }
+.qt-src { color: var(--df-ink-muted); text-decoration: underline; text-underline-offset: .15em; }
+
+/* Deck cover/divider slides are dark even when the surrounding theme is light.
+   Solid filled controls need a different token from bright-on-dark accent text. */
+.slide.dark { --legal-crimson: #e55c73; }
+.dshape .tile.center, .vf-btn.solid {
+  background: var(--legal-solid-crimson); border-color: var(--legal-solid-crimson);
+}
+.dshape .tile.center .dl, .dshape .tile.center .dt, .vf-btn.solid { color: #fff; }
+
+/* The practitioner reader carries its layout CSS in the body after head
+   stylesheets. Scope these text rules to the app to keep their intended ink. */
+.viz-app .rd-count { color: var(--df-slate-600); }
+.viz-app .qt-src { color: var(--df-ink-muted); text-decoration: underline; text-underline-offset: .15em; }
+.viz-app .st-card h3 { color: var(--c-ink); }
+body .chip:not(.active) .chip-count { color: var(--df-slate-600); }

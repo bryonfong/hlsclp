@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(location.search.indexOf('preview=1')!==-1){document.documentElement.classList.add('preview-mode');}})()</script>
+<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme')||localStorage.getItem('legal-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(location.search.indexOf('preview=1')!==-1){document.documentElement.classList.add('preview-mode');}})()</script>
 <title>Harvey's Strategic Evolution — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/harveys-strategic-evolution.html">
 <meta name="description" content="How Harvey evolved from a legal-research tool toward a professional-services platform — a concentric view of its strategic expansion.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Harvey's Strategic Evolution — AI &amp; the Legal Profession">
 <meta property="og:description" content="How Harvey evolved from a legal-research tool toward a professional-services platform — a concentric view of its strategic expansion.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/harveys-strategic-evolution.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/harveys-strategic-evolution.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -1203,7 +1203,7 @@ svg *:focus, svg *:focus-visible { outline: none !important; }
 
 /* ============================================================
    PRINT — clean PDF: un-fix the layout, render the SVG static at
-   fit scale, hide chrome, preserve colours.
+   fit scale, hide chrome, preserve colors.
    ============================================================ */
 @media print {
   html, body { height: auto !important; overflow: visible !important; background: #fff !important; }
@@ -2344,6 +2344,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
   .detail-panel { width: 100%; position: fixed; top: 50%; bottom: 0; right: 0; }
 }
 </style>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -2388,7 +2389,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
 
   <div class="key-insight">
     <div class="key-insight-label">Key Insight</div>
-    <div class="key-insight-text">&ldquo;The law firm is the distribution node, not the centre of the matter.&rdquo;</div>
+    <div class="key-insight-text">&ldquo;The law firm is the distribution node, not the center of the matter.&rdquo;</div>
   </div>
 </aside>
 
@@ -2434,7 +2435,7 @@ function getColor(role) {
 
 // Ring hues differentiate the five concentric layers by COLOUR, not opacity.
 // Innermost (P1) = Harvard crimson (legitimate focal/origin use of the brand
-// colour); moving outward: indigo, teal, gold, plum. Theme-aware so dark mode
+// color); moving outward: indigo, teal, gold, plum. Theme-aware so dark mode
 // lifts each hue for contrast on dark slate. Mirrors getColor()'s isLight read.
 var vizIsLight = document.documentElement.getAttribute('data-theme') !== 'dark';
 var lensHue = {
@@ -2482,8 +2483,8 @@ var phases = {
     id: 'P3', name: 'Workflow\nPlatform', dates: '2024\u20132025', color: lensHue.teal, labelColor: lensText.teal,
     tagline: 'Platform on which firms build, not just a tool they use',
     keywords: 'Matter-Centric\n18K Workflows \u00b7 M365',
-    tooltip: 'Transform from conversational assistant into customisable workflow platform',
-    thesis: 'Transform from conversational assistant into customisable workflow platform. Matter-centric design where legal work organises around matters \u2014 a merger, a patent prosecution, a securities litigation.',
+    tooltip: 'Transform from conversational assistant into customizable workflow platform',
+    thesis: 'Transform from conversational assistant into customizable workflow platform. Matter-centric design where legal work organizes around matters \u2014 a merger, a patent prosecution, a securities litigation.',
     milestones: ['Matter-centric workspaces', 'Workflow Builder (Jun 2025): 18,000+ custom workflows, 25,000+ custom agents', 'Microsoft 365: Outlook Add-In (12,000+ queries/week), Word Add-In, SharePoint', 'Multi-source reasoning across 200+ legal sources, 60+ jurisdictions', 'Mobile app (Sep 2025)', 'Partnership ecosystem: LexisNexis, Wolters Kluwer, Ironclad, Box', 'a16z Series F ($8B valuation, Dec 2025)'],
     gtm: 'Firms encode expertise into models, workflows, and agents, then deliver outcomes faster and at software margins.',
     quote: '\u201cThey wrote the playbook for what it means to be an AI-native application company, same thing Salesforce did with the cloud transition.\u201d \u2014 Pat Grady, Sequoia',
@@ -2494,8 +2495,8 @@ var phases = {
     tagline: 'The law firm is the distribution node',
     keywords: 'Shared Spaces \u00b7 Guest Access \u00b7 Cross-Org',
     tooltip: 'Infrastructure layer that coordinates complex deals across law firms, clients, and advisors',
-    thesis: 'Harvey stopped being a platform and started becoming infrastructure. Shared Spaces (Dec 2025) lets law firms and their clients work in the same AI-powered workspace. Guest accounts mean firms can invite clients who aren\u2019t Harvey customers. Design partnerships are revealing: PwC and IFS alongside law firms on M&A analysis, Gleiss Lutz and Deutsche Telekom on regulatory matters. Three types of organisation \u2014 corporate buyer, consulting advisor, law firm \u2014 in the same workspace on the same matter.',
-    milestones: ['Shared Spaces (Dec 2025, GA Mar 2026) \u2014 #1 product release of 2025', 'Guest accounts for non-Harvey users', 'Granular object-level permissions with audit trails', 'Long-horizon agents for complex multi-step workflows', 'Design partners: Gleiss Lutz/Deutsche Telekom, PwC/IFS, KWM/IAG, Thompson Hine/Flex', '$11B valuation (Sequoia + GIC co-lead Series G, Mar 2026)', '$190M ARR', '100,000+ lawyers, 1,300 organisations, 60 countries'],
+    thesis: 'Harvey stopped being a platform and started becoming infrastructure. Shared Spaces (Dec 2025) lets law firms and their clients work in the same AI-powered workspace. Guest accounts mean firms can invite clients who aren\u2019t Harvey customers. Design partnerships are revealing: PwC and IFS alongside law firms on M&A analysis, Gleiss Lutz and Deutsche Telekom on regulatory matters. Three types of organization \u2014 corporate buyer, consulting advisor, law firm \u2014 in the same workspace on the same matter.',
+    milestones: ['Shared Spaces (Dec 2025, GA Mar 2026) \u2014 #1 product release of 2025', 'Guest accounts for non-Harvey users', 'Granular object-level permissions with audit trails', 'Long-horizon agents for complex multi-step workflows', 'Design partners: Gleiss Lutz/Deutsche Telekom, PwC/IFS, KWM/IAG, Thompson Hine/Flex', '$11B valuation (Sequoia + GIC co-lead Series G, Mar 2026)', '$190M ARR', '100,000+ lawyers, 1,300 organizations, 60 countries'],
     gtm: 'Law firm deploys Harvey \u2192 invites clients into Shared Spaces \u2192 clients experience Harvey through firm\u2019s workspace \u2192 other advisors join \u2192 Harvey becomes shared intelligence layer.',
     quote: '\u201cHarvey gives us real-time visibility into what our advisors and firms are doing\u2026 whether it\u2019s our corporate development team, advisors like PwC, or our law firms.\u201d \u2014 Andrew Binstead, SVP Corporate Development, IFS',
     investors: ['Sequoia (Series G co-lead)', 'GIC (Series G co-lead)']
@@ -2507,7 +2508,7 @@ var phases = {
     tooltip: 'Shaping who builds, what gets built, and how capital flows through legal technology',
     thesis: 'The outermost ring is still forming. Harvey started acquiring (Hexus \u2014 an engineering talent play). It embedded itself in the foundation model layer as a launch partner on Anthropic\u2019s Claude Marketplace and integrated with MCP so Claude users can invoke Harvey\u2019s legal workflows from inside Claude. It moved to a multi-model strategy \u2014 OpenAI, Anthropic, and Google \u2014 becoming model-agnostic. And it became an investor, partnering with The LegalTech Fund ($110M) to co-invest in complementary startups. The fifth ring isn\u2019t about building better tools or even better infrastructure. It\u2019s about shaping who else builds, what gets built, and how capital flows through the legal technology landscape.',
     milestones: ['Hexus acquisition (engineering talent play, early 2026)', 'Anthropic Claude Marketplace launch partner', 'MCP integration \u2014 Claude users invoke Harvey workflows from inside Claude', 'Multi-model strategy: OpenAI, Anthropic, Google', 'LegalTech Fund partnership ($110M, up to $2M per startup)', 'Complementary middleware \u2014 going to where the users are'],
-    gtm: 'Complementary middleware \u2014 going to where the users are rather than pulling users to itself. Model-agnostic rather than tied to any single foundation model. The bet: enterprises standardise on Claude or another foundation model, and Harvey will be there when they arrive.',
+    gtm: 'Complementary middleware \u2014 going to where the users are rather than pulling users to itself. Model-agnostic rather than tied to any single foundation model. The bet: enterprises standardize on Claude or another foundation model, and Harvey will be there when they arrive.',
     quote: '\u201cMarketplace model similar to approaches used by Anthropic.\u201d \u2014 Winston Weinberg',
     investors: ['The LegalTech Fund (co-investment)']
   }
@@ -2663,9 +2664,9 @@ var baseRings = rings;
 var baseMaxOuterRadius = d3.max(baseRings, function(r) { return r.outerR; });
 // Narrow viewports (tablet/phone, or a small window) can't fit the left phase
 // labels and the right timeline column alongside the rings without crowding,
-// so below ~900px we render the clean centred rings-only view — the same layout
+// so below ~900px we render the clean centered rings-only view — the same layout
 // embed mode uses. The phase legend remains in the sidebar. Wide desktop keeps
-// the full labelled + timeline layout.
+// the full labeled + timeline layout.
 var ringsOnly = embedMode || width < 900;
 var embedScale = ringsOnly ? Math.min(0.88, Math.max(0.32, Math.min((width * 0.94) / (baseMaxOuterRadius * 2), (height * 0.94) / (baseMaxOuterRadius * 2)))) : 1;
 rings = baseRings.map(function(r) {
@@ -3043,7 +3044,7 @@ window.addEventListener('theme-changed', function() {
       'David B. Wilkins': 'https://hls.harvard.edu/faculty/david-b-wilkins/'
     },
     projectAuthorsLabel: 'David Wilkins and Anthea Roberts',
-    homeDescription: 'Interactive essays and visualisations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
+    homeDescription: 'Interactive essays and visualizations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
     leadsLabel: 'Project leads',
     leads: [
       'David Wilkins',
@@ -3054,7 +3055,7 @@ window.addEventListener('theme-changed', function() {
       'Artificial intelligence is not simply another technology being adopted by the legal profession. It is structurally reconfiguring the profession: how legal services are delivered, who delivers them, how lawyers are trained, and what it means to exercise professional judgment.',
       'This project brings together David Wilkins and Anthea Roberts to read that transformation through complementary lenses. One reads the legal profession as a century-long institutional system; the other reads these developments through AI and complex decision-making.'
     ],
-    overviewNote: 'The first release pairs essays with interactive visualisations so the argument and the evidence architecture travel together.',
+    overviewNote: 'The first release pairs essays with interactive visualizations so the argument and the evidence architecture travel together.',
     articles: [
       {
         id: 'series-introduction',
@@ -3077,7 +3078,7 @@ window.addEventListener('theme-changed', function() {
         dateLabel: '3 April 2026',
         authorsLabel: 'Anthea Roberts and David Wilkins',
         markdownPath: 'outputs/2026-04-07-2-law-is-the-gateway-drug.md',
-        excerpt: 'Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
+        excerpt: 'Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
         sidebarNote: 'Law\'s structural centrality explains why the serious early AI money is flowing into legal.',
         heroVisualId: 'law-gateway',
         heroCaption: 'A systems map of law\'s structural centrality and the expanding legalisation of everything.',
@@ -3155,7 +3156,7 @@ window.addEventListener('theme-changed', function() {
         accent: '#A51C30'
       }
     ],
-    visualisations: [
+    visualizations: [
       {
         id: 'topic-network',
         title: 'Topic Network',
@@ -3279,7 +3280,7 @@ window.addEventListener('theme-changed', function() {
   };
 
   site.getVisual = function (id) {
-    return site.visualisations.find(function (visual) { return visual.id === id; }) || site.visualisations[0];
+    return site.visualizations.find(function (visual) { return visual.id === id; }) || site.visualizations[0];
   };
 
   site.getArticleUrl = function (id) {
@@ -3317,7 +3318,13 @@ window.addEventListener('theme-changed', function() {
 
   function currentTheme() {
     var stored;
-    try { stored = localStorage.getItem('harvard-project-theme'); } catch (e) {}
+    /* The site's own key is the SEED here too, not only in the head script:
+       currentTheme() feeds applyTheme(), which then PERSISTS what it resolved.
+       Reading only harvard-project-theme meant this function resolved 'light',
+       overwrote the head script's dark, and wrote 'light' back into a key four
+       other lens pages read — so one visit pinned all of them. */
+    try { stored = localStorage.getItem('harvard-project-theme')
+                || localStorage.getItem('legal-theme'); } catch (e) {}
     return stored === 'dark' ? 'dark' : 'light';
   }
 
@@ -3358,7 +3365,7 @@ window.addEventListener('theme-changed', function() {
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(site.getArticleUrl(article.id)) + '">' + article.title + '</a>';
     }).join('');
 
-    var visualItems = site.visualisations.map(function (visual) {
+    var visualItems = site.visualizations.map(function (visual) {
       var active = visual.id === currentVisualId ? ' active' : '';
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(visual.path) + '">' + visual.title + '</a>';
     }).join('');
@@ -3375,7 +3382,6 @@ window.addEventListener('theme-changed', function() {
       '  </a>' +
       '  <div class="project-nav-links">' +
       '    <a class="project-nav-link" href="../index.html#essays">Essays</a>' +
-      '    <a class="project-nav-link project-nav-link-active" href="index.html">Visualisations</a>' +
       '    <a class="project-nav-link" href="../essays/series-introduction.html">About</a>' +
       '  </div>' +
       '</nav>';
@@ -3426,7 +3432,7 @@ window.addEventListener('theme-changed', function() {
 
 </script>
 <script>
-injectHarvardProjectNav({ currentSection: 'visualisations', currentVisualId: 'harvey-evolution' });
+injectHarvardProjectNav({ currentSection: 'visualizations', currentVisualId: 'harvey-evolution' });
 </script>
 </body>
 </html>

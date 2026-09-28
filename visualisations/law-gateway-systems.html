@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}})()</script>
+<script>(function(){var s;try{s=localStorage.getItem('harvard-project-theme')||localStorage.getItem('legal-theme');}catch(e){}var t=s==='dark'?'dark':'light';document.documentElement.setAttribute('data-theme',t);if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}})()</script>
 <title>Law as the Gateway — AI &amp; the Legal Profession</title>
-<meta name="description" content="A systems map of why law sits at the centre of professional services — and why that makes it the gateway for AI.">
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/law-gateway-systems.html">
+<meta name="description" content="A systems map of why law sits at the center of professional services — and why that makes it the gateway for AI.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Law as the Gateway — AI &amp; the Legal Profession">
-<meta property="og:description" content="A systems map of why law sits at the centre of professional services — and why that makes it the gateway for AI.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/law-gateway-systems.html">
+<meta property="og:description" content="A systems map of why law sits at the center of professional services — and why that makes it the gateway for AI.">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/law-gateway-systems.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Law as the Gateway — AI &amp; the Legal Profession">
-<meta name="twitter:description" content="A systems map of why law sits at the centre of professional services — and why that makes it the gateway for AI.">
+<meta name="twitter:description" content="A systems map of why law sits at the center of professional services — and why that makes it the gateway for AI.">
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
 <link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
@@ -2312,6 +2312,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
     @page { size: landscape; margin: 10mm; }
   }
 </style>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -2324,7 +2325,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
   <hr class="sidebar-divider sidebar-header-divider">
 
   <h1 class="sidebar-page-title">Law as the Gateway</h1>
-  <div class="sidebar-page-desc">Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.</div>
+  <div class="sidebar-page-desc">Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.</div>
   <div class="sidebar-page-author">By <a href="https://hls.harvard.edu/faculty/anthea-roberts/" target="_blank" rel="noopener">Anthea Roberts</a> and <a href="https://hls.harvard.edu/faculty/david-b-wilkins/" target="_blank" rel="noopener">David Wilkins</a></div>
   <div class="sidebar-credit">
     <span class="sidebar-credit-label">Visuals and analysis created with</span>
@@ -2338,7 +2339,7 @@ html[data-theme="dark"] .article-hero-frame iframe {
   <details class="onboarding-block" open>
     <summary>How to Read This</summary>
     <div class="onboarding-content">
-      Law sits at the centre of a gravitational system. Inner-orbit nodes are domains where law has been structurally embedded for decades. Outer-orbit nodes are domains where the "legalisation of everything" is expanding law's reach. Click any node for detail on the gateway thesis.
+      Law sits at the center of a gravitational system. Inner-orbit nodes are domains where law has been structurally embedded for decades. Outer-orbit nodes are domains where the "legalisation of everything" is expanding law's reach. Click any node for detail on the gateway thesis.
     </div>
   </details>
 
@@ -2470,12 +2471,12 @@ const detailContent = {
     gateway: "AI in employment law learns HR processes, compensation structures, and workforce dynamics."
   },
   REGULATION: {
-    embedding: "Administrative law, regulatory filings, enforcement defence, compliance frameworks. Lawyers don\u2019t just respond to regulation \u2014 they helped create it, shaping it in ways that require legal interpretation.",
-    gateway: "AI in compliance learns organisational operations, risk management, and governance structures across every regulated industry."
+    embedding: "Administrative law, regulatory filings, enforcement defense, compliance frameworks. Lawyers don\u2019t just respond to regulation \u2014 they helped create it, shaping it in ways that require legal interpretation.",
+    gateway: "AI in compliance learns organizational operations, risk management, and governance structures across every regulated industry."
   },
   CONSUMER: {
     embedding: "Consumer protection, product liability, advertising law, warranty obligations. The expanding reach of consumer regulation creates growing legal complexity.",
-    gateway: "AI in consumer law learns market dynamics, product safety standards, and consumer behaviour patterns."
+    gateway: "AI in consumer law learns market dynamics, product safety standards, and consumer behavior patterns."
   },
   CYBER: {
     embedding: "Data breach response, cybersecurity regulation, incident reporting obligations. Cyber incidents are increasingly legal events as much as technical ones.",
@@ -2979,7 +2980,7 @@ render('all');
       'David B. Wilkins': 'https://hls.harvard.edu/faculty/david-b-wilkins/'
     },
     projectAuthorsLabel: 'David Wilkins and Anthea Roberts',
-    homeDescription: 'Interactive essays and visualisations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
+    homeDescription: 'Interactive essays and visualizations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
     leadsLabel: 'Project leads',
     leads: [
       'David Wilkins',
@@ -2990,7 +2991,7 @@ render('all');
       'Artificial intelligence is not simply another technology being adopted by the legal profession. It is structurally reconfiguring the profession: how legal services are delivered, who delivers them, how lawyers are trained, and what it means to exercise professional judgment.',
       'This project brings together David Wilkins and Anthea Roberts to read that transformation through complementary lenses. One reads the legal profession as a century-long institutional system; the other reads these developments through AI and complex decision-making.'
     ],
-    overviewNote: 'The first release pairs essays with interactive visualisations so the argument and the evidence architecture travel together.',
+    overviewNote: 'The first release pairs essays with interactive visualizations so the argument and the evidence architecture travel together.',
     articles: [
       {
         id: 'series-introduction',
@@ -3013,7 +3014,7 @@ render('all');
         dateLabel: '3 April 2026',
         authorsLabel: 'Anthea Roberts and David Wilkins',
         markdownPath: 'outputs/2026-04-07-2-law-is-the-gateway-drug.md',
-        excerpt: 'Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
+        excerpt: 'Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
         sidebarNote: 'Law\'s structural centrality explains why the serious early AI money is flowing into legal.',
         heroVisualId: 'law-gateway',
         heroCaption: 'A systems map of law\'s structural centrality and the expanding legalisation of everything.',
@@ -3091,7 +3092,7 @@ render('all');
         accent: '#A51C30'
       }
     ],
-    visualisations: [
+    visualizations: [
       {
         id: 'topic-network',
         title: 'Topic Network',
@@ -3215,7 +3216,7 @@ render('all');
   };
 
   site.getVisual = function (id) {
-    return site.visualisations.find(function (visual) { return visual.id === id; }) || site.visualisations[0];
+    return site.visualizations.find(function (visual) { return visual.id === id; }) || site.visualizations[0];
   };
 
   site.getArticleUrl = function (id) {
@@ -3253,7 +3254,13 @@ render('all');
 
   function currentTheme() {
     var stored;
-    try { stored = localStorage.getItem('harvard-project-theme'); } catch (e) {}
+    /* The site's own key is the SEED here too, not only in the head script:
+       currentTheme() feeds applyTheme(), which then PERSISTS what it resolved.
+       Reading only harvard-project-theme meant this function resolved 'light',
+       overwrote the head script's dark, and wrote 'light' back into a key four
+       other lens pages read — so one visit pinned all of them. */
+    try { stored = localStorage.getItem('harvard-project-theme')
+                || localStorage.getItem('legal-theme'); } catch (e) {}
     return stored === 'dark' ? 'dark' : 'light';
   }
 
@@ -3294,7 +3301,7 @@ render('all');
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(site.getArticleUrl(article.id)) + '">' + article.title + '</a>';
     }).join('');
 
-    var visualItems = site.visualisations.map(function (visual) {
+    var visualItems = site.visualizations.map(function (visual) {
       var active = visual.id === currentVisualId ? ' active' : '';
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(visual.path) + '">' + visual.title + '</a>';
     }).join('');
@@ -3311,7 +3318,6 @@ render('all');
       '  </a>' +
       '  <div class="project-nav-links">' +
       '    <a class="project-nav-link" href="../index.html#essays">Essays</a>' +
-      '    <a class="project-nav-link project-nav-link-active" href="index.html">Visualisations</a>' +
       '    <a class="project-nav-link" href="../essays/series-introduction.html">About</a>' +
       '  </div>' +
       '</nav>';
@@ -3362,7 +3368,7 @@ render('all');
 
 </script>
 <script>
-injectHarvardProjectNav({ currentSection: 'visualisations', currentVisualId: 'law-gateway' });
+injectHarvardProjectNav({ currentSection: 'visualizations', currentVisualId: 'law-gateway' });
 </script>
 </body>
 </html>

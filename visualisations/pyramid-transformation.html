@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){var t=localStorage.getItem('harvard-viz-theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
+<script>(function(){var t=localStorage.getItem('harvard-viz-theme')||localStorage.getItem('legal-theme');if(t)document.documentElement.setAttribute('data-theme',t);})()</script>
 <title>The Pyramid Transformation — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/pyramid-transformation.html">
 <meta name="description" content="How AI reshapes the law-firm pyramid — from up-or-out to up-and-out.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="The Pyramid Transformation — AI &amp; the Legal Profession">
 <meta property="og:description" content="How AI reshapes the law-firm pyramid — from up-or-out to up-and-out.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/pyramid-transformation.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/pyramid-transformation.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -41,7 +41,7 @@
   --surface-dark: #f1f5f9;
   --text-heading: #0f172a;
   --text-body: #334155;
-  --text-secondary: #64748b;
+  --text-secondary: #475569;
   --text-muted: #94a3b8;
   --text-label: #64748b;
   --border: #e2e8f0;
@@ -108,7 +108,8 @@ h1.sidebar-page-title { margin-top: 0; }
 .toggle-switch {
   position: relative; width: 36px; height: 20px; cursor: pointer;
 }
-.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-switch input { position: absolute; inset: 0; opacity: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.toggle-switch input:focus-visible + .toggle-slider { outline: 2px solid var(--text-heading); outline-offset: 3px; }
 .toggle-slider {
   position: absolute; inset: 0; background: var(--slate-700);
   border-radius: 10px; transition: background 0.2s;
@@ -242,6 +243,7 @@ svg *:focus, svg *:focus-visible { outline: none !important; }
 }
 </style>
 <script>(function(){var q=location.search;if(q.indexOf('embed=1')!==-1)document.documentElement.classList.add('embed-mode');if(q.indexOf('hero=1')!==-1)document.documentElement.classList.add('hero-mode');if(q.indexOf('preview=1')!==-1)document.documentElement.classList.add('preview-mode');})()</script>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -271,31 +273,31 @@ svg *:focus, svg *:focus-visible { outline: none !important; }
   <div class="sidebar-section-label">Convergence Forces</div>
   <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px;">
     <div class="toggle-row">
-      <span class="toggle-label"><span class="toggle-color-dot" style="background:#FF9413"></span> From Below</span>
-      <label class="toggle-switch"><input type="checkbox" id="toggle-from-below"><span class="toggle-slider"></span></label>
+      <span class="toggle-label" id="label-from-below"><span class="toggle-color-dot" style="background:#FF9413"></span> From Below</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-from-below" aria-labelledby="label-from-below"><span class="toggle-slider"></span></label>
     </div>
     <div class="toggle-row">
-      <span class="toggle-label"><span class="toggle-color-dot" style="background:#EFD038"></span> Laterally</span>
-      <label class="toggle-switch"><input type="checkbox" id="toggle-laterally"><span class="toggle-slider"></span></label>
+      <span class="toggle-label" id="label-laterally"><span class="toggle-color-dot" style="background:#EFD038"></span> Laterally</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-laterally" aria-labelledby="label-laterally"><span class="toggle-slider"></span></label>
     </div>
     <div class="toggle-row">
-      <span class="toggle-label"><span class="toggle-color-dot" style="background:#1B99D6"></span> From Clients</span>
-      <label class="toggle-switch"><input type="checkbox" id="toggle-from-clients"><span class="toggle-slider"></span></label>
+      <span class="toggle-label" id="label-from-clients"><span class="toggle-color-dot" style="background:#1B99D6"></span> From Clients</span>
+      <label class="toggle-switch"><input type="checkbox" id="toggle-from-clients" aria-labelledby="label-from-clients"><span class="toggle-slider"></span></label>
     </div>
   </div>
 
   <hr class="sidebar-divider">
 
   <div class="toggle-row">
-    <span class="toggle-label">Training Pathway</span>
-    <label class="toggle-switch"><input type="checkbox" id="toggle-training" checked><span class="toggle-slider"></span></label>
+    <span class="toggle-label" id="label-training">Training Pathway</span>
+    <label class="toggle-switch"><input type="checkbox" id="toggle-training" aria-labelledby="label-training" checked><span class="toggle-slider"></span></label>
   </div>
 
   <hr class="sidebar-divider">
 
   <div class="toggle-row">
     <span class="toggle-label">Theme</span>
-    <label class="toggle-switch"><input type="checkbox" id="toggle-theme"><span class="toggle-slider"></span></label>
+    <label class="toggle-switch"><input type="checkbox" id="toggle-theme" aria-label="Dark theme"><span class="toggle-slider"></span></label>
   </div>
 </aside>
 
@@ -391,7 +393,7 @@ const SHAPES = [
     vertices: [[0.5, 0.05], [0.55, 0.12], [0.58, 0.95], [0.42, 0.95], [0.45, 0.12]],
     tiers: [
       { label: "Partners", yStart: 0.05, yEnd: 0.22, color: "rgba(68,107,183,0.14)", stroke: "#446BB7", aiImpact: "Augmented \u2014 integrative judgment expands" },
-      { label: "Counsel", yStart: 0.22, yEnd: 0.40, color: "rgba(11,174,163,0.14)", stroke: "#0BAEA3", aiImpact: "Augmented \u2014 specialised orchestration roles" },
+      { label: "Counsel", yStart: 0.22, yEnd: 0.40, color: "rgba(11,174,163,0.14)", stroke: "#0BAEA3", aiImpact: "Augmented \u2014 specialized orchestration roles" },
       { label: "Senior Associates", yStart: 0.40, yEnd: 0.62, color: "rgba(239,208,56,0.16)", stroke: "#EFD038", aiImpact: "Transformed \u2014 review and quality control" },
       { label: "Junior Associates", yStart: 0.62, yEnd: 0.95, color: "rgba(146,68,138,0.14)", stroke: "#92448A", aiImpact: "Reduced \u2014 vastly fewer people at the base" }
     ],
@@ -507,7 +509,7 @@ const CONVERGENCE_FORCES = [
     examples: [
       "Harvey building agent platform for law firms",
       "Eve.legal\u2019s $1B contingency AI model",
-      "Bek: \u2018Today\u2019s judgement will become tomorrow\u2019s intelligence\u2019"
+      "Bek: \u2018Today\u2019s judgment will become tomorrow\u2019s intelligence\u2019"
     ],
     shapesItFavors: ["obelisk", "barbell"]
   },
@@ -521,7 +523,7 @@ const CONVERGENCE_FORCES = [
     actors: ["PwC", "KPMG", "EY", "Deloitte"],
     examples: [
       "PwC promoting legal in 124 countries by 2012",
-      "KPMG licensed to practise law in Arizona",
+      "KPMG licensed to practice law in Arizona",
       "\u2018They will move up the value chain and eat our lunch\u2019"
     ],
     shapesItFavors: ["barbell", "t-shape"]
@@ -537,7 +539,7 @@ const CONVERGENCE_FORCES = [
     examples: [
       "Yurko\u2019s \u2018virtual law firm\u2019 cutting costs 50%+",
       "GCs as ecosystem orchestrators with AI",
-      "In-house teams governing organisational AI use"
+      "In-house teams governing organizational AI use"
     ],
     shapesItFavors: ["t-shape"]
   }
@@ -810,7 +812,7 @@ function drawTiers(shape, animate) {
       .attr("font-family", "'IBM Plex Sans', sans-serif")
       .attr("font-size", tier.isMissing ? "14px" : "14px")
       .attr("font-weight", 500)
-      .attr("fill", tier.isMissing ? "#A51C30" : "var(--text-secondary)")
+      .attr("fill", "var(--text-heading)")
       .attr("pointer-events", "none")
       .style("opacity", animate ? 0 : 0.85)
       .text(tier.isMissing ? "" : tier.label)

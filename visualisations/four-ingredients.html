@@ -3,14 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script>(function(){document.documentElement.setAttribute('data-theme','light');localStorage.setItem('harvard-project-theme','light');localStorage.setItem('harvard-viz-theme','light');if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(location.search.indexOf('hero=1')!==-1){document.documentElement.classList.add('hero-mode');}})()</script>
+<!-- This page is light-only by design and sets its own data-theme directly.
+     It used to also WRITE 'light' into harvard-project-theme and
+     harvard-viz-theme, which are SHARED keys: visiting it pinned five
+     sibling lens pages to light for the life of the browser profile. The
+     writes are gone; the page's own appearance is unchanged. -->
+<script>(function(){document.documentElement.setAttribute('data-theme','light');if(location.search.indexOf('embed=1')!==-1){document.documentElement.classList.add('embed-mode');}if(location.search.indexOf('hero=1')!==-1){document.documentElement.classList.add('hero-mode');}})()</script>
 <title>The Four Ingredients — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/four-ingredients.html">
 <meta name="description" content="The four ingredients of a good outcome with AI — and why domain expertise is the scarcest of them.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="The Four Ingredients — AI &amp; the Legal Profession">
 <meta property="og:description" content="The four ingredients of a good outcome with AI — and why domain expertise is the scarcest of them.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/four-ingredients.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/visualisations/four-ingredients.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -28,7 +33,7 @@
    Adapted from AI Through Dragonfly Eyes shared.css
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&display=swap');
+@font-face { font-family: 'IBM Plex Sans'; src: url('../assets/fonts/ibm-plex-sans.woff2') format('woff2'); font-weight: 300 700; font-style: normal; font-display: swap; }
 
 /* ---- CSS Custom Properties ---- */
 :root {
@@ -57,9 +62,9 @@
 
   /* ── Dragonfly "lens" palette (categorical) ──
      Bright hues for fills/dots/strokes; *-text variants are AA-dark
-     so a coloured hue can be used as small text on white. Crimson
+     so a colored hue can be used as small text on white. Crimson
      (--df-accent) is reserved for selection/active/emphasis only and
-     is never a category colour. */
+     is never a category color. */
   --df-lens-indigo:  #446BB7;  --df-lens-indigo-text:  #3A5BA0;
   --df-lens-teal:    #0BAEA3;  --df-lens-teal-text:    #07756E;
   --df-lens-gold:    #EFD038;  --df-lens-gold-text:    #8A6D00;
@@ -2441,6 +2446,7 @@ html.hero-mode .axis-tick { display: none !important; }
 }
 
 </style>
+<link rel="stylesheet" href="../chart-contrast.css">
 </head>
 <body>
 
@@ -2489,14 +2495,14 @@ html.hero-mode .axis-tick { display: none !important; }
   <div class="sidebar-section-label">Environment</div>
   <div class="env-slider-group">
     <div class="env-slider-label">
-      <span>Model Capability</span>
+      <label for="model-cap-slider">Model Capability</label>
       <span class="env-slider-value" id="model-cap-value">7</span>
     </div>
     <input type="range" class="env-slider" id="model-cap-slider" min="0" max="10" value="7" step="1">
   </div>
   <div class="env-slider-group">
     <div class="env-slider-label">
-      <span>Context Infrastructure</span>
+      <label for="context-inf-slider">Context Infrastructure</label>
       <span class="env-slider-value" id="context-inf-value">5</span>
     </div>
     <input type="range" class="env-slider" id="context-inf-slider" min="0" max="10" value="5" step="1">
@@ -3303,7 +3309,7 @@ drawViz();
       'David B. Wilkins': 'https://hls.harvard.edu/faculty/david-b-wilkins/'
     },
     projectAuthorsLabel: 'David Wilkins and Anthea Roberts',
-    homeDescription: 'Interactive essays and visualisations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
+    homeDescription: 'Interactive essays and visualizations on how AI is reshaping legal services, professional judgment, and the future structure of the legal profession.',
     leadsLabel: 'Project leads',
     leads: [
       'David Wilkins',
@@ -3314,7 +3320,7 @@ drawViz();
       'Artificial intelligence is not simply another technology being adopted by the legal profession. It is structurally reconfiguring the profession: how legal services are delivered, who delivers them, how lawyers are trained, and what it means to exercise professional judgment.',
       'This project brings together David Wilkins and Anthea Roberts to read that transformation through complementary lenses. One reads the legal profession as a century-long institutional system; the other reads these developments through AI and complex decision-making.'
     ],
-    overviewNote: 'The first release pairs essays with interactive visualisations so the argument and the evidence architecture travel together.',
+    overviewNote: 'The first release pairs essays with interactive visualizations so the argument and the evidence architecture travel together.',
     articles: [
       {
         id: 'series-introduction',
@@ -3337,7 +3343,7 @@ drawViz();
         dateLabel: '3 April 2026',
         authorsLabel: 'Anthea Roberts and David Wilkins',
         markdownPath: 'outputs/2026-04-07-2-law-is-the-gateway-drug.md',
-        excerpt: 'Why law sits at the centre of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
+        excerpt: 'Why law sits at the center of business, regulation, and governance, and why that structural position makes it the natural gateway for AI across professional services.',
         sidebarNote: 'Law\'s structural centrality explains why the serious early AI money is flowing into legal.',
         heroVisualId: 'law-gateway',
         heroCaption: 'A systems map of law\'s structural centrality and the expanding legalisation of everything.',
@@ -3415,7 +3421,7 @@ drawViz();
         accent: '#A51C30'
       }
     ],
-    visualisations: [
+    visualizations: [
       {
         id: 'topic-network',
         title: 'Topic Network',
@@ -3539,7 +3545,7 @@ drawViz();
   };
 
   site.getVisual = function (id) {
-    return site.visualisations.find(function (visual) { return visual.id === id; }) || site.visualisations[0];
+    return site.visualizations.find(function (visual) { return visual.id === id; }) || site.visualizations[0];
   };
 
   site.getArticleUrl = function (id) {
@@ -3581,8 +3587,7 @@ drawViz();
 
   function updateThemeLogos() {
     document.documentElement.setAttribute('data-theme', 'light');
-    localStorage.setItem('harvard-project-theme', 'light');
-    localStorage.setItem('harvard-viz-theme', 'light');
+    /* No localStorage write — see the head comment: these are shared keys. */
     var isLight = true;
     var logos = Array.prototype.slice.call(document.querySelectorAll('[data-theme-logo]'));
     logos.forEach(function (logo) {
@@ -3609,7 +3614,7 @@ drawViz();
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(site.getArticleUrl(article.id)) + '">' + article.title + '</a>';
     }).join('');
 
-    var visualItems = site.visualisations.map(function (visual) {
+    var visualItems = site.visualizations.map(function (visual) {
       var active = visual.id === currentVisualId ? ' active' : '';
       return '<a class="nav-dropdown-item' + active + '" href="' + resolveProjectUrl(visual.path) + '">' + visual.title + '</a>';
     }).join('');
@@ -3626,7 +3631,6 @@ drawViz();
       '  </a>' +
       '  <div class="project-nav-links">' +
       '    <a class="project-nav-link" href="../index.html#essays">Essays</a>' +
-      '    <a class="project-nav-link project-nav-link-active" href="index.html">Visualisations</a>' +
       '    <a class="project-nav-link" href="../essays/series-introduction.html">About</a>' +
       '  </div>' +
       '</nav>';
@@ -3677,7 +3681,7 @@ drawViz();
 
 </script>
 <script>
-injectHarvardProjectNav({ currentSection: 'visualisations', currentVisualId: 'four-ingredients' });
+injectHarvardProjectNav({ currentSection: 'visualizations', currentVisualId: 'four-ingredients' });
 </script>
 </body>
 </html>

@@ -1,0 +1,1007 @@
+{
+  "schema_version": "actor-display-groups/v1",
+  "classification_basis": "Editorial primary role in this map; original corpus measurements preserved.",
+  "notes": [
+    "This is an editorial primary-role display taxonomy, not a new corpus extraction, a legal status register, an affiliation claim or an importance ranking. Original measured classes and source records remain unchanged.",
+    "Every named actor has exactly one primary colour. Named people can share a role colour with an institution or field without being treated as organisations. Named corporate buyers represent the legal-department role discussed in the corpus, not their entire business.",
+    "The ten strategic group IDs and their full names are retained. A group-level relationship does not automatically apply to each named member; a named actor’s secondary display role does not add a relationship.",
+    "Related groups deliberately share the existing fourteen colour families. Diamond labels and group descriptions identify the exact constituency; matching colour alone is not proof of identical membership.",
+    "A-16 and A-23 have no named members in this retained actor inventory. Their collective diamonds remain analytically useful in the strategic core without inventing named representatives.",
+    "Harvard Business School is primarily research and scholarship; Harvard Law School is primarily legal education with research as an additional role. The wider research group includes economics, management, computer science and law.",
+    "AI-native legal services retain the existing six named historical/current providers. Product vendors such as Harvey, Legora, EvenUp and Ironclad stay in legal technology. Atrium remains a historical case, not an assertion that it still operates."
+  ],
+  "groups_by_id": {
+    "A-08": {
+      "id": "A-08",
+      "label": "Venture investors",
+      "name": "Venture and growth investors in legal-AI vendors and AI-native providers (Sequoia, a16z, Kleiner Perkins, Coatue, GIC, General Catalyst, Bessemer, Accel, NVentures, LegalTech Fund)",
+      "description": "Venture and growth investors in legal AI and AI-native providers. Named investors are assigned by their investment role; this does not imply identical portfolios or strategies.",
+      "color_index": 6,
+      "colour_family": "Capital",
+      "core_group_id": "A-08",
+      "base_class_ids": [
+        "capital"
+      ],
+      "actor_ids": [
+        "Andreessen Horowitz",
+        "Coatue",
+        "Elad Gil",
+        "General Catalyst",
+        "Kleiner Perkins",
+        "LegalTech Fund",
+        "OpenAI Startup Fund",
+        "Sequoia",
+        "Y Combinator"
+      ]
+    },
+    "A-09": {
+      "id": "A-09",
+      "label": "Corporate buyers",
+      "name": "Corporate legal departments and their GCs (in-house counsel and legal operations)",
+      "description": "Corporate legal departments, general counsel and legal operations. Named companies stand for the demand-side legal teams discussed in the corpus; buyer associations represent the constituency rather than being corporate legal departments themselves.",
+      "color_index": 7,
+      "colour_family": "Corporate demand",
+      "core_group_id": "A-09",
+      "base_class_ids": [
+        "client-inhouse"
+      ],
+      "actor_ids": [
+        "Association of Corporate Counsel",
+        "Barclays",
+        "CLOC",
+        "Ford Motor Company",
+        "General Electric",
+        "Goldman Sachs",
+        "JPMorgan",
+        "Walmart"
+      ]
+    },
+    "A-10": {
+      "id": "A-10",
+      "label": "Large firms",
+      "name": "Large incumbent law firms (Am Law 100 / Magic Circle: Kirkland, Freshfields, Clifford Chance, Ropes & Gray, Cooley, MinterEllison)",
+      "description": "Large incumbent law firms. Membership here identifies the type of practice, not common AI adoption, ownership, pricing or strategy.",
+      "color_index": 9,
+      "colour_family": "Incumbent law firms",
+      "core_group_id": "A-10",
+      "base_class_ids": [
+        "incumbent-firm",
+        "individual"
+      ],
+      "actor_ids": [
+        "A&O Shearman",
+        "Ashurst",
+        "Baker McKenzie",
+        "Bird & Bird",
+        "Cleary Gottlieb",
+        "Clifford Chance",
+        "Cooley",
+        "Cravath",
+        "DLA Piper",
+        "David Wakeling",
+        "Davis Polk",
+        "Dentons",
+        "Fenwick & West",
+        "Freshfields",
+        "Gunderson Dettmer",
+        "Hogan Lovells",
+        "King & Wood Mallesons",
+        "Kirkland & Ellis",
+        "Latham & Watkins",
+        "Linklaters",
+        "Milbank",
+        "MinterEllison",
+        "Orrick",
+        "Paul, Weiss",
+        "Ropes & Gray",
+        "Sidley Austin",
+        "Skadden",
+        "Sullivan & Cromwell",
+        "Wachtell",
+        "White & Case",
+        "WilmerHale",
+        "Wilson Sonsini"
+      ]
+    },
+    "A-15": {
+      "id": "A-15",
+      "label": "AI-native providers",
+      "name": "AI-native legal service providers (Crosby, General Legal, Soxton, Eudia, Norm, Garfield AI, Lawhive, Covenant, Carta Law)",
+      "description": "AI-native legal service providers: businesses organised around delivering legal services with AI. This is distinct from software vendors selling tools to legal practitioners. Historical entrants remain visible as historical cases.",
+      "color_index": 2,
+      "colour_family": "AI-native services",
+      "core_group_id": "A-15",
+      "base_class_ids": [
+        "ai-native-firm"
+      ],
+      "actor_ids": [
+        "Atrium",
+        "Covenant",
+        "Crosby",
+        "Eudia",
+        "Garfield AI",
+        "Norm Ai"
+      ]
+    },
+    "A-16": {
+      "id": "A-16",
+      "label": "Junior workforce",
+      "name": "Junior lawyers, trainees and paralegals (frontline workforce)",
+      "description": "Junior lawyers, trainees and paralegals as a collective constituency. No retained named actor has been assigned to this group solely because they are an individual or a researcher.",
+      "color_index": 11,
+      "colour_family": "Individuals and workforce",
+      "core_group_id": "A-16",
+      "base_class_ids": [],
+      "actor_ids": []
+    },
+    "A-17": {
+      "id": "A-17",
+      "label": "Legal education",
+      "name": "Law schools and legal educators (Suffolk, Berkeley, Minnesota, Case Western, BPP/ULaw/Oxford/KCL)",
+      "description": "Law schools and legal educators in their education and training role. Broader empirical AI and work research has a separate display group; legal schools can contribute to that research without changing their primary display role.",
+      "color_index": 1,
+      "colour_family": "Education and research",
+      "core_group_id": "A-17",
+      "base_class_ids": [
+        "academy",
+        "individual"
+      ],
+      "actor_ids": [
+        "Andrew Perlman",
+        "Berkeley Law",
+        "Columbia Law School",
+        "Georgetown Law",
+        "Harvard Law School",
+        "Megan Ma",
+        "Michigan Law",
+        "NYU School of Law",
+        "Stanford Law School",
+        "Suffolk University Law School",
+        "University of Minnesota Law",
+        "Vanderbilt Law School",
+        "Yale Law School"
+      ]
+    },
+    "A-23": {
+      "id": "A-23",
+      "label": "Legal consumers",
+      "name": "Self-represented litigants and low-income legal consumers",
+      "description": "Self-represented litigants and low-income legal consumers. Legal aid organisations and consumer-law platforms serve this constituency but are not themselves consumers.",
+      "color_index": 0,
+      "colour_family": "Access to justice",
+      "core_group_id": "A-23",
+      "base_class_ids": [],
+      "actor_ids": []
+    },
+    "A-24": {
+      "id": "A-24",
+      "label": "Insurers",
+      "name": "Professional-liability insurers, brokers and mutuals (CNA, Travelers, Beazley, Hamilton Select, Lloyd's/Armilla; Lockton, Aon, WTW; ALAS)",
+      "description": "Professional-liability insurers, brokers and mutuals. ALAS is the named mutual represented here; this group is distinct from private-equity and venture investors.",
+      "color_index": 5,
+      "colour_family": "Professional insurance",
+      "core_group_id": "A-24",
+      "base_class_ids": [],
+      "actor_ids": [
+        "ALAS"
+      ]
+    },
+    "A-28": {
+      "id": "A-28",
+      "label": "Courts",
+      "name": "Courts and judges as adjudicators, sanctioning authorities and rule-makers for the bar (US federal and state courts; UK High Court; British Columbia Supreme Court; Florida and New Jersey Supreme Courts; Second Circuit)",
+      "description": "Courts and judges exercising adjudicative, sanctioning and professional rule-making authority, including the judicial administration supporting them. Professional associations and private arbitral providers are distinguished separately.",
+      "color_index": 12,
+      "colour_family": "Law and public institutions",
+      "core_group_id": "A-28",
+      "base_class_ids": [
+        "individual",
+        "regulator-court"
+      ],
+      "actor_ids": [
+        "Arizona Supreme Court",
+        "John Roberts",
+        "Judicial Office",
+        "Michigan Supreme Court",
+        "Second Circuit",
+        "Supreme Court of the United States",
+        "Utah Supreme Court"
+      ]
+    },
+    "A-33": {
+      "id": "A-33",
+      "label": "Private equity",
+      "name": "Private-equity sponsors and litigation funders entering legal-practice investment and AI deployment (MSO and ABS routes; Blackstone, Hellman & Friedman and Goldman Sachs in Anthropic's venture; TPG, Advent, Bain Capital and Brookfield in OpenAI's)",
+      "description": "Private-equity sponsors and litigation funders entering legal-practice investment and AI deployment. Assignment is a primary display role and does not imply that every investment follows the same ownership route.",
+      "color_index": 6,
+      "colour_family": "Capital",
+      "core_group_id": "A-33",
+      "base_class_ids": [
+        "capital"
+      ],
+      "actor_ids": [
+        "Bain Capital",
+        "Blackstone"
+      ]
+    },
+    "DG-platforms": {
+      "id": "DG-platforms",
+      "label": "AI and technology platforms",
+      "name": "AI and technology platforms",
+      "description": "Foundation-model developers, major technology platforms and their named leaders. Platform supply is distinguished from a company’s additional role as a purchaser of legal services.",
+      "color_index": 8,
+      "colour_family": "Technology platforms",
+      "core_group_id": null,
+      "base_class_ids": [
+        "client-inhouse",
+        "foundation-model",
+        "individual"
+      ],
+      "actor_ids": [
+        "Amazon",
+        "Anthropic",
+        "Apple",
+        "Cisco",
+        "Dario Amodei",
+        "DeepSeek",
+        "Google",
+        "IBM",
+        "Jared Kaplan",
+        "Jason Boehmig",
+        "Meta AI",
+        "Microsoft",
+        "Mistral",
+        "Nvidia",
+        "OpenAI",
+        "Palantir",
+        "Perplexity",
+        "Salesforce",
+        "Sam Altman",
+        "xAI"
+      ]
+    },
+    "DG-legaltech": {
+      "id": "DG-legaltech",
+      "label": "Legal technology",
+      "name": "Legal technology",
+      "description": "Legal software and legal-AI vendors, and named product founders or technologists. Providing software does not by itself make an organisation an AI-native legal service provider.",
+      "color_index": 13,
+      "colour_family": "Legal technology",
+      "core_group_id": null,
+      "base_class_ids": [
+        "individual",
+        "vendor-legal-ai"
+      ],
+      "actor_ids": [
+        "Agiloft",
+        "BriefPoint",
+        "Casetext",
+        "Clio",
+        "Damien Riehl",
+        "DocuSign",
+        "Eve",
+        "EvenUp",
+        "Everlaw",
+        "Gabe Pereyra",
+        "Harvey",
+        "Ironclad",
+        "Josef",
+        "Kira Systems",
+        "LawDroid",
+        "LawGeex",
+        "Legora",
+        "Litera",
+        "Luminance",
+        "Max Junestrand",
+        "Midpage",
+        "NetDocuments",
+        "Pablo Arredondo",
+        "Paxton",
+        "PracticePanther",
+        "ROSS Intelligence",
+        "Relativity",
+        "Robin AI",
+        "Sandstone",
+        "Spellbook",
+        "Tom Martin",
+        "Wexler",
+        "Winston Weinberg",
+        "iManage"
+      ]
+    },
+    "DG-publishing": {
+      "id": "DG-publishing",
+      "label": "Legal publishers",
+      "name": "Legal publishers",
+      "description": "Legal information publishers, research databases and named publishing executives. Ownership and product relationships are explained in the actor profiles.",
+      "color_index": 10,
+      "colour_family": "Legal information",
+      "core_group_id": null,
+      "base_class_ids": [
+        "incumbent-publisher",
+        "individual"
+      ],
+      "actor_ids": [
+        "Bloomberg Law",
+        "Ed Walters",
+        "LexisNexis",
+        "RELX",
+        "Thomson Reuters",
+        "Wolters Kluwer",
+        "vLex"
+      ]
+    },
+    "DG-alsp": {
+      "id": "DG-alsp",
+      "label": "Alternative legal services",
+      "name": "Alternative legal services",
+      "description": "Alternative legal-service providers, flexible resourcing and outsourced legal operations. This category is distinct from both incumbent law firms and software vendors.",
+      "color_index": 3,
+      "colour_family": "Alternative legal services",
+      "core_group_id": null,
+      "base_class_ids": [
+        "alsp"
+      ],
+      "actor_ids": [
+        "Axiom",
+        "Consilio",
+        "UnitedLex"
+      ]
+    },
+    "DG-consulting": {
+      "id": "DG-consulting",
+      "label": "Consulting and advisory",
+      "name": "Consulting and advisory",
+      "description": "Management consultancies, multidisciplinary professional-services firms and legal-market advisory businesses. The group includes the Big Four but does not imply they all offer the same regulated legal services.",
+      "color_index": 4,
+      "colour_family": "Information and advisory",
+      "core_group_id": null,
+      "base_class_ids": [
+        "analyst-press",
+        "big-four",
+        "individual"
+      ],
+      "actor_ids": [
+        "Accenture",
+        "Boston Consulting Group",
+        "Creative Lawyers",
+        "Deloitte",
+        "EY",
+        "Gartner",
+        "Jen Leonard",
+        "KPMG",
+        "McKinsey",
+        "PwC"
+      ]
+    },
+    "DG-a2j": {
+      "id": "DG-a2j",
+      "label": "Legal help providers",
+      "name": "Legal help providers",
+      "description": "Legal aid organisations, public-interest legal information projects and consumer legal-help platforms. These are providers or intermediaries serving consumers, not the consumers themselves.",
+      "color_index": 0,
+      "colour_family": "Access to justice",
+      "core_group_id": null,
+      "base_class_ids": [
+        "a2j"
+      ],
+      "actor_ids": [
+        "DoNotPay",
+        "Free Law Project",
+        "Legal Aid Society",
+        "Legal Aid of North Carolina",
+        "LegalZoom",
+        "Rocket Lawyer",
+        "Upsolve"
+      ]
+    },
+    "DG-research": {
+      "id": "DG-research",
+      "label": "Research and scholarship",
+      "name": "Research and scholarship",
+      "description": "Empirical AI and work researchers, legal scholars, research institutes, university research labs and research-oriented policy forums. This wider group includes HBS, economics, management, computer science and legal research; it is not limited to economics or to empirical methods.",
+      "color_index": 1,
+      "colour_family": "Education and research",
+      "core_group_id": null,
+      "base_class_ids": [
+        "academy",
+        "analyst-press",
+        "individual"
+      ],
+      "actor_ids": [
+        "American Bar Foundation",
+        "Anthea Roberts",
+        "Benjamin Alarie",
+        "Damien Charlotin",
+        "Daniel E. Ho",
+        "Daniel Martin Katz",
+        "Daniel Rock",
+        "Daniel Schwarcz",
+        "Danielle Li",
+        "Daron Acemoglu",
+        "David Autor",
+        "David B. Wilkins",
+        "Deborah L. Rhode",
+        "Erik Brynjolfsson",
+        "Ethan Mollick",
+        "Faiz Surani",
+        "Frank Levy",
+        "Frank Pasquale",
+        "Gillian K. Hadfield",
+        "Harry Surden",
+        "Harvard Business School",
+        "IAALS",
+        "Jonathan H. Choi",
+        "MIT",
+        "Marc Galanter",
+        "Margaret Hagan",
+        "Matthew Dahl",
+        "Maura R. Grossman",
+        "Mirac Suzgun",
+        "National Bureau of Economic Research",
+        "Pamela Mishkin",
+        "Pascual Restrepo",
+        "Percy Liang",
+        "RAND",
+        "Rebecca L. Sandefur",
+        "Rishi Bommasani",
+        "Sam Manning",
+        "Stanford CodeX",
+        "Stanford Digital Economy Lab",
+        "Stanford Legal Design Lab",
+        "Varun Magesh",
+        "Whitney Zhang",
+        "William D. Henderson",
+        "World Economic Forum"
+      ]
+    },
+    "DG-associations": {
+      "id": "DG-associations",
+      "label": "Professional associations",
+      "name": "Professional associations",
+      "description": "Professional membership bodies and learned societies. Their convening and representational functions are distinct from courts, public regulators and the practitioners or institutions they represent.",
+      "color_index": 12,
+      "colour_family": "Law and public institutions",
+      "core_group_id": null,
+      "base_class_ids": [
+        "academy",
+        "analyst-press",
+        "regulator-court"
+      ],
+      "actor_ids": [
+        "ACM",
+        "American Bar Association",
+        "Association for Computational Linguistics",
+        "Bar Council",
+        "IEEE",
+        "ILTA",
+        "International Bar Association",
+        "Law Society of England and Wales",
+        "NALP",
+        "New York State Bar Association"
+      ]
+    },
+    "DG-news": {
+      "id": "DG-news",
+      "label": "Reporting and commentary",
+      "name": "Reporting and commentary",
+      "description": "News publications, specialist legal-technology outlets, podcasts and named journalists or commentators. Coverage and commentary do not imply endorsement, partnership or agreement.",
+      "color_index": 4,
+      "colour_family": "Information and advisory",
+      "core_group_id": null,
+      "base_class_ids": [
+        "analyst-press",
+        "individual"
+      ],
+      "actor_ids": [
+        "ABA Journal",
+        "Above the Law",
+        "Artificial Lawyer",
+        "Bob Ambrogi",
+        "CNBC",
+        "CNN",
+        "Chad Main",
+        "Financial Times",
+        "Forbes",
+        "Geek in Review",
+        "Greg Lambert",
+        "Harvard Business Review",
+        "Jordan Furlong",
+        "Law.com",
+        "Law360",
+        "LawSites",
+        "Legal IT Insider",
+        "Legally Disrupted",
+        "Legaltech Hub",
+        "Marlene Gebauer",
+        "New York Times",
+        "Nikki Shaver",
+        "Reuters",
+        "Richard Susskind",
+        "Richard Tromans",
+        "Sara Merken",
+        "Stephanie Wilkins",
+        "TechCrunch",
+        "Technically Legal",
+        "The Guardian",
+        "Wall Street Journal",
+        "Zach Abramowitz"
+      ]
+    },
+    "DG-public": {
+      "id": "DG-public",
+      "label": "Public institutions",
+      "name": "Public institutions",
+      "description": "Government bodies, legislatures, general-purpose public regulators, intergovernmental organisations and public funding bodies. Legal-profession regulators and courts are shown separately.",
+      "color_index": 12,
+      "colour_family": "Law and public institutions",
+      "core_group_id": null,
+      "base_class_ids": [
+        "analyst-press",
+        "regulator-court"
+      ],
+      "actor_ids": [
+        "Congress",
+        "Department of Justice",
+        "European Commission",
+        "European Parliament",
+        "European Union",
+        "FDA",
+        "Federal Trade Commission",
+        "Legal Services Corporation",
+        "NIST",
+        "OECD",
+        "Securities and Exchange Commission",
+        "Senate",
+        "United Nations",
+        "White House"
+      ]
+    },
+    "DG-investors": {
+      "id": "DG-investors",
+      "label": "Other investment institutions",
+      "name": "Other investment institutions",
+      "description": "Investment institutions that are not primarily displayed as venture investors or private-equity sponsors. The display role does not assert a particular legal-sector investment.",
+      "color_index": 6,
+      "colour_family": "Capital",
+      "core_group_id": null,
+      "base_class_ids": [
+        "capital"
+      ],
+      "actor_ids": [
+        "Vanguard"
+      ]
+    },
+    "DG-justice": {
+      "id": "DG-justice",
+      "label": "Justice organisations",
+      "name": "Justice organisations",
+      "description": "Private dispute-resolution providers and judicial education or support organisations. They contribute to the justice system without all exercising the adjudicative authority of a public court.",
+      "color_index": 12,
+      "colour_family": "Law and public institutions",
+      "core_group_id": null,
+      "base_class_ids": [
+        "individual",
+        "regulator-court"
+      ],
+      "actor_ids": [
+        "American Arbitration Association",
+        "Bridget McCormack",
+        "Federal Judicial Center",
+        "National Center for State Courts"
+      ]
+    },
+    "DG-legalregulators": {
+      "id": "DG-legalregulators",
+      "label": "Legal regulators",
+      "name": "Legal regulators",
+      "description": "Bodies exercising statutory legal-services oversight or professional regulatory authority. Membership associations are separated where their primary corpus role is representation rather than regulation.",
+      "color_index": 12,
+      "colour_family": "Law and public institutions",
+      "core_group_id": null,
+      "base_class_ids": [
+        "regulator-court"
+      ],
+      "actor_ids": [
+        "Florida Bar",
+        "Legal Services Board",
+        "Solicitors Regulation Authority",
+        "State Bar",
+        "State Bar of California",
+        "Victorian Legal Services Board"
+      ]
+    }
+  },
+  "actor_group_by_id": {
+    "A&O Shearman": "A-10",
+    "ABA Journal": "DG-news",
+    "ACM": "DG-associations",
+    "ALAS": "A-24",
+    "Above the Law": "DG-news",
+    "Accenture": "DG-consulting",
+    "Agiloft": "DG-legaltech",
+    "Amazon": "DG-platforms",
+    "American Arbitration Association": "DG-justice",
+    "American Bar Association": "DG-associations",
+    "American Bar Foundation": "DG-research",
+    "Andreessen Horowitz": "A-08",
+    "Andrew Perlman": "A-17",
+    "Anthea Roberts": "DG-research",
+    "Anthropic": "DG-platforms",
+    "Apple": "DG-platforms",
+    "Arizona Supreme Court": "A-28",
+    "Artificial Lawyer": "DG-news",
+    "Ashurst": "A-10",
+    "Association for Computational Linguistics": "DG-associations",
+    "Association of Corporate Counsel": "A-09",
+    "Atrium": "A-15",
+    "Axiom": "DG-alsp",
+    "Bain Capital": "A-33",
+    "Baker McKenzie": "A-10",
+    "Bar Council": "DG-associations",
+    "Barclays": "A-09",
+    "Benjamin Alarie": "DG-research",
+    "Berkeley Law": "A-17",
+    "Bird & Bird": "A-10",
+    "Blackstone": "A-33",
+    "Bloomberg Law": "DG-publishing",
+    "Bob Ambrogi": "DG-news",
+    "Boston Consulting Group": "DG-consulting",
+    "Bridget McCormack": "DG-justice",
+    "BriefPoint": "DG-legaltech",
+    "CLOC": "A-09",
+    "CNBC": "DG-news",
+    "CNN": "DG-news",
+    "Casetext": "DG-legaltech",
+    "Chad Main": "DG-news",
+    "Cisco": "DG-platforms",
+    "Cleary Gottlieb": "A-10",
+    "Clifford Chance": "A-10",
+    "Clio": "DG-legaltech",
+    "Coatue": "A-08",
+    "Columbia Law School": "A-17",
+    "Congress": "DG-public",
+    "Consilio": "DG-alsp",
+    "Cooley": "A-10",
+    "Covenant": "A-15",
+    "Cravath": "A-10",
+    "Creative Lawyers": "DG-consulting",
+    "Crosby": "A-15",
+    "DLA Piper": "A-10",
+    "Damien Charlotin": "DG-research",
+    "Damien Riehl": "DG-legaltech",
+    "Daniel E. Ho": "DG-research",
+    "Daniel Martin Katz": "DG-research",
+    "Daniel Rock": "DG-research",
+    "Daniel Schwarcz": "DG-research",
+    "Danielle Li": "DG-research",
+    "Dario Amodei": "DG-platforms",
+    "Daron Acemoglu": "DG-research",
+    "David Autor": "DG-research",
+    "David B. Wilkins": "DG-research",
+    "David Wakeling": "A-10",
+    "Davis Polk": "A-10",
+    "Deborah L. Rhode": "DG-research",
+    "DeepSeek": "DG-platforms",
+    "Deloitte": "DG-consulting",
+    "Dentons": "A-10",
+    "Department of Justice": "DG-public",
+    "DoNotPay": "DG-a2j",
+    "DocuSign": "DG-legaltech",
+    "EY": "DG-consulting",
+    "Ed Walters": "DG-publishing",
+    "Elad Gil": "A-08",
+    "Erik Brynjolfsson": "DG-research",
+    "Ethan Mollick": "DG-research",
+    "Eudia": "A-15",
+    "European Commission": "DG-public",
+    "European Parliament": "DG-public",
+    "European Union": "DG-public",
+    "Eve": "DG-legaltech",
+    "EvenUp": "DG-legaltech",
+    "Everlaw": "DG-legaltech",
+    "FDA": "DG-public",
+    "Faiz Surani": "DG-research",
+    "Federal Judicial Center": "DG-justice",
+    "Federal Trade Commission": "DG-public",
+    "Fenwick & West": "A-10",
+    "Financial Times": "DG-news",
+    "Florida Bar": "DG-legalregulators",
+    "Forbes": "DG-news",
+    "Ford Motor Company": "A-09",
+    "Frank Levy": "DG-research",
+    "Frank Pasquale": "DG-research",
+    "Free Law Project": "DG-a2j",
+    "Freshfields": "A-10",
+    "Gabe Pereyra": "DG-legaltech",
+    "Garfield AI": "A-15",
+    "Gartner": "DG-consulting",
+    "Geek in Review": "DG-news",
+    "General Catalyst": "A-08",
+    "General Electric": "A-09",
+    "Georgetown Law": "A-17",
+    "Gillian K. Hadfield": "DG-research",
+    "Goldman Sachs": "A-09",
+    "Google": "DG-platforms",
+    "Greg Lambert": "DG-news",
+    "Gunderson Dettmer": "A-10",
+    "Harry Surden": "DG-research",
+    "Harvard Business Review": "DG-news",
+    "Harvard Business School": "DG-research",
+    "Harvard Law School": "A-17",
+    "Harvey": "DG-legaltech",
+    "Hogan Lovells": "A-10",
+    "IAALS": "DG-research",
+    "IBM": "DG-platforms",
+    "IEEE": "DG-associations",
+    "ILTA": "DG-associations",
+    "International Bar Association": "DG-associations",
+    "Ironclad": "DG-legaltech",
+    "JPMorgan": "A-09",
+    "Jared Kaplan": "DG-platforms",
+    "Jason Boehmig": "DG-platforms",
+    "Jen Leonard": "DG-consulting",
+    "John Roberts": "A-28",
+    "Jonathan H. Choi": "DG-research",
+    "Jordan Furlong": "DG-news",
+    "Josef": "DG-legaltech",
+    "Judicial Office": "A-28",
+    "KPMG": "DG-consulting",
+    "King & Wood Mallesons": "A-10",
+    "Kira Systems": "DG-legaltech",
+    "Kirkland & Ellis": "A-10",
+    "Kleiner Perkins": "A-08",
+    "Latham & Watkins": "A-10",
+    "Law Society of England and Wales": "DG-associations",
+    "Law.com": "DG-news",
+    "Law360": "DG-news",
+    "LawDroid": "DG-legaltech",
+    "LawGeex": "DG-legaltech",
+    "LawSites": "DG-news",
+    "Legal Aid Society": "DG-a2j",
+    "Legal Aid of North Carolina": "DG-a2j",
+    "Legal IT Insider": "DG-news",
+    "Legal Services Board": "DG-legalregulators",
+    "Legal Services Corporation": "DG-public",
+    "LegalTech Fund": "A-08",
+    "LegalZoom": "DG-a2j",
+    "Legally Disrupted": "DG-news",
+    "Legaltech Hub": "DG-news",
+    "Legora": "DG-legaltech",
+    "LexisNexis": "DG-publishing",
+    "Linklaters": "A-10",
+    "Litera": "DG-legaltech",
+    "Luminance": "DG-legaltech",
+    "MIT": "DG-research",
+    "Marc Galanter": "DG-research",
+    "Margaret Hagan": "DG-research",
+    "Marlene Gebauer": "DG-news",
+    "Matthew Dahl": "DG-research",
+    "Maura R. Grossman": "DG-research",
+    "Max Junestrand": "DG-legaltech",
+    "McKinsey": "DG-consulting",
+    "Megan Ma": "A-17",
+    "Meta AI": "DG-platforms",
+    "Michigan Law": "A-17",
+    "Michigan Supreme Court": "A-28",
+    "Microsoft": "DG-platforms",
+    "Midpage": "DG-legaltech",
+    "Milbank": "A-10",
+    "MinterEllison": "A-10",
+    "Mirac Suzgun": "DG-research",
+    "Mistral": "DG-platforms",
+    "NALP": "DG-associations",
+    "NIST": "DG-public",
+    "NYU School of Law": "A-17",
+    "National Bureau of Economic Research": "DG-research",
+    "National Center for State Courts": "DG-justice",
+    "NetDocuments": "DG-legaltech",
+    "New York State Bar Association": "DG-associations",
+    "New York Times": "DG-news",
+    "Nikki Shaver": "DG-news",
+    "Norm Ai": "A-15",
+    "Nvidia": "DG-platforms",
+    "OECD": "DG-public",
+    "OpenAI": "DG-platforms",
+    "OpenAI Startup Fund": "A-08",
+    "Orrick": "A-10",
+    "Pablo Arredondo": "DG-legaltech",
+    "Palantir": "DG-platforms",
+    "Pamela Mishkin": "DG-research",
+    "Pascual Restrepo": "DG-research",
+    "Paul, Weiss": "A-10",
+    "Paxton": "DG-legaltech",
+    "Percy Liang": "DG-research",
+    "Perplexity": "DG-platforms",
+    "PracticePanther": "DG-legaltech",
+    "PwC": "DG-consulting",
+    "RAND": "DG-research",
+    "RELX": "DG-publishing",
+    "ROSS Intelligence": "DG-legaltech",
+    "Rebecca L. Sandefur": "DG-research",
+    "Relativity": "DG-legaltech",
+    "Reuters": "DG-news",
+    "Richard Susskind": "DG-news",
+    "Richard Tromans": "DG-news",
+    "Rishi Bommasani": "DG-research",
+    "Robin AI": "DG-legaltech",
+    "Rocket Lawyer": "DG-a2j",
+    "Ropes & Gray": "A-10",
+    "Salesforce": "DG-platforms",
+    "Sam Altman": "DG-platforms",
+    "Sam Manning": "DG-research",
+    "Sandstone": "DG-legaltech",
+    "Sara Merken": "DG-news",
+    "Second Circuit": "A-28",
+    "Securities and Exchange Commission": "DG-public",
+    "Senate": "DG-public",
+    "Sequoia": "A-08",
+    "Sidley Austin": "A-10",
+    "Skadden": "A-10",
+    "Solicitors Regulation Authority": "DG-legalregulators",
+    "Spellbook": "DG-legaltech",
+    "Stanford CodeX": "DG-research",
+    "Stanford Digital Economy Lab": "DG-research",
+    "Stanford Law School": "A-17",
+    "Stanford Legal Design Lab": "DG-research",
+    "State Bar": "DG-legalregulators",
+    "State Bar of California": "DG-legalregulators",
+    "Stephanie Wilkins": "DG-news",
+    "Suffolk University Law School": "A-17",
+    "Sullivan & Cromwell": "A-10",
+    "Supreme Court of the United States": "A-28",
+    "TechCrunch": "DG-news",
+    "Technically Legal": "DG-news",
+    "The Guardian": "DG-news",
+    "Thomson Reuters": "DG-publishing",
+    "Tom Martin": "DG-legaltech",
+    "United Nations": "DG-public",
+    "UnitedLex": "DG-alsp",
+    "University of Minnesota Law": "A-17",
+    "Upsolve": "DG-a2j",
+    "Utah Supreme Court": "A-28",
+    "Vanderbilt Law School": "A-17",
+    "Vanguard": "DG-investors",
+    "Varun Magesh": "DG-research",
+    "Victorian Legal Services Board": "DG-legalregulators",
+    "Wachtell": "A-10",
+    "Wall Street Journal": "DG-news",
+    "Walmart": "A-09",
+    "Wexler": "DG-legaltech",
+    "White & Case": "A-10",
+    "White House": "DG-public",
+    "Whitney Zhang": "DG-research",
+    "William D. Henderson": "DG-research",
+    "WilmerHale": "A-10",
+    "Wilson Sonsini": "A-10",
+    "Winston Weinberg": "DG-legaltech",
+    "Wolters Kluwer": "DG-publishing",
+    "World Economic Forum": "DG-research",
+    "Y Combinator": "A-08",
+    "Yale Law School": "A-17",
+    "Zach Abramowitz": "DG-news",
+    "iManage": "DG-legaltech",
+    "vLex": "DG-publishing",
+    "xAI": "DG-platforms"
+  },
+  "additional_group_ids_by_actor": {
+    "Amazon": [
+      "A-09"
+    ],
+    "Andrew Perlman": [
+      "DG-research"
+    ],
+    "Apple": [
+      "A-09"
+    ],
+    "Association of Corporate Counsel": [
+      "DG-associations"
+    ],
+    "Benjamin Alarie": [
+      "A-17",
+      "DG-legaltech"
+    ],
+    "Berkeley Law": [
+      "DG-research"
+    ],
+    "CLOC": [
+      "DG-associations"
+    ],
+    "Chad Main": [
+      "DG-alsp"
+    ],
+    "Cisco": [
+      "A-09"
+    ],
+    "Columbia Law School": [
+      "DG-research"
+    ],
+    "Daniel E. Ho": [
+      "A-17"
+    ],
+    "Daniel Martin Katz": [
+      "A-17"
+    ],
+    "Daniel Schwarcz": [
+      "A-17"
+    ],
+    "David B. Wilkins": [
+      "A-17"
+    ],
+    "Deborah L. Rhode": [
+      "A-17"
+    ],
+    "Frank Pasquale": [
+      "A-17"
+    ],
+    "Georgetown Law": [
+      "DG-research"
+    ],
+    "Gillian K. Hadfield": [
+      "A-17"
+    ],
+    "Goldman Sachs": [
+      "A-33"
+    ],
+    "Harry Surden": [
+      "A-17"
+    ],
+    "Harvard Law School": [
+      "DG-research"
+    ],
+    "Jason Boehmig": [
+      "DG-legaltech"
+    ],
+    "Jen Leonard": [
+      "DG-news"
+    ],
+    "Jonathan H. Choi": [
+      "A-17"
+    ],
+    "Marc Galanter": [
+      "A-17"
+    ],
+    "Margaret Hagan": [
+      "DG-a2j"
+    ],
+    "Megan Ma": [
+      "DG-research"
+    ],
+    "Michigan Law": [
+      "DG-research"
+    ],
+    "NYU School of Law": [
+      "DG-research"
+    ],
+    "Nvidia": [
+      "A-09"
+    ],
+    "Pablo Arredondo": [
+      "DG-research"
+    ],
+    "Salesforce": [
+      "A-09"
+    ],
+    "Stanford Law School": [
+      "DG-research"
+    ],
+    "Stanford Legal Design Lab": [
+      "DG-a2j"
+    ],
+    "Suffolk University Law School": [
+      "DG-research"
+    ],
+    "University of Minnesota Law": [
+      "DG-research"
+    ],
+    "Vanderbilt Law School": [
+      "DG-research"
+    ],
+    "William D. Henderson": [
+      "A-17"
+    ],
+    "Yale Law School": [
+      "DG-research"
+    ]
+  }
+}

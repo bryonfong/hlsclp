@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Deck Master — AI &amp; the Legal Profession</title>
+<meta name="description" content="Presentation deck master for the AI &amp; the Legal Profession series.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="Deck Master — AI &amp; the Legal Profession">
+<meta property="og:description" content="Presentation deck master for the AI &amp; the Legal Profession series.">
+<meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/deck/index.html">
+<meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Deck Master — AI &amp; the Legal Profession">
+<meta name="twitter:description" content="Presentation deck master for the AI &amp; the Legal Profession series.">
+<meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<link rel="stylesheet" href="../legal-design-system.css">
+<style>
+  deck-stage:not(:defined) { visibility: hidden; }
+  html, body { margin: 0; background: #0a0e16; }
+
+  deck-stage {
+    /* projection type scale (~2.4× the web guide) */
+    --d-hero: 104px;
+    --d-h1: 78px;
+    --d-h2: 54px;
+    --d-h3: 40px;
+    --d-body: 34px;
+    --d-small: 26px;
+    --d-label: 23px;
+    --pad: 112px;
+  }
+
+  .slide { width: 1920px; height: 1080px; position: relative; background: var(--bg-page); overflow: hidden; }
+  .slide.dark { background: #0c1119; --text-display:#f4f7fb; --text-body:#cdd6e3; --text-muted:#8a99ad; --border:#26303f; }
+  .pad { position: absolute; inset: var(--pad); }
+
+  .d-eyebrow { font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--legal-crimson); }
+  .d-eyebrow.muted { color: var(--text-muted); }
+  h1.d, h2.d, h3.d { font-family: var(--legal-serif); color: var(--text-display); line-height: 1.05; letter-spacing: -0.02em; font-weight: 600; margin: 0; }
+  h1.d { font-size: var(--d-h1); }
+  h2.d { font-size: var(--d-h2); }
+  .d em { font-style: italic; color: var(--legal-crimson); }
+  .d-body { font-family: var(--legal-sans); font-size: var(--d-body); line-height: 1.5; color: var(--text-body); }
+
+  /* footer co-brand */
+  .d-foot { position: absolute; left: var(--pad); right: var(--pad); bottom: 56px; display: flex; align-items: center; justify-content: space-between; }
+  .d-foot .cobrand { display: flex; align-items: center; gap: 16px; font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); }
+  .d-foot .cobrand b { color: var(--text-body); font-weight: 600; }
+  .d-foot .credit { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); }
+  .d-foot .credit b { color: var(--text-body); font-weight: 600; }
+  .d-rule { position: absolute; left: var(--pad); right: var(--pad); bottom: 124px; height: 1px; background: var(--border); }
+
+  /* ── COVER ───────────────────────────────────────────────── */
+  .cover .pad { display: flex; flex-direction: column; justify-content: center; }
+  .cover .markwrap { margin-bottom: 56px; }
+  .cover .crule { width: 96px; height: 4px; background: var(--legal-crimson); margin: 40px 0 44px; }
+  .cover h1 { font-size: var(--d-hero); max-width: 22ch; line-height: 1.0; }
+  .cover .sub { font-family: var(--legal-serif); font-size: 46px; color: var(--text-muted); margin-top: 28px; font-style: italic; font-weight: 400; }
+  .cover .leads { position: absolute; left: var(--pad); right: var(--pad); bottom: 80px; display: flex; gap: 64px; align-items: flex-end; justify-content: space-between; }
+  .cover .leads .role { display: block; font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 20px; }
+  .cover .leads .lead-group { display: flex; gap: 80px; }
+  .cover .leads .who { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); line-height: 1.5; max-width: 26ch; }
+  .cover .leads .who b { color: var(--text-display); font-weight: 600; display: block; font-size: 30px; margin-bottom: 4px; }
+  .cover .leads .org { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); text-align: right; line-height: 1.5; }
+
+  /* ── SECTION DIVIDER ─────────────────────────────────────── */
+  .divider .pad { display: flex; flex-direction: column; justify-content: center; }
+  .divider .num { font-family: var(--legal-serif); font-size: 280px; font-weight: 600; color: var(--legal-crimson); line-height: 0.8; letter-spacing: -0.04em; }
+  .divider h2 { font-size: 92px; margin-top: 24px; max-width: 20ch; }
+  .divider .desc { font-family: var(--legal-sans); font-size: var(--d-body); color: var(--text-muted); margin-top: 36px; max-width: 40ch; line-height: 1.5; }
+
+  /* ── INSIGHT LIST ────────────────────────────────────────── */
+  .insight .head { margin-bottom: 32px; }
+  .insight h2 { font-size: 64px; max-width: 26ch; margin-top: 16px; }
+  .ins-list { display: flex; flex-direction: column; gap: 0; }
+  .ins-item { display: grid; grid-template-columns: 120px 1fr; gap: 40px; padding: 24px 0; border-top: 1px solid var(--border); align-items: baseline; }
+  .ins-item:last-child { border-bottom: 1px solid var(--border); }
+  .ins-item .n { font-family: var(--legal-serif); font-size: 54px; font-weight: 600; color: var(--legal-crimson); line-height: 1; }
+  .ins-item .c h3 { font-family: var(--legal-serif); font-size: var(--d-h3); font-weight: 600; color: var(--text-display); margin: 0 0 8px; }
+  .ins-item .c p { font-family: var(--legal-sans); font-size: 29px; color: var(--text-muted); margin: 0; line-height: 1.38; max-width: 48ch; }
+
+  /* ── COMPARISON ──────────────────────────────────────────── */
+  .compare .head { margin-bottom: 64px; }
+  .compare h2 { font-size: 72px; margin-top: 20px; }
+  .cmp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .cmp-col { border-top: 4px solid var(--legal-crimson); padding-top: 36px; }
+  .cmp-col.alt { border-top-color: var(--df-slate-400); }
+  .cmp-col .lbl { font-family: var(--legal-sans); font-size: var(--d-label); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--legal-crimson); margin-bottom: 22px; }
+  .cmp-col.alt .lbl { color: var(--text-muted); }
+  .cmp-col h3 { font-family: var(--legal-serif); font-size: 50px; font-weight: 600; color: var(--text-display); line-height: 1.1; margin: 0 0 30px; }
+  .cmp-col ul { margin: 0; padding: 0; list-style: none; }
+  .cmp-col li { font-family: var(--legal-sans); font-size: 30px; line-height: 1.45; color: var(--text-body); padding: 18px 0 18px 40px; position: relative; border-top: 1px solid var(--border); }
+  .cmp-col li::before { content: ""; position: absolute; left: 0; top: 30px; width: 14px; height: 14px; border-radius: 50%; background: var(--legal-crimson); }
+  .cmp-col.alt li::before { background: var(--df-slate-300); }
+
+  /* ── DIAMOND-COMPLETE 5-SHAPE GRID ───────────────────────── */
+  .diamond .head { margin-bottom: 20px; }
+  .diamond h2 { font-size: 64px; max-width: 26ch; margin-top: 18px; }
+  .diamond-stage { position: absolute; left: 50%; top: 600px; transform: translate(-50%, -50%); width: 1000px; height: 740px; }
+  .dshape { position: absolute; width: 300px; height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; transform: translate(-50%, -50%); }
+  .dshape .tile { width: 230px; height: 230px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 24px; box-shadow: var(--shadow-card); padding: 24px; }
+  .dshape .tile.center { background: var(--legal-crimson); border-color: var(--legal-crimson); }
+  .dshape .tile.center .dl { color: rgba(255,255,255,0.78); }
+  .dshape .tile.center .dt { color: #fff; }
+  .dshape .dl { font-family: var(--legal-sans); font-size: 19px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--legal-crimson); }
+  .dshape .dt { font-family: var(--legal-serif); font-size: 32px; font-weight: 600; color: var(--text-display); line-height: 1.1; }
+  .diamond svg.links { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+
+  /* ── EMBEDDED VIZ ────────────────────────────────────────── */
+  .vizslide .pad { display: grid; grid-template-columns: 1.15fr 1fr; gap: 80px; align-items: center; }
+  .vizslide .net { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 28px; height: 720px; position: relative; overflow: hidden; }
+  .vizslide .copy h2 { font-size: 64px; margin: 18px 0 30px; max-width: 16ch; }
+  .vizslide .copy p { font-family: var(--legal-sans); font-size: var(--d-body); color: var(--text-muted); line-height: 1.5; max-width: 30ch; }
+  .vizslide .stats { display: flex; gap: 56px; margin-top: 48px; }
+  .vizslide .stats .n { font-family: var(--legal-serif); font-size: 84px; font-weight: 600; color: var(--text-display); line-height: 1; }
+  .vizslide .stats .l { font-family: var(--legal-sans); font-size: 24px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); margin-top: 12px; }
+
+  /* ── CLOSING ─────────────────────────────────────────────── */
+  .closing .pad { display: flex; flex-direction: column; justify-content: center; }
+  .closing .crule { width: 96px; height: 4px; background: var(--legal-crimson); margin: 44px 0; }
+  .closing h2 { font-size: 96px; max-width: 18ch; }
+  .closing .url { font-family: var(--legal-sans); font-size: 30px; color: var(--text-muted); margin-top: 40px; }
+  .closing .leads { position: absolute; left: var(--pad); right: var(--pad); bottom: 96px; display: flex; gap: 80px; }
+  .closing .leads .who { font-family: var(--legal-sans); font-size: var(--d-small); color: var(--text-muted); line-height: 1.5; }
+  .closing .leads .who b { color: var(--text-display); font-weight: 600; display: block; font-size: 30px; }
+</style>
+<link rel="stylesheet" href="../chart-contrast.css">
+</head>
+<body>
+<deck-stage width="1920" height="1080">
+
+  <!-- 1 · COVER (variant A — Anthea Roberts lead) -->
+  <section data-label="Cover · Anthea lead">
+    <div class="slide cover">
+      <div class="pad">
+        <div class="markwrap"><span class="mk" data-mk="cover"></span></div>
+        <div class="d-eyebrow">A research program · Harvard Law School</div>
+        <div class="crule"></div>
+        <h1 class="d">AI &amp; the <em>Legal</em> Profession</h1>
+        <div class="sub">Complex decision-making and the future of the profession</div>
+      </div>
+      <div class="leads">
+        <div class="lead-block">
+          <span class="role">Project leads</span>
+          <div class="lead-group">
+            <div class="who"><b>Anthea Roberts</b>Professor, ANU · Visiting Professor, Harvard Law School</div>
+            <div class="who"><b>David B. Wilkins</b>Faculty Director, Center on the Legal Profession</div>
+          </div>
+        </div>
+        <div class="org">Center on the Legal Profession,<br>Harvard Law School<br>with Dragonfly Thinking</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1b · COVER (variant B — David B. Wilkins lead) -->
+  <section data-label="Cover · David lead">
+    <div class="slide cover">
+      <div class="pad">
+        <div class="markwrap"><span class="mk" data-mk="cover"></span></div>
+        <div class="d-eyebrow">A research program · Harvard Law School</div>
+        <div class="crule"></div>
+        <h1 class="d">AI &amp; the <em>Legal</em> Profession</h1>
+        <div class="sub">Complex decision-making and the future of the profession</div>
+      </div>
+      <div class="leads">
+        <div class="lead-block">
+          <span class="role">Project leads</span>
+          <div class="lead-group">
+            <div class="who"><b>David B. Wilkins</b>Faculty Director, Center on the Legal Profession</div>
+            <div class="who"><b>Anthea Roberts</b>Professor, ANU · Visiting Professor, Harvard Law School</div>
+          </div>
+        </div>
+        <div class="org">Center on the Legal Profession,<br>Harvard Law School<br>with Dragonfly Thinking</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · SECTION DIVIDER -->
+  <section data-label="Section 01">
+    <div class="slide divider dark">
+      <div class="pad">
+        <div class="d-eyebrow">Part one</div>
+        <div class="num">01</div>
+        <h2 class="d">The gateway <em>position</em></h2>
+        <p class="desc">Why the serious money is flowing into law — and what law's century-built structural centrality means for everything that follows.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 · INSIGHT LIST -->
+  <section data-label="Insights">
+    <div class="slide insight">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">The thesis</div>
+          <h2 class="d">A 10:1 valuation gap is a signal, not <em>noise</em>.</h2>
+        </div>
+        <div class="ins-list">
+          <div class="ins-item">
+            <div class="n">01</div>
+            <div class="c"><h3>Not just text-fit</h3><p>Accounting and consulting are knowledge work too — that alone can't explain a tenfold valuation gap.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">02</div>
+            <div class="c"><h3>A century-built position</h3><p>Lawyers have worked for a hundred years to make law a central node in how business and society operate.</p></div>
+          </div>
+          <div class="ins-item">
+            <div class="n">03</div>
+            <div class="c"><h3>The gating input</h3><p>The General Counsel sits at the closing table — the input without which nothing moves forward.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <b>03</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 · TWO-COLUMN COMPARISON -->
+  <section data-label="Comparison">
+    <div class="slide compare">
+      <div class="pad">
+        <div class="head">
+          <div class="d-eyebrow">The open question</div>
+          <h2 class="d">Capture — <em>both ways</em>.</h2>
+        </div>
+        <div class="cmp-grid">
+          <div class="cmp-col">
+            <div class="lbl">Law captures the gateway</div>
+            <h3>The profession absorbs AI</h3>
+            <ul>
+              <li>Incumbent firms adopt AI as the latest in a century of tools.</li>
+              <li>Structural centrality holds — or expands further.</li>
+              <li>Value accrues to those who own the legal node.</li>
+            </ul>
+          </div>
+          <div class="cmp-col alt">
+            <div class="lbl">The gateway captures law</div>
+            <h3>Platforms inherit the position</h3>
+            <ul>
+              <li>AI platforms built on law inherit the gateway vantage.</li>
+              <li>The profession supplies raw material to a layer above it.</li>
+              <li>Control over the central node migrates outward.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="d-rule"></div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <b>04</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 · DIAMOND-COMPLETE 5-SHAPE GRID -->
+  <section data-label="Diamond-complete">
+    <div class="slide diamond">
+      <div class="pad" style="inset: 80px var(--pad);">
+        <div class="head">
+          <div class="d-eyebrow">Dragonfly thinking · the crossover visual</div>
+          <h2 class="d">Five lenses integrate into one <em>compound</em> view.</h2>
+        </div>
+      </div>
+      <div class="diamond-stage" id="diamondStage">
+        <svg class="links" viewBox="0 0 1000 740" id="diamondLinks"></svg>
+        <div class="dshape" style="left:500px; top:140px;"><div class="tile"><span class="dl">Structure</span><span class="dt">Professional system</span></div></div>
+        <div class="dshape" style="left:180px; top:370px;"><div class="tile"><span class="dl">Technology</span><span class="dt">AI strategy</span></div></div>
+        <div class="dshape" style="left:820px; top:370px;"><div class="tile"><span class="dl">Market</span><span class="dt">Capital &amp; firms</span></div></div>
+        <div class="dshape" style="left:500px; top:600px;"><div class="tile"><span class="dl">Disruption</span><span class="dt">Innovation theory</span></div></div>
+        <div class="dshape" style="left:500px; top:370px;"><div class="tile center"><span class="dl">Integration</span><span class="dt">Compound judgment</span></div></div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <b>05</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 · EMBEDDED VIZ -->
+  <section data-label="Topic network">
+    <div class="slide vizslide">
+      <div class="pad">
+        <div class="net" id="deckNet" aria-hidden="true"></div>
+        <div class="copy">
+          <div class="d-eyebrow">Interactive · D3</div>
+          <h2 class="d">A living map of the <em>corpus</em>.</h2>
+          <p>Every source coded across dimensions — surfacing which issues dominate, where tensions live, and which sources bridge domains.</p>
+          <div class="stats">
+            <div class="stat"><div class="n">170</div><div class="l">Sources</div></div>
+            <div class="stat"><div class="n">39</div><div class="l">Topics</div></div>
+            <div class="stat"><div class="n">11</div><div class="l">Dimensions</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="d-foot">
+        <div class="cobrand"><span class="mk" data-mk="foot"></span><span>AI &amp; the Legal Profession</span></div>
+        <div class="credit">Center on the Legal Profession, Harvard Law School · <b>06</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 · CLOSING -->
+  <section data-label="Closing">
+    <div class="slide closing dark">
+      <div class="pad">
+        <span class="mk" data-mk="close"></span>
+        <div class="crule"></div>
+        <h2 class="d">Lenses being tested — not finished <em>pronouncements</em>.</h2>
+        <div class="url">clp.law.harvard.edu · AI &amp; the Legal Profession</div>
+      </div>
+      <div class="leads">
+        <div class="who"><b>Anthea Roberts</b>Professor, ANU · Visiting Professor, Harvard Law School</div>
+        <div class="who"><b>David B. Wilkins</b>Faculty Director, Center on the Legal Profession</div>
+        <div class="who"><b>with Dragonfly Thinking</b>Multi-lens analysis methodology</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script src="../deck-stage.js"></script>
+<script src="../mark-engine.js"></script>
+<script>
+(function () {
+  const D = window.Dragonfly;
+  const set = (k, mode, h) => document.querySelectorAll(`[data-mk="${k}"]`).forEach(e => e.innerHTML = D.svg(mode, { height: h }));
+  set('cover', 'tonal', 132);
+  set('foot', 'tonal', 36);
+  set('close', 'white', 120);
+
+  // Diamond links — connect each lens to the crimson center.
+  const links = document.getElementById('diamondLinks');
+  if (links) {
+    const C = [500, 370];
+    [[500,140],[180,370],[820,370],[500,600]].forEach(p => {
+      const l = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      l.setAttribute('x1', p[0]); l.setAttribute('y1', p[1]); l.setAttribute('x2', C[0]); l.setAttribute('y2', C[1]);
+      l.setAttribute('stroke', 'rgba(165,28,48,0.30)'); l.setAttribute('stroke-width', '2'); l.setAttribute('stroke-dasharray', '3 7'); l.setAttribute('stroke-linecap', 'round');
+      links.appendChild(l);
+    });
+  }
+
+  // Deck network viz (slate field, crimson bridge nodes).
+  const host = document.getElementById('deckNet');
+  if (host) {
+    const NS = 'http://www.w3.org/2000/svg', W = 760, H = 720;
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('viewBox', `0 0 ${W} ${H}`); svg.setAttribute('width', '100%'); svg.setAttribute('height', '100%');
+    let seed = 21; const rnd = () => (seed = (seed * 9301 + 49297) % 233280) / 233280;
+    const N = 80, nodes = [];
+    for (let i = 0; i < N; i++) nodes.push({ x: 70 + rnd() * (W - 140), y: 70 + rnd() * (H - 140), r: 5 + rnd() * 9, bridge: rnd() > 0.84 });
+    nodes.forEach((a, i) => {
+      nodes.map((b, j) => ({ j, d: Math.hypot(a.x - b.x, a.y - b.y) })).filter(o => o.j !== i).sort((p, q) => p.d - q.d).slice(0, 2)
+        .forEach(o => { if (o.j > i) { const l = document.createElementNS(NS, 'line'); l.setAttribute('x1', a.x); l.setAttribute('y1', a.y); l.setAttribute('x2', nodes[o.j].x); l.setAttribute('y2', nodes[o.j].y); l.setAttribute('stroke', (a.bridge || nodes[o.j].bridge) ? 'rgba(165,28,48,0.30)' : 'rgba(100,116,139,0.18)'); l.setAttribute('stroke-width', '1.4'); svg.appendChild(l); } });
+    });
+    nodes.forEach(n => { const c = document.createElementNS(NS, 'circle'); c.setAttribute('cx', n.x); c.setAttribute('cy', n.y); c.setAttribute('r', n.r); c.setAttribute('fill', n.bridge ? '#A51C30' : '#cbd5e1'); if (n.bridge) { c.setAttribute('stroke', 'rgba(165,28,48,0.16)'); c.setAttribute('stroke-width', '9'); } svg.appendChild(c); });
+    host.appendChild(svg);
+  }
+})();
+</script>
+</body>
+</html>

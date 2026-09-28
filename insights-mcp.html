@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
+<title>MCP connector — Dragonfly Insights · AI &amp; the Legal Profession</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI &amp; the Legal Profession">
+<meta property="og:title" content="MCP connector — Dragonfly Insights · AI &amp; the Legal Profession">
+<meta property="og:description" content="Connect an AI agent directly to the Second Chair corpus over the Model Context Protocol — 21 read-only tools.">
+<meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/insights-mcp.html">
+<meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="MCP connector — Dragonfly Insights · AI &amp; the Legal Profession">
+<meta name="twitter:description" content="Connect an AI agent directly to the Second Chair corpus over the Model Context Protocol — 21 read-only tools.">
+<meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
+
+<meta name="description" content="Connect an AI agent directly to the Second Chair corpus over the Model Context Protocol — 21 read-only tools.">
+<link rel="icon" href="assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="assets/reference/apple-touch-icon.png">
+<link rel="stylesheet" href="legal-design-system.css">
+<link rel="stylesheet" href="legal-site.css?v=dragonfly-navigation-20260920">
+<link rel="stylesheet" href="insights.css?v=insights-loading-20260920">
+<script src="site-accessibility.js" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
+<!-- NAV -->
+<header class="site-nav">
+  <a class="brand" href="index.html" aria-label="Home">
+    <img class="hls-shield" src="assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
+  </a>
+  <nav class="links" aria-label="Primary">
+    <a href="index.html#essays">Essays</a>
+    <a href="insights.html" aria-current="true">Dragonfly Insights</a>
+    <a href="course.html">Harvard Course</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="powerpoints.html">PowerPoints</a>
+    <a href="project-leads.html">About</a>
+  </nav>
+  <div class="nav-right">
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.36 6.36-.7-.7M6.34 6.34l-.7-.7m12.72 0-.7.7M6.34 17.66l-.7.7"/><circle cx="12" cy="12" r="4"/></svg></button>
+    <a class="btn btn-primary" href="insights-method.html">How it was produced</a>
+    <button class="icon-btn nav-burger" aria-label="Menu" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
+  </div>
+</header>
+<div class="corpus-sub">
+  <div class="inner">
+    <nav class="items aligned-nav insights-nav" aria-label="Dragonfly Insights"><a href="insights.html" data-insights-view="overview">Overview</a><a href="insights-topics.html" data-insights-view="guide">Topic guide</a><a href="insights-analysis.html#topics" data-insights-view="topics">Topic map</a><a href="insights-analysis.html#actors" data-insights-view="actors">Actors</a><!-- HIDDEN 2026-09-26: Dynamics + Scenarios lenses withheld from view. Pages, panels and data all remain in place. To restore: delete this comment wrapper here AND re-add the two ids in insights-analysis.js. -->
+<!-- <a href="insights-analysis.html#dynamics" data-insights-view="dynamics">Dynamics</a><a href="insights-analysis.html#scenarios" data-insights-view="scenarios">Scenarios</a> --><a href="insights-sources.html" data-insights-view="search">Search</a><a href="insights-method.html" data-insights-view="method">Method</a><a href="insights-mcp.html" data-insights-view="mcp" aria-current="page">MCP</a></nav>
+  </div>
+</div>
+<main id="main-content" tabindex="-1">
+<section class="wrap lede">
+  <div class="eyebrow-row"><span class="eyebrow">MCP &middot; Model Context Protocol</span><span class="label-chip">21 read-only tools</span></div>
+  <h1>Give an agent the whole <em>evidence base</em></h1>
+  <p class="standfirst">The Second Chair corpus is available to AI agents through a live Model Context Protocol server. Add it as a connector and your agent can search 43,432 passages &mdash; every open-distribution source; the 124 restricted works are analyzed but their text is never returned &mdash; walk the topic map, split any cluster by voice or era, find the rare places where voices actually disagree, and audit each claim against the evidence its author offered for it. We are applying analytical lenses to the corpus: topic mapping and actor mapping are published, with driver and dynamics mapping and scenario mapping in progress.</p>
+</section>
+
+<section class="wrap" style="margin-top:56px;">
+  <div style="max-width:76ch;">
+    <div class="urlbar"><span class="lb">Connector URL</span><span class="u" id="mcpurl">https://insightbridge-secondchair.aicolab.org/mcp</span><button class="cp" type="button" id="copyBtn">Copy</button></div>
+    <div class="client">
+      <h4>Claude &mdash; personal accounts (Free, Pro and Max)</h4>
+      <div class="prose"><ol><li>Go to <b>Customize &rarr; Connectors</b> &mdash; or open <a href="https://claude.ai/customize/connectors" rel="noopener">claude.ai/customize/connectors</a> directly.</li><li>Click <b>+</b>, then <b>Add custom connector</b>.</li><li>Paste the URL above and click <b>Add</b>. No authentication is required &mdash; leave <em>Advanced settings</em> empty.</li><li>In a chat, click <b>+</b> (or type <b>/</b>), hover <b>Connectors</b>, and toggle it on for that conversation if it isn&rsquo;t already.</li></ol><p style="font-size:15px;color:var(--text-faint);">Connectors are account-level: added once, available in Claude on the web, desktop and mobile. Free accounts can add one custom connector.</p></div>
+    </div>
+    <div class="client">
+      <h4>Claude &mdash; organisation accounts (Team and Enterprise)</h4>
+      <div class="prose"><p style="font-size:15px;color:var(--text-faint);">On Team and Enterprise plans only an organisation <b>Owner</b> (or Primary Owner) can add a custom connector &mdash; members do not see the option, so the personal steps above will dead-end.</p><ol><li>An Owner opens <b>Organization settings &rarr; Connectors</b> &mdash; or <a href="https://claude.ai/admin-settings/connectors" rel="noopener">claude.ai/admin-settings/connectors</a> directly.</li><li>Click <b>Add</b>, hover <b>Custom</b>, then select <b>Web</b>.</li><li>Paste the URL above and click <b>Add</b>. No authentication is required &mdash; leave <em>Advanced settings</em> empty.</li><li>Each member then opens <b>Customize &rarr; Connectors</b>, finds the connector the Owner added, and clicks <b>Connect</b>; in a chat it is enabled via <b>+</b> &rarr; <b>Connectors</b> like any other tool.</li></ol></div>
+    </div>
+    <div class="client">
+      <h4>ChatGPT &mdash; requires developer mode</h4>
+      <div class="prose"><ol><li>Turn on <b>Developer mode</b>. OpenAI has moved this toggle more than once: look under <b>Settings &rarr; Apps &rarr; Advanced settings</b>, and if it is not there try <b>Settings &rarr; Connectors &rarr; Advanced</b> or <b>Settings &rarr; Security and login</b>. On Business, Enterprise and Edu workspaces an admin has to allow it under <b>Permissions &amp; Roles &rarr; Connected data</b>.</li><li>Go to <b>Settings &rarr; Connectors</b>. The button to create a custom connector only appears once developer mode is on.</li><li>Add the URL above with transport <b>Streamable HTTP</b> and authentication <b>None</b>.</li></ol><p style="font-size:15px;color:var(--text-faint);">Available on Plus and Pro; on workspace plans an administrator can disable developer mode or allowlist specific connectors.</p></div>
+    </div>
+    <div class="client">
+      <h4>Claude Code</h4>
+      <div class="prose"><p>One command &mdash; <code>--transport http</code> is what makes it a remote connector rather than a local process:</p></div>
+      <div class="code">claude mcp add --transport http second-chair https://insightbridge-secondchair.aicolab.org/mcp</div>
+      <div class="prose"><p style="font-size:15px;color:var(--text-faint);">Re-adding after a change needs <code>claude mcp remove second-chair</code> first.</p></div>
+    </div>
+    <div class="client">
+      <h4>VS Code (GitHub Copilot), Cursor and Windsurf</h4>
+      <div class="prose"><p>All three take the same shape of entry. In VS Code run <b>MCP: Open User Configuration</b> from the command palette, or create <code>.vscode/mcp.json</code> in a workspace; in Cursor use <b>Settings &rarr; MCP</b>.</p></div>
+      <div class="code">{<br>&nbsp;&nbsp;"servers": {<br>&nbsp;&nbsp;&nbsp;&nbsp;"second-chair": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "http",<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"url": "https://insightbridge-secondchair.aicolab.org/mcp"<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;}<br>}</div>
+      <div class="prose"><p style="font-size:15px;color:var(--text-faint);">Some clients name the top-level key <code>mcpServers</code> rather than <code>servers</code>; if the server does not appear, try the other spelling.</p></div>
+    </div>
+    <div class="prose"><p>Then ask something like &ldquo;Using the legal-AI corpus, which claims about AI replacing lawyers are made by vendors, and what evidence do they actually offer for them?&rdquo;</p></div>
+    <div class="prose"><p>Works with any MCP client. The endpoint speaks JSON-RPC over a stateless one-POST Streamable-HTTP adapter at <code>POST /mcp</code>; there is no SSE stream and no authentication, so a client that insists on OAuth should be set to &ldquo;no auth&rdquo;.</p></div>
+  </div>
+</section>
+
+<section class="wrap" style="margin-top:64px;">
+  <div class="sec-head"><div><span class="eyebrow">Reading rules</span><h2>How to read what comes back</h2></div></div>
+  <div class="prose"><ul><li><strong>Source counts are not prevalence.</strong> This is a curated evidence base of 1,501 published works, not a survey of the profession. "N sources say X" measures the corpus, never the field.</li><li><strong>Positions are relative to each cluster's own proposition</strong> — Supports, Builds on, Unclear, Mixed, Redirects, Opposes measure stance-toward-a-framing. Most read supportive, so agreement is the default and only <code>contested_topics</code> finds real divergence.</li><li><strong>Era is ordinal</strong>, not a category: Foundations (pre-2015) → Automation debate (2015-2022) → Generative shock (2023-2024) → Adoption at scale (2025) → Current wave (2026). The tools always return era rows in that order.</li><li><strong>The tree has generations.</strong> <code>list_families</code> is the root generation, <code>list_superclusters</code> the one below; any node's id works with <code>topics_in_supercluster</code>. Every topic carries its lineage.</li><li><strong>Restricted sources are analysed, not reproduced.</strong> Their stances, key points and short verified quotes are returned; <code>search_passages</code> never returns their text.</li><li><strong>topic_id is the topicClusterId</strong>, not the display <code>cluster_id</code>; both look plausible, so the wrong one quietly returns a different topic.</li></ul></div>
+</section>
+
+<section class="wrap" style="margin-top:64px;">
+  <div class="sec-head"><div><span class="eyebrow">Live tool tester</span><h2>Try the tools on Second Chair</h2></div></div>
+  <div class="prose"><p>Choose a tool, adjust its example inputs, and run it against the live server on Second Chair.</p><p><a class="legal-link" href="https://insightbridge-secondchair.aicolab.org/connect" target="_blank" rel="noopener">Open Second Chair’s live tool tester (external site) &nearr;</a></p></div>
+</section>
+
+<section class="wrap" style="margin-top:88px;">
+  <div class="sec-head"><div><span class="eyebrow">The tools</span><h2>What an agent can ask for</h2></div><p>Twenty-one read-only tools. Each carries the corpus&rsquo;s reading rules in its own description.</p></div>
+  <div class="tool-group"><div class="gl">Orientation &amp; search</div><div class="tool-rows"><div class="tool-row"><div class="tn">corpus_overview</div><div class="td">Scale and shape of the corpus: 1,501 sources, the topic tree, the two lenses, the position mix. Read first.</div></div><div class="tool-row"><div class="tn">search_passages</div><div class="td">Semantic search over the verbatim passages of open-distribution sources; restricted works are never returned.</div></div><div class="tool-row"><div class="tn">find_topics</div><div class="td">Semantic search over the 369 topic clusters; returns the ids the tools below need, with their lineage.</div></div></div></div><div class="tool-group"><div class="gl">The grouping tree</div><div class="tool-rows"><div class="tool-row"><div class="tn">list_families</div><div class="td">The 5 top-level families &mdash; the coarsest map of the corpus &mdash; with child, topic and source counts.</div></div><div class="tool-row"><div class="tn">list_superclusters</div><div class="td">The 46 named themes one generation below the families, each with its parent family and reach.</div></div><div class="tool-row"><div class="tn">topics_in_supercluster</div><div class="td">Every topic beneath a family or theme id, each with its source reach, position mix and lineage.</div></div><div class="tool-row"><div class="tn">related_topics</div><div class="td">Topics sharing a nearest-generation group with the given topic, ranked by how many groups they share.</div></div></div></div><div class="tool-group"><div class="gl">Anatomy of a topic</div><div class="tool-rows"><div class="tool-row"><div class="tn">get_topic</div><div class="td">One cluster in full: proposition, findings, lineage, reach by tier, position mix by voice and era, stances.</div></div><div class="tool-row"><div class="tn">topic_quotes</div><div class="td">Verbatim cross-cutting quotes for a topic, each attributed to its source, voice, era and publication.</div></div><div class="tool-row"><div class="tn">topic_perspectives</div><div class="td">The parameterized lens: each voice&rsquo;s synthesized stance, or each era&rsquo;s &mdash; era rows in ordinal order.</div></div></div></div><div class="tool-group"><div class="gl">Divergence &amp; drift</div><div class="tool-rows"><div class="tool-row"><div class="tn">contested_topics</div><div class="td">The corpus&rsquo;s disagreements: clusters ranked by how many stances push back, each naming its dissenters.</div></div><div class="tool-row"><div class="tn">era_drift</div><div class="td">How positions move across the five eras &mdash; for one topic, one voice, both, or the whole corpus.</div></div></div></div><div class="tool-group"><div class="gl">Voices &amp; sources</div><div class="tool-rows"><div class="tool-row"><div class="tn">source_perspectives</div><div class="td">Every source holding a stance on a topic, with its framing and own points &mdash; slice by voice, era, position.</div></div><div class="tool-row"><div class="tn">voice_profile</div><div class="td">One voice across the corpus: eras, evidence types, position mix, and the clusters it dominates.</div></div><div class="tool-row"><div class="tn">list_sources</div><div class="td">The 1,501 published works &mdash; filter by voice, era, class, type, year or a substring of title or slug.</div></div><div class="tool-row"><div class="tn">get_source</div><div class="td">One work by slug or fuzzy title: metadata, every position it holds, its facets, its version siblings.</div></div></div></div><div class="tool-group"><div class="gl">Documents</div><div class="tool-rows"><div class="tool-row"><div class="tn">find_documents</div><div class="td">Search the 1,501 documents by title, source slug, publication or author. Documents are 1:1 with sources.</div></div><div class="tool-row"><div class="tn">get_document</div><div class="td">Key points with verified quotes, the full claim spine, the three curator facets, dominant topic.</div></div></div></div><div class="tool-group"><div class="gl">Tags &amp; the claim audit</div><div class="tool-rows"><div class="tool-row"><div class="tn">list_tags</div><div class="td">One curator vocabulary &mdash; evidence type, topic dimension, jurisdiction &mdash; with source counts per value.</div></div><div class="tool-row"><div class="tn">tag_pivot</div><div class="td">Source counts per tag value, cross-tabbed by voice, era, type or class; evidence type &times; voice is sharpest.</div></div><div class="tool-row"><div class="tn">claim_audit</div><div class="td">Each concrete claim paired with the evidence offered, its timeframe and who it affects; filter to unevidenced.</div></div></div></div>
+
+  <div class="credit">
+    <div class="k">How this was made</div>
+    <p>Second Chair is a jointly developed corpus. The corpus underlying this project was created by
+       Anthea Roberts and David B. Wilkins. It was structured and analyzed using
+       <b style="color:var(--text-heading);font-weight:600;">Insight Bridge</b>, the corpus-reading pipeline
+       built by Sam Bide at AI CoLab, which reads each source end-to-end, embeds its passages and clusters
+       them into topics, themes and families. It was then analyzed through
+       <b style="color:var(--text-heading);font-weight:600;">Dragonfly Thinking</b>&rsquo;s multi-perspective
+       agentic method. <a class="legal-link" href="insights-method.html">How the reading was produced &rarr;</a></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+</main>
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="brand-block">
+        <span class="mk" data-mk="foot"></span>
+        <div class="bt">
+          <b>AI &amp; the Legal Profession</b>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School.
+             Project leads David B. Wilkins &amp; Anthea Roberts. Powered by
+             <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and
+             <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Series</h4>
+        <a href="index.html#essays">Essays</a>
+        <a href="insights.html">Insights</a>
+        <a href="visualisations/index.html">Visuals</a>
+        <a href="course.html">Harvard course</a>
+        <a href="workshops.html">Workshops</a>
+      </div>
+      <div class="foot-col">
+        <h4>About</h4>
+        <a href="essays/series-introduction.html">The project</a>
+        <a href="project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
+        <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
+      </div>
+    </div>
+    <div class="foot-base">
+      <span>&copy; 2026 President &amp; Fellows of Harvard College</span>
+      <span>Corpus figures from Insight Bridge, harvested 2026-09-11. Analyses being tested and refined &mdash; not finished pronouncements.</span>
+    </div>
+  </div>
+</footer>
+<script src="mark-engine.js"></script>
+<script>
+(function(){
+  const D = window.Dragonfly;
+  document.querySelectorAll('[data-mk="brand"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 30 }));
+  document.querySelectorAll('[data-mk="foot"]').forEach(e => e.innerHTML = D.svg('tonal', { height: 40 }));
+
+  // Theme
+  const btn = document.getElementById('themeBtn'), root = document.documentElement;
+  let stored = null; try { stored = localStorage.getItem('legal-theme'); } catch (e) {}
+  const _mq = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)');
+  root.setAttribute('data-theme', stored || (_mq && _mq.matches ? 'dark' : 'light'));
+  if (_mq) _mq.addEventListener('change', e => {
+    let s = null; try { s = localStorage.getItem('legal-theme'); } catch (_) {}
+    if (!s) root.setAttribute('data-theme', e.matches ? 'dark' : 'light');
+  });
+  btn.addEventListener('click', () => {
+    const n = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', n); try { localStorage.setItem('legal-theme', n); } catch (e) {}
+  });
+
+  // Mobile menu
+  const burger = document.querySelector('.nav-burger'), links = document.querySelector('.site-nav .links');
+  if (burger && links) burger.addEventListener('click', () => {
+    const open = links.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+<script>
+(function () {
+  const btn = document.getElementById('copyBtn'), url = document.getElementById('mcpurl');
+  if (!btn || !url || !navigator.clipboard) return;
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText(url.textContent.trim()).then(() => {
+      const was = btn.textContent;
+      btn.textContent = 'Copied';
+      setTimeout(() => { btn.textContent = was; }, 1600);
+    }).catch(() => {});
+  });
+})();
+</script>
+</body>
+</html>

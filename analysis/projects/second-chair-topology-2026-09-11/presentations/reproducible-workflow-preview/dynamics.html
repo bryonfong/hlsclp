@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dynamics — AI and the legal profession</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="../../../../visual-library/foundations/tokens.css">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;background:var(--df-surface);color:var(--df-ink)}
+body{display:flex;flex-direction:column;font-family:var(--df-font,"IBM Plex Sans",system-ui,sans-serif)}
+.dynamics-stage{order:0;flex:1 1 auto;min-height:0;background:var(--df-surface)}
+#dynamics-frame{display:block;width:100%;height:100%;border:0;background:var(--df-surface)}
+.df-support-strip{flex:none;background:var(--df-surface);border-top:1px solid var(--df-border);border-bottom:0}
+.dynamics-guide{order:2;min-height:38px;padding:8px 18px 10px;color:var(--df-ink-muted);font-size:12px;line-height:1.45}
+@media(max-width:920px){
+  .dynamics-guide{padding:7px 10px 9px}
+}
+</style>
+</head>
+<body>
+<main class="dynamics-stage viz-workspace">
+  <iframe id="dynamics-frame" title="Drivers and feedback dynamics" src="../../../second-chair-expanded-2026-09-13/delivery/drivers-shared.html?embed=1&amp;theme=light&amp;showUnsigned=1&amp;v=shared-map-navigation-20260914"></iframe>
+</main>
+<div hidden aria-hidden="true">
+    <select id="dynamics-view" tabindex="-1">
+      <option value="drivers-shared.html">Driver network · 30 drivers + 43 loop variables / 118 connections</option>
+      <option value="drivers-shared.html|R1">R-01 · Pricing pressure returning through formation and risk costs</option>
+      <option value="drivers-shared.html|R2">R-02 · Checkable work attracts its own learning</option>
+      <option value="drivers-shared.html|R3">R-03 · Who owns reusable expertise wins the next round of work</option>
+      <option value="drivers-shared.html|R4">R-04 · Assurance earns room to operate · designed</option>
+      <option value="drivers-shared.html|R5">R-05 · The scoreboard selects its own winners</option>
+      <option value="drivers-shared.html|R6">R-06 · Unseen errors manufacture confidence</option>
+      <option value="drivers-shared.html|R7">R-07 · The more expertise a platform holds, the harder it is to leave</option>
+      <option value="drivers-shared.html|R8">R-08 · Cheap submissions invite more submissions</option>
+      <option value="drivers-shared.html|R9">R-09 · Expert evaluation can become a formation engine · designed</option>
+      <option value="drivers-shared.html|B1">B-01 · The delayed formation and verification brake</option>
+      <option value="drivers-shared.html|B2">B-02 · The review queue limits expansion</option>
+      <option value="drivers-shared.html|B3">B-03 · Handoff failures can trigger workflow repair · designed</option>
+      <option value="drivers-shared.html|B4">B-04 · Growth-financing discipline limits AI-native expansion</option>
+      <option value="drivers-shared.html|B5">B-05 · User outcomes correct what the system optimises · designed</option>
+    </select>
+  <a id="dynamics-direct" href="../../../second-chair-expanded-2026-09-13/delivery/drivers-shared.html?embed=1&amp;theme=light&amp;showUnsigned=1&amp;v=shared-map-navigation-20260914" target="_blank" rel="noopener">Open full view</a>
+</div>
+<div class="df-support-strip dynamics-guide" id="dynamics-note">Select a driver for its direct connections, or a loop for its exact circuit. Full map clears the selection and filters. Dashed-outline nodes are unmeasured variables; dotted loop guides show related drivers, not causation.</div>
+<script>
+(function(){
+  'use strict';
+  const base='../../../second-chair-expanded-2026-09-13/delivery/';
+  const view=document.getElementById('dynamics-view'),frame=document.getElementById('dynamics-frame');
+  const direct=document.getElementById('dynamics-direct'),note=document.getElementById('dynamics-note');
+  const routeOptions=[...view.options].map(option=>({value:option.value,label:option.textContent.trim()}));
+  let theme=document.documentElement.dataset.theme||'light',activeSelection=null;
+  function route(){const parts=view.value.split('|');return{file:parts[0],loop:parts[1]||''}}
+  function url(){const current=route();return base+current.file+'?embed=1&theme='+theme+'&showUnsigned=1&v=shared-map-navigation-20260914'+(current.loop?'&loop='+current.loop:'')+(activeSelection&&['node','edge','cascades','thresholds'].includes(activeSelection.kind)?'&selection='+activeSelection.kind+'&selectionId='+encodeURIComponent(activeSelection.id):'')}
+  function applyTheme(value){
+    theme=value==='dark'?'dark':'light';document.documentElement.dataset.theme=theme;
+    try{frame.contentDocument.documentElement.dataset.theme=theme}catch(e){}
+    try{frame.contentWindow.postMessage({kind:'df-theme',theme},location.origin)}catch(e){}
+    direct.href=url();
+  }
+  function installLoopMenu(d,loopSection){
+    const trigger=loopSection.querySelector('.cmd-trigger span');if(trigger)trigger.textContent='Loops';
+    const desc=loopSection.querySelector('.cmd-filter-desc');if(desc)desc.textContent='All 14 circuits use the same map. Selection traces the exact directed arrows, with related drivers shown by dotted context guides.';
+    const openLink=d.createElement('a');openLink.className='chip dynamics-loop-link';openLink.target='_blank';openLink.rel='noopener';openLink.textContent='Open selected view ↗';openLink.href=direct.href;loopSection.querySelector('.cmd-popover').appendChild(openLink);
+    d.addEventListener('shared:selection',event=>{activeSelection=event.detail;view.value=activeSelection.kind==='loops'?'drivers-shared.html|'+activeSelection.id:'drivers-shared.html';direct.href=url();openLink.href=direct.href});
+    d.addEventListener('shared:loop',event=>{view.value='drivers-shared.html|'+event.detail.id;direct.href=url();openLink.href=direct.href});
+    d.addEventListener('shared:clear',()=>{activeSelection=null;view.value='drivers-shared.html';direct.href=url();openLink.href=direct.href});
+  }
+  function arrangeChild(){
+    const d=frame.contentDocument;if(!d)return;
+    const app=d.querySelector('.viz-app'),workspace=app&&app.querySelector('.viz-workspace'),palette=app&&app.querySelector('#palette');
+    if(app&&workspace&&palette){
+      const supportRows=[palette,note].filter(Boolean);
+      workspace.classList.add('df-reading-layout');
+      workspace.style.setProperty('--df-support-row-count',supportRows.length);
+      supportRows.forEach(row=>{row.classList.add('df-support-row');workspace.appendChild(row)});
+      let style=d.getElementById('df-dynamics-presentation');
+      if(!style){style=d.createElement('style');style.id='df-dynamics-presentation';style.textContent=`
+      .viz-app{height:100%!important}.viz-workspace.df-reading-layout{height:100%;min-height:0;grid-template-rows:minmax(0,1fr) repeat(var(--df-support-row-count),auto)!important}
+      .viz-workspace.df-reading-layout>.viz-canvas{grid-column:1;grid-row:1;min-height:0}
+      .viz-workspace.df-reading-layout>.viz-panel{grid-column:2;grid-row:1/-1;height:auto;max-height:none;min-height:0}
+      .viz-workspace.df-reading-layout>.df-support-row{grid-column:1;min-width:0;width:auto!important}
+      .viz-workspace.df-reading-layout>.panel-resize{grid-row:1/-1}
+      .df-support-row{flex:none;background:var(--df-surface);border-top:1px solid var(--df-border);border-bottom:0}
+      .dynamics-guide{min-height:38px;padding:8px 18px 10px;color:var(--df-ink-muted);font-size:12px;line-height:1.45}
+      .cmd-palette{border-top:1px solid var(--df-border)!important;border-bottom:0!important;background:var(--df-surface)!important}.cmd-section{position:relative}.cmd-popover{top:auto!important;bottom:calc(100% + 6px)!important;max-height:min(360px,calc(100vh - 170px));overflow:auto}
+      .dynamics-loop-choice{width:100%;justify-content:flex-start;text-align:left}.dynamics-loop-choice .chip-label{flex:1}.dynamics-loop-link{display:flex!important;margin-top:8px;text-decoration:none!important;justify-content:center}
+      @media(max-width:920px){
+       html,body{height:auto!important;min-height:100%;overflow:auto!important}.viz-app{height:auto!important;min-height:100vh}.viz-workspace.df-reading-layout{display:flex!important;flex-direction:column;height:auto!important}.viz-workspace.df-reading-layout>.viz-canvas{order:0;flex:none;height:520px;min-height:520px;width:100%}.viz-workspace.df-reading-layout>.df-support-row{order:1;width:100%!important}.viz-workspace.df-reading-layout>.viz-panel{order:2;width:100%!important;min-height:520px}
+       .dynamics-guide{padding:7px 10px 9px}
+       .cmd-palette{position:relative}.cmd-section{position:static}.cmd-popover{left:8px!important;right:8px!important;width:auto!important;max-width:none!important}
+      }`;d.head.appendChild(style)}
+    }
+    const loopSection=d.querySelector('.cmd-section[data-layer="loops"]');
+    if(loopSection){
+      installLoopMenu(d,loopSection);
+    }
+    const unsigned=d.querySelector('#cmd-unsigned');
+    if(unsigned){const label=unsigned.querySelector('.chip-label');if(label)label.textContent='Polarity not fixed';if(unsigned.getAttribute('aria-pressed')==='false')unsigned.click()}
+    const loopToggle=d.querySelector('[data-toggle="loops"]');if(loopToggle&&loopToggle.getAttribute('aria-pressed')==='false')loopToggle.click();
+    if(route().loop){const pick=d.querySelector('[data-pick="loops"][data-id="'+route().loop+'"]');if(pick&&!pick.classList.contains('active'))pick.click()}
+    applyTheme(theme);
+  }
+  function select(){
+    direct.href=url();
+    const currentLoop=route().loop,d=frame.contentDocument,pick=d&&d.querySelector('[data-pick="loops"][data-id="'+currentLoop+'"]');
+    if(pick)pick.click();else if(d&&d.getElementById('cmd-clear'))d.getElementById('cmd-clear').click();else frame.src=url();
+    const current=route();
+    note.textContent=current.file==='drivers-shared.html'&&!current.loop
+      ?'Select a driver for its direct connections, or a loop for its exact circuit. Full map clears the selection and filters. Dashed-outline nodes are unmeasured variables; dotted loop guides show related drivers, not causation.'
+      :current.loop
+        ?'This circuit follows the highlighted arrows on the shared map. Select a node or connection for its evidence and test. Dotted guides identify driver context only.'
+        :'All circuits share this map. Select a loop, driver, variable or connection to inspect its evidence and test.';
+  }
+  frame.addEventListener('load',arrangeChild);view.addEventListener('change',select);
+  window.addEventListener('message',event=>{const data=event.data||{};if(data.kind==='df-theme')applyTheme(data.theme)});
+  if(frame.contentDocument&&frame.contentDocument.readyState==='complete')arrangeChild();
+})();
+</script>
+</body>
+</html>

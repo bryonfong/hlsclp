@@ -1,0 +1,517 @@
+/* SYNCED COPY — DO NOT EDIT. Source: dragonfly-design canonical/foundations/tokens.css · v5.13.0 · 2026-09-09
+Improve upstream, never here — the next sync overwrites this file. */
+/*
+ * Dragonfly Design System — Canonical Tokens
+ *
+ * Single source of truth for all --df-* tokens. Both reference sites
+ * and downstream consumer agents @import this file.
+ *
+ * Narrative authority: ../rules/Dragonfly-Design-System.md
+ * Stability contract: ../STABILITY.md
+ *
+ * Change rules: any value change here requires a VERSION bump.
+ * See canonical/DISCIPLE_INTEGRATION_CONTRACT.md for semver semantics.
+ */
+
+:root {
+	/* ─── Neutrals (Tailwind Slate — 90% of all colour on any page) ─── */
+	--df-slate-950: #0f172a; /* Headings, primary text */
+	--df-slate-800: #1e293b; /* Body text, card text — DEFAULT readable text */
+	--df-slate-700: #334155; /* Labels, tertiary text */
+	--df-slate-600: #475569; /* Links, sidebar descriptions, legend text */
+	--df-slate-500: #64748b; /* Metadata, muted text */
+	--df-slate-400: #94a3b8; /* Placeholder, divider text */
+	--df-slate-300: #cbd5e1; /* Subtle borders */
+	--df-slate-200: #e2e8f0; /* Primary borders, dividers */
+	--df-slate-100: #f1f5f9; /* Hover states, panel fills */
+	--df-slate-50:  #f8f9fb; /* Sidebar bg, subtle panels */
+	--df-white:     #fff;    /* Page background */
+
+	/* ─── Text ink (job-named text colour — reach for these, not a raw slate rung) ───
+	 * Alias onto the slate ramp so the text-colour rule lives in the NAME, not in
+	 * something you have to remember. Body is the default; lighter inks are
+	 * caption/metadata only. They inherit the dark zinc reassignment for free via
+	 * var(). Rule: foundations/colour.md + typography.md. */
+	--df-ink:        var(--df-slate-800); /* DEFAULT readable text — body, labels, descriptions */
+	--df-ink-strong: var(--df-slate-950); /* headings, primary emphasis */
+	--df-ink-muted:  var(--df-slate-600); /* links, sidebar descriptions, legend */
+	--df-ink-faint:  var(--df-slate-500); /* captions, footers, metadata — never body */
+
+	/* ─── Surfaces & Borders (theme-aware semantic chrome) ─── */
+	/* Light values mirror today's canon so light mode renders pixel-identical.
+	   Dark values live in the [data-theme="dark"] block at the foot of this file. */
+	--df-surface:        #fff;     /* Page background */
+	--df-surface-soft:   #f8f9fb;  /* Sidebar / subtle panel */
+	--df-surface-raised: #f1f5f9;  /* Hover / raised card */
+	--df-surface-sunk:   #f8f9fb;  /* Recessed / soft card */
+	--df-surface-rail:   #f8f9fb;  /* Rail / deepest chrome */
+	--df-border:         #e2e8f0;  /* Primary border (= slate-200) */
+	--df-border-soft:    #f1f5f9;  /* Subtle border (= slate-100) */
+
+	/* ─── Brand ─── */
+	--df-primary:       #0563FA; /* Dragonfly blue — sole primary; sparing use only */
+	--df-primary-hover: #0449c4;
+	--df-mint:          #0E9E6E; /* Mint accent (hovers, links, gradient tail); the dark layer reassigns to #34D399 AND promotes it to the dark primary (dark leads mint). */
+	--df-mint-hover:    #0B845C;
+	--df-callout:       #002D9C;
+	--df-mark-red:      #BA1B23; /* Dragonfly logo mark red — fixed brand colour, NOT a risk signal */
+	--df-mark-red-dark: #8b1a14; /* darker mark-red — for mark-red TEXT on a light surface (the gradient's deep-red end); dark theme lifts it for legibility */
+	--df-accent-report: var(--df-callout); /* reading-column accent — reuses the navy callout in LIGHT; the dark theme brightens it to a vivid azure that pairs with the mint primary (opt-in via report.css) */
+	--df-brand-blue:    #0563FA; /* The blue that STAYS blue — brand-gradient start. Independent of --df-primary (which leads mint in dark). */
+	/* ─── Midnight — a blue-tinted dark substrate + its elevation family ───
+	   A bluer, deeper alternative to the #121212 neutral substrate, with two
+	   lifted panel steps and a matching border so cards/panels sit ON midnight
+	   without going muddy-grey. FIXED dark colours (same value in both themes);
+	   they do NOT replace the global --df-surface — opt in per-surface (e.g. the
+	   presentation deck's dark ground in deck.css). */
+	--df-midnight:        #0B1120; /* ground — deepest midnight navy */
+	--df-midnight-soft:   #141D33; /* subtle panel / soft card (+1 step, blue-tinted) */
+	--df-midnight-raised: #1E2A47; /* raised / hover card (+2 steps — reads as elevated) */
+	--df-midnight-border: #283759; /* border / divider on midnight — navy, not neutral grey */
+
+	/* ─── Brand gradient — theme-aware ───
+	   Light: the full 6-stop Dragonfly brand gradient (navy → royal → brand-blue →
+	   plum → orange-red → dark-red), matching the briefing reference. The dark layer
+	   (below) reassigns this to blue → mint. Consumed by the nav/module underlines and
+	   the viz-card accent via var(--df-gradient-brand[-vertical]); never hardcode in
+	   consumers — only here. */
+	--df-gradient-brand:          linear-gradient(90deg,  #002d9c 0%, #1d4ed8 22%, var(--df-brand-blue) 42%, #92448a 62%, #da342a 82%, #8b1a14 100%);
+	--df-gradient-brand-vertical: linear-gradient(180deg, #002d9c 0%, #1d4ed8 22%, var(--df-brand-blue) 42%, #92448a 62%, #da342a 82%, #8b1a14 100%);
+
+	/* Brand accent extensions — secondary accent + brand-blue tint fills */
+	--df-accent-secondary: #3b82f6;             /* Tailwind blue-500 — supporting accent for charts, secondary emphasis */
+	--df-accent-05:        rgba(5,99,250,0.05); /* Brand blue at 5% — subtle hover/wash fills */
+	--df-accent-10:        rgba(5,99,250,0.10); /* Brand blue at 10% — soft surface tint, callout backgrounds */
+
+	/* ─── Dragonfly Signature Palette ───
+	   A 10-stop tint→shade ramp generated from the signature blue (#0563FA). Reach for
+	   it when a single blue accent isn't enough — sequential data, layered blue-on-blue
+	   fills, hover/active steps, charted series. The mid stop (500) IS the signature
+	   (= --df-primary / --df-brand-blue in light); lower stops are pale grounds, higher
+	   stops deep inks. The dark layer re-points every stop so each KEEPS ITS JOB across
+	   the theme (50 = subtle blue ground · 900 = strongest blue ink). See colour.md. */
+	--df-blue-50:  #e6f4ff; /* lightest wash — subtle blue ground */
+	--df-blue-100: #a8d5ff;
+	--df-blue-200: #80bdff;
+	--df-blue-300: #57a2ff;
+	--df-blue-400: #2e85ff;
+	--df-blue-500: #0563fa; /* SIGNATURE — Dragonfly blue (= --df-primary / --df-brand-blue) */
+	--df-blue-600: #004ad4;
+	--df-blue-700: #0037ad;
+	--df-blue-800: #002687;
+	--df-blue-900: #001861; /* deepest shade — strongest blue ink */
+
+	/* ─── Risk Severity (badges, viz nodes, status indicators) ─── */
+	--df-risk-catastrophic: #991b1b; /* maroon — deepest tail, one rung below extreme (red-800) */
+	--df-risk-extreme:  #dc2626;
+	--df-risk-high:     #ea580c;
+	--df-risk-moderate: #d97706;
+	--df-risk-low:      #059669;
+
+	/* ─── Semantic palette (the role quartet) ───────────────────────────────
+	 * Valence/status by JOB, not by hue — bind meaning to these roles, never to
+	 * ad-hoc colours. Aliases of the ramp + slate, so they re-resolve in dark
+	 * mode untouched. Contract: ../contracts/viz-acceptance.md (ENC·4, THM·1).
+	 * Promoted from the visual-library token contract — the packer no longer
+	 * appends them at sync. */
+	--df-pos:      var(--df-risk-low);
+	--df-neutral:  var(--df-slate-500);
+	--df-caution:  var(--df-risk-moderate);
+	--df-critical: var(--df-risk-extreme);
+
+	/* ─── Confidence (data source signalling) ─── */
+	--df-conf-public: #059669;
+	--df-conf-gov:    #0563FA;
+	--df-conf-est:    #d97706;
+
+	/* ─── Categories (domain colour coding) ─── */
+	--df-cat-economic:       #0563FA;
+	--df-cat-security:       #dc2626;
+	--df-cat-social:         #7c3aed;
+	--df-cat-infrastructure: #059669;
+	--df-cat-political:      #d97706;
+
+	/* ─── PESTLE (driver / system-dynamics domains) ─── */
+	/* Reference existing tokens via var() so the whole family auto-themes — */
+	/* no separate dark reassignment needed. Used by the Driver / System-Dynamics viz. */
+	--df-pestle-political:     var(--df-risk-moderate);
+	--df-pestle-economic:      var(--df-primary);
+	--df-pestle-social:        var(--df-cat-social);
+	--df-pestle-technological: var(--df-lens-teal);
+	--df-pestle-legal:         var(--df-lens-plum);
+	--df-pestle-environmental: var(--df-lens-green);
+
+	/* ─── Sequential ramp (ordered emphasis — navy → blue → slate) ─── */
+	/* One ordered, monotonic scale for SEQUENTIAL emphasis — executive-briefing
+	   blocks, ranked rows, depth. Read 1 → 5 (deep → pale). Job-named aliases onto
+	   existing tokens so the whole ramp auto-themes; the two blue stops (1 navy, 2
+	   blue) get a dark repoint in the [data-theme="dark"] block onto the signature
+	   blue scale. Origin: the Dubai briefing watchlist rail (navy #002D9C → blue → slate). */
+	--df-seq-1: var(--df-callout);       /* deepest — navy  #002D9C */
+	--df-seq-2: var(--df-brand-blue);    /* bright blue     #0563FA (stays blue in dark) */
+	--df-seq-3: var(--df-slate-400);     /* mid slate       #94a3b8 */
+	--df-seq-4: var(--df-slate-300);     /* light slate     #cbd5e1 */
+	--df-seq-5: var(--df-slate-200);     /* palest          #e2e8f0 */
+
+	/* ─── Risk / Reward / Resilience ─── */
+	--df-rrr-risk:       #8f2d2d;
+	--df-rrr-reward:     #0a6b42;
+	--df-rrr-resilience: #145f86;
+
+	/* RRR brand swatch palette */
+	--df-rrr-red:    #FF0103;
+	--df-rrr-green:  #00CA00;
+	--df-rrr-navy:   #1C48C5;
+
+	/* ─── Dragonfly Lenses palette (unified --df-lens-*) ─── */
+	--df-lens-primary:  #0563FA;
+	--df-lens-plum:     #92448A;
+	--df-lens-magenta:  #E1208D;
+	--df-lens-rose:     #F81369;
+	--df-lens-red:      #DA342A;
+	--df-lens-red-dm:   #FF252F;
+	--df-lens-orange:   #FF9413;
+	--df-lens-yellow:   #EFE338;
+	--df-lens-gold:     #FFDB58; /* mustard gold. Dark theme keeps its own gold below. */
+	--df-lens-green:    #0ABF67;
+	--df-lens-teal:     #0BAEA3;
+	--df-lens-sky:      #1B99D6;
+	--df-lens-cobalt:   #1575BF;
+	--df-lens-indigo:   #446BB7;
+
+	/* ─── Lens → Agent identity ───────────────────────────────────────────
+	 * The twelve analyst agents ARE the twelve lenses: each agent renders in
+	 * its lens hue. These are var() aliases, not new colours — so they inherit
+	 * the dark-theme lens reassignment automatically (declared once, here).
+	 * Order follows the methodology wheel: blue → purple → pink → red →
+	 * orange → yellow → green → teal → blue.
+	 */
+	--df-agent-research:      var(--df-lens-indigo);   /* research-analyst */
+	--df-agent-actors:        var(--df-lens-plum);     /* actors-analyst */
+	--df-agent-drivers:       var(--df-lens-magenta);  /* drivers-analyst */
+	--df-agent-scale:         var(--df-lens-rose);     /* scale-analyst */
+	--df-agent-systems:       var(--df-lens-red);      /* systems-analyst */
+	--df-agent-scenarios:     var(--df-lens-orange);   /* scenarios-analyst */
+	--df-agent-strategy:      var(--df-lens-gold);     /* strategic-analyst */
+	--df-agent-interventions: var(--df-lens-green);    /* interventions-analyst */
+	--df-agent-challenge:     var(--df-lens-teal);     /* challenge-analyst */
+	--df-agent-data:          var(--df-lens-sky);      /* data-analyst */
+	--df-agent-writer:        var(--df-lens-cobalt);   /* strategic-writer */
+	--df-agent-visualizer:    var(--df-lens-primary);  /* strategic-visualizer */
+
+	/* Ink companion — when an agent accent has to carry TEXT on a light
+	   surface, consumers read --df-agent-<x>-ink and fall back to the accent
+	   itself: var(--df-agent-<x>-ink, var(--df-agent-<x>)). Gold is the one
+	   lens that fails on white, so it is the one that carries an ink.
+	   (Dark mode reassigns it back to the accent at the foot of this file.) */
+	--df-agent-strategy-ink:  var(--df-slate-800);     /* gold text is unreadable on white */
+
+	/* ─── Skills ──────────────────────────────────────────────────────────
+	 * A skill takes the hue of the agent that loads it (--df-skill-tint, set
+	 * per-instance at render to the owner's --df-agent-* value). On a hex node:
+	 *   fill   = owner hue at --df-skill-fill-alpha over the surface
+	 *   stroke = owner hue at full strength
+	 * A skill loaded by 2+ agents is "shared": neutral slate, dashed stroke.
+	 */
+	--df-skill-tint:       var(--df-slate-400); /* fallback when no owner is set */
+	--df-skill-shared:     var(--df-slate-500); /* shared skill (2+ agents) — neutral */
+	--df-skill-fill-alpha: 8%;                  /* tint strength of the hex fill */
+
+	/* ─── Typography ─── */
+	--df-font:      'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+	--df-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace; /* mono meta, code, tabular labels */
+	--df-font-serif:'IBM Plex Serif', Georgia, 'Times New Roman', serif; /* RESTRICTED display face — headers ONLY, and only on
+	                   Proposals, Presentations, and Official Dragonfly Websites. Never body prose, never labels.
+	                   The system still runs on two faces (sans + mono); serif is a sanctioned headline exception,
+	                   not a third everyday typeface. Narrative: typography.md → The display serif (restricted). */
+	/* The minimum-size law (5.0.0): any text the reader actually reads is ≥ 14px
+	   on screen; mono uppercase tracked labels are ≥ 11.5px; NOTHING sits below
+	   11.5px anywhere. The floor lives in these values — reach for a token and you
+	   cannot go under it. Narrative: typography.md → Minimum sizes. */
+	--df-text-h1:    32px;
+	--df-text-h2:    22px;
+	--df-text-h3:    17px;
+	--df-text-h4:    15px;
+	--df-text-base:  15px;
+	--df-text-sm:    14px;   /* smallest READING size — the readable-text floor */
+	--df-text-xs:    13px;   /* dense scanned metadata — never running prose */
+	--df-text-label: 11.5px; /* mono uppercase tracked labels — the absolute floor */
+	--df-text-micro: 11.5px; /* mono-only. Deliberately value-CONVERGED with
+	                            --df-text-label (5.0.0): the floor leaves no rung
+	                            below label size, but the name is kept so micro
+	                            consumers keep their intent and the two jobs can
+	                            diverge again if the scale ever grows downward. */
+
+	/* ─── Editorial / report type scale (long-form reading column) ──────────
+	 * The reading scale for the single-visual-report family — larger than the
+	 * compact UI scale above so a 760px prose column reads as an article, not a
+	 * dashboard. Documented in typography.md (the "report scale"); shipped here
+	 * as job-named tokens so the divergence is RESOLVED, not just noted. Opt in
+	 * by consuming --df-text-article-* in a reading column (templates/
+	 * single-visual-report/report.css); the UI scale (32/22/17/15) is untouched. */
+	--df-text-article-h1:        44px; /* cover title + bare section numeral */
+	--df-text-article-h2:        28px; /* section heading */
+	--df-text-article-h3:        22px; /* sub-heading inside a section */
+	--df-text-article-h4:        20px; /* sub-sub-heading — a titled block inside a sub-section */
+	--df-text-article-standfirst:19px; /* deck / standfirst under the title */
+	--df-text-article-body:      18px; /* reading body copy */
+	--df-text-article-table:     16px; /* prose-table cell text — table cells are
+	                                      reading surfaces, never below 16px in an
+	                                      article/report context */
+
+	/* ─── Viz-panel type (job-named — alias onto the UI scale above) ─────────
+	 * The _viz-shell context panel is read at arm's length beside a canvas; these
+	 * name what the text is FOR so the panel can't drift under the floor again.
+	 * var() aliases, not new sizes — they track the UI scale automatically.
+	 * Consumed by visualisations/_viz-shell/viz-shell.css. */
+	--df-text-panel-body:     var(--df-text-base);  /* 15px — panel prose: .p-lead, .detail-line, ties, tooltip names */
+	--df-text-panel-takeaway: var(--df-text-base);  /* 15px — takeaway lines (.p-takeaway) */
+	--df-text-panel-label:    var(--df-text-label); /* 11.5px — mono uppercase tracked: .p-block-label, .cmd-inline-label, .tie-type, .src-tag, .tag */
+	--df-text-panel-badge:    var(--df-text-label); /* 11.5px — pills + counters: .p-badge, .chip-count, .reset-btn */
+
+	/* ─── Projection type scale (1920×1080 decks) ───────────────────────────
+	 * Anchored to PowerPoint point sizes, not an arbitrary screen multiplier. A
+	 * 16:9 slide authored on a 1920×1080 canvas is 13.333in wide, so 1920/13.333
+	 * = 144px/in and 1pt = 2px EXACTLY (px = 2 × point-size). TWO floors, mirroring
+	 * the screen scale's readable/label split: 24pt = 48px for anything read as a
+	 * sentence, 16pt = 32px for captions. Revised 5.6.0 off a single 30pt/60px
+	 * Kawasaki floor, which is a sparse-keynote standard and left briefing slides
+	 * holding ~40 words. The 2.4×-from-screen scale stays rejected: it put the
+	 * floor at 29px and read too small at conference-room distance — anchor to the
+	 * point size, never a screen multiplier. Toggle in with data-display="projection" on the
+	 * slide root; the screen preview keeps the compact UI sizes. Light-only
+	 * (decks don't project in dark). Narrative: typography.md -> Projection scale. */
+	--df-proj-display: 120px; /* cover hero / single big number — 60pt */
+	--df-proj-h1:       88px; /* slide title — 44pt */
+	--df-proj-h2:       68px; /* slide heading — 34pt */
+	--df-proj-h3:       60px; /* sub-heading — 30pt */
+	--df-proj-body:     56px; /* body / bullets — 28pt */
+	--df-proj-label:    40px; /* caption / footnote — 20pt */
+	/* TWO floors, mirroring the screen scale's readable/label split. Revised
+	   5.6.0 from a single 30pt/60px Kawasaki floor — see typography.md
+	   § Projection & presentation scale for the change and its reasoning. */
+	--df-proj-floor-body:  48px; /* 24pt — readable deck text never goes below this */
+	--df-proj-floor-label: 32px; /* 16pt — supplementary captions only */
+
+	/* ─── Spacing ladder ───────────────────────────────────────────────────
+	 * The named step scale on a 4px grid. Reach for a rung for any gap
+	 * *between* blocks; see foundations/spacing.md for role-by-rung.
+	 * Type-derived rhythm (paragraph 24, heading 44/11) stays in typography.
+	 */
+	--df-space-3xs:  4px;   /* hairline — chip inset, icon↔label */
+	--df-space-2xs:  8px;   /* tight stack — dense list, tag row */
+	--df-space-xs:  12px;   /* default small gap — label↔value, grid gap */
+	--df-space-sm:  16px;   /* standard block gap; card-grid gutter */
+	--df-space-md:  24px;   /* generous block gap; paragraph rhythm */
+	--df-space-lg:  32px;   /* figure / callout separation from prose */
+	--df-space-xl:  48px;   /* sub-section break; page padding */
+	--df-space-2xl: 56px;   /* major section break (.section top) */
+	--df-space-3xl: 80px;   /* rail gutter; page-foot breathing */
+	--df-space-4xl: 96px;   /* cover bottom — the longest exhale */
+
+	/* ─── Spacing roles (job-named gaps — alias onto the ladder above) ───────
+	 * The ladder is value-named (which rung?); these say what the gap is FOR, so
+	 * you don't have to recall the role-by-rung map. See spacing.md. */
+	--df-space-tight:     var(--df-space-2xs); /* 8px  — dense stack: list items, tag row */
+	--df-space-block:     var(--df-space-sm);  /* 16px — block gap, card-grid gutter */
+	--df-space-paragraph: var(--df-space-md);  /* 24px — paragraph rhythm */
+	--df-space-section:   var(--df-space-2xl); /* 56px — major section break */
+
+	/* ─── Layout & legacy spacing ───────────────────────────────────────────
+	 * Page frame + the older UI-scale gaps. NOTE: --df-section-gap (52) is the
+	 * compact-UI value; the report scale uses --df-space-2xl (56). The two
+	 * resolve when the UI-vs-report scale call lands (see typography.md note).
+	 */
+	--df-section-gap:         52px;
+	--df-page-padding:        48px;
+	--df-page-padding-x:      56px;
+	--df-card-padding:        20px;
+	--df-sidebar-width:       280px;
+	--df-sidebar-right-width: 230px;
+	--df-content-max-width:   760px;  /* canonical reading frame — matches typography.md / spacing.md */
+
+	/* ─── Border Radius ─── */
+	--df-radius-card:  10px;
+	--df-radius-md:    8px;
+	--df-radius-sm:    6px;
+	--df-radius-badge: 4px;
+	--df-radius-xs:    3px;
+	--df-radius-pill:  999px;  /* fully-rounded — pills, chips, toggles, status dots */
+
+	/* ─── Shadows ─── */
+	--df-shadow-light:   0 1px 3px rgba(0,0,0,0.08);
+	--df-shadow-card:    0 2px 8px rgba(0,0,0,0.04);
+	--df-shadow-tooltip: 0 4px 12px rgba(0,0,0,0.08);
+	--df-shadow-panel:   0 4px 16px rgba(0,0,0,0.08);
+
+	/* ─── Motion (theme-invariant — no dark reassignment needed) ───────────
+	 * Durations + easings for hovers, popovers, panel slides and surface
+	 * fades. Two speeds, two curves: fast/soft for micro-interactions,
+	 * base/out for entering panels. Reach for a named rung, never a literal.
+	 */
+	--df-dur-fast: 150ms;  /* hovers, chip toggles, icon nudges */
+	--df-dur-base: 220ms;  /* popovers, panel slides, surface fades */
+	--df-ease-out:  cubic-bezier(0.16, 1, 0.3, 1);  /* decisive enter — overshoot-free */
+	--df-ease-soft: cubic-bezier(0.4, 0, 0.2, 1);   /* standard ease-in-out — hovers, fades */
+	/* These two ARE the complete set — there is no --df-ease-standard, -in, -in-out
+	 * or -linear, and none will be added. The curve most systems call "standard" is
+	 * --df-ease-soft; it is named for its job, not its shape, like every token here.
+	 * Stated because a consumer guessed the other name, and an unresolved var()
+	 * invalidates its whole declaration in silence — the actors map in
+	 * dragonfly-claude-config lost every citation hover to it and nothing reported
+	 * a fault. (Recorded 2026-08-12, sprint corpus-lens-review, DD-002.) */
+}
+
+/*
+ * ─── Dark theme ──────────────────────────────────────────────────────
+ *
+ * One token vocabulary, two themes. Activate by setting data-theme="dark"
+ * on <html>. Every value below REASSIGNS an existing --df-* name to a
+ * dark-legible value (the 7 surface/border tokens are declared in :root
+ * above and re-pointed here). No new token names; no --dk-* prefix.
+ *
+ * Text rule (dark-mode equivalent of the light slate-800 rule):
+ *   headings = lightest legible ink (NOT pure #fff — pure white glows on
+ *   black); default readable body text = #d4d4d8. Measured contrast on
+ *   the #000 substrate is recorded in ../rules/Dragonfly-Design-System.md
+ *   and references/dark-theme/dark-theme.md.
+ *
+ * Seeded from the UAE "Neon" palette. Light :root above is byte-identical
+ * to pre-dark canon — light mode is unchanged.
+ */
+[data-theme="dark"] {
+	/* ─── Zinc text ramp (dark reassignment of the slate scale) ─── */
+	/* Substrate is NOT pure black — the page is #121212 (Material baseline) to
+	   stop the glare/halo of light text on absolute black. Inks 950–500 stay
+	   off-white (never pure #fff); the low end 400–50 are lifted off black so
+	   panels/borders read as ELEVATION (lighter grey = higher), not shadow.
+	   Ratios below are on the #121212 page (WCAG AA+; small text ≥7:1). */
+	--df-slate-950: #e4e4e7; /* Headings — soft off-white, not pure white (≈14.0:1) */
+	--df-slate-800: #d4d4d8; /* Body text — DEFAULT readable text (≈12.0:1) */
+	--df-slate-700: #a1a1aa; /* Labels, tertiary text (≈6.9:1) */
+	--df-slate-600: #9b9ba5; /* Links, sidebar descriptions (≈6.4:1) */
+	--df-slate-500: #82828d; /* Metadata, muted text (≈4.6:1) */
+	--df-slate-400: #52525b; /* Placeholder / strong divider — borders only, never body */
+	--df-slate-300: #3f3f46; /* Subtle borders (sits just below --df-border) */
+	--df-slate-200: #2e2e35; /* Primary borders, dividers (= --df-border) */
+	--df-slate-100: #26262b; /* Hover states, raised panel fills (= --df-surface-raised) */
+	--df-slate-50:  #1c1c20; /* Subtle panels (= --df-surface-soft) */
+	--df-white:     #121212; /* Page background — off-black, not pure black */
+
+	/* ─── Surfaces & Borders — dark elevation ramp ───
+	   Higher elevation = lighter grey (Material dark guidance), since shadows
+	   read poorly on a dark page. base #121212 → soft → raised, each a clear step. */
+	--df-surface:        #121212; /* Page background (off-black base) */
+	--df-surface-soft:   #1c1c20; /* Sidebar / subtle panel (+1 step) */
+	--df-surface-raised: #26262b; /* Hover / raised card (+2 steps — reads as elevated) */
+	--df-surface-sunk:   #18181b; /* Recessed / soft card (just above base) */
+	--df-surface-rail:   #0e0e10; /* Rail / deepest chrome (just below base) */
+	--df-border:         #2e2e35; /* Primary border — visible but soft on #121212 */
+	--df-border-soft:    #242429; /* Subtle border */
+
+	/* ─── Brand ─── */
+	/* DARK LEADS THE SIGNATURE BLUE. In dark mode --df-primary resolves to the
+	   Signature Palette mid (--df-blue-500 = #0757d8), so links, active nav, buttons
+	   and hovers lead the dragonfly blue. --df-mint is kept as a named accent (it still
+	   tracks --df-lens-green and tails the brand gradient), but no longer drives the
+	   primary. (Earlier direction had dark leading mint — reversed at the request of the
+	   palette work; the brand gradient stays blue → mint.) */
+	--df-mint:          #34D399; /* Dark-mode mint accent (≈10.3:1 on #121212) — = --df-lens-green; gradient tail + named accent */
+	--df-mint-hover:    #6EE7B7; /* lighter mint — hover / active */
+	--df-brand-blue:    #4d8bff; /* The blue that stays blue — gradient start only (6.45:1) */
+	--df-primary:       var(--df-blue-600);   /* dark accent leads the SIGNATURE BLUE (#2b7ae8; was --df-mint) */
+	--df-primary-hover: var(--df-blue-700);   /* lighter blue hover step — dark blue siblings run lighter as the number rises */
+	/* Brand gradient (dark) — blue → mint. */
+	--df-gradient-brand:          linear-gradient(90deg,  var(--df-brand-blue) 0%, var(--df-mint) 100%);
+	--df-gradient-brand-vertical: linear-gradient(180deg, var(--df-brand-blue) 0%, var(--df-mint) 100%);
+	--df-callout:       #6fa3ff;
+	/* --df-mark-red intentionally NOT reassigned — the logo mark keeps its #BA1B23 in both themes */
+	--df-mark-red-dark: #f87171; /* mark-red TEXT lifted for legibility on the #121212 substrate (≈7.6:1) */
+	--df-accent-report: #10B981; /* emerald reading-column accent — a deeper green that complements the mint primary in dark (≈7.6:1 on #121212), vs the muted periwinkle callout */
+	--df-accent-secondary: #60a5fa;
+	--df-accent-05:        rgba(77,139,255,0.06); /* primary at ~6% on the dark base */
+	--df-accent-10:        rgba(77,139,255,0.12); /* primary at ~12% on the dark base */
+
+	/* ─── Dragonfly Signature Palette (dark) ───
+	   Role-preserving inversion of the light ramp: each stop keeps its job (50 = subtle
+	   blue ground · 900 = strongest blue ink) but re-points for the #121212 substrate.
+	   The signature (500) is lifted to #0757d8 for legibility on dark. */
+	--df-blue-50:  #11192b; /* subtle blue-navy ground */
+	--df-blue-100: #0f2244;
+	--df-blue-200: #102c59;
+	--df-blue-300: #0d387c;
+	--df-blue-400: #0a47aa;
+	--df-blue-500: #0757d8; /* SIGNATURE — lifted for dark */
+	--df-blue-600: #2b7ae8;
+	--df-blue-700: #549bf3;
+	--df-blue-800: #7db8f8;
+	--df-blue-900: #a5d1fa; /* strongest blue ink on dark */
+
+	/* ─── Risk Severity ─── */
+	--df-risk-catastrophic: #f43f5e; /* maroon tail, lifted for legibility on #000 (5.30:1) */
+	--df-risk-extreme:  #f87171; /* (7.59:1) */
+	--df-risk-high:     #FBA94B; /* (10.88:1) */
+	--df-risk-moderate: #fbbf24; /* (12.58:1) */
+	--df-risk-low:      #34D399; /* (10.92:1) */
+
+	/* ─── Confidence ─── */
+	--df-conf-public: #34D399;
+	--df-conf-gov:    #4d8bff;
+	--df-conf-est:    #fbbf24;
+
+	/* ─── Categories ─── */
+	--df-cat-economic:       #4d8bff;
+	--df-cat-security:       #f87171;
+	--df-cat-social:         #a78bfa; /* (7.72:1) */
+	--df-cat-infrastructure: #34D399;
+	--df-cat-political:      #fbbf24;
+
+	/* ─── PESTLE (dark repoint) ─── */
+	/* In light, economic = --df-primary (#0563FA blue). In dark, --df-primary leads
+	   MINT — which collides with technological (teal) and environmental (emerald).
+	   Repoint economic to cobalt so the six PESTLE domains stay distinct in dark. */
+	--df-pestle-economic:    var(--df-lens-cobalt); /* blue, not mint (8.21:1) */
+
+	/* ─── Sequential ramp (dark repoint) ─── */
+	/* In light, seq-1/seq-2 alias the navy callout + brand blue. On the dark
+	   substrate those lift too bright for a deep→pale ramp, so repoint the two
+	   blue stops onto the signature dark blue scale: a low navy ground (200) and
+	   a vivid mid blue (600). Stops 3–5 stay on the slate aliases. */
+	--df-seq-1: var(--df-blue-300);   /* deepest — navy  #0d387c */
+	--df-seq-2: var(--df-blue-600);   /* mid blue        #2b7ae8 */
+
+	/* ─── Risk / Reward / Resilience ─── */
+	--df-rrr-risk:       #f87171;
+	--df-rrr-reward:     #34D399;
+	--df-rrr-resilience: #60a5fa;
+	--df-rrr-red:        #FF6B6B;
+	--df-rrr-green:      #34D399;
+	--df-rrr-navy:       #6fa3ff;
+
+	/* ─── Dragonfly Lenses ─── */
+	/* Dark hues match the v2.1 methodology-eye reference exactly; every rung
+	   clears WCAG AA (≥4.5:1) on the #000 substrate. Ratios in parentheses. */
+	--df-lens-primary:  #4d8bff; /* (6.45:1) */
+	--df-lens-plum:     #C084CC; /* (7.41:1) */
+	--df-lens-magenta:  #F472B6; /* (7.93:1) */
+	--df-lens-rose:     #F81369; /* (5.29:1) */
+	--df-lens-red:      #FF252F; /* (5.56:1) */
+	/* --df-lens-red-dm intentionally NOT reassigned (legacy one-off; stays light) */
+	--df-lens-orange:   #FBA94B; /* (10.88:1) */
+	--df-lens-yellow:   #EFE338; /* (15.71:1) */
+	--df-lens-gold:     #EFD038; /* (13.75:1) */
+	--df-lens-green:    #34D399; /* emerald verdict-mint lands here (10.92:1) */
+	--df-lens-teal:     #2DD4BF; /* (11.28:1) */
+	--df-lens-sky:      #60B8E8; /* (9.52:1) */
+	--df-lens-cobalt:   #5BA8E8; /* (8.21:1) */
+	--df-lens-indigo:   #7C9BE0; /* (7.62:1) */
+	/* Agent + skill tokens are var() aliases of the lenses and --df-slate-*,
+	   so they re-resolve to these dark values automatically — none reassigned. */
+	--df-agent-strategy-ink: var(--df-agent-strategy); /* dark gold clears 13.75:1 — text may take the accent again */
+
+	/* ─── Shadows (deeper on the dark substrate) ─── */
+	--df-shadow-light:   0 1px 3px rgba(0,0,0,0.5);
+	--df-shadow-card:    0 2px 8px rgba(0,0,0,0.4);
+	--df-shadow-tooltip: 0 4px 12px rgba(0,0,0,0.6);
+	--df-shadow-panel:   0 4px 16px rgba(0,0,0,0.6);
+}

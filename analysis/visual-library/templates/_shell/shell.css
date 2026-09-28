@@ -1,0 +1,469 @@
+/* ════════════════════════════════════════════════════════════════════════
+   DRAGONFLY · CHROME SHELL  (canonical)
+   ────────────────────────────────────────────────────────────────────────
+   The shared page furniture for app-style deliverables: top bar, global nav,
+   identity meta, tools (provenance + modules), theme toggle, the tab railway,
+   and the command-palette band — plus the right-rail base + resize handle and
+   the visual-stage frame.
+
+   Pairs with chrome.js (injects the markup from a DF_CHROME config) and
+   foundations/tokens.css (every value resolves from a --df-* token). Curated
+   from the UAE Trade-Routes briefing chrome, decoupled from that deliverable.
+
+   TOKEN DISCIPLINE: no raw hex. Colours/radii/motion = --df-*; only the shell
+   LAYOUT constants (max width, bar heights) live in the :root below — they are
+   chrome geometry, not design tokens.
+   ════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  --shell-max:    1440px;  /* inner content cap; bars go full-bleed, content centres */
+  --shell-pad-x:  32px;    /* horizontal page padding */
+  --top-bar-h:    51px;    /* logo 22 + 14×2 padding + 1px border */
+  --rail-right-w: 380px;   /* rail width — min/default; the resize handle writes this up to 620 */
+}
+
+/* ─── Content links — canonical default for any page that loads the shell.
+   Tokenised for both themes (Dragonfly blue in light, mint in dark) and, being
+   author-origin, this overrides the browser's default link colours in EVERY
+   state — including :visited, which otherwise falls to UA dark purple,
+   unreadable on the dark substrate. Deliberately element-level (lowest
+   specificity): the header chrome (.global-nav-item, .family-nav-item, …) and
+   component links (.viz-open, .card-link, …) set their own colour on a more
+   specific selector, so this default never touches them. */
+a { color: var(--df-primary); }
+
+/* ─── Top bar ───────────────────────────────────────────────────────────── */
+/* Glassmorphism: a translucent, blurred substrate so page content shows
+   through the sticky header. The fill is derived from --df-surface, so it
+   tracks the theme (frosted white in light, frosted black in dark). Browsers
+   without backdrop-filter fall back to the solid surface (see @supports). */
+.top-bar-wrap {
+  position: sticky; top: 0; z-index: 50; width: 100%;
+  background: color-mix(in srgb, var(--df-surface) 72%, transparent);
+  border-bottom: 1px solid var(--df-border);
+  -webkit-backdrop-filter: blur(14px) saturate(1.4);
+  backdrop-filter: blur(14px) saturate(1.4);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .top-bar-wrap { background: var(--df-surface); }
+}
+.top-bar {
+  max-width: var(--shell-max); margin: 0 auto; padding: 0 var(--shell-pad-x);
+  min-height: calc(var(--top-bar-h) - 1px);
+  display: flex; align-items: stretch; justify-content: space-between;
+}
+.top-bar-lead  { display: inline-flex; align-items: stretch; gap: 30px; min-width: 0; }
+.top-bar-right { display: inline-flex; align-items: center; gap: 24px; }
+/* Chrome links never show the browser's default text underline — only the
+   intentional brand-gradient underline (nav ::after, module .mod-underline). */
+.top-bar-wrap a, .tab-bar a { text-decoration: none; }
+
+/* Brand — theme-swapped logo (black in light, white in dark) */
+.top-bar-brand { display: inline-flex; align-items: center; }
+.top-bar-brand img { height: 22px; width: auto; display: block; opacity: 0.92; }
+.top-bar-brand .brand-logo { display: none; }
+:root:not([data-theme="dark"]) .top-bar-brand .brand-logo--black { display: block; }
+:root[data-theme="dark"]        .top-bar-brand .brand-logo--white { display: block; }
+
+/* Active Visual Family breadcrumb — sits just right of the logo */
+.top-bar-breadcrumb { display: inline-flex; align-items: center; gap: 8px; }
+.top-bar-breadcrumb .bc-sep { width: 1px; height: 18px; background: var(--df-border); margin: 0 6px 0 2px; }
+.top-bar-breadcrumb .bc-num { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600; letter-spacing: 0.06em; color: var(--df-slate-500); }
+.top-bar-breadcrumb .bc-name { font-family: var(--df-font); font-size: var(--df-text-sm); font-weight: 600; letter-spacing: -0.005em; color: var(--df-slate-900); }
+
+/* Classification pill — first item in the right cluster */
+.top-bar-classification { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; padding: 3px 10px; border-radius: var(--df-radius-pill); color: var(--df-slate-700); border: 1px solid var(--df-border); background: var(--df-surface-raised); white-space: nowrap; }
+/* Status variants for the pill, opted into via DF_CHROME.classification:
+   { label, cls } — the `cls` hook chrome.js already supports. Additive: the
+   default neutral pill is unchanged, so no existing page moves.
+   .is-working — red. The artefact is IN PROGRESS and must not be treated as
+   settled. Loud on purpose: a quiet "working" badge gets read as "reference". */
+.top-bar-classification.is-working {
+  color: var(--df-risk-extreme);
+  border-color: color-mix(in srgb, var(--df-risk-extreme) 42%, transparent);
+  background: color-mix(in srgb, var(--df-risk-extreme) 12%, transparent);
+  font-weight: 700;
+}
+
+/* Global section nav — gradient underline grows 0→full on hover/active */
+.global-nav { display: inline-flex; align-items: stretch; gap: 26px; }
+.global-nav-item {
+  position: relative; display: inline-flex; align-items: center;
+  font-family: var(--df-font); font-size: var(--df-text-base); font-weight: 500; letter-spacing: -0.005em;
+  color: var(--df-slate-700); white-space: nowrap; transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.global-nav-item::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0;
+  background-image: var(--df-gradient-brand);
+  transition: width 500ms var(--df-ease-out); pointer-events: none;
+}
+.global-nav-item:hover, .global-nav-item.active { color: var(--df-primary); }
+.global-nav-item:hover::after, .global-nav-item.active::after { width: 100%; }
+.global-nav-item.active { font-weight: 600; }
+
+/* ─── Section drop-down (.nav-mega) ─────────────────────────────────────────
+   A nav item that owns a group of pages drops a two-column panel: the pages
+   down the left (title · what it is), the hovered one shown on the right (motif ·
+   title · what you get). The motif is the SAME symbol the page's card uses on
+   index.html, out of canonical/assets/motifs.js — the menu carries no artwork of
+   its own, and it draws that artwork ONCE, at the size it can be read. The list
+   rows carry no picture: a 64px motif was a mark rather than a drawing, and a row
+   does not need two things pointing at the same page.
+
+   --nm-accent is the section's colour, set per menu by chrome.js from
+   DF_CHROME.nav[].accent (red · blue · plum, matching index.html's three filter
+   cards). It also lands as --mv-accent, which is the property the motifs
+   themselves read — so one declaration colours the chrome AND the drawings. */
+.nav-mega { position: relative; display: inline-flex; align-items: stretch; }
+.nav-mega .global-nav-item { gap: 5px; }
+.nav-mega-chev { flex: none; opacity: 0.6; transition: transform var(--df-dur-base) var(--df-ease-soft), opacity var(--df-dur-base) var(--df-ease-soft); }
+.nav-mega.is-open .nav-mega-chev { transform: rotate(180deg); opacity: 1; }
+.nav-mega.is-open > .global-nav-item { color: var(--df-primary); }
+.nav-mega.is-open > .global-nav-item::after { width: 100%; }
+
+/* The panel. Frosted like the bar it hangs from, so the two read as one piece of
+   chrome rather than a card dropped on the page. It sizes to its content
+   (max-content) — one column of rows for a short section, two for Templates —
+   and chrome.js nudges it left if that would overrun the window. */
+.nav-mega-panel {
+  position: absolute; top: calc(100% + 9px); left: 0; z-index: 60;
+  display: none; grid-template-columns: max-content 300px; gap: 0;
+  max-width: calc(100vw - 32px);
+  background: color-mix(in srgb, var(--df-surface) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft);
+  overflow: hidden;
+}
+.nav-mega.is-open .nav-mega-panel { display: grid; }
+
+/* ── Left column — the pages ──────────────────────────────────────────────── */
+.nav-mega-list { display: grid; grid-template-columns: repeat(var(--nm-cols, 1), 300px); align-content: start; padding: 10px; gap: 1px; max-height: min(70vh, 620px); overflow-y: auto; }
+.nav-mega-item {
+  position: relative; display: block; padding: 9px 12px; min-height: 52px;
+  border-radius: var(--df-radius-sm); color: var(--df-slate-900);
+  transition: background var(--df-dur-base) var(--df-ease-soft);
+}
+.nav-mega-item.is-on { background: var(--df-surface-raised); }
+.nav-mega-item:focus-visible { outline: 2px solid var(--df-primary); outline-offset: -2px; }
+.nav-mega-item .nmi-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nav-mega-item .nmi-title {
+  display: flex; align-items: center; gap: 7px;
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--df-slate-950);
+  transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.nav-mega-item.is-on .nmi-title { color: var(--nm-accent, var(--df-primary)); }
+.nav-mega-item .nmi-tag { font-size: var(--df-text-sm); line-height: 1.35; color: var(--df-slate-700); }
+/* A page that does not exist yet reads muted in the list — and says so in full
+   on the preview beside it. The word lives there, not in the row, because a chip
+   in the row pushed long titles onto a second line and broke the list's rhythm;
+   the panel has the room the row does not.
+
+   The mute is one step (950 → 700), not two: a planned page is still a page you
+   are meant to read about, so its row stays above the readable floor and only
+   the title stops being the darkest thing in the list. */
+.nav-mega-item.is-planned .nmi-title { color: var(--df-slate-700); font-weight: 600; }
+
+/* ── Right column — the enlarged preview ──────────────────────────────────── */
+.nav-mega-previews { position: relative; border-left: 1px solid var(--df-border); padding: 16px; background: color-mix(in srgb, var(--df-surface-raised) 55%, transparent); }
+.nav-mega-preview { display: none; }
+.nav-mega-preview.is-on { display: block; }
+.nav-mega-preview .nmp-frame {
+  display: flex; align-items: center; justify-content: center; height: 132px; margin-bottom: 14px; padding: 10px;
+  background: var(--df-surface); border: 1px solid var(--df-border); border-radius: var(--df-radius-sm);
+}
+.nav-mega-preview .nmp-frame svg { display: block; width: 100%; height: 100%; }
+.nav-mega-preview .nmp-title {
+  display: flex; align-items: center; gap: 9px; font-family: var(--df-font); font-size: var(--df-text-base);
+  font-weight: 600; letter-spacing: -0.01em; color: var(--df-slate-950); margin-bottom: 5px;
+}
+.nav-mega-preview .nmp-flag {
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600;
+  letter-spacing: 0.06em; color: var(--df-slate-700); white-space: nowrap;
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-pill); padding: 1px 8px;
+}
+.nav-mega-preview .nmp-blurb { margin: 0; font-size: var(--df-text-sm); line-height: 1.5; color: var(--df-slate-700); }
+
+/* Four-family global nav — same gradient-underline behaviour as .global-nav,
+   but each item carries a mono family number + the family name. Sits just right
+   of the logo, replacing the single-family breadcrumb on the viz pages. */
+.family-nav { display: inline-flex; align-items: stretch; gap: 22px; }
+.family-nav-item {
+  position: relative; display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--df-font); font-size: var(--df-text-base); font-weight: 500; letter-spacing: -0.005em;
+  color: var(--df-slate-700); white-space: nowrap; transition: color var(--df-dur-base) var(--df-ease-soft);
+}
+.family-nav-item .fam-num { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600; letter-spacing: 0.06em; color: var(--df-slate-500); transition: color var(--df-dur-base) var(--df-ease-soft); }
+.family-nav-item::after {
+  content: ""; position: absolute; left: 0; bottom: -1px; height: 2px; width: 0;
+  background-image: var(--df-gradient-brand);
+  transition: width 500ms var(--df-ease-out); pointer-events: none;
+}
+.family-nav-item:hover, .family-nav-item.active { color: var(--df-primary); }
+.family-nav-item:hover .fam-num, .family-nav-item.active .fam-num { color: var(--df-primary); }
+.family-nav-item:hover::after, .family-nav-item.active::after { width: 100%; }
+.family-nav-item.active { font-weight: 600; }
+.family-nav-item.is-disabled { color: var(--df-slate-400); cursor: default; pointer-events: none; }
+.family-nav-item.is-disabled .fam-num { color: var(--df-slate-300); }
+
+/* Identity meta strip */
+.top-bar-meta {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500; letter-spacing: 0.01em; color: var(--df-slate-700);
+}
+.top-bar-meta .meta-label { color: var(--df-slate-700); }
+.top-bar-meta .meta-label.is-client { color: var(--df-primary); font-weight: 600; }   /* client-name slot — Dragonfly blue */
+.top-bar-meta .meta-icon { display: inline-flex; align-items: center; justify-content: center; color: var(--df-slate-700); }
+.top-bar-meta .meta-icon-dragonfly img { width: 16px; height: 16px; display: block; }
+.top-bar-meta .meta-icon svg, .top-bar-meta .meta-clock svg { display: block; }
+.top-bar-meta .meta-clock { display: inline-flex; align-items: center; color: var(--df-slate-700); }
+.top-bar-meta .meta-icon + .meta-label, .top-bar-meta .meta-clock + .meta-label { margin-left: -2px; }
+.top-bar-meta .meta-icon-workflow, .top-bar-meta .meta-clock { margin-left: 18px; }
+/* Version chip — the same object as index.html's hero .ds-version (home.css),
+   at header size. Only the padding shrinks: the type stays at --df-text-label,
+   the 11.5px floor, because a chip in a 13px strip is made smaller by tightening
+   its box, not by going under the floor. Fill and border are one mixed hue so
+   the pair moves with the token, and the fill stays light (8%) — the plate is
+   there to seat the number, not to shout over it. Rendered from a meta[] entry
+   carrying `badge` (see chrome.js metaHTML), so its place in the strip is set
+   by array order. */
+.top-bar-meta .meta-badge {
+  display: inline-flex; align-items: center;
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 600;
+  letter-spacing: 0.04em; line-height: 1.5; white-space: nowrap;
+  color: var(--df-blue-700);
+  background: color-mix(in srgb, var(--df-callout) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--df-callout) 32%, transparent);
+  border-radius: var(--df-radius-pill); padding: 1px 8px;
+}
+
+/* Tools cluster (provenance + modules) */
+.top-bar-tools { display: inline-flex; align-items: center; gap: 16px; }
+.top-bar-conf-trigger {
+  font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 500; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--df-slate-950); padding: 4px 0 4px 8px; gap: 7px;
+}
+
+/* ─── Shared dropdown primitive (.cmd-section) ──────────────────────────── */
+.cmd-section { position: relative; display: inline-flex; align-items: center; flex-shrink: 0; }
+.cmd-section-trigger {
+  display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 9px;
+  background: transparent; border: 1px solid transparent; border-radius: var(--df-radius-xs);
+  color: var(--df-slate-700); font-family: var(--df-font); font-size: var(--df-text-xs); font-weight: 500;
+  cursor: pointer; white-space: nowrap;
+  transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.cmd-section-trigger:hover { background: var(--df-surface-raised); color: var(--df-slate-950); }
+.cmd-section.is-open .cmd-section-trigger { background: var(--df-surface-raised); border-color: var(--df-border); color: var(--df-slate-950); }
+.cmd-section-icon { width: 14px; height: 14px; flex: 0 0 auto; }
+.cmd-section-name { letter-spacing: 0.01em; }
+.cmd-section-chev { width: 9px; height: 9px; opacity: 0.5; transition: transform var(--df-dur-fast) var(--df-ease-soft), opacity var(--df-dur-fast) var(--df-ease-soft); }
+.cmd-section.is-open .cmd-section-chev { transform: rotate(180deg); opacity: 1; }
+.cmd-section-dot { width: 6px; height: 6px; border-radius: 50%; background: transparent; flex-shrink: 0; transition: background var(--df-dur-fast) var(--df-ease-soft); }
+.cmd-section-dot.on { background: var(--df-primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--df-primary) 18%, transparent); }
+.cmd-section-popover {
+  position: absolute; top: calc(100% + 6px); left: 0; display: none;
+  min-width: 240px; padding: 6px; background: var(--df-surface);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-sm);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft); z-index: 60;
+}
+.cmd-section.is-open .cmd-section-popover { display: block; }
+/* right-aligned popovers for the right-cluster tools */
+.top-bar-tools .cmd-section-popover { left: auto; right: 0; }
+
+/* Provenance popover content */
+.top-bar-conf-popover { min-width: 320px; }
+.top-bar-conf-caption { font-size: var(--df-text-xs); line-height: 1.5; color: var(--df-slate-700); margin: 4px 6px 10px; }
+.prov-row { display: flex; justify-content: space-between; gap: 16px; padding: 4px 6px; font-size: var(--df-text-xs); }
+.prov-row .prov-k { color: var(--df-slate-500); font-family: var(--df-font-mono); font-size: var(--df-text-micro); letter-spacing: 0.08em; text-transform: uppercase; }
+.prov-row .prov-v { color: var(--df-slate-800); text-align: right; }
+.conf-divider { border: 0; border-top: 1px solid var(--df-border); margin: 8px 0; }
+.footer-block-label { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: var(--df-slate-600); margin: 6px 6px 8px; }
+.footer-tag-legend { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 6px; }
+.footer-tag { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: var(--df-radius-pill); border: 1px solid; }
+.footer-tag.is-public   { color: var(--df-conf-public); border-color: color-mix(in srgb, var(--df-conf-public) 32%, transparent); background: color-mix(in srgb, var(--df-conf-public) 14%, transparent); }
+.footer-tag.is-gov      { color: var(--df-conf-gov);    border-color: color-mix(in srgb, var(--df-conf-gov) 30%, transparent);    background: color-mix(in srgb, var(--df-conf-gov) 12%, transparent); }
+.footer-tag.is-estimate { color: var(--df-conf-est);    border-color: color-mix(in srgb, var(--df-conf-est) 30%, transparent);    background: color-mix(in srgb, var(--df-conf-est) 12%, transparent); }
+.footer-tag.is-client   { color: var(--df-cat-social);  border-color: color-mix(in srgb, var(--df-cat-social) 30%, transparent);  background: color-mix(in srgb, var(--df-cat-social) 12%, transparent); }
+.conf-note { font-size: var(--df-text-label); color: var(--df-slate-500); margin: 10px 6px 4px; }
+
+/* All-Modules hamburger → X */
+.modules-burger { position: relative; width: 16px; height: 12px; opacity: 0.8; }
+.top-bar-modules-trigger:hover .modules-burger, .cmd-section.is-open .modules-burger { opacity: 1; }
+.modules-burger .mb-bar { position: absolute; left: 0; width: 100%; height: 2px; border-radius: 1px; background: currentColor; transition: transform var(--df-dur-fast) var(--df-ease-soft), opacity var(--df-dur-fast) var(--df-ease-soft), top var(--df-dur-fast) var(--df-ease-soft); }
+.modules-burger .mb-bar:nth-child(1) { top: 0; }
+.modules-burger .mb-bar:nth-child(2) { top: 50%; transform: translateY(-50%); }
+.modules-burger .mb-bar:nth-child(3) { bottom: 0; }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(2) { opacity: 0; }
+.cmd-section.is-open .modules-burger .mb-bar:nth-child(3) { top: 50%; bottom: auto; transform: translateY(-50%) rotate(-45deg); }
+/* All-Modules dropdown — the dtsite navbar treatment (exact to the reference):
+   no side padding so the dashed dividers run full width; each row's brand-gradient
+   underline grows 0→full and the title slides 4px + turns brand-blue on hover/active. */
+.top-bar-modules-popover { min-width: 240px; max-width: 280px; max-height: 92vh; overflow-y: auto; padding: 8px 0 4px; text-align: left; text-transform: none; }
+.modules-caption { font-size: var(--df-text-label); line-height: 1.45; color: var(--df-slate-600); margin: 0 0 4px; padding: 0 13px; }
+/* Family group header inside the modules menu ("Family N: <name>") */
+.modules-group-label { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--df-slate-500); padding: 11px 13px 5px; }
+.modules-menu > .modules-group-label:first-child { padding-top: 4px; }
+.modules-group-empty { margin: 0; padding: 2px 13px 8px; font-size: var(--df-text-label); font-style: italic; color: var(--df-slate-400); }
+.modules-menu { display: flex; flex-direction: column; }
+.modules-menu-item { position: relative; display: grid; grid-template-columns: 20px 1fr; align-items: baseline; gap: 9px; padding: 6px 13px; border-bottom: 1px dashed var(--df-slate-300); color: var(--df-slate-900); }
+.modules-menu-item .mod-num { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.04em; color: var(--df-slate-500); font-variant-numeric: tabular-nums; transition: color 200ms ease; }
+.modules-menu-item .mod-title { display: inline-block; font-size: var(--df-text-xs); line-height: 1.35; color: inherit; transition: transform 200ms ease, color 200ms ease; }
+.modules-menu-item .mod-underline { position: absolute; left: 0; bottom: -1px; height: 2px; width: 0; background-image: var(--df-gradient-brand); transition: width 500ms var(--df-ease-out); pointer-events: none; }
+.modules-menu-item:hover .mod-underline, .modules-menu-item.is-active .mod-underline { width: 100%; }
+.modules-menu-item:hover .mod-title, .modules-menu-item.is-active .mod-title { transform: translateX(4px); color: var(--df-brand-blue); }
+.modules-menu-item:hover .mod-num, .modules-menu-item.is-active .mod-num { color: var(--df-brand-blue); }
+.modules-menu-item.is-active .mod-title { font-weight: 600; }
+
+/* Action cluster — updates · repo link · theme toggle, kept tight together */
+.top-bar-actions { display: inline-flex; align-items: center; gap: 8px; }
+
+/* Theme toggle + repo link + updates — same square icon-button shape */
+.top-bar-theme-toggle,
+.top-bar-github,
+.top-bar-updates {
+  display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; padding: 0; flex-shrink: 0;
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md); background: transparent; color: var(--df-slate-700);
+  cursor: pointer; -webkit-appearance: none; appearance: none;
+  transition: background var(--df-dur-base) var(--df-ease-soft), border-color var(--df-dur-base) var(--df-ease-soft), color var(--df-dur-base) var(--df-ease-soft);
+}
+.top-bar-theme-toggle:hover,
+.top-bar-github:hover,
+.top-bar-updates:hover { background: var(--df-surface-raised); border-color: var(--df-slate-400); color: var(--df-slate-950); }
+.top-bar-theme-toggle:focus-visible,
+.top-bar-github:focus-visible,
+.top-bar-updates:focus-visible { outline: 2px solid var(--df-primary); outline-offset: 2px; }
+/* Red "new briefing" dot on the updates button — lit by chrome.js when an unseen
+   briefing exists. The surface-coloured ring lifts it off the megaphone glyph. */
+.top-bar-updates { position: relative; }
+.top-bar-updates-dot {
+  position: absolute; top: 4px; right: 4px; width: 7px; height: 7px; border-radius: 50%;
+  background: var(--df-risk-extreme); box-shadow: 0 0 0 2px var(--df-surface); pointer-events: none;
+}
+
+/* ─── Updates dropdown — megaphone → glassmorphism briefing calendar ─────────
+   The button drops a frosted calendar in the header; dated days link to their
+   timestamped briefing. Right-aligned under the action cluster. */
+.top-bar-updates-wrap { position: relative; display: inline-flex; }
+.top-bar-updates-cal {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 60; width: 288px; padding: 14px;
+  background: color-mix(in srgb, var(--df-surface) 94%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4);
+  border: 1px solid var(--df-border); border-radius: var(--df-radius-md);
+  box-shadow: var(--df-shadow-panel), 0 0 0 1px var(--df-border-soft);
+}
+.top-bar-updates-cal[hidden] { display: none; }
+.top-bar-updates-cal .uc-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 0 0 10px; }
+.top-bar-updates-cal .uc-month { flex: 1; text-align: center; font-family: var(--df-font-mono); font-size: var(--df-text-sm); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--df-slate-950); }
+.top-bar-updates-cal .uc-nav { display: flex; align-items: center; justify-content: center; width: 26px; height: 26px; flex: none; padding: 0; border: 1px solid var(--df-border); border-radius: var(--df-radius-sm); background: var(--df-surface); color: var(--df-slate-700); font-size: var(--df-text-md); line-height: 1; cursor: pointer; }
+.top-bar-updates-cal .uc-nav:hover:not(:disabled) { border-color: var(--df-callout); color: var(--df-callout); }
+.top-bar-updates-cal .uc-nav:disabled { opacity: 0.35; cursor: default; }
+.top-bar-updates-cal .uc-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 2px; }
+.top-bar-updates-cal .uc-dow { font-family: var(--df-font-mono); font-size: var(--df-text-label); font-weight: 700; color: var(--df-slate-500); text-align: center; padding: 2px 0 6px; }
+.top-bar-updates-cal .uc-day { display: flex; align-items: center; justify-content: center; height: 30px; border-radius: var(--df-radius-sm); font-size: var(--df-text-sm); color: var(--df-slate-300); text-decoration: none; }
+.top-bar-updates-cal .uc-day.is-empty { visibility: hidden; }
+.top-bar-updates-cal .uc-day.is-available { color: var(--df-callout); font-weight: 700; border: 1px solid var(--df-callout); cursor: pointer; }
+.top-bar-updates-cal .uc-day.is-available:hover { background: var(--df-callout); color: var(--df-surface); }
+.top-bar-updates-cal .uc-day.is-latest { background: var(--df-callout); color: var(--df-surface); border: 1px solid var(--df-callout); }
+/* Dark mode mirrors light mode's STATE: the latest day is a FILLED chip (mint =
+   primary in dark) and previous briefing days stay outlined — same distinction,
+   dark palette. */
+:root[data-theme="dark"] .top-bar-updates-cal .uc-day.is-latest { background: var(--df-primary); color: var(--df-surface); border-color: var(--df-primary); }
+.top-bar-updates-cal .uc-note { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--df-border-soft, var(--df-border)); font-size: var(--df-text-sm); color: var(--df-slate-700); line-height: 1.4; }
+.top-bar-updates-cal .uc-empty { font-size: var(--df-text-sm); color: var(--df-slate-700); line-height: 1.45; }
+.top-bar-theme-toggle .theme-ic { display: none; pointer-events: none; }
+:root:not([data-theme="dark"]) .top-bar-theme-toggle .theme-ic-moon { display: block; }
+:root[data-theme="dark"]        .top-bar-theme-toggle .theme-ic-sun  { display: block; }
+
+/* ─── Tab railway ───────────────────────────────────────────────────────── */
+.tab-bar-wrap {
+  position: sticky; top: var(--top-bar-h); z-index: 30;
+  background: var(--df-surface); border-bottom: 1px solid var(--df-border);
+  margin: 0 calc(50% - 50vw); padding: 0;   /* full-bleed */
+}
+.tab-bar {
+  display: flex; flex-direction: row; gap: 0; overflow-x: auto; scrollbar-width: none;
+  padding-left:  max(var(--shell-pad-x), calc(50vw - var(--shell-max) / 2 + var(--shell-pad-x)));
+  padding-right: max(var(--shell-pad-x), calc(50vw - var(--shell-max) / 2 + var(--shell-pad-x)));
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  --tab-color: var(--df-slate-950);
+  display: inline-flex; align-items: center; gap: 10px; padding: 9px 0; margin-right: 22px;
+  background: transparent; border: none; border-bottom: 2px solid transparent; font-family: inherit;
+  font-size: var(--df-text-sm); font-weight: 500; letter-spacing: -0.005em; color: var(--df-slate-700);
+  white-space: nowrap; cursor: pointer; position: relative;
+  transition: color var(--df-dur-fast) var(--df-ease-soft), border-color var(--df-dur-fast) var(--df-ease-soft);
+}
+.tab-btn:last-child { margin-right: 0; }
+.tab-btn .tab-btn-name { letter-spacing: -0.005em; }
+.tab-btn .tab-btn-hex { display: inline-flex; align-items: center; justify-content: center; color: var(--df-slate-700); transition: color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn .tab-btn-hex svg { display: block; width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linejoin: round; transition: fill var(--df-dur-fast) var(--df-ease-soft), stroke var(--df-dur-fast) var(--df-ease-soft); }
+/* Text takes --tab-ink (the accent's readable-ink companion, when the token
+   has one — gold text fails on white); underline + hex keep the accent. */
+.tab-btn:hover, .tab-btn.active { color: var(--tab-ink, var(--tab-color)); border-bottom-color: var(--tab-color); }
+.tab-btn:hover .tab-btn-name, .tab-btn.active .tab-btn-name { color: var(--tab-ink, var(--tab-color)); }
+.tab-btn:hover .tab-btn-hex, .tab-btn.active .tab-btn-hex { color: var(--tab-color); }
+.tab-btn:hover .tab-btn-hex svg, .tab-btn.active .tab-btn-hex svg { fill: var(--tab-color); stroke: var(--tab-color); }
+.tab-btn.active { font-weight: 600; }
+/* Family tabs: a leading 01-04 numeral + a trailing count badge */
+.tab-btn-num { font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; letter-spacing: 0.04em; color: var(--df-slate-400); transition: color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn:hover .tab-btn-num, .tab-btn.active .tab-btn-num { color: var(--tab-ink, var(--tab-color)); }
+.tab-btn-count { display: inline-flex; align-items: center; justify-content: center; min-width: 16px; height: 15px; padding: 0 5px; border-radius: 8px; background: var(--df-surface-raised); color: var(--df-slate-600); font-family: var(--df-font-mono); font-size: var(--df-text-micro); font-weight: 600; font-variant-numeric: tabular-nums; transition: background var(--df-dur-fast) var(--df-ease-soft), color var(--df-dur-fast) var(--df-ease-soft); }
+.tab-btn:hover .tab-btn-count, .tab-btn.active .tab-btn-count { background: color-mix(in srgb, var(--tab-color) 16%, transparent); color: var(--tab-ink, var(--tab-color)); }
+
+/* ─── NOTE — palette, context rail, and stage are NOT here ──────────────────
+   The command palette, the context/detail panel, and the visual stage belong
+   to the visualisation (visualisations/<slug>/rendered.html), not the shell.
+   The shell renders navigation only: top bar + tab railway + theme. A host
+   template frames the viz iframe with its own page <style>. ──────────────── */
+
+/* ─── Responsive ────────────────────────────────────────────────────────── */
+@media (max-width: 1080px) { .top-bar-meta { display: none; } .family-nav { gap: 16px; } .family-nav-item { font-size: var(--df-text-sm); } }
+/* Tight windows: the section menu drops to a single column of rows and a
+   narrower preview, rather than being clamped until it overlaps the nav. */
+@media (max-width: 1180px) {
+  .nav-mega-panel { grid-template-columns: max-content 250px; }
+  .nav-mega-list { grid-template-columns: repeat(1, 252px); }
+  .nav-mega-preview .nmp-frame { height: 112px; }
+}
+@media (max-width: 768px) {
+  .top-bar-lead { gap: 16px; } .top-bar-right { gap: 16px; }
+  .global-nav { gap: 16px; } .global-nav-item { font-size: var(--df-text-sm); } .top-bar-tools { gap: 10px; }
+  /* tight headers: keep the family numbers, drop the names to stop overflow */
+  .family-nav { gap: 14px; } .family-nav-item .fam-name { display: none; }
+}
+
+/* Phones: the bar holds a 200px wordmark, the Menu, and three 32px action
+   icons — 387px of content in a 326px line, so the wordmark was being squeezed
+   to 123px while the logo itself kept its intrinsic width and slid underneath
+   the Menu. Nothing here shrinks the brand: the furniture gives way instead.
+   The theme toggle stays because it changes what you can read; the updates and
+   github links are a tap away in the Menu. */
+@media (max-width: 520px) {
+  .top-bar { padding: 0 20px; }
+  .top-bar-lead, .top-bar-brand { flex: 0 0 auto; }
+  .top-bar-updates-wrap, .top-bar-github { display: none; }
+}
+/* 360px is a real Android width and the wordmark + "Menu" meet exactly there.
+   The burger carries the control alone; the button keeps its name from the
+   aria-label chrome.js sets, not from this text. */
+@media (max-width: 400px) {
+  .top-bar { padding: 0 14px; }
+  .top-bar-right { gap: 10px; }
+  .top-bar-modules-trigger .cmd-section-name { display: none; }
+}
+
+/* ─── Workspace site header — section nav ⇄ hamburger, mobile only ─────────
+   The workspace pages (marked .df-site-chrome by site-chrome.js) carry the
+   "Menu" burger as their MOBILE navigation. On desktop the inline .global-nav
+   shows and the burger is hidden; below 768px they swap. Scoped to
+   .df-site-chrome so template consumers (multi-report) that show both an inline
+   nav AND the All-Modules burger at every width are unaffected. */
+html.df-site-chrome .top-bar-tools { display: none; }              /* desktop: inline nav, no burger (hide the whole wrapper so the action icons don't shift) */
+@media (max-width: 768px) {
+  html.df-site-chrome .global-nav    { display: none; }            /* mobile: hide the inline nav … */
+  html.df-site-chrome .top-bar-tools { display: inline-flex; }     /* … and reveal the hamburger */
+}

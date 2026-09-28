@@ -5,37 +5,43 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
 <title>AI &amp; the Legal Profession — A research program of Harvard Law School</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="AI &amp; the Legal Profession — A research program of Harvard Law School">
-<meta property="og:description" content="A living essay-and-visualisation series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, using Dragonfly Thinking methodology and AI agents.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/">
+<meta property="og:description" content="A living essay-and-visualization series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, powered by Insight Bridge and Dragonfly Thinking.">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI &amp; the Legal Profession — A research program of Harvard Law School">
-<meta name="twitter:description" content="A living essay-and-visualisation series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, using Dragonfly Thinking methodology and AI agents.">
+<meta name="twitter:description" content="A living essay-and-visualization series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, powered by Insight Bridge and Dragonfly Thinking.">
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
-<meta name="description" content="A living essay-and-visualisation series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, using Dragonfly Thinking methodology and AI agents.">
-<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg">
+<meta name="description" content="A living essay-and-visualization series on how AI is structurally reconfiguring the legal profession. A research program of the Center on the Legal Profession, Harvard Law School — led by David B. Wilkins and Anthea Roberts, powered by Insight Bridge and Dragonfly Thinking.">
+<link rel="icon" href="assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="assets/reference/apple-touch-icon.png">
 <link rel="stylesheet" href="legal-design-system.css">
-<link rel="stylesheet" href="legal-site.css">
+<link rel="stylesheet" href="legal-site.css?v=dragonfly-navigation-20260920">
+<script src="site-accessibility.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <!-- NAV -->
 <header class="site-nav">
   <a class="brand" href="index.html" aria-label="Home">
-    <span class="mk" data-mk="brand"></span>
-    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small></span>
+    <img class="hls-shield" src="assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
   </a>
   <nav class="links" aria-label="Primary">
     <a href="#essays" aria-current="page">Essays</a>
-    <a href="visualisations/index.html">Visualisations</a>
-    <a href="deck/series-deck.html">Presentation</a>
-    <a href="essays/series-introduction.html">About</a>
+    <a href="insights.html">Dragonfly Insights</a>
+    <a href="course.html">Harvard Course</a>
+    <a href="presentations.html">Presentations</a>
+    <a href="powerpoints.html">PowerPoints</a>
+    <a href="project-leads.html">About</a>
   </nav>
   <div class="nav-right">
     <button class="icon-btn" id="themeBtn" aria-label="Toggle theme" title="Toggle light / dark">
@@ -49,13 +55,14 @@
 </header>
 
 <!-- HERO -->
+<main id="main-content" tabindex="-1">
 <section class="wrap hero">
   <div class="eyebrow-row">
     <span class="eyebrow">A research program</span>
-    <span class="label-chip">Harvard Law School · using Dragonfly Thinking</span>
+    <span class="label-chip">Harvard Law School · Insight Bridge &times; Dragonfly Thinking</span>
   </div>
   <h1>AI isn't being adopted by law. It's <em>restructuring</em> the profession.</h1>
-  <p class="standfirst">A living essay-and-visualisation series on how artificial intelligence is reconfiguring how legal services are delivered, who delivers them, how lawyers are trained, and what professional judgment becomes — read as a system, through many lenses at once.</p>
+  <p class="standfirst">A living essay-and-visualization series on how artificial intelligence is reconfiguring how legal services are delivered, who delivers them, how lawyers are trained, and what professional judgment becomes — read as a system, through many lenses at once.</p>
   <div style="margin-top:34px;">
     <span class="eyebrow" style="display:block;margin-bottom:14px;">Project leads</span>
     <div class="byline" style="margin-top:0;">
@@ -66,35 +73,43 @@
   </div>
   <div class="cta-row">
     <a class="btn btn-primary" href="#essays">Start reading<span class="arr">→</span></a>
-    <a class="btn btn-ghost" href="visualisations/index.html">Explore the topic network</a>
+    <a class="btn btn-ghost" href="insights.html">Explore the evidence base</a>
   </div>
 </section>
 
-<!-- THE SERIES — 7 essays, each with its visualisation -->
+<!-- THE SERIES — 7 essays, each with its visualization -->
 <section class="wrap" id="essays" style="margin-top:36px;">
   <div class="sec-head">
     <div>
       <span class="eyebrow">The series</span>
-      <h2>Seven essays, seven lenses</h2>
+      <h2>Seven essays, and the analysis behind them</h2>
     </div>
-    <p>Each reads the same transformation through a different lens — and each pairs with an interactive visualisation.</p>
+    <p>Each reads the same transformation through a different lens — and each pairs with an interactive visualization.</p>
   </div>
   <div class="essay-grid">
-    <a class="essay-card feature" href="essays/series-introduction.html">
-      <div class="thumb"><img src="assets/thumbnails/topic-network.png" alt="The topic network — 170 sources across 39 topics" loading="lazy"></div>
+    <!-- Two destinations, so two links. This card carries the topic network as its
+         image and used to be a single anchor to the essay: a reader who clicked the
+         network got an introduction instead, which is the one thing the picture
+         promised they would not get. The card is a div with the heading and the
+         figure each linked, rather than an anchor with another anchor inside it. -->
+    <div class="essay-card feature">
+      <a class="thumb thumb-link" href="visualisations/topic-network-v2.html" aria-label="Open the topic network">
+        <img src="assets/thumbnails/topic-network.png" alt="The topic network — every topic cluster against the sources that argue about it" loading="lazy">
+        <span class="thumb-cta">Open the topic network<span aria-hidden="true"> →</span></span>
+      </a>
       <div class="card-body">
         <div class="meta-row"><span class="badge"><span class="dot"></span>Series · Introduction</span></div>
-        <h3>Series introduction</h3>
+        <h3><a href="essays/series-introduction.html">Series introduction</a></h3>
         <p>Why this series exists, what each of us brings to it, and how AI, complex decision-making, and the structure of the legal profession intersect. Start here.</p>
-        <span class="read">Read the introduction<span>→</span><em class="rt">16 min</em></span>
+        <a class="read" href="essays/series-introduction.html">Read the introduction<span>→</span><em class="rt">16 min</em></a>
       </div>
-    </a>
+    </div>
     <a class="essay-card" href="essays/law-is-the-gateway-drug.html">
       <div class="thumb"><span class="num">01</span><img src="assets/thumbnails/law-gateway-systems.png" alt="Systems map of law's structural centrality" loading="lazy"></div>
       <div class="card-body">
         <div class="meta-row"><span class="badge"><span class="dot"></span>Structure</span></div>
         <h3>Law is the gateway drug</h3>
-        <p>Law's structural position — at the centre of business, connecting every function — makes it the natural entry point for AI across professional services.</p>
+        <p>Law's structural position — at the center of business, connecting every function — makes it the natural entry point for AI across professional services.</p>
         <span class="read">Read essay<span>→</span><em class="rt">10 min</em></span>
       </div>
     </a>
@@ -112,7 +127,7 @@
       <div class="card-body">
         <div class="meta-row"><span class="badge"><span class="dot"></span>Practice</span></div>
         <h3>Getting your hands dirty</h3>
-        <p>From analysing the system to experiencing it — what it actually feels like to work with AI agents on complex intellectual tasks, and why that gap matters.</p>
+        <p>From analyzing the system to experiencing it — what it actually feels like to work with AI agents on complex intellectual tasks, and why that gap matters.</p>
         <span class="read">Read essay<span>→</span><em class="rt">18 min</em></span>
       </div>
     </a>
@@ -146,25 +161,28 @@
   </div>
 </section>
 
-<!-- TOPIC NETWORK TEASER -->
-<section class="wrap" id="series" style="margin-top:96px;">
+<!-- DRAGONFLY INSIGHTS TEASER -->
+<section class="wrap" id="insights" style="margin-top:96px;">
   <div class="viz-teaser">
     <div class="canvas" id="netCanvas" aria-hidden="true"></div>
     <div class="copy">
-      <span class="eyebrow" style="margin-bottom:14px;display:block;">Interactive · D3</span>
-      <h3>The topic network</h3>
-      <p>A living map of the corpus underpinning this series. Each source is coded across dimensions, surfacing which issues are most discussed, where structural tensions live, and which sources bridge multiple domains.</p>
+      <span class="eyebrow" style="margin-bottom:14px;display:block;">Insight Bridge &times; Dragonfly Thinking</span>
+      <h3>Dragonfly Insights</h3>
+      <p>The evidence base under the series, opened. <b>Second Chair</b> is 1,501 curated sources on AI and the
+      legal profession, 1949&ndash;2026, created by Anthea Roberts and David B. Wilkins as part of this project.
+      It was structured and analyzed by Insight Bridge. We are applying analytical lenses to the corpus: topic mapping and actor mapping are published, with driver and dynamics mapping and scenario mapping in progress. The record is open to read, filter and query, including by your own agents.</p>
       <div class="viz-stats">
-        <div class="stat"><div class="n">170</div><div class="l">Sources</div></div>
-        <div class="stat"><div class="n">39</div><div class="l">Topics</div></div>
-        <div class="stat"><div class="n">11</div><div class="l">Dimensions</div></div>
+        <div class="stat"><div class="n">1,501</div><div class="l">Sources</div></div>
+        <div class="stat"><div class="n">369</div><div class="l">Topic clusters</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">Lenses</div></div>
       </div>
-      <a class="btn btn-ghost" href="visualisations/index.html">Open the visualisation<span class="arr">→</span></a>
+      <a class="btn btn-ghost" href="insights.html">Open Dragonfly Insights<span class="arr">&rarr;</span></a>
     </div>
   </div>
 </section>
 
 <!-- FOOTER -->
+</main>
 <footer class="site-foot" id="about">
   <div class="wrap">
     <div class="foot-grid">
@@ -172,27 +190,29 @@
         <span class="mk" data-mk="foot"></span>
         <div class="bt">
           <b>AI &amp; the Legal Profession</b>
-          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads David B. Wilkins &amp; Anthea Roberts, using <a href="https://dragonflythinking.com" rel="noopener">Dragonfly Thinking</a> methodology and AI agents.</p>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads David B. Wilkins &amp; Anthea Roberts. Powered by <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
         </div>
       </div>
       <div class="foot-col">
         <h4>Series</h4>
         <a href="#essays">Essays</a>
-        <a href="visualisations/index.html">Visualisations</a>
-        <a href="https://hls.harvard.edu/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener">The Harvard course</a>
+        <a href="insights.html">Insights</a>
+        <a href="visualisations/index.html">Visuals</a>
+        <a href="course.html">Harvard course</a>
         <a href="workshops.html">Workshops</a>
       </div>
       <div class="foot-col">
         <h4>About</h4>
         <a href="essays/series-introduction.html">The project</a>
-        <a href="project-leads.html">Project leads</a>
+        <a href="project-leads.html">Project leads &amp; contributors</a>
+        <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a>
+        <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>
         <a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a>
-        <a href="https://clp.law.harvard.edu" rel="noopener">Contact</a>
       </div>
     </div>
     <div class="foot-base">
       <span>© 2026 President &amp; Fellows of Harvard College</span>
-      <span>Lenses being tested and refined — not finished pronouncements.</span>
+      <span>Analyses being tested and refined — not finished pronouncements.</span>
     </div>
   </div>
 </footer>

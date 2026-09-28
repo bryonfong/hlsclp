@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
 <title>Getting your hands dirty — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/getting-your-hands-dirty.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Getting your hands dirty — AI &amp; the Legal Profession">
 <meta property="og:description" content="What it actually feels like to work with AI on complex intellectual tasks — and why the gap between talking about AI and using it matters so much.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/getting-your-hands-dirty.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/getting-your-hands-dirty.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -20,20 +20,26 @@
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
 <meta name="description" content="What it actually feels like to work with AI on complex intellectual tasks — and why the gap between talking about AI and using it matters so much.">
-<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<link rel="icon" href="../assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="../assets/reference/apple-touch-icon.png">
 <link rel="stylesheet" href="../legal-design-system.css">
-<link rel="stylesheet" href="../legal-site.css">
+<link rel="stylesheet" href="../legal-site.css?v=dragonfly-navigation-20260920">
+<script src="../site-accessibility.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-nav">
   <a class="brand" href="../index.html" aria-label="Home">
-    <span class="mk" data-mk="brand"></span>
-    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small></span>
+    <img class="hls-shield" src="../assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
   </a>
   <nav class="links" aria-label="Primary">
     <a href="../index.html#essays" aria-current="page">Essays</a>
-    <a href="../visualisations/index.html">Visualisations</a>
-    <a href="../deck/series-deck.html">Presentation</a>
+    <a href="../insights.html">Dragonfly Insights</a>
+    <a href="../course.html">Harvard Course</a>
+    <a href="../presentations.html">Presentations</a>
+    <a href="../powerpoints.html">PowerPoints</a>
     <a href="series-introduction.html">About</a>
   </nav>
   <div class="nav-right">
@@ -45,6 +51,7 @@
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <div class="wrap">
   <div class="reader">
     <aside class="toc" aria-label="Contents">
@@ -76,9 +83,9 @@
 
       <figure class="essay-viz">
         <div class="essay-viz-frame">
-          <iframe src="../visualisations/director-coach-editor.html?embed=1" loading="lazy" title="Interactive visualisation: The shift from doing to directing — Director, Coach, and Editor as the three mod" aria-label="Interactive visualisation: The shift from doing to directing — Director, Coach, and Editor as the three mod — opens its own controls"></iframe>
+          <iframe src="../visualisations/director-coach-editor.html?embed=1" loading="lazy" title="Interactive visualization: The shift from doing to directing — Director, Coach, and Editor as the three mod" aria-label="Interactive visualization: The shift from doing to directing — Director, Coach, and Editor as the three mod — opens its own controls"></iframe>
         </div>
-        <figcaption><b>Interactive.</b> The shift from doing to directing — Director, Coach, and Editor as the three modes of human–AI collaboration. <a class="legal-link" href="../visualisations/director-coach-editor.html">Open the full visualisation →</a></figcaption>
+        <figcaption><b>Interactive.</b> The shift from doing to directing — Director, Coach, and Editor as the three modes of human–AI collaboration. <a class="legal-link" href="../visualisations/director-coach-editor.html">Open the full visualization →</a></figcaption>
       </figure>
 
       <div class="essay-note"><p>This essay is part of <a class="legal-link" href="../index.html">AI, Complex Decision-Making and the Future of the Legal Profession</a>, a project of the Center on the Legal Profession at Harvard Law School. We drafted the first essays in this series together at Harvard at the end of March, while teaching a course on AI and the Future of Law and hosting an event on agentic AI and complex decision-making. In our first two pieces, we argued that <a class="legal-link" href="law-is-the-gateway-drug.html">law's structural position</a> makes it the gateway drug for AI across professional services, and we examined <a class="legal-link" href="harveys-strategic-evolution.html">Harvey's Strategic Evolution</a> on top of that position. Those pieces were analytical — mapping forces, naming patterns. This one turns inward. What does it actually feel like to work with AI on complex intellectual tasks? And what's stopping the profession from getting there?</p></div>
@@ -97,7 +104,7 @@
       <p>We both think better through speaking than writing, so Anthea showed David how to start drafting by dictating thoughts through Wispr Flow — capturing ideas verbally to open the conversation with the agent. She showed how to get the agents to respond to and critique their hypotheses. We directed agents to undertake different types of analysis and reviewed their outputs. David would identify places where a plausible, fluent output missed something that only decades of studying the profession would reveal.</p>
       <p>At times an agent would surface a connection neither of us had seen, and it would spark new discussions. For example, the discussion of the dark side of law as a gateway drug from our first piece — that originated from an observation from a Dragonfly agent. David had been calling law a gateway drug for years. Dragonfly pointed out that the difference between the metaphor of a gateway (positive) and a gateway drug (negative) suggested we should also explore the downside of law's increasing centrality. That seemed like a good point, we thought, particularly given Dan Wang's contrast in <em>Breakneck</em> of China's engineering state and America's lawyerly society — which we discuss in our <a class="legal-link" href="law-is-the-gateway-drug.html">first piece</a>.</p>
       <p>The experience revealed something that Anthea has seen time and time again. Abstract understanding of AI and practical understanding are different in kind, not just degree. David knew what large language models could do. He'd read the benchmarks, the capability assessments, the case studies. He had seen Anthea present on her work and had talked to other people who were using the models. But there is a difference between knowing that AI can surface unexpected connections and watching it do so on your own material — and then having the judgment to see that one of those connections is brilliant and another is nonsense. That second kind of knowing only comes from the experience itself.</p>
-      <p>This is how you learn AI. Not from a presentation. Not from a report. Not from a two-day workshop. It's experiential. The Greeks had a word for this kind of knowledge: <em>metis</em> — practical wisdom, as distinct from theoretical knowledge. You don't get metis from textbooks. You get it from doing. You have to sit with the tools, get frustrated when they produce mediocre output, learn to direct them better, develop a feel for when they're confident and when they're bluffing. You learn how much context is too much, when to break a complex task into steps, how to recognise a plausible-sounding output that's subtly wrong. You develop the instinct that something is off before you can articulate why. That can't be delegated. But these skills can also pass between more experienced users and more novice users when you work together, as we did. You can learn through a combination of doing, watching, and copying.</p>
+      <p>This is how you learn AI. Not from a presentation. Not from a report. Not from a two-day workshop. It's experiential. The Greeks had a word for this kind of knowledge: <em>metis</em> — practical wisdom, as distinct from theoretical knowledge. You don't get metis from textbooks. You get it from doing. You have to sit with the tools, get frustrated when they produce mediocre output, learn to direct them better, develop a feel for when they're confident and when they're bluffing. You learn how much context is too much, when to break a complex task into steps, how to recognize a plausible-sounding output that's subtly wrong. You develop the instinct that something is off before you can articulate why. That can't be delegated. But these skills can also pass between more experienced users and more novice users when you work together, as we did. You can learn through a combination of doing, watching, and copying.</p>
       <p>In our view, when it comes to AI, everybody needs to learn how to do this for themselves. Leaders in particular. The instinct to delegate AI to others — to the associates, to the innovation team, to the chief technology officer — is understandable. It is also fundamentally wrong. You cannot have a real, visceral understanding of what this technology does unless you've lived the experience firsthand. You cannot make good decisions about AI's impact on your practice, your firm, or your clients from the outside.</p>
       <p>The good news is that many skills senior people already have transfer directly. Managing, directing and reviewing the work of AI agents draws on the same capabilities as managing, directing and reviewing the work of junior colleagues. You set direction, provide context, evaluate quality, catch errors, make judgment calls about when to trust and when to verify. The hump is learning how agents work instead of how the people you manage work. That hump is real. But it's smaller than it looks — and far smaller than most senior professionals assume.</p>
       <h2 id="the-software-preview">The Software Preview</h2>
@@ -108,7 +115,7 @@
       <p>These managerial or orchestration roles are not new to senior lawyers. A partner who directs a team of associates on a complex transaction is already a director. A senior counsel who sits with a junior during a negotiation prep session, redirecting their analysis when it drifts, is already a coach. A GC who reviews an associate's memorandum before it goes to the board is already an editor. The shift isn't from doing to not-doing. It's from directing people to directing agents — and many of the core capabilities transfer.</p>
       <p>But that transfer has a precondition. As any sports fan knows, the best athletes rarely make the best coaches, and vice versa. Great players often perform instinctively — they can't easily articulate what makes them successful. Wayne Gretzky famously explained his goal-scoring by saying he skated to where the puck would be, not where it was. Inspiring, but not exactly a coaching manual. A great coach translates that intuition into concrete, teachable steps: watch the angle of your opponent's stick, know their tendencies, anticipate where the pass will go. The skill of performing and the skill of directing are different in kind. Senior lawyers know this intimately — everyone has seen brilliant practitioners who never learned to direct and review, who became micro-managers rather than orchestrators, undermining productivity and sapping team energy. The capabilities that transfer to AI direction aren't the capabilities of doing excellent legal work. They're the capabilities of orchestrating others who do it.</p>
       <p>There's a crucial distinction that the transfer metaphor can obscure. With people, you can often delegate and step back — the associate carries institutional knowledge, the junior knows the formatting conventions, the team self-corrects on routine matters. With agents, you need to be all three: director, coach, and editor, often within a single working session. You set the direction, watch the execution unfold, course-correct when it drifts, and verify the output before it goes anywhere. The roles are analytically distinct but practically inseparable. Generative AI does not generate alone — the quality of its output depends as much on the nature of the collaboration as on the strength of the underlying model.</p>
-      <p>Each role draws on domain expertise and AI expertise simultaneously — and neither substitutes for the other. The director needs domain expertise to know which risks matter for this counterparty, and AI expertise to know how to frame the request. The coach needs domain expertise to recognise when the analysis has drifted, and AI expertise to know how to redirect. The editor needs domain expertise to know what "right" looks like, and AI expertise to recognise the characteristic patterns of AI error. Domain expertise is what makes the directing, coaching, and editing valuable. AI expertise is what lets you do it through this new medium. The first you already have. The second is what this piece is asking you to develop.</p>
+      <p>Each role draws on domain expertise and AI expertise simultaneously — and neither substitutes for the other. The director needs domain expertise to know which risks matter for this counterparty, and AI expertise to know how to frame the request. The coach needs domain expertise to recognize when the analysis has drifted, and AI expertise to know how to redirect. The editor needs domain expertise to know what "right" looks like, and AI expertise to recognize the characteristic patterns of AI error. Domain expertise is what makes the directing, coaching, and editing valuable. AI expertise is what lets you do it through this new medium. The first you already have. The second is what this piece is asking you to develop.</p>
       <p>But this raises a question we'll explore in a forthcoming piece on the training crisis. We've argued that domain experts need to learn AI — that the hump is crossable. But what about the other direction? If AI automates the work through which domain expertise was historically built, who becomes the next generation of directors, coaches, and editors?</p>
       <h2 id="tools-versus-technique">Tools Versus Technique</h2>
       <p>We'll return to that question. For now, the practical one: how do you actually develop the AI side? Anthea has written about <a class="legal-link" href="https://www.dragonflythinking.com/insights/tools-vs-technique-the-capability-gap" target="_blank" rel="noopener">the capability gap</a> — the distance between having AI tools and knowing how to use them — and <a class="legal-link" href="https://www.dragonflythinking.com/insights/0-to-1-1-to-10-10-to-100-three-ways-of-working-with-ai" target="_blank" rel="noopener">three levels of AI fluency</a> that map onto the profession. The frameworks matter, but the experiential point matters more.</p>
@@ -119,7 +126,7 @@
       <p>Senior professionals have an advantage they may not appreciate. Twenty-five years of judgment combined with AI technique produces something enormously more effective than either alone. You are not starting from zero — managing agents draws on capabilities you've spent a career developing. But that potential only activates if you invest the time. Delegating instead of learning means losing the capacity to evaluate what the technology is doing to your practice, your clients, your firm's competitive position.</p>
       <p>Some fears are validated. AI does change what expertise means. The tasks being automated aren't coming back. The competition from AI-native firms is real and accelerating.</p>
       <p>Some fears are dissolved. Using AI doesn't necessarily undermine critical thinking — it can demand more of it. The director/coach/editor model puts human judgment at the center, not the periphery. The work changes in form. The need for judgment doesn't diminish.</p>
-      <p>And some fears are inverted. The real risk isn't that using AI will devalue your expertise. It's that not using it will leave you unable to evaluate what it produces — and unable to compete with those who can. It is one of the scariest times to be a lawyer. But it is also one of the most exciting. The scare and the excitement come from the same source: a technology that rewards those who engage with it and marginalises those who don't. The double bind we noted in <a class="legal-link" href="harveys-strategic-evolution.html">Harvey's Strategic Evolution</a> — if the tool isn't reliable enough, lawyers don't trust it; if it's too reliable, it threatens them — dissolves when you actually use the tools. What replaces it is something more productive: a working relationship with capabilities and limitations you understand from direct experience, not secondhand accounts.</p>
+      <p>And some fears are inverted. The real risk isn't that using AI will devalue your expertise. It's that not using it will leave you unable to evaluate what it produces — and unable to compete with those who can. It is one of the scariest times to be a lawyer. But it is also one of the most exciting. The scare and the excitement come from the same source: a technology that rewards those who engage with it and marginalizes those who don't. The double bind we noted in <a class="legal-link" href="harveys-strategic-evolution.html">Harvey's Strategic Evolution</a> — if the tool isn't reliable enough, lawyers don't trust it; if it's too reliable, it threatens them — dissolves when you actually use the tools. What replaces it is something more productive: a working relationship with capabilities and limitations you understand from direct experience, not secondhand accounts.</p>
       <h2 id="what-this-piece-asks">What This Piece Asks</h2>
       <p>Our first two pieces mapped the structural landscape — why law is the gateway, what Harvey is building on top of it. This piece asks a more immediate question: are you willing to get your hands dirty?</p>
       <p>The gap between those who work with AI and those who talk about it is widening faster than most people in the profession realize. It won't close on its own. It won't close by hiring the right vendor or subscribing to the right platform. It closes only through practice — sustained, applied, often uncomfortable practice. Not a workshop. Not a pilot. Not a memo from the innovation committee. The kind of practice where you sit with the tools, fail, learn, and develop the judgment that only comes from doing.</p>
@@ -135,6 +142,7 @@
   </div>
 </div>
 
+</main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -142,11 +150,11 @@
         <span class="mk" data-mk="foot"></span>
         <div class="bt">
           <b>AI &amp; the Legal Profession</b>
-          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins, using <a href="https://dragonflythinking.com" rel="noopener">Dragonfly Thinking</a> methodology and AI agents.</p>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins. Powered by <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
         </div>
       </div>
-      <div class="foot-col"><h4>Series</h4><a href="../index.html#essays">Essays</a><a href="../visualisations/index.html">Visualisations</a><a href="https://hls.harvard.edu/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener">The Harvard course</a><a href="../workshops.html">Workshops</a></div>
-      <div class="foot-col"><h4>About</h4><a href="series-introduction.html">The project</a><a href="../project-leads.html">Project leads</a><a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a><a href="https://clp.law.harvard.edu" rel="noopener">Contact</a></div>
+      <div class="foot-col"><h4>Series</h4><a href="../index.html#essays">Essays</a><a href="../insights.html">Insights</a><a href="../visualisations/index.html">Visuals</a><a href="../course.html">Harvard course</a><a href="../workshops.html">Workshops</a></div>
+      <div class="foot-col"><h4>About</h4><a href="series-introduction.html">The project</a><a href="../project-leads.html">Project leads &amp; contributors</a><a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a><a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a><a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a></div>
     </div>
     <div class="foot-base"><span>© 2026 President &amp; Fellows of Harvard College</span><span>Lenses being tested and refined.</span></div>
   </div>

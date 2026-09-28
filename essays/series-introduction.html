@@ -5,11 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script>/* theme-init: set theme before first paint to avoid FOUC + keep aria-pressed in sync */(function(){var d=document.documentElement;try{var t=localStorage.getItem('legal-theme');if(!t)t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';d.setAttribute('data-theme',t);}catch(e){}var sync=function(){var b=document.getElementById('themeBtn');if(b)b.setAttribute('aria-pressed',d.getAttribute('data-theme')==='dark'?'true':'false');};document.addEventListener('DOMContentLoaded',function(){sync();try{new MutationObserver(sync).observe(d,{attributes:true,attributeFilter:['data-theme']});}catch(e){}});})();</script>
 <title>Series introduction — AI &amp; the Legal Profession</title>
+<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/series-introduction.html">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="AI &amp; the Legal Profession">
 <meta property="og:title" content="Series introduction — AI &amp; the Legal Profession">
 <meta property="og:description" content="Why this series exists, what each of us brings to it, and how AI, complex decision-making, and the structure of the legal profession intersect.">
-<link rel="canonical" href="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/series-introduction.html">
 <meta property="og:url" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/essays/series-introduction.html">
 <meta property="og:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 <meta property="og:image:width" content="1200">
@@ -20,20 +20,26 @@
 <meta name="twitter:image" content="https://clp.law.harvard.edu/ai-and-the-legal-profession/assets/reference/og-card.png">
 
 <meta name="description" content="Why this series exists, what each of us brings to it, and how AI, complex decision-making, and the structure of the legal profession intersect.">
-<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg">
+<link rel="icon" href="../assets/reference/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="../assets/reference/favicon.svg?v=hls-20260918">
+<link rel="apple-touch-icon" href="../assets/reference/apple-touch-icon.png">
 <link rel="stylesheet" href="../legal-design-system.css">
-<link rel="stylesheet" href="../legal-site.css">
+<link rel="stylesheet" href="../legal-site.css?v=dragonfly-navigation-20260920">
+<script src="../site-accessibility.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to main content</a>
 <header class="site-nav">
   <a class="brand" href="../index.html" aria-label="Home">
-    <span class="mk" data-mk="brand"></span>
-    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small></span>
+    <img class="hls-shield" src="../assets/reference/harvard-law-shield.svg" width="38" height="38" alt="Harvard Law School shield">
+    <span class="bt"><b>AI &amp; the Legal Profession</b><small>Center on the Legal Profession</small><small class="institution-name">Harvard Law School</small></span>
   </a>
   <nav class="links" aria-label="Primary">
     <a href="../index.html#essays" aria-current="page">Essays</a>
-    <a href="../visualisations/index.html">Visualisations</a>
-    <a href="../deck/series-deck.html">Presentation</a>
+    <a href="../insights.html">Dragonfly Insights</a>
+    <a href="../course.html">Harvard Course</a>
+    <a href="../presentations.html">Presentations</a>
+    <a href="../powerpoints.html">PowerPoints</a>
     <a href="series-introduction.html">About</a>
   </nav>
   <div class="nav-right">
@@ -45,6 +51,7 @@
   </div>
 </header>
 
+<main id="main-content" tabindex="-1">
 <div class="wrap">
   <div class="reader">
     <aside class="toc" aria-label="Contents">
@@ -75,9 +82,9 @@
 
       <figure class="essay-viz">
         <div class="essay-viz-frame">
-          <iframe src="../visualisations/topic-network.html?embed=1" loading="lazy" title="Interactive visualisation: The topic network maps 170 sources across 39 topics in 11 dimensions — the knowl" aria-label="Interactive visualisation: The topic network maps 170 sources across 39 topics in 11 dimensions — the knowl — opens its own controls"></iframe>
+          <iframe src="../visualisations/topic-network.html?embed=1" loading="lazy" title="Interactive visualization: The topic network maps 170 sources across 39 topics in 11 dimensions — the knowl" aria-label="Interactive visualization: The topic network maps 170 sources across 39 topics in 11 dimensions — the knowl — opens its own controls"></iframe>
         </div>
-        <figcaption><b>Interactive.</b> The topic network maps 170 sources across 39 topics in 11 dimensions — the knowledge base underpinning this series. <a class="legal-link" href="../visualisations/topic-network.html">Open the full visualisation →</a></figcaption>
+        <figcaption><b>Interactive.</b> The first-release topic network maps 170 sources across 39 topics in 11 dimensions; the live research corpus for the flagship papers has since expanded. <a class="legal-link" href="../visualisations/topic-network.html">Open the full visualization →</a></figcaption>
       </figure>
 
       <div class="essay-note"><p>A project of the Center on the Legal Profession, Harvard Law School.</p><p>Project leads:**  David B. Wilkins, Lester Kissel Professor of Law, Vice Dean for Global Initiatives on the Legal Profession, and Faculty Director of the Center on the Legal Profession, Harvard Law School; and Anthea Roberts, Professor at the Australian National University's School of Regulation and Global Governance and Visiting Professor at Harvard Law School.</p></div>
@@ -114,7 +121,8 @@
       <h2 id="what-comes-next">What Comes Next</h2>
       <p>This project is not just a paper series. It is a sustained program of research and engagement at the intersection of the three questions above — questions that are going to affect every part of the legal profession, law firms, and legal education for years to come.</p>
       <p>In addition to the essays and interactive visualizations shared here, we are developing a course at Harvard Law School on AI and the future of the legal profession, and we plan to reconvene workshops with senior leaders in law — general counsel, managing partners, and others at the frontier of these changes — to continue testing these frameworks against the experience of people living through them. In April 2026, we hosted a colloquium at Harvard on agentic AI and complex decision-making, bringing together researchers and practitioners to examine how agentic AI could enrich research projects.</p>
-      <p>The topic network visualization maps the corpus of sources we are building as part of this project — at the time of this release, 170 sources across 39 topics in 11 dimensions, from market dynamics and technology evolution to competitive dynamics, human-AI collaboration, and professional identity. Each source is coded against these dimensions, creating a map of which issues are most discussed, where structural tensions live, and which sources bridge multiple domains. This is an ongoing, living collection — the knowledge base that underpins the analysis in this series, refreshed through monthly sweeps as new developments emerge.</p>
+      <p>The topic network visualization maps the first-release corpus behind this project — 170 sources across 39 topics in 11 dimensions, from market dynamics and technology evolution to competitive dynamics, human-AI collaboration, and professional identity. Since that release, the research base has expanded into a live source corpus for the three flagship papers now in development: academic literature, primary legal and regulatory materials, industry and market evidence, legal-technology and law-firm records, investor and platform materials, our prior work, and a transcribed legal-AI podcast and interview corpus. Each source is coded against the claims it supports, complicates, or distinguishes, so the papers rest on a source map rather than a generic literature review.</p>
+      <p>That distinction matters. We use different sources for different evidentiary jobs. Scholarship supplies theory and empirical anchors; legal materials show how courts, regulators, and bar authorities are absorbing AI; industry sources document live market movement and actor positioning; and podcasts and interviews are treated as labeled practice signals of how participants understand their own strategies and constraints. We do not treat vendor claims, funding-round valuations, consultancy forecasts, or podcast statements as freestanding proof. They are triangulated against the broader corpus and labeled for what they are.</p>
       <p>Future papers will take the analysis deeper — mapping the actors reshaping the legal market, the driving forces behind their strategies, the feedback loops that amplify or constrain change, and the scenarios that emerge from different combinations of these forces. The papers and visuals are shared as they are developed — not as finished pronouncements but as frameworks being tested against the evidence and refined through engagement with the profession.</p>
       <p>We're interested less in predicting who wins than in helping people see the system clearly enough to make better decisions within it. We also welcome input from the broader ecosystem we're addressing — if you have thoughts on these pieces, if you disagree with some of the analysis, if you want to say "yes, but ..." then let us know. This is an evolving project and it takes many lenses to create dragonfly vision.</p>
     </article>
@@ -127,6 +135,7 @@
   </div>
 </div>
 
+</main>
 <footer class="site-foot">
   <div class="wrap">
     <div class="foot-grid">
@@ -134,11 +143,11 @@
         <span class="mk" data-mk="foot"></span>
         <div class="bt">
           <b>AI &amp; the Legal Profession</b>
-          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins, using <a href="https://dragonflythinking.com" rel="noopener">Dragonfly Thinking</a> methodology and AI agents.</p>
+          <p>A research program of the Center on the Legal Profession, Harvard Law School. Project leads Anthea Roberts &amp; David B. Wilkins. Powered by <a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a> and <a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a>.</p>
         </div>
       </div>
-      <div class="foot-col"><h4>Series</h4><a href="../index.html#essays">Essays</a><a href="../visualisations/index.html">Visualisations</a><a href="https://hls.harvard.edu/courses/ai-complex-decision-making-and-the-future-of-the-legal-profession/" rel="noopener">The Harvard course</a><a href="../workshops.html">Workshops</a></div>
-      <div class="foot-col"><h4>About</h4><a href="series-introduction.html">The project</a><a href="../project-leads.html">Project leads</a><a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a><a href="https://clp.law.harvard.edu" rel="noopener">Contact</a></div>
+      <div class="foot-col"><h4>Series</h4><a href="../index.html#essays">Essays</a><a href="../insights.html">Insights</a><a href="../visualisations/index.html">Visuals</a><a href="../course.html">Harvard course</a><a href="../workshops.html">Workshops</a></div>
+      <div class="foot-col"><h4>About</h4><a href="series-introduction.html">The project</a><a href="../project-leads.html">Project leads &amp; contributors</a><a href="https://insightbridge-secondchair.aicolab.org/insight-bridge" rel="noopener" target="_blank">Insight Bridge</a><a href="https://dragonflythinking.com" rel="noopener" target="_blank">Dragonfly Thinking</a><a href="https://clp.law.harvard.edu" rel="noopener">Center on the Legal Profession</a></div>
     </div>
     <div class="foot-base"><span>© 2026 President &amp; Fellows of Harvard College</span><span>Lenses being tested and refined.</span></div>
   </div>

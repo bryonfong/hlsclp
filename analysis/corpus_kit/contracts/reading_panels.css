@@ -1,0 +1,76 @@
+/* Reader layer: argument first, provenance within reach, canonical token ink. */
+/* Legacy document figures position SVGs absolutely. Anchor them to the inner
+   canvas, whose scroll border clips the drawing, rather than its padded host. */
+.viz-canvas--doc .canvas{position:relative}
+@font-face{font-family:'IBM Plex Sans';src:url('../../visual-library/foundations/ibm-plex-sans.woff2') format('woff2');font-weight:100 700;font-style:normal;font-display:swap}
+.reading-profile{font-family:var(--df-font);font-size:15px;line-height:1.65;color:var(--df-ink);min-width:0}
+.reading-profile h2{font-size:23px!important;line-height:1.23!important;color:var(--df-ink-strong);margin:8px 0 18px!important}
+.reading-profile .reading-headline{font-size:19px;line-height:1.4;font-weight:600;color:var(--df-ink-strong);margin:0 0 13px}
+.reading-profile .reading-lead{font-size:16px;line-height:1.65;margin:0 0 26px}
+.reading-profile p{font-size:15px;line-height:1.7;margin:8px 0 15px;overflow-wrap:break-word}
+.reading-profile h3{font-size:15px!important;line-height:1.4!important;font-weight:600;color:var(--df-ink-strong);margin:24px 0 8px!important}
+.reading-kicker,.reading-basis{font-size:12px;color:var(--df-ink-muted)}
+.reading-kicker{text-transform:uppercase;letter-spacing:.06em}
+.reading-basis{display:block;margin-top:5px}
+.reading-claim-basis{font-size:12px;color:var(--df-ink-muted);font-style:italic}
+.reading-link,.reading-citations button{font:inherit;background:none;border:0;color:var(--df-primary);cursor:pointer;text-align:left;padding:0;text-decoration:underline;text-underline-offset:3px}
+.reading-citations{white-space:normal}.reading-citations button{font-size:12px;font-weight:600;padding:0 2px}
+.reading-audit{border-top:1px solid var(--df-border);padding:16px 0;margin:0;font-size:14px}
+.reading-audit>summary{font-size:14px;line-height:1.5;font-weight:500;color:var(--df-ink);cursor:pointer}
+.reading-profile blockquote{font-size:14px;line-height:1.7;border-left:2px solid var(--df-border);padding-left:14px;margin:12px 0;color:var(--df-ink)}
+.reading-profile .reading-locator{font-size:12px;color:var(--df-ink-muted);overflow-wrap:anywhere}
+.reading-measure{display:flex;gap:18px;justify-content:space-between;border-bottom:1px solid var(--df-border-soft);padding:7px 0;font-size:13px}
+.reading-measure span:last-child{text-align:right;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.reading-record-links{display:flex;flex-direction:column;align-items:flex-start;gap:9px;font-size:14px}
+.reading-source{scroll-margin:12px}.reading-connection{margin-bottom:20px}
+.reading-corpus>h3{margin:0 0 8px!important}
+.reading-connections{margin-top:16px}.reading-connections>summary,.reading-passage>summary{cursor:pointer;color:var(--df-primary);font-size:14px;line-height:1.6}
+.reading-connections .reading-record-links{margin-top:14px}
+.reading-profile a{color:var(--df-primary);text-underline-offset:3px}
+.reading-source-group{padding:0 0 20px;border-bottom:1px solid var(--df-border-soft)}
+.reading-evidence-use{font-weight:500}.reading-passage{margin:12px 0 20px}
+.reading-profile blockquote p{font-size:15px;line-height:1.75;margin-bottom:18px}
+.reading-profile button:focus-visible{outline:2px solid var(--df-primary);outline-offset:3px}
+[data-board-child=true] body{margin:0;overflow:hidden;background:var(--df-surface)}
+[data-board-child=true] body>header,[data-board-child=true] .shell-header,[data-board-child=true] .site-header,[data-board-child=true] .tab-bar,[data-board-child=true] .viz-panel,[data-board-child=true] .panel-resize,[data-board-child=true] .panel-toggle,[data-board-child=true] .panel-reopen,[data-board-child=true] main>aside{display:none!important}
+[data-board-child=true] .viz-workspace{display:flex!important;flex-direction:column;min-height:0;grid-template-columns:1fr!important}
+[data-board-child=true] .viz-canvas{flex:1;min-height:0}
+/* The board-child layout parks the palette beneath the canvas, so a dropdown that opens downward leaves the frame. Open it upward over the canvas instead. */
+[data-board-child=true] .cmd-popover{top:auto;bottom:calc(100% + 6px)}
+[data-board-child=true] main{display:block;height:calc(100vh - 116px);min-height:0}
+[data-board-child=true] body:has(#net){display:flex;flex-direction:column;height:100vh}
+[data-board-child=true] body:has(#net)>.bar{flex:none}
+[data-board-child=true] body:has(#net)>main{flex:1;height:auto;min-height:0}
+[data-board-child=true] #stage{height:100%;min-height:0}
+[data-board-child=true] .bar{padding:9px 14px;background:var(--df-surface);color:var(--df-ink)}
+[data-board-child=true] .rich-tier-nav{padding:8px 12px;flex-shrink:0;display:flex;gap:6px;flex-wrap:wrap}
+[data-board-child=true] .cmd-palette{flex:none;max-height:35vh;overflow:auto;border-top:1px solid var(--df-border)}
+/* That scroll box clips a menu opening upward. Release the clip only while a menu is open; a tall palette still scrolls the rest of the time. */
+[data-board-child=true] .cmd-palette:has(.cmd-section.is-open){overflow:visible}
+.reading-search{position:absolute;top:100%;left:0;right:0;z-index:20;max-height:280px;overflow:auto;border:1px solid var(--df-border);background:var(--df-surface);padding:12px;box-shadow:var(--df-shadow-panel)}
+.grp:has(.reading-search){position:relative}.reading-search button{display:block;padding:7px 0;text-align:left;background:none;border:0;color:var(--df-ink);width:100%}
+.reading-search p{margin:0 0 8px;font-size:12px}
+[data-board-child=true] .reading-search{top:auto;bottom:100%}
+@media(min-width:1000px){body:has(#reading-data) main{grid-template-columns:minmax(0,1fr) 440px}}
+/* Shared reading navigation and contextual saved-source reader. */
+.reading-section-nav{display:flex;flex-wrap:wrap;gap:7px 13px;margin:0 0 25px;padding:12px 0;border-block:1px solid var(--df-border)}
+.reading-section-nav>span{flex-basis:100%;font-size:12px;color:var(--df-ink-muted)}
+.reading-section-nav button{font:inherit;font-size:13px;line-height:1.5;border:0;padding:0;background:none;color:var(--df-primary);text-align:left;text-decoration:underline;text-underline-offset:3px;cursor:pointer;overflow-wrap:anywhere}
+.reading-profile [data-reading-section]{scroll-margin-top:12px}.reading-profile [data-reading-section]:focus{outline:none}
+.reading-native>h3{margin-top:5px!important}.reading-native-points>summary{color:var(--df-primary);cursor:pointer;font-size:14px}
+.reading-link-kind{display:block;color:var(--df-ink-muted);font-size:12px;text-decoration:none}.reading-record-links a{overflow-wrap:anywhere;max-width:100%}
+.reading-support{font-size:12px;color:var(--df-ink-muted);margin:7px 0 13px}.reading-support>summary{cursor:pointer}
+.reading-source-dialog{padding:0;border:1px solid var(--df-border);background:var(--df-surface);color:var(--df-ink);width:min(1040px,calc(100vw - 24px));height:calc(100dvh - 32px);max-width:calc(100vw - 24px);max-height:calc(100dvh - 32px);font:15px/1.5 var(--df-font)}
+.reading-source-dialog[open]{display:flex;flex-direction:column}.reading-source-dialog::backdrop{background:color-mix(in srgb,var(--df-slate-950) 48%,transparent)}
+.reading-source-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:15px 18px;border-bottom:1px solid var(--df-border);flex:none}
+.reading-source-toolbar>div{flex:1 1 250px;min-width:0}.reading-source-toolbar h2{font-size:18px;line-height:1.35;margin:3px 0;overflow-wrap:anywhere}.reading-source-toolbar p{margin:0}
+.reading-source-toolbar button,.reading-source-toolbar a{font:inherit;font-size:13px;line-height:1.5;cursor:pointer;color:var(--df-primary);background:none;border:0;padding:5px 0;text-align:left;overflow-wrap:anywhere}
+.reading-source-toolbar button:focus-visible,.reading-source-toolbar a:focus-visible{outline:2px solid var(--df-primary);outline-offset:3px}
+.reading-source-dialog iframe{display:block;border:0;width:100%;flex:1;min-height:0;background:var(--df-surface)}.reading-source-dialog iframe[hidden]{display:none}
+.reading-source-status{padding:15px 18px;margin:0;font-size:14px}.reading-source-dialog:has(.reading-source-status:not([hidden])) iframe{visibility:hidden}
+@media(max-width:600px){.reading-source-dialog{width:calc(100vw - 12px);max-width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px)}.reading-source-toolbar{padding:10px 12px;gap:6px 14px}.reading-source-toolbar>div{flex-basis:100%;order:2}.reading-source-toolbar a{flex:1}}
+.reading-source-profile{padding:12px 0;border-bottom:1px solid var(--df-border-soft)}.reading-source-profile>a:first-child{font-weight:600}.reading-source-profile .reading-source-coverage{font-size:13px;color:var(--df-ink-muted);margin:7px 0}.reading-source-profile>a{font-size:14px;overflow-wrap:anywhere}
+
+.reading-dissent .reading-perspective{margin:12px 0 18px;padding-left:12px;border-left:3px solid var(--df-border)}
+.reading-dissent .reading-perspective[data-position="Opposes"],.reading-dissent .reading-perspective[data-position="Mixed"],.reading-dissent .reading-perspective[data-position="Redirects"]{border-left-color:var(--df-primary)}
+.reading-dissent h4{margin:0 0 6px;font-size:14px}.reading-stances{font-size:14px}.reading-basis-inherited{font-style:italic}.reading-disposition{font-size:14px}
